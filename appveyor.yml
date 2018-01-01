@@ -37,7 +37,7 @@ install:
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
   - 7z x irrKlang-32bit-1.5.0.zip
-  - move irrKlang-1.5.0 irrklang
+  - move irrKlang-32nit-1.5.0 irrklang
   - move irrklang\plugins\ikpMP3 ikpmp3
 
   # let premake happy
