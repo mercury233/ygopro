@@ -4,7 +4,6 @@ solution "ygo"
     objdir "obj"
 
     USE_IRRKLANG = true
-    IRRKLANG_PRO = true
 
     configurations { "Release", "Debug" }
 
@@ -71,7 +70,6 @@ solution "ygo"
     include "irrlicht"
     include "lua"
     include "sqlite3"
-    if IRRKLANG_PRO then
+    include "irrklang"
     include "ikpmp3"
-    end
     end
