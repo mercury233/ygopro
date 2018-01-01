@@ -48,9 +48,6 @@ bool ImageManager::Initial(const path dir)  {
 		snprintf(buff, 100, "/textures/extra/lscale_%d.png", i);
 		tLScale[i] = driver->getTexture((dir + path(buff)));
 	}
-	support_types.push_back(std::string("jpg"));
-	support_types.push_back(std::string("png"));
-	support_types.push_back(std::string("bmp"));
 	return true;
 }
 void ImageManager::SetDevice(irr::IrrlichtDevice* dev) {
