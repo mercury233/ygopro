@@ -4,8 +4,6 @@ skip_tags: true
 environment:
   access_token:
     secure: DOOS4g7CT8ctOgiMr62K56qQ1FO6s2ESpqNZlhf8F4nomemvvwxV/pRj9nbKmtjR
-  irrklang_pro_passwd:
-    secure: 3wmY6LZoi+aLqtpqw2RSx9Ae3Qq91ZV0LM8ghEnwFIpW7tP3jbOUEXxvzg98JYOShMN22iISCDHyfSQIv+xWEA==
 
 install:
   - git submodule update --init --recursive
@@ -44,9 +42,6 @@ install:
 
   # let premake happy
   - xcopy /E premake\* .
-
-  # use irrklang pro
-  - 7z x irrklang\irrKlang.7z -p%irrklang_pro_passwd% -oirrklang\lib\Win32-visualStudio -y
   
   # patch irrlicht
   - patch -p0 < irrlicht\irrlicht.patch
