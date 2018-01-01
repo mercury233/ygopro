@@ -68,7 +68,7 @@ bool Game::Initialize() {
 	guiFont = irr::gui::CGUITTFont::createTTFont(env, gameConf.textfont, gameConf.textfontsize);
 	textFont = guiFont;
 	smgr = device->getSceneManager();
-	device->setWindowCaption(L"YGOPro");
+	device->setWindowCaption(L"YGO-VI");
 	device->setResizable(false);
 #ifdef _WIN32
 	irr::video::SExposedVideoData exposedData = driver->getExposedVideoData();
