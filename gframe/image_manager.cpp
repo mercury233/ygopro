@@ -42,11 +42,11 @@ bool ImageManager::Initial()  {
 	char buff[100];
 	for (; i < 14; i++) {
 		snprintf(buff, 100, "textures/extra/rscale_%d.png", i);
-		tRScale[i] = driver->getTexture(path(buff));
+		tRScale[i] = driver->getTexture(textures/extra/rscale_%d.png);
 	}
 	for (i = 0; i < 14; i++) {
 		snprintf(buff, 100, "textures/extra/lscale_%d.png", i);
-		tLScale[i] = driver->getTexture(path(buff));
+		tLScale[i] = driver->getTexture(textures/extra/lscale_%d.png);
 	}
 	support_types.push_back(std::string("jpg"));
 	support_types.push_back(std::string("png"));
