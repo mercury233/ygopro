@@ -11,13 +11,13 @@ BLOCK "StringFileInfo"
 BEGIN
 BLOCK "080404b0"
 BEGIN
-VALUE "FileDescription", "YGOPro ver.233 test"
-VALUE "InternalName", "YGOPro"
-VALUE "LegalCopyright", "Copyright (C) 2017 Fluorohydride"
-VALUE "OriginalFilename", "YGOPro_test.exe"
-VALUE "ProductName", "YGOPro"
-VALUE "FileVersion", "1.034.2.233"
-VALUE "ProductVersion", "1.034.2.233"
+VALUE "FileDescription", "YGO-VI"
+VALUE "InternalName", "YGO-VI"
+VALUE "LegalCopyright", "Copyright (C) 2018 Fluorohydride"
+VALUE "OriginalFilename", "YGO-VI"
+VALUE "ProductName", "YGO-VI"
+VALUE "FileVersion", "1.034.2"
+VALUE "ProductVersion", "1.034.2"
 END
 END
 BLOCK "VarFileInfo"
