@@ -17,6 +17,7 @@ struct Config {
 	unsigned short antialias;
 	unsigned short serverport;
 	unsigned char textfontsize;
+	unsigned short game_version;
 	wchar_t lasthost[100];
 	wchar_t lastport[10];
 	wchar_t nickname[20];
