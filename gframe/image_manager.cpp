@@ -53,8 +53,6 @@ bool ImageManager::Initial() {
 	support_types.push_back(std::string("bmp"));
 	return true;
 }
-	return true;
-}
 void ImageManager::SetDevice(irr::IrrlichtDevice* dev) {
 	device = dev;
 	driver = dev->getVideoDriver();
