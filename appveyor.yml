@@ -83,15 +83,6 @@ artifacts:
   - path: ygopro-ver.233.7z
     name: ygopro-ver.233
 
-deploy:
-    release: latest
-    description: 'Automatic build by Appveyor.\nUpdated on $(APPVEYOR_REPO_COMMIT_TIMESTAMP).'
-    provider: GitHub
-    auth_token: $(access_token)
-    force_update: true
-    on:
-        branch: test
-
 cache:
   - premake-5.0.0-alpha12-windows.zip
   - libevent-2.0.22-stable.tar.gz
