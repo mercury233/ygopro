@@ -5,7 +5,7 @@ namespace ygo {
 
 ImageManager imageManager;
 
-bool ImageManager::Initial() {
+bool ImageManager::Initial(const path dir)  {
 	tCover[0] = driver->getTexture("textures/cover.jpg");
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
@@ -42,11 +42,11 @@ bool ImageManager::Initial() {
 	char buff[100];
 	for (; i < 14; i++) {
 		snprintf(buff, 100, "/textures/extra/rscale_%d.png", i);
-		tRScale[i] = driver->getTexture((dir + path(buff)).c_str());
+		tRScale[i] = driver->getTexture((dir + path(buff)));
 	}
 	for (i = 0; i < 14; i++) {
 		snprintf(buff, 100, "/textures/extra/lscale_%d.png", i);
-		tLScale[i] = driver->getTexture((dir + path(buff)).c_str());
+		tLScale[i] = driver->getTexture((dir + path(buff)));
 	}
 	support_types.push_back(std::string("jpg"));
 	support_types.push_back(std::string("png"));
