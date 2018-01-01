@@ -5,7 +5,7 @@ namespace ygo {
 
 ImageManager imageManager;
 
-bool ImageManager::Initial(const path dir)  {
+bool ImageManager::Initial()  {
 	tCover[0] = driver->getTexture("textures/cover.jpg");
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
