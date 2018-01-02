@@ -1,4 +1,5 @@
 #include "image_manager.h"
+#include "image_manager.cpp"
 #include "game.h"
 
 namespace ygo {
