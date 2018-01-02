@@ -41,17 +41,16 @@ bool ImageManager::Initial()  {
 	int i = 0;
 	char buff[100];
 	for (; i < 14; i++) {
-		sprintf(buff, 100, "/textures/extra/rscale_%d.png", i);
+		snprintf(buff, 100, "/textures/extra/rscale_%d.png", i);
  		tRScale[i] = driver->getTexture(buff);
 	}
 	for (i = 0; i < 14; i++) {
-		sprintf(buff, 100, "/textures/extra/lscale_%d.png", i);
+		snprintf(buff, 100, "/textures/extra/lscale_%d.png", i);
 		tLScale[i] = driver->getTexture(buff);
 	}
 	support_types.push_back(std::string("jpg"));
 	support_types.push_back(std::string("png"));
 	support_types.push_back(std::string("bmp"));
-	return true;
 	return true;
 }
 void ImageManager::SetDevice(irr::IrrlichtDevice* dev) {
