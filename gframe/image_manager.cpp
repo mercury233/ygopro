@@ -38,7 +38,7 @@ bool ImageManager::Initial()  {
 	tFieldTransparent[0] = driver->getTexture("textures/field-transparent2.png");
 	tField[1] = driver->getTexture("textures/field3.png");
 	tFieldTransparent[1] = driver->getTexture("textures/field-transparent3.png");
-	int i = 0;
+	int i = pscale;
 	char buff[100];
 	for (; i < 14; i++) {
 		snprintf(buff, 100, "/textures/extra/rscale_%d.png", i);
