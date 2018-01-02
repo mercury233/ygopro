@@ -272,10 +272,10 @@ void Game::DrawLinkedZones(ClientCard* pcard) {
 	}
 }
 void Game::CheckMutual(ClientCard* pcard, int mark) {
-	matManager.mSelField.AmbientColor = 0xff0261a2;
+	matManager.mSelField.AmbientColor = 0xff02c53e;
 	driver->setMaterial(matManager.mSelField);
 	if (pcard && pcard->type & TYPE_LINK && pcard->link_marker & mark) {
-		matManager.mSelField.AmbientColor = 0xff6b82c5;
+		matManager.mSelField.AmbientColor = 0xff009900;
 		driver->setMaterial(matManager.mSelField);
 	}
 }
