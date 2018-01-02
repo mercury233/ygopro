@@ -190,8 +190,6 @@ public:
 
 	bool is_building;
 	bool is_siding;
-	
-	bool isPSEnabled;
 
 	ClientField dField;
 	DeckBuilder deckBuilder;
