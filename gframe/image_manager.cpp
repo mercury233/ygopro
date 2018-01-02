@@ -176,6 +176,7 @@ irr::video::ITexture* ImageManager::GetTexture(int code) {
 		return tUnknown;
 	auto tit = tMap.find(code);
 	if(tit == tMap.end()) {
+		static const std::string exts[] = { ".bpg", ".jpg" };
 		char file[256];
 		sprintf(file, "expansions/pics/%d.jpg", code);
 		irr::video::ITexture* img = GetTextureFromFile(file, CARD_IMG_WIDTH, CARD_IMG_HEIGHT);
@@ -200,6 +201,7 @@ irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 		return tUnknown;
 	auto tit = tThumb.find(code);
 	if(tit == tThumb.end()) {
+		static const std::string exts[] = { ".bpg", ".jpg" };
 		char file[256];
 		sprintf(file, "expansions/pics/thumbnail/%d.jpg", code);
 		irr::video::ITexture* img = GetTextureFromFile(file, CARD_THUMB_WIDTH, CARD_THUMB_HEIGHT);
@@ -228,6 +230,7 @@ irr::video::ITexture* ImageManager::GetTextureField(int code) {
 		return NULL;
 	auto tit = tFields.find(code);
 	if(tit == tFields.end()) {
+		static const std::string exts[] = { ".bpg", ".png", ".jpg" };
 		char file[256];
 		sprintf(file, "expansions/pics/field/%d.png", code);
 		irr::video::ITexture* img = GetTextureFromFile(file, 512, 512);
