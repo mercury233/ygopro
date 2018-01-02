@@ -275,7 +275,7 @@ void Game::CheckMutual(ClientCard* pcard, int mark) {
 	matManager.mSelField.AmbientColor = 0xff0261a2;
 	driver->setMaterial(matManager.mSelField);
 	if (pcard && pcard->type & TYPE_LINK && pcard->link_marker & mark) {
-		matManager.mSelField.AmbientColor = 0xff009900;
+		matManager.mSelField.AmbientColor = 0xff6b82c5;
 		driver->setMaterial(matManager.mSelField);
 	}
 }
@@ -374,6 +374,12 @@ void Game::DrawCard(ClientCard* pcard) {
 		atk.setTranslation(pcard->curPos + vector3df(0, -atkdy / 4.0f - 0.35f, 0.05f));
 		driver->setTransform(irr::video::ETS_WORLD, atk);
 		driver->drawVertexPrimitiveList(matManager.vSymbol, 4, matManager.iRectangle, 2);
+	}
+	if (isPSEnabled && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && pcard->sequence > 5)) {
+		int scale = pcard->sequence == 6 ? pcard->lscale : pcard->rscale;
+		matManager.mTexture.setTexture(0, pcard->sequence == 6 ? imageManager.tLScale[scale] : imageManager.tRScale[scale]);
+		driver->setMaterial(matManager.mTexture);
+		driver->drawVertexPrimitiveList(matManager.vPScale, 4, matManager.iRectangle, 2);
 	}
 }
 void Game::DrawMisc() {
