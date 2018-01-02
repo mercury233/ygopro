@@ -10,12 +10,6 @@ bool ImageManager::Initial()  {
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
-	tCover[2] = driver->getTexture("textures/cover3.jpg");
-	if(!tCover[2])
-		tCover[2] = tCover[0];
-	tCover[3] = driver->getTexture("textures/cover4.jpg");
-	if(!tCover[3])
-		tCover[3] = tCover[0];
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
@@ -47,11 +41,11 @@ bool ImageManager::Initial()  {
 	int i = 0;
 	char buff[100];
 	for (; i < 14; i++) {
-		snprintf(buff, 100, "/textures/extra/rscale_%d.png", i);
+		sprintf(buff, 100, "/textures/extra/rscale_%d.png", i);
  		tRScale[i] = driver->getTexture(buff);
 	}
 	for (i = 0; i < 14; i++) {
-		snprintf(buff, 100, "/textures/extra/lscale_%d.png", i);
+		sprintf(buff, 100, "/textures/extra/lscale_%d.png", i);
 		tLScale[i] = driver->getTexture(buff);
 	}
 	support_types.push_back(std::string("jpg"));
