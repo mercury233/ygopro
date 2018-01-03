@@ -45,6 +45,7 @@ struct Config {
 	int enable_bot_mode;
 	bool enable_sound;
 	bool enable_music;
+	int chkEnablePScale;
 	double sound_volume;
 	double music_volume;
 	int music_mode;
@@ -242,6 +243,7 @@ public:
 	irr::gui::IGUIScrollBar* scrSoundVolume;
 	irr::gui::IGUIScrollBar* scrMusicVolume;
 	irr::gui::IGUICheckBox* chkMusicMode;
+	irr::gui::IGUICheckBox* chkEnablePScale;
 	//main menu
 	irr::gui::IGUIWindow* wMainMenu;
 	irr::gui::IGUIButton* btnLanMode;
