@@ -45,10 +45,10 @@ struct Config {
 	int enable_bot_mode;
 	bool enable_sound;
 	bool enable_music;
-	int chkEnablePScale;
 	double sound_volume;
 	double music_volume;
 	int music_mode;
+	int chkEnablePScale;
 };
 
 struct DuelInfo {
