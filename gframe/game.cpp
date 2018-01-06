@@ -1030,7 +1030,7 @@ void Game::LoadConfig() {
 	gameConf.roompass[0] = 0;
 	//settings
 	gameConf.chkMAutoPos = 0;
-	gameConf.chkSTAutoPos = 1;
+	gameConf.chkSTAutoPos = 0;
 	gameConf.chkRandomPos = 0;
 	gameConf.chkAutoChain = 0;
 	gameConf.chkWaitChain = 0;
