@@ -1991,7 +1991,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				}
 			switch(id) {
 			case BUTTON_CARD_SEARCH: {
-				ShellExecute(handle, "open", "http://www.ourocg.cn/S.aspx?key=s%", null, null, sw_shownormal);
+				mainGame->system("chrome http://www.ourocg.cn/S.aspx?key=s%");
 				return true;
 				break;
 			}
