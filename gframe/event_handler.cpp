@@ -1991,6 +1991,15 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			}
 			}
 			break;
+		case irr::gui::EGET_BUTTON_CLICKED: {
+			switch(id) {
+			case BUTTON_CARD_SEARCH: {
+				mainGame->ShellExecute(Handle, "open"," http://www.ourocg.cn/S.aspx?key=%s", code, nil, SW_SHOWNORMAL);  
+				return true;
+				break;
+			}
+			}
+			break;
 		}
 		case irr::gui::EGET_CHECKBOX_CHANGED: {
 			switch(id) {
