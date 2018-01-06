@@ -1988,13 +1988,11 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				mainGame->logParam.clear();
 				return true;
 				break;
-			}
-			}
-			break;
-		case irr::gui::EGET_BUTTON_CLICKED: {
+				}
+		        case irr::gui::EGET_BUTTON_CLICKED: {
 			switch(id) {
 			case BUTTON_CARD_SEARCH: {
-				System.Diagnostics.Process.Start("http://www.ourocg.cn/S.aspx?key=s%", code)
+				ShellExecute(NULL,"open","http://www.ourocg.cn/S.aspx?key=s%",NULL,NULL,SW_SHOW);
 				return true;
 				break;
 			}
