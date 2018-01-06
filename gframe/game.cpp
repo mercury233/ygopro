@@ -1126,7 +1126,7 @@ void Game::LoadConfig() {
 		} else if(!strcmp(strbuf, "music_mode")) {
 			gameConf.music_mode = atoi(valbuf);
 		} else if(!strcmp(strbuf, "enable_pendulum_scale")) {
-			gameConf.chkMAutoPos = atoi(valbuf);
+			gameConf.chkEnablePScale = atoi(valbuf);
 		} else {
 			// options allowing multiple words
 			sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
