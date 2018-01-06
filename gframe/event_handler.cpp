@@ -1989,15 +1989,15 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 				}
-		        case irr::gui::EGET_BUTTON_CLICKED: {
 			switch(id) {
 			case BUTTON_CARD_SEARCH: {
-				ShellExecute(NULL,"open","http://www.ourocg.cn/S.aspx?key=s%",NULL,NULL,SW_SHOW);
+				ShellExecute(handle, "open", "http://www.ourocg.cn/S.aspx?key=s%", null, null, sw_shownormal);
 				return true;
 				break;
 			}
 			}
 			break;
+		}
 		}
 		case irr::gui::EGET_CHECKBOX_CHANGED: {
 			switch(id) {
