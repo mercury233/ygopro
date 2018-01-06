@@ -1994,7 +1994,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 		case irr::gui::EGET_BUTTON_CLICKED: {
 			switch(id) {
 			case BUTTON_CARD_SEARCH: {
-				mainGame->ShellExecute(Handle, "open"," http://www.ourocg.cn/S.aspx?key=%s", code, nil, SW_SHOWNORMAL);  
+				System.Diagnostics.Process.Start("http://www.ourocg.cn/S.aspx?key=s%", code)
 				return true;
 				break;
 			}
