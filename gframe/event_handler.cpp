@@ -1990,8 +1990,9 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
-                                mcard->code
-				system ("start http://www.ourocg.cn/S.aspx?key="+mcard);
+				CardData cd;
+                                if(!dataManager.GetData(code, &cd))
+				system ("start http://www.ourocg.cn/S.aspx?key="+code);
 				return true;
 				break;
 			}
