@@ -239,7 +239,7 @@ bool Game::Initialize() {
 	scrCardText->setLargeStep(1);
 	scrCardText->setSmallStep(1);
 	scrCardText->setVisible(false);
-	btnCardSearch = env->addButton(rect<s32>(160, 300, 260, 325), tabInfo, BUTTON_CARD_SEARCH, dataManager.GetSysString(1282));
+	btnCardSearch = env->addButton(rect<s32>(160, 300, 260, 325), tabInfo, BUTTON_CARD_SEARCH, dataManager.GetSysString(1283));
 	//log
 	irr::gui::IGUITab* tabLog =  wInfos->addTab(dataManager.GetSysString(1271));
 	lstLog = env->addListBox(rect<s32>(10, 10, 290, 290), tabLog, LISTBOX_LOG, false);
