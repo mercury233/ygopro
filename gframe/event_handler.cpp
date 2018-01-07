@@ -1,6 +1,5 @@
 #include "event_handler.h"
 #include "client_field.h"
-#include "client_card.h"
 #include "math.h"
 #include "network.h"
 #include "game.h"
@@ -1991,6 +1990,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
+				int code
 				system ("start http://www.ourocg.cn/S.aspx?key=s%", code);
 				return true;
 				break;
