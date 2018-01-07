@@ -1976,8 +1976,7 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 	return false;
 }
 bool ClientField::OnCommonEvent(const irr::SEvent& event) {
-	switch(event.EventType) {
-	case irr::EET_GUI_EVENT: {
+		case irr::EET_GUI_EVENT: {
 		s32 id = event.GUIEvent.Caller->getID();
 		switch(event.GUIEvent.EventType) {
 		case irr::gui::EGET_BUTTON_CLICKED: {
@@ -1990,8 +1989,15 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 				}
 			}
+			switch(id) {
+			case BUTTON_CARD_SEARCH: {
+				system ("http://www.ourocg.cn/S.aspx?key=");
+				return true;
+				break;
+			    }
 			}
 			break;
+		}
 		}
 		case irr::gui::EGET_CHECKBOX_CHANGED: {
 			switch(id) {
