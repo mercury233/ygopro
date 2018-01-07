@@ -226,7 +226,6 @@ public:
 	irr::gui::IGUIStaticText* stSetName;
 	irr::gui::IGUIStaticText* stText;
 	irr::gui::IGUIScrollBar* scrCardText;
-	irr::gui::IGUIButton* btnCardSearch;
 	irr::gui::IGUIListBox* lstLog;
 	irr::gui::IGUIButton* btnClearLog;
 	irr::gui::IGUIButton* btnSaveLog;
@@ -615,8 +614,6 @@ extern Game* mainGame;
 
 #define BUTTON_MARKS_FILTER			380
 #define BUTTON_MARKERS_OK			381
-
-#define BUTTON_CARD_SEARCH			382
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
