@@ -234,12 +234,11 @@ bool Game::Initialize() {
 	stDataInfo->setOverrideColor(SColor(255, 0, 0, 255));
 	stSetName = env->addStaticText(L"", rect<s32>(15, 83, 296, 106), false, true, tabInfo, -1, false);
 	stSetName->setOverrideColor(SColor(255, 0, 0, 255));
-	stText = env->addStaticText(L"", rect<s32>(15, 106, 287, 290), false, true, tabInfo, -1, false);
-	scrCardText = env->addScrollBar(false, rect<s32>(267, 106, 287, 290), tabInfo, SCROLL_CARDTEXT);
+	stText = env->addStaticText(L"", rect<s32>(15, 106, 287, 324), false, true, tabInfo, -1, false);
+	scrCardText = env->addScrollBar(false, rect<s32>(267, 106, 287, 324), tabInfo, SCROLL_CARDTEXT);
 	scrCardText->setLargeStep(1);
 	scrCardText->setSmallStep(1);
 	scrCardText->setVisible(false);
-	btnCardSearch = env->addButton(rect<s32>(160, 300, 260, 325), tabInfo, BUTTON_CARD_SEARCH, dataManager.GetSysString(1272));
 	//log
 	irr::gui::IGUITab* tabLog =  wInfos->addTab(dataManager.GetSysString(1271));
 	lstLog = env->addListBox(rect<s32>(10, 10, 290, 290), tabLog, LISTBOX_LOG, false);
