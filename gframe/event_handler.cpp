@@ -1990,7 +1990,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
-				int code
+				int code;
 				system ("start http://www.ourocg.cn/S.aspx?key=s%", code);
 				return true;
 				break;
