@@ -1990,9 +1990,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
-				int code;
-				code = sqlite3_column_int(pStmt, 0);
-				system ("start http://www.ourocg.cn/S.aspx?key="+code);
+                                mcard->code
+				system ("start http://www.ourocg.cn/S.aspx?key="+mcard);
 				return true;
 				break;
 			}
