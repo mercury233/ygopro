@@ -1,5 +1,6 @@
 #include "event_handler.h"
 #include "client_field.h"
+#include "client_card.h"
 #include "math.h"
 #include "network.h"
 #include "game.h"
