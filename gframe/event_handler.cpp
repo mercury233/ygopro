@@ -1991,7 +1991,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				}
 			switch(id) {
 			case BUTTON_CARD_SEARCH: {
-				system("http://www.ourocg.cn/S.aspx?key=s%");
+				system("explorer.exe" "http://www.ourocg.cn/S.aspx?key=s%");
 				return true;
 				break;
 			}
