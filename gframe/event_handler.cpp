@@ -1987,7 +1987,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				mainGame->logParam.clear();
 				return true;
 				break;
-				}
+			     }
 			}
 			switch(id) {
 			case BUTTON_CARD_SEARCH: {
@@ -1997,7 +1997,6 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			    }
 			}
 			break;
-		}
 		}
 		case irr::gui::EGET_CHECKBOX_CHANGED: {
 			switch(id) {
