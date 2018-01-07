@@ -1993,7 +1993,6 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			}
 			break;
 		}
-		}
 		case irr::gui::EGET_CHECKBOX_CHANGED: {
 			switch(id) {
 			case CHECKBOX_AUTO_SEARCH: {
