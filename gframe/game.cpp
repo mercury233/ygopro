@@ -1271,8 +1271,8 @@ void Game::ShowCardInfo(int code) {
 		stInfo->setText(formatBuffer);
 		stDataInfo->setText(L"");
 		stSetName->setRelativePosition(rect<s32>(15, 60, 296, 83));
-		stText->setRelativePosition(rect<s32>(15, 60 + offset, 287, 324));
-		scrCardText->setRelativePosition(rect<s32>(267, 60 + offset, 287, 324));
+		stText->setRelativePosition(rect<s32>(15, 60 + offset, 287, 290));
+		scrCardText->setRelativePosition(rect<s32>(267, 60 + offset, 287, 290));
 	}
 	showingtext = dataManager.GetText(code);
 	const auto& tsize = stText->getRelativePosition();
