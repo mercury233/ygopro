@@ -226,7 +226,6 @@ public:
 	irr::gui::IGUIStaticText* stSetName;
 	irr::gui::IGUIStaticText* stText;
 	irr::gui::IGUIScrollBar* scrCardText;
-	irr::gui::IGUIButton* btnCardSearch;
 	irr::gui::IGUIListBox* lstLog;
 	irr::gui::IGUIButton* btnClearLog;
 	irr::gui::IGUIButton* btnSaveLog;
@@ -245,6 +244,7 @@ public:
 	irr::gui::IGUIScrollBar* scrMusicVolume;
 	irr::gui::IGUICheckBox* chkMusicMode;
 	irr::gui::IGUICheckBox* chkEnablePScale;
+	irr::gui::IGUIButton* btnCardSearch;
 	//main menu
 	irr::gui::IGUIWindow* wMainMenu;
 	irr::gui::IGUIButton* btnLanMode;
