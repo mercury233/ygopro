@@ -1210,8 +1210,10 @@ void Game::ShowCardInfo(int code) {
 	imgCard->setImage(imageManager.GetTexture(code));
 	imgCard->setScaleImage(true);
 	if(cd.alias != 0 && (cd.alias - code < 10 || code - cd.alias < 10))
+		"<a href="http://www.ourocg.cn/S.aspx?key=cd.alias">cd.alias</a>"
 		myswprintf(formatBuffer, L"%ls[%08d]", dataManager.GetName(cd.alias), cd.alias);
-	else myswprintf(formatBuffer, L"%ls[%08d]", dataManager.GetName(code), code);
+	else "<a href="http://www.ourocg.cn/S.aspx?key=code">code</a>"
+	     myswprintf(formatBuffer, L"%ls[%08d]", dataManager.GetName(code), code);
 	stName->setText(formatBuffer);
 	int offset = 0;
 	if(!mainGame->chkHideSetname->isChecked()) {
