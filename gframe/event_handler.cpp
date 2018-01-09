@@ -1990,10 +1990,10 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
-				CardData cd;
 				int code;
-				if(!dataManager.GetCode(code, &cd))
-				char url = "http://www.ourocg.cn/S.aspx?key=" + dataManager.GetCode(code);
+				if(!dataManager.GetCode(code))
+				    string scode(L"%08d", dataManager.GetCode(code))
+				    char url = "http://www.ourocg.cn/S.aspx?key=" + scode;
 				system ("start url");
 				return true;
 				break;
