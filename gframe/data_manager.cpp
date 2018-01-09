@@ -143,6 +143,7 @@ const wchar_t* DataManager::GetName(int code) {
 }
 const wchar_t* DataManager::GetCode(int code) {
 	auto csit = _strings.find(code);
+	CardData cd;
 	if(csit == _strings.end())
 		return unknown_string;
 	if(csit->cd.alias)
