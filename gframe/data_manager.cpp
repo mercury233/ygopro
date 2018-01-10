@@ -141,11 +141,6 @@ const wchar_t* DataManager::GetName(int code) {
 		return csit->second.name;
 	return unknown_string;
 }
-const wchar_t* DataManager::GetCode(int code) {
-	auto csit = _strings.find(code);
-	if(csit == _strings.end())
-		return unknown_string;
-}
 const wchar_t* DataManager::GetText(int code) {
 	auto csit = _strings.find(code);
 	if(csit == _strings.end())
