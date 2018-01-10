@@ -8,7 +8,6 @@
 #include <unordered_map>
 #include <vector>
 #include <list>
-#include "CGUISkinSystem/CGUISkinSystem.h"
 
 namespace ygo {
 
@@ -50,7 +49,6 @@ struct Config {
 	double music_volume;
 	int music_mode;
 	int chkEnablePScale;
-	int skin_index;
 };
 
 struct DuelInfo {
@@ -193,8 +191,6 @@ public:
 
 	bool is_building;
 	bool is_siding;
-	
-	CGUISkinSystem *skinSystem;
 
 	ClientField dField;
 	DeckBuilder deckBuilder;
