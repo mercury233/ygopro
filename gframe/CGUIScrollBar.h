@@ -29,52 +29,52 @@ namespace gui
 		virtual ~CGUIScrollBar();
 
 		//! called if an event happened.
-		virtual bool OnEvent(const SEvent& event) _IRR_OVERRIDE_;
+		virtual bool OnEvent(const SEvent& event) ;
 
 		//! draws the element and its children
-		virtual void draw() _IRR_OVERRIDE_;
+		virtual void draw() ;
 
-		virtual void OnPostRender(u32 timeMs) _IRR_OVERRIDE_;
+		virtual void OnPostRender(u32 timeMs) ;
 
 
 		//! gets the maximum value of the scrollbar.
-		virtual s32 getMax() const _IRR_OVERRIDE_;
+		virtual s32 getMax();
 
 		//! sets the maximum value of the scrollbar.
-		virtual void setMax(s32 max) _IRR_OVERRIDE_;
+		virtual void setMax(s32 max) ;
 
 		//! gets the minimum value of the scrollbar.
-		virtual s32 getMin() const _IRR_OVERRIDE_;
+		virtual s32 getMin();
 
 		//! sets the minimum value of the scrollbar.
-		virtual void setMin(s32 min) _IRR_OVERRIDE_;
+		virtual void setMin(s32 min) ;
 
 		//! gets the small step value
-		virtual s32 getSmallStep() const _IRR_OVERRIDE_;
+		virtual s32 getSmallStep();
 
 		//! sets the small step value
-		virtual void setSmallStep(s32 step) _IRR_OVERRIDE_;
+		virtual void setSmallStep(s32 step) ;
 
 		//! gets the large step value
-		virtual s32 getLargeStep() const _IRR_OVERRIDE_;
+		virtual s32 getLargeStep();
 
 		//! sets the large step value
-		virtual void setLargeStep(s32 step) _IRR_OVERRIDE_;
+		virtual void setLargeStep(s32 step) ;
 
 		//! gets the current position of the scrollbar
-		virtual s32 getPos() const _IRR_OVERRIDE_;
+		virtual s32 getPos();
 
 		//! sets the position of the scrollbar
-		virtual void setPos(s32 pos) _IRR_OVERRIDE_;
+		virtual void setPos(s32 pos) ;
 
 		//! updates the rectangle
-		virtual void updateAbsolutePosition() _IRR_OVERRIDE_;
+		virtual void updateAbsolutePosition() ;
 
 		//! Writes attributes of the element.
-		virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_;
+		virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options);
 
 		//! Reads attributes of the element
-		virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_;
+		virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options) ;
 
 	private:
 
