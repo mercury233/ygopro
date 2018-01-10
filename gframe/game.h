@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <vector>
 #include <list>
+#include "CGUISkinSystem/CGUISkinSystem.h"
 
 namespace ygo {
 
@@ -192,6 +193,8 @@ public:
 
 	bool is_building;
 	bool is_siding;
+	
+	CGUISkinSystem *skinSystem;
 
 	ClientField dField;
 	DeckBuilder deckBuilder;
