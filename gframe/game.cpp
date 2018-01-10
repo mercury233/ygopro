@@ -35,19 +35,6 @@ bool Game::Initialize() {
 	device = irr::createDeviceEx(params);
 	if(!device)
 		return false;
-	
-	// Apply skin
-	if (gameConf.skin_index >= 0)
-	{
-		skinSystem = new CGUISkinSystem("skin", device);
-		core::array<core::stringw> skins = skinSystem->listSkins();
-		if ((size_t)gameConf.skin_index < skins.size())
-		{
-			int index = skins.size() - gameConf.skin_index - 1; // reverse index
-			skinSystem->applySkin(skins[index].c_str());
-		}
-	}
-	
 	linePattern = 0x0f0f;
 	waitFrame = 0;
 	signalFrame = 0;
@@ -1065,7 +1052,6 @@ void Game::LoadConfig() {
 	gameConf.music_volume = 0.5;
 	gameConf.music_mode = 1;
 	gameConf.chkEnablePScale = 1;
-	gameConf.skin_index = 1;
 	while(fgets(linebuf, 256, fp)) {
 		sscanf(linebuf, "%s = %s", strbuf, valbuf);
 		if(!strcmp(strbuf, "antialias")) {
@@ -1142,8 +1128,6 @@ void Game::LoadConfig() {
 			gameConf.music_mode = atoi(valbuf);
 		} else if(!strcmp(strbuf, "enable_pendulum_scale")) {
 			gameConf.chkEnablePScale = atoi(valbuf);
-		} else if (!strcmp(strbuf, "skin_index")) {
-			gameConf.skin_index = atoi(valbuf);
 		} else {
 			// options allowing multiple words
 			sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
@@ -1208,7 +1192,6 @@ void Game::SaveConfig() {
 	fprintf(fp, "enable_sound = %d\n", ((mainGame->chkEnableSound->isChecked()) ? 1 : 0));
 	fprintf(fp, "enable_music = %d\n", ((mainGame->chkEnableMusic->isChecked()) ? 1 : 0));
 	fprintf(fp, "enable_pendulum_scale = %d\n", ((mainGame->chkEnablePScale->isChecked()) ? 1 : 0));
-	fprintf(fp, "skin_index = %d\n", gameConf.skin_index);
 	fprintf(fp, "#Volume of sound and music, between 0 and 100\n");
 	int vol = gameConf.sound_volume * 100;
 	if(vol < 0) vol = 0; else if(vol > 100) vol = 100;
