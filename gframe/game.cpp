@@ -1065,7 +1065,7 @@ void Game::LoadConfig() {
 	gameConf.music_volume = 0.5;
 	gameConf.music_mode = 1;
 	gameConf.chkEnablePScale = 1;
-	gameConf.skin_index = 1
+	gameConf.skin_index = 1;
 	while(fgets(linebuf, 256, fp)) {
 		sscanf(linebuf, "%s = %s", strbuf, valbuf);
 		if(!strcmp(strbuf, "antialias")) {
