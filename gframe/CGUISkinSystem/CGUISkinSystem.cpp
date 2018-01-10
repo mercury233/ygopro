@@ -1,6 +1,6 @@
 #include "CGUISkinSystem.h"
 
-CGUISkinSystem::CGUISkinSystem(core::string<char*> path,IrrlichtDevice *dev) {
+CGUISkinSystem::CGUISkinSystem(irr::core::string<char*> path,IrrlichtDevice *dev) {
 	device = dev;
 	skinsPath = path;
 	fs = dev->getFileSystem();	
