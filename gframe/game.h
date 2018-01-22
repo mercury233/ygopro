@@ -253,6 +253,11 @@ public:
 	irr::gui::IGUIButton* btnTestMode;
 	irr::gui::IGUIButton* btnDeckEdit;
 	irr::gui::IGUIButton* btnModeExit;
+	irr::gui::IGUIButton* btnProVersion;
+	//pro version
+	irr::gui::IGUIWindow* wVerWindow;
+	irr::gui::IGUIButton* btnVersionSave;
+	irr::gui::IGUIEditBox* ebVersion;
 	//lan
 	irr::gui::IGUIWindow* wLanWindow;
 	irr::gui::IGUIEditBox* ebNickName;
@@ -617,6 +622,8 @@ extern Game* mainGame;
 #define BUTTON_MARKERS_OK			381
 
 #define BUTTON_CARD_SEARCH			382
+#define BUTTON_PRO_VERSION			383
+#define BUTTON_VER_SAVE	               		384
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
