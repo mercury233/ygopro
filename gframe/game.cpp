@@ -15,7 +15,7 @@
 #include <dirent.h>
 #endif
 
-unsigned char PRO_VERSION = 0x1342;
+unsigned short PRO_VERSION = 0x1342;
 
 namespace ygo {
 
@@ -1029,7 +1029,7 @@ void Game::LoadConfig() {
 	gameConf.antialias = 0;
 	gameConf.serverport = 7911;
 	gameConf.textfontsize = 12;
-	gameConf.game_version[100] = 4930;
+	gameConf.game_version = 4930;
 	gameConf.nickname[0] = 0;
 	gameConf.gamename[0] = 0;
 	gameConf.lastdeck[0] = 0;
