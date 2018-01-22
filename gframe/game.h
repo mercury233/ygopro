@@ -254,10 +254,6 @@ public:
 	irr::gui::IGUIButton* btnDeckEdit;
 	irr::gui::IGUIButton* btnModeExit;
 	irr::gui::IGUIButton* btnProVersion;
-	//pro version
-	irr::gui::IGUIWindow* wVerWindow;
-	irr::gui::IGUIButton* btnVersionSave;
-	irr::gui::IGUIEditBox* ebVersion;
 	//lan
 	irr::gui::IGUIWindow* wLanWindow;
 	irr::gui::IGUIEditBox* ebNickName;
