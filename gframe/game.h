@@ -618,8 +618,6 @@ extern Game* mainGame;
 #define BUTTON_MARKERS_OK			381
 
 #define BUTTON_CARD_SEARCH			382
-#define BUTTON_PRO_VERSION			383
-#define BUTTON_VER_SAVE	               		384
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
