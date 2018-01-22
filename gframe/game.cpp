@@ -102,7 +102,7 @@ bool Game::Initialize() {
 	wVerWindow->getCloseButton()->setVisible(false);
 	wVerWindow->setVisible(false);
 	env->addStaticText(dataManager.GetSysString(1286), rect<s32>(10, 30, 220, 50), false, false, wVerWindow);
-	ebVersion = env->addEditBox(L"", rect<s32>(360, 355, 420, 380), gameConf.game_version, wVerWindow);
+	ebVersion = env->addEditBox(L"", rect<s32>(360, 355, 420, 380), PRO_VERSION, wVerWindow);
 	ebVersion->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	btnVersionSave = env->addButton(rect<s32>(460, 385, 570, 410), wVerWindow, BUTTON_VER_SAVE, dataManager.GetSysString(1287));
 	//lan mode
