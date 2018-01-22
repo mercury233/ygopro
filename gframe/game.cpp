@@ -92,17 +92,25 @@ bool Game::Initialize() {
 	btnLanMode = env->addButton(rect<s32>(10, 30, 270, 60), wMainMenu, BUTTON_LAN_MODE, dataManager.GetSysString(1200));
 	btnSingleMode = env->addButton(rect<s32>(10, 65, 270, 95), wMainMenu, BUTTON_SINGLE_MODE, dataManager.GetSysString(1201));
 	btnReplayMode = env->addButton(rect<s32>(10, 100, 270, 130), wMainMenu, BUTTON_REPLAY_MODE, dataManager.GetSysString(1202));
-//	btnTestMode = env->addButton(rect<s32>(10, 135, 270, 165), wMainMenu, BUTTON_TEST_MODE, dataManager.GetSysString(1203));
+    //  btnTestMode = env->addButton(rect<s32>(10, 135, 270, 165), wMainMenu, BUTTON_TEST_MODE, dataManager.GetSysString(1203));
 	btnDeckEdit = env->addButton(rect<s32>(10, 135, 270, 165), wMainMenu, BUTTON_DECK_EDIT, dataManager.GetSysString(1204));
 	btnModeExit = env->addButton(rect<s32>(10, 170, 270, 200), wMainMenu, BUTTON_MODE_EXIT, dataManager.GetSysString(1210));
+	btnProVersion = env->addButton(rect<s32>(10, 205, 270, 235), wMainMenu, BUTTON_PRO_VERSION, dataManager.GetSysString(1299));
 
+        //pro version
+	wVerWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1285));
+	wVerLanWindow->getCloseButton()->setVisible(false);
+	wVerWindow->setVisible(false);
+	env->addStaticText(dataManager.GetSysString(1286), rect<s32>(10, 30, 220, 50), false, false, wVerWindow);
+	ebVersion = env->addEditBox(gameConf.game_version, rect<s32>(360, 355, 420, 380), true, wVerWindow);
+	btnVersionSave = env->addButton(rect<s32>(460, 385, 570, 410), wVerWindow, BUTTON_VER_SAVE, dataManager.GetSysString(1287));
 	//lan mode
 	wLanWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1200));
 	wLanWindow->getCloseButton()->setVisible(false);
 	wLanWindow->setVisible(false);
 	env->addStaticText(dataManager.GetSysString(1220), rect<s32>(10, 30, 220, 50), false, false, wLanWindow);
 	ebNickName = env->addEditBox(gameConf.nickname, rect<s32>(110, 25, 450, 50), true, wLanWindow);
-	ebNickName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
+	ebNickName->setTextAlignment(irr::gui::EGUIA_UPPERL EFT, irr::gui::EGUIA_CENTER);
 	lstHostList = env->addListBox(rect<s32>(10, 60, 570, 320), wLanWindow, LISTBOX_LAN_HOST, true);
 	lstHostList->setItemHeight(18);
 	btnLanRefresh = env->addButton(rect<s32>(240, 325, 340, 350), wLanWindow, BUTTON_LAN_REFRESH, dataManager.GetSysString(1217));
