@@ -42,6 +42,20 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->device->closeDevice();
 				break;
 			}
+			case BUTTON_PRO_VERSION: {
+				mainGame->btnCreateHost->setEnabled(true);
+				mainGame->btnVersionSave->setEnabled(true);
+				mainGame->HideElement(mainGame->wMainMenu);
+				mainGame->ShowElement(mainGame->wVerWindow);
+				break;
+			}
+			case BUTTON_VER_SAVE: {
+				mainGame->HideElement(mainGame->wVerWindow);
+				mainGame->ShowElement(mainGame->wMainMenu);
+				if(exit_on_return)
+					mainGame->device->closeDevice();
+				break;
+			}
 			case BUTTON_LAN_MODE: {
 				mainGame->btnCreateHost->setEnabled(true);
 				mainGame->btnJoinHost->setEnabled(true);
