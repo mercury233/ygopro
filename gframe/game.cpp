@@ -99,10 +99,11 @@ bool Game::Initialize() {
 
         //pro version
 	wVerWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1285));
-	wVerLanWindow->getCloseButton()->setVisible(false);
+	wVerWindow->getCloseButton()->setVisible(false);
 	wVerWindow->setVisible(false);
 	env->addStaticText(dataManager.GetSysString(1286), rect<s32>(10, 30, 220, 50), false, false, wVerWindow);
 	ebVersion = env->addEditBox(gameConf.game_version, rect<s32>(360, 355, 420, 380), true, wVerWindow);
+	ebVersion->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	btnVersionSave = env->addButton(rect<s32>(460, 385, 570, 410), wVerWindow, BUTTON_VER_SAVE, dataManager.GetSysString(1287));
 	//lan mode
 	wLanWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1200));
@@ -110,7 +111,7 @@ bool Game::Initialize() {
 	wLanWindow->setVisible(false);
 	env->addStaticText(dataManager.GetSysString(1220), rect<s32>(10, 30, 220, 50), false, false, wLanWindow);
 	ebNickName = env->addEditBox(gameConf.nickname, rect<s32>(110, 25, 450, 50), true, wLanWindow);
-	ebNickName->setTextAlignment(irr::gui::EGUIA_UPPERL EFT, irr::gui::EGUIA_CENTER);
+	ebNickName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
 	lstHostList = env->addListBox(rect<s32>(10, 60, 570, 320), wLanWindow, LISTBOX_LAN_HOST, true);
 	lstHostList->setItemHeight(18);
 	btnLanRefresh = env->addButton(rect<s32>(240, 325, 340, 350), wLanWindow, BUTTON_LAN_REFRESH, dataManager.GetSysString(1217));
