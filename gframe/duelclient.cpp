@@ -63,6 +63,14 @@ bool DuelClient::StartClient(unsigned int ip, unsigned short port, bool create_g
 	Thread::NewThread(ClientThread, 0);
 	return true;
 }
+void SendClickEventForRefreshRoomList()
+{
+	irr::SEvent pressEvent;
+	pressEvent.EventType = irr::EEVENT_TYPE::EET_GUI_EVENT;
+	pressEvent.GUIEvent.Caller = mainGame->btnLanRefresh;
+	pressEvent.GUIEvent.EventType = irr::gui::EGUI_EVENT_TYPE::EGET_BUTTON_CLICKED;
+	mainGame->btnLanRefresh->OnEvent(pressEvent);
+}
 void DuelClient::ConnectTimeout(evutil_socket_t fd, short events, void* arg) {
 	if(connect_state == 0x7)
 		return;
@@ -77,6 +85,7 @@ void DuelClient::ConnectTimeout(evutil_socket_t fd, short events, void* arg) {
 			mainGame->ShowElement(mainGame->wSinglePlay);
 		else if(!bot_mode && !mainGame->wLanWindow->isVisible())
 			mainGame->ShowElement(mainGame->wLanWindow);
+		        SendClickEventForRefreshRoomList();
 		mainGame->env->addMessageBox(L"", dataManager.GetSysString(1400));
 		mainGame->gMutex.Unlock();
 	}
@@ -112,6 +121,8 @@ void DuelClient::ClientEvent(bufferevent *bev, short events, void *ctx) {
 		bool create_game = (size_t)ctx != 0;
 		CTOS_PlayerInfo cspi;
 		BufferIO::CopyWStr(mainGame->ebNickName->getText(), cspi.name, 20);
+		auto t = User::Instance()->GetToken();
+		memcpy_s(cspi.token,sizeof(cspi.token), std::get<1>(t), std::get<0>(t));
 		SendPacketToServer(CTOS_PLAYER_INFO, cspi);
 		if(create_game) {
 			CTOS_CreateGame cscg;
@@ -182,6 +193,7 @@ void DuelClient::ClientEvent(bufferevent *bev, short events, void *ctx) {
 						mainGame->ShowElement(mainGame->wSinglePlay);
 					else
 						mainGame->ShowElement(mainGame->wLanWindow);
+					        SendClickEventForRefreshRoomList();
 					mainGame->wChat->setVisible(false);
 					if(events & BEV_EVENT_EOF)
 						mainGame->env->addMessageBox(L"", dataManager.GetSysString(1401));
@@ -208,6 +220,7 @@ void DuelClient::ClientEvent(bufferevent *bev, short events, void *ctx) {
 						mainGame->ShowElement(mainGame->wSinglePlay);
 					else
 						mainGame->ShowElement(mainGame->wLanWindow);
+					        SendClickEventForRefreshRoomList();
 					mainGame->gMutex.Unlock();
 				}
 			}
@@ -652,6 +665,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			mainGame->ShowElement(mainGame->wSinglePlay);
 		else
 			mainGame->ShowElement(mainGame->wLanWindow);
+		        SendClickEventForRefreshRoomList();
 		mainGame->gMutex.Unlock();
 		event_base_loopbreak(client_base);
 		if(exit_on_return)
@@ -883,6 +897,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			mainGame->ShowElement(mainGame->wSinglePlay);
 		else
 			mainGame->ShowElement(mainGame->wLanWindow);
+		        SendClickEventForRefreshRoomList();
 		mainGame->gMutex.Unlock();
 		event_base_loopbreak(client_base);
 		if(exit_on_return)
