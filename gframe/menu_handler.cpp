@@ -49,6 +49,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->btnJoinCancel->setEnabled(true);
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wLanWindow);
+				SendClickEventForRefreshRoomList();
 				break;
 			}
 			case BUTTON_JOIN_HOST: {
@@ -100,6 +101,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_LAN_REFRESH: {
 				DuelClient::BeginRefreshHost();
+				SendClickEventForRefreshRoomList();
 				break;
 			}
 			case BUTTON_CREATE_HOST: {
@@ -120,6 +122,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				}
 				mainGame->btnHostConfirm->setEnabled(false);
 				mainGame->btnHostCancel->setEnabled(false);
+				SendClickEventForRefreshRoomList();
 				break;
 			}
 			case BUTTON_HOST_CANCEL: {
@@ -182,6 +185,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					mainGame->ShowElement(mainGame->wSinglePlay);
 				else
 					mainGame->ShowElement(mainGame->wLanWindow);
+				        SendClickEventForRefreshRoomList();
 				mainGame->wChat->setVisible(false);
 				if(exit_on_return)
 					mainGame->device->closeDevice();
