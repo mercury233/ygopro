@@ -121,8 +121,6 @@ void DuelClient::ClientEvent(bufferevent *bev, short events, void *ctx) {
 		bool create_game = (size_t)ctx != 0;
 		CTOS_PlayerInfo cspi;
 		BufferIO::CopyWStr(mainGame->ebNickName->getText(), cspi.name, 20);
-		auto t = User::Instance()->GetToken();
-		memcpy_s(cspi.token,sizeof(cspi.token), std::get<1>(t), std::get<0>(t));
 		SendPacketToServer(CTOS_PLAYER_INFO, cspi);
 		if(create_game) {
 			CTOS_CreateGame cscg;
