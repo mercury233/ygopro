@@ -11,7 +11,6 @@
 
 namespace ygo {
 
-void SendClickEventForRefreshRoomList();
 void UpdateDeck() {
 	BufferIO::CopyWStr(mainGame->cbDeckSelect->getItem(mainGame->cbDeckSelect->getSelected()),
 		mainGame->gameConf.lastdeck, 64);
@@ -84,7 +83,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				unsigned int remote_port = _wtoi(mainGame->ebJoinPort->getText());
 				BufferIO::CopyWStr(pstr, mainGame->gameConf.lasthost, 100);
 				BufferIO::CopyWStr(mainGame->ebJoinPort->getText(), mainGame->gameConf.lastport, 20);
-				SendClickEventForRefreshRoomList();
 				if(DuelClient::StartClient(remote_addr, remote_port, false)) {
 					mainGame->btnCreateHost->setEnabled(false);
 					mainGame->btnJoinHost->setEnabled(false);
@@ -101,7 +99,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_LAN_REFRESH: {
 				DuelClient::BeginRefreshHost();
-				SendClickEventForRefreshRoomList();
 				break;
 			}
 			case BUTTON_CREATE_HOST: {
@@ -122,7 +119,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				}
 				mainGame->btnHostConfirm->setEnabled(false);
 				mainGame->btnHostCancel->setEnabled(false);
-				SendClickEventForRefreshRoomList();
 				break;
 			}
 			case BUTTON_HOST_CANCEL: {
