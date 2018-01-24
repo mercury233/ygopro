@@ -11,6 +11,7 @@
 
 namespace ygo {
 
+void SendClickEventForRefreshRoomList();
 void UpdateDeck() {
 	BufferIO::CopyWStr(mainGame->cbDeckSelect->getItem(mainGame->cbDeckSelect->getSelected()),
 		mainGame->gameConf.lastdeck, 64);
