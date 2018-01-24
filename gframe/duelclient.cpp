@@ -652,7 +652,6 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			mainGame->ShowElement(mainGame->wSinglePlay);
 		else
 			mainGame->ShowElement(mainGame->wLanWindow);
-		        SendClickEventForRefreshRoomList();
 		mainGame->gMutex.Unlock();
 		event_base_loopbreak(client_base);
 		if(exit_on_return)
@@ -884,7 +883,6 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			mainGame->ShowElement(mainGame->wSinglePlay);
 		else
 			mainGame->ShowElement(mainGame->wLanWindow);
-		        SendClickEventForRefreshRoomList();
 		mainGame->gMutex.Unlock();
 		event_base_loopbreak(client_base);
 		if(exit_on_return)
