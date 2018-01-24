@@ -79,17 +79,6 @@ int main(int argc, char* argv[]) {
 			GetParameter(param, &argv[i][2]);
 			ygo::dataManager.LoadDB(param);
 		}
-	        if(!strcmp(argv[i], "-j")) {
-				const char* tokenStr = getenv("TOKEN");
-				uint32 gameid = boost::lexical_cast<std::uint64_t>(getenv("GAMEID"));
-				byte token[16];
-				hex2bin(tokenStr, (char*)token);
-				User::Instance()->SetToken(token);
-				ygo::mainGame->ebJoinIP->setID(gameid);
-				event.GUIEvent.Caller = ygo::mainGame->btnJoinHost;
-				/go::mainGame->device->setEventReceiver(&ygo::mainGame->menuHandler);
-				ygo::mainGame->device->postEventFromUser(event);
-			}
 		if(!strcmp(argv[i], "-e")) { // extra database
 			++i;
 			char param[128];
