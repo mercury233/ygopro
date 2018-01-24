@@ -181,7 +181,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					mainGame->ShowElement(mainGame->wSinglePlay);
 				else
 					mainGame->ShowElement(mainGame->wLanWindow);
-				        SendClickEventForRefreshRoomList();
 				mainGame->wChat->setVisible(false);
 				if(exit_on_return)
 					mainGame->device->closeDevice();
