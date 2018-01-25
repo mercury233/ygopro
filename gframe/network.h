@@ -95,6 +95,71 @@ struct STOC_HS_PlayerChange {
 struct STOC_HS_WatchChange {
 	unsigned short watch_count;
 };
+#pragma pack(pop)
+
+struct HostPacket_V2 {
+	unsigned short identifier;
+	unsigned short version;
+	unsigned short port;
+	unsigned int ipaddr;
+	int hostID;
+	PlatformString name;
+	HostInfo host;
+
+	int FromBytes(char* buffer)
+	{
+		char* start = buffer;
+
+		identifier = BufferIO::ReadUInt16(buffer);
+		version = BufferIO::ReadUInt16(buffer);
+		port = BufferIO::ReadUInt16(buffer);
+		ipaddr = BufferIO::ReadInt32(buffer);
+		hostID = BufferIO::ReadInt32(buffer);
+		byte strlen = BufferIO::ReadUInt8(buffer);
+		char16_t* str = new char16_t[strlen + 1];
+		memset(str, 0, sizeof(char16_t) * (strlen + 1));
+		memcpy(str, buffer, sizeof(char16_t) * strlen);
+		name = PlatformString::FromUTF16(str);
+		delete str;
+		buffer += sizeof(char16_t) * strlen;
+		host = *(HostInfo*)buffer;
+		buffer += sizeof(HostInfo);
+		return buffer - start;
+	}
+};
+
+struct HostInfo_AlignDefault {
+	unsigned int lflist;
+	unsigned char rule;
+	unsigned char mode;
+	bool enable_priority;
+	bool no_check_deck;
+	bool no_shuffle_deck;
+	unsigned int start_lp;
+	unsigned char start_hand;
+	unsigned char draw_count;
+	unsigned short time_limit;
+};
+
+struct CTOS_JoinGame_AlignDefault {
+	unsigned short version;
+	unsigned int gameid;
+	unsigned short pass[20];
+};
+
+struct STOC_ErrorMsg_AlignDefault {
+	unsigned char msg;
+	unsigned int code;
+};
+
+struct STOC_JoinGame_AlignDefault {
+	HostInfo_AlignDefault info;
+};
+
+struct STOC_TimeLimit_AlignDefault {
+	unsigned char player;
+	unsigned short left_time;
+};
 
 class DuelMode;
 
