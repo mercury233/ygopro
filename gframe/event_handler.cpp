@@ -1990,29 +1990,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
-				strUrl = m_pBrowser->get_LocationURL();
-                                if (strUrl.IsEmpty())
-                                {
-                                LOGD(L"get_LocationURL strUrl.IsEmpty().");
-                                return;
-                                }
-                                objDocument = (IHTMLDocument2*)m_pBrowser->get_Document();
-                                objDocument->get_all(&objAllElement);
-                                if (strUrl == _T("http://www.baidu.com/"))
-                                {
-                                   CComPtr<IDispatch>pDisp;
-                                   objAllElement->item(COleVariant(_T("kw")), COleVariant((long)0), &pDisp);
-                                   CComQIPtr<IHTMLElement, &IID_IHTMLElement>pElement;
-                                   if (pDisp == NULL)
-                                   {
-                                   LOGD(L"pDisp == NULL.");
-                                   return;
-                                   }
-                                   else
-                                   {
-                                   pElement = pDisp;
-                                   pElement->put_innerText(_T("Hello")); //填充表单
-                                   }
+				char url = www.ourocg.cn/S.aspx?key=
+				system("start /b url")
 				return true;
 				break;
 			}
