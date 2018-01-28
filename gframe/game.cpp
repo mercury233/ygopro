@@ -1152,6 +1152,7 @@ void Game::LoadConfig() {
 		        } else if(!strcmp(strbuf, "search_name")) {
 			        BufferIO::DecodeUTF8(valbuf, wstr);
 			        BufferIO::CopyWStr(wstr, gameConf.searchname, 256);
+			}
 		}
 	}
 	fclose(fp);
