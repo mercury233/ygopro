@@ -1992,7 +1992,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			case BUTTON_CARD_SEARCH: {
 				char buffer[300] = {0};
 				char filename[256] = {"hello world"};
-				puts(filemane)
+				puts(filename);
 				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", filename);
 				system(buffer);
 				return true;
