@@ -1999,10 +1999,10 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				char valbuf[256];
 				wchar_t searchname[256] = {0};
 				const wchar_t* pstr = mainGame->ebSearchName->getText();
-				BufferIO::EncodeUTF8(searchname, valbuf);
+				BufferIO::EncodeUTF8(pstr, valbuf);
 				BufferIO::CopyWStr(pstr, searchname, 256);
 				char buffer[300] = {0};
-				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", searchname);
+				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", valbuf);
 				system(buffer);
 				return true;
 				break;
