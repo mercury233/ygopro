@@ -245,7 +245,7 @@ public:
 	irr::gui::IGUIScrollBar* scrMusicVolume;
 	irr::gui::IGUICheckBox* chkMusicMode;
 	irr::gui::IGUICheckBox* chkEnablePScale;
-	irr::gui::IGUIWindow* wSearchMenu;
+	irr::gui::IGUIWindow* wSearchWindow;
 	irr::gui::IGUIButton* btnCardSearch;
 	irr::gui::IGUIButton* btnSearchAgree;
 	irr::gui::IGUIButton* btnSearchCancel;
