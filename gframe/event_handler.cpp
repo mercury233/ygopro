@@ -2000,7 +2000,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				const wchar_t* pstr = mainGame->ebSearchName->getText();
 				BufferIO::CopyWStr(pstr, searchname, 256);
 				char buffer[300] = {0};
-				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", searchname);
+				char* name = urlencode('searchname');
+				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", name);
 				system(buffer);
 				return true;
 				break;
