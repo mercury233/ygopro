@@ -1997,7 +1997,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_SEARCH_AGREE: {
 				char searchname[256] = {0};
-				const wchar_t* pstr = mainGame->ebSearchname->getText();
+				const wchar_t* pstr = mainGame->ebSearchName->getText();
 				BufferIO::CopyWStr(pstr, searchname, 256);
 				char buffer[300] = {0};
 				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", pstr);
