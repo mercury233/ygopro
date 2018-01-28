@@ -245,6 +245,9 @@ public:
 	irr::gui::IGUICheckBox* chkMusicMode;
 	irr::gui::IGUICheckBox* chkEnablePScale;
 	irr::gui::IGUIButton* btnCardSearch;
+	irr::gui::IGUIButton* btnSearchAgree;
+	irr::gui::IGUIButton* btnSearchCancel;
+	irr::gui::IGUIEditBox* ebSearchName;
 	//main menu
 	irr::gui::IGUIWindow* wMainMenu;
 	irr::gui::IGUIButton* btnLanMode;
@@ -253,7 +256,6 @@ public:
 	irr::gui::IGUIButton* btnTestMode;
 	irr::gui::IGUIButton* btnDeckEdit;
 	irr::gui::IGUIButton* btnModeExit;
-	irr::gui::IGUIButton* btnProVersion;
 	//lan
 	irr::gui::IGUIWindow* wLanWindow;
 	irr::gui::IGUIEditBox* ebNickName;
@@ -618,6 +620,8 @@ extern Game* mainGame;
 #define BUTTON_MARKERS_OK			381
 
 #define BUTTON_CARD_SEARCH			382
+#define BUTTON_SEARCH_AGREE			383
+#define BUTTON_SEARCH_CANCEL			384
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
