@@ -1990,8 +1990,10 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
-				const char url = "www.ourocg.cn/S.aspx?key=";
-				system("start /b url");
+				char buffer[300] = {0};
+				char filename[256] = {"hello world"}
+				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", filename)
+				system(buffer);
 				return true;
 				break;
 			}
