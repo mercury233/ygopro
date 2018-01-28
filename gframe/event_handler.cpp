@@ -1990,12 +1990,22 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
+				mainGame->btnSearchAgree->setEnabled(true);
+				mainGame->btnSearchCancel->setEnabled(true);
+				mainGame->ShowElement(mainGame->wSearchWindow);
+			}
+			case BUTTON_SEARCH_AGREE: {
+				char searchname[256];
+				const wchar_t* pstr = mainGame->ebSearchName->getText();
+				BufferIO::CopyWStr(pstr, searchname, 256);
 				char buffer[300] = {0};
-				char *filename = {"hello world"};
-				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s[^/n]", filename);
+				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", pstr);
 				system(buffer);
 				return true;
 				break;
+			}
+			case BUTTON_SEARCH_CANCEL: {
+				mainGame->HideElement(mainGame->wSearchWindow);
 			}
 			}
 			break;
