@@ -107,7 +107,7 @@ public:
 		return wp - wstr;
 	}
 	// URLEncode
-	static int URLEncode(const wchar_t* str, char* result, const int resultSize) {  
+	static int URLEncode(const wchar_t* str, char result, const int resultSize) {  
                int i;  
                int j = 0;//for result index  
                char ch;  
