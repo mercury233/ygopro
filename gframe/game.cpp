@@ -1038,7 +1038,6 @@ void Game::LoadConfig() {
 	gameConf.lasthost[0] = 0;
 	gameConf.lastport[0] = 0;
 	gameConf.roompass[0] = 0;
-	gameConf.searchname[0] = 0;
 	//settings
 	gameConf.chkMAutoPos = 0;
 	gameConf.chkSTAutoPos = 0;
@@ -1150,9 +1149,6 @@ void Game::LoadConfig() {
 			} else if (!strcmp(strbuf, "lastdeck")) {
 				BufferIO::DecodeUTF8(valbuf, wstr);
 				BufferIO::CopyWStr(wstr, gameConf.lastdeck, 64);
-		        } else if(!strcmp(strbuf, "search_name")) {
-			        BufferIO::DecodeUTF8(valbuf, wstr);
-			        BufferIO::CopyWStr(wstr, gameConf.searchname, 256);
 			}
 		}
 	}
