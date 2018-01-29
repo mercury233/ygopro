@@ -107,14 +107,14 @@ public:
 		return wp - wstr;
 	}
 	// URLEncode
-	static int URLEncode(const wchar_t* str, const int strSize, char* result, const int resultSize) {  
+	static int URLEncode(const wchar_t* str, char* result, const int resultSize) {  
                int i;  
                int j = 0;//for result index  
                char ch;  
-               if ((str==NULL) || (result==NULL) || (strSize<=0) || (resultSize<=0)) {  
+               if ((str==NULL) || (result==NULL) || (resultSize<=0)) {  
                return 0;  
                }  
-               for ( i=0; (i<strSize)&&(j<resultSize); ++i) {  
+               for ( i=0; j<resultSize; ++i) {  
                ch = str[i];  
                   if (((ch>='A') && (ch<'Z')) ||  
                   ((ch>='a') && (ch<'z')) ||  
