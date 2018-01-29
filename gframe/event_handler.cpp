@@ -1051,12 +1051,20 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 				UpdateDeclarableCode(false);
 				break;
 			}
+			case EDITBOX_SEARCHCARD: {
+				UpdateDeclarableCode(false);
+				break;
+			}
 			}
 			break;
 		}
 		case irr::gui::EGET_EDITBOX_ENTER: {
 			switch(id) {
 			case EDITBOX_ANCARD: {
+				UpdateDeclarableCode(true);
+				break;
+			}
+			case EDITBOX_SEARCHCARD: {
 				UpdateDeclarableCode(true);
 				break;
 			}
@@ -1996,13 +2004,13 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SEARCH_AGREE: {
-				char searchname[256]; 
-				const wchar_t* pstr = mainGame->ebSearchName->getText();
-				BufferIO::CopyWStr(pstr, searchname, 256);
+				int sel = mainGame->lstANCard->getSelected();
+				if(sel == -1)
+					break;
 				char buffer[300] = {0};
-				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", searchname);
+				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", sel);
 				system(buffer);
-				return true;
+				mainGame->HideElement(mainGame->wSearchWindow, true);
 				break;
 			}
 			case BUTTON_SEARCH_CANCEL: {
