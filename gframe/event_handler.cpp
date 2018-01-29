@@ -1996,13 +1996,11 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SEARCH_AGREE: {
-				char valbuf[256];
 				wchar_t searchname[256] = {0}; 
 				const wchar_t* pstr = mainGame->ebSearchName->getText();
-				BufferIO::URLEncode(pstr, 100, valbuf, 100);
 				BufferIO::CopyWStr(pstr, searchname, 256);
 				char buffer[300] = {0};
-				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", valbuf);
+				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", searchname);
 				system(buffer);
 				return true;
 				break;
