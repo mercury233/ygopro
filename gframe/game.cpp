@@ -311,8 +311,9 @@ bool Game::Initialize() {
 	wSearchWindow->getCloseButton()->setVisible(false);
 	wSearchWindow->setVisible(false);
 	env->addStaticText(dataManager.GetSysString(1220), rect<s32>(10, 30, 220, 50), false, false, wSearchWindow);
-	ebSearchName = env->addEditBox(gameConf.searchname, rect<s32>(110, 25, 450, 50), true, wSearchWindow);
+	ebSearchName = env->addEditBox(gameConf.searchname, rect<s32>(110, 25, 450, 50), true, wSearchWindow, EDITBOX_SEARCHCARD);
 	ebSearchName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
+	lstSearchCard = env->addListBox(rect<s32>(20, 50, 190, 160), wSearchWindow, LISTBOX_SEARCHCARD, true);
 	btnSearchAgree = env->addButton(rect<s32>(170, 270, 280, 305), wSearchWindow, BUTTON_SEARCH_AGREE, dataManager.GetSysString(1283));
 	btnSearchCancel = env->addButton(rect<s32>(460, 385, 570, 410), wSearchWindow, BUTTON_SEARCH_CANCEL, dataManager.GetSysString(1284));
 	//
