@@ -1996,7 +1996,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SEARCH_AGREE: {
-				char valbuf[256];
+				char* valbuf[256];
 				wchar_t searchname[256] = {0}; 
 				const wchar_t* pstr = mainGame->ebSearchName->getText();
 				BufferIO::URLEncode(pstr, valbuf, 256);
