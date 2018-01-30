@@ -250,7 +250,6 @@ public:
 	irr::gui::IGUIButton* btnSearchAgree;
 	irr::gui::IGUIButton* btnSearchCancel;
 	irr::gui::IGUIEditBox* ebSearchName;
-	irr::gui::IGUIListBox* lstSearchCard;
 	//main menu
 	irr::gui::IGUIWindow* wMainMenu;
 	irr::gui::IGUIButton* btnLanMode;
@@ -625,8 +624,6 @@ extern Game* mainGame;
 #define BUTTON_CARD_SEARCH			382
 #define BUTTON_SEARCH_AGREE			383
 #define BUTTON_SEARCH_CANCEL			384
-#define LISTBOX_SEARCHCARD			385
-#define EDITBOX_SEARCHCARD			386
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
