@@ -110,7 +110,7 @@ public:
 	static unsigned char toHex(unsigned char c) {
              return c > 9? 'A'-10+c : '0'+c;
              }
-	static void EncodeUrl(const char str, char result) {
+	static void EncodeUrl(const wchar_t str, char result) {
              int len = str.length();
              for(int i=0; i<len; i++) {
                 if(isalnum((unsigned char)str[i]) ||
