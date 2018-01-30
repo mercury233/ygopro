@@ -1432,9 +1432,8 @@ void ClientField::UpdateDeclarableCode(bool enter) {
 		UpdateDeclarableCodeOpcode(enter);
 }
 }
-
 void ClientField::UpdateSearchCodeType(bool enter) {
-	const wchar_t* pname = mainGame->ebSearchCard->getText();
+	const wchar_t* pname = mainGame->ebSearchName->getText();
 	int trycode = BufferIO::GetVal(pname);
 	CardString cstr;
 	CardData cd;
@@ -1466,7 +1465,7 @@ void ClientField::UpdateSearchCodeType(bool enter) {
 	}
 }
 void ClientField::UpdateSearchCodeOpcode(bool enter) {
-	const wchar_t* pname = mainGame->ebSearchCard->getText();
+	const wchar_t* pname = mainGame->ebSearchName->getText();
 	int trycode = BufferIO::GetVal(pname);
 	CardString cstr;
 	CardData cd;
@@ -1490,8 +1489,8 @@ void ClientField::UpdateSearchCodeOpcode(bool enter) {
 					mainGame->lstSearchCard->insertItem(0, cit->second.name, -1);
 					searchcard.insert(searchcard.begin(), cit->first);
 				} else {
-					mainGame->lstSearchCard->addItem(cit->second.name);
-					searchcard.push_back(cit->first);
+					searchcard.push_bd->addItem(cit->second.name);
+					mainGame->lstSearchCarack(cit->first);
 				}
 			}
 		}
