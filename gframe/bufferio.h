@@ -106,25 +106,6 @@ public:
 		*wp = 0;
 		return wp - wstr;
 	}
-	//UrlEncode
-	static unsigned char toHex(unsigned char c) {
-             return c > 9? 'A'-10+c : '0'+c;
-             }
-	static void EncodeUrl(const wchar_t str, char result) {
-             int len = str.length();
-             for(int i=0; i<len; i++) {
-                if(isalnum((unsigned char)str[i]) ||
-                (str[i]=='.')||(str[i]=='-')||(str[i]=='*')||(str[i]=='_')) {
-                 result += str[i];
-                } else if(str[i] == ' ') {
-                result += '+';
-                } else {
-                result += '%';
-                result += toHex((unsigned char)str[i] >> 4);
-                result += toHex((unsigned char)str[i] & 0xF);
-                }
-            }
-	}
 	static int GetVal(const wchar_t* pstr) {
 		int ret = 0;
 		while(*pstr >= L'0' && *pstr <= L'9') {
