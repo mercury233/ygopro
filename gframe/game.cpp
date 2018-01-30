@@ -1148,7 +1148,7 @@ void Game::LoadConfig() {
 				BufferIO::CopyWStr(wstr, gameConf.gamename, 20);
 			} else if (!strcmp(strbuf, "searchname")) {
 				BufferIO::DecodeUTF8(valbuf, wstr);
-				BufferIO::CopyWStr(wstr, gameConf.searchname, 20);
+				BufferIO::CopyWStr(wstr, gameConf.searchname, 256);
 			} else if (!strcmp(strbuf, "lastdeck")) {
 				BufferIO::DecodeUTF8(valbuf, wstr);
 				BufferIO::CopyWStr(wstr, gameConf.lastdeck, 64);
