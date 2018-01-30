@@ -124,6 +124,7 @@ public:
                 result += toHex((unsigned char)str[i] & 0xF);
                 }
             }
+	}
 	static int GetVal(const wchar_t* pstr) {
 		int ret = 0;
 		while(*pstr >= L'0' && *pstr <= L'9') {
