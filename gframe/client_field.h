@@ -113,7 +113,6 @@ public:
 	void UpdateDeclarableCodeType(bool enter);
 	void UpdateDeclarableCodeOpcode(bool enter);
 	void UpdateDeclarableCode(bool enter);
-	
 	void UpdateSearchCodeType(bool enter);
 	void UpdateSearchCodeOpcode(bool enter);
 	void UpdateSearchCode(bool enter);
