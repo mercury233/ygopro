@@ -60,6 +60,7 @@ public:
 	bool select_ready;
 	int announce_count;
 	int declarable_type;
+	int Search_type;
 	int select_counter_count;
 	int select_counter_type;
 	std::vector<ClientCard*> selectable_cards;
