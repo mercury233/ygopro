@@ -1432,6 +1432,7 @@ void ClientField::UpdateDeclarableCode(bool enter) {
 		UpdateDeclarableCodeOpcode(enter);
 }
 }
+
 void ClientField::UpdateSearchCodeType(bool enter) {
 	const wchar_t* pname = mainGame->ebSearchCard->getText();
 	int trycode = BufferIO::GetVal(pname);
@@ -1439,15 +1440,15 @@ void ClientField::UpdateSearchCodeType(bool enter) {
 	CardData cd;
 	if(dataManager.GetString(trycode, &cstr) && dataManager.GetData(trycode, &cd) && is_Search(cd, Search_type)) {
 		mainGame->lstSearchCard->clear();
-		ancard.clear();
+		searchcard.clear();
 		mainGame->lstSearchCard->addItem(cstr.name);
-		ancard.push_back(trycode);
+		searchcard.push_back(trycode);
 		return;
 	}
 	if((pname[0] == 0 || pname[1] == 0) && !enter)
 		return;
 	mainGame->lstSearchCard->clear();
-	ancard.clear();
+	searchcard.clear();
 	for(auto cit = dataManager._strings.begin(); cit != dataManager._strings.end(); ++cit) {
 		if(wcsstr(cit->second.name, pname) != 0) {
 			auto cp = dataManager.GetCodePointer(cit->first);	//verified by _strings
@@ -1455,10 +1456,10 @@ void ClientField::UpdateSearchCodeType(bool enter) {
 			if(is_Search(cp->second, Search_type)) {
 				if(wcscmp(pname, cit->second.name) == 0) { //exact match
 					mainGame->lstSearchCard->insertItem(0, cit->second.name, -1);
-					ancard.insert(ancard.begin(), cit->first);
+					searchcard.insert(searchcard.begin(), cit->first);
 				} else {
 					mainGame->lstSearchCard->addItem(cit->second.name);
-					ancard.push_back(cit->first);
+					searchcard.push_back(cit->first);
 				}
 			}
 		}
@@ -1471,15 +1472,15 @@ void ClientField::UpdateSearchCodeOpcode(bool enter) {
 	CardData cd;
 	if(dataManager.GetString(trycode, &cstr) && dataManager.GetData(trycode, &cd) && is_Search(cd, opcode)) {
 		mainGame->lstSearchCard->clear();
-		ancard.clear();
+		searchcard.clear();
 		mainGame->lstSearchCard->addItem(cstr.name);
-		ancard.push_back(trycode);
+		searchcard.push_back(trycode);
 		return;
 	}
 	if((pname[0] == 0 || pname[1] == 0) && !enter)
 		return;
 	mainGame->lstSearchCard->clear();
-	ancard.clear();
+	searchcard.clear();
 	for(auto cit = dataManager._strings.begin(); cit != dataManager._strings.end(); ++cit) {
 		if(wcsstr(cit->second.name, pname) != 0) {
 			auto cp = dataManager.GetCodePointer(cit->first);	//verified by _strings
@@ -1487,10 +1488,10 @@ void ClientField::UpdateSearchCodeOpcode(bool enter) {
 			if(is_Search(cp->second, opcode)) {
 				if(wcscmp(pname, cit->second.name) == 0) { //exact match
 					mainGame->lstSearchCard->insertItem(0, cit->second.name, -1);
-					ancard.insert(ancard.begin(), cit->first);
+					searchcard.insert(searchcard.begin(), cit->first);
 				} else {
 					mainGame->lstSearchCard->addItem(cit->second.name);
-					ancard.push_back(cit->first);
+					searchcard.push_back(cit->first);
 				}
 			}
 		}
