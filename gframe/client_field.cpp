@@ -1431,7 +1431,6 @@ void ClientField::UpdateDeclarableCode(bool enter) {
 	else
 		UpdateDeclarableCodeOpcode(enter);
 }
-}
 void ClientField::UpdateSearchCodeType(bool enter) {
 	const wchar_t* pname = mainGame->ebSearchName->getText();
 	int trycode = BufferIO::GetVal(pname);
