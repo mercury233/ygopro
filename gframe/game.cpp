@@ -1177,6 +1177,8 @@ void Game::SaveConfig() {
 	fprintf(fp, "textfont = %s %d\n", linebuf, gameConf.textfontsize);
 	BufferIO::EncodeUTF8(gameConf.numfont, linebuf);
 	fprintf(fp, "numfont = %s\n", linebuf);
+	BufferIO::EncodeUTF8(gameConf.searchname, linebuf);
+	fprintf(fp, "searchname = %s\n", linebuf);
 	fprintf(fp, "serverport = %d\n", gameConf.serverport);
 	BufferIO::EncodeUTF8(gameConf.lasthost, linebuf);
 	fprintf(fp, "lasthost = %s\n", linebuf);
