@@ -930,13 +930,6 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 				}
 				break;
 			}
-			case LISTBOX_SEARCHCARD: {
-				int sel = mainGame->lstSearchCard->getSelected();
-				if(sel != -1) {
-					mainGame->ShowCardInfo(ancard[sel]);
-				}
-				break;
-			}
 			}
 			break;
 		}
@@ -1069,10 +1062,6 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 			switch(id) {
 			case EDITBOX_ANCARD: {
 				UpdateDeclarableCode(true);
-				break;
-			}
-			case EDITBOX_SEARCHCARD: {
-				UpdateSearchCode(true);
 				break;
 			}
 			case EDITBOX_CHAT: {
@@ -2011,12 +2000,11 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SEARCH_AGREE: {
-				int sel = mainGame->lstSearchCard->getSelected();
-				if(sel == -1)
-					break;
-			        DuelClient::SetResponseI(searchcard[sel]);
+                                char searchname[256];
+				const wchar_t* pstr = mainGame->ebSearchName->getText();
+				BufferIO::CopyWStr(pstr, searchname, 256);
 				char buffer[300] = {0};
-				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", sel);
+				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", searchname);
 				system(buffer);
 				mainGame->HideElement(mainGame->wSearchWindow, true);
 				break;
