@@ -1059,7 +1059,7 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case EDITBOX_SEARCHCARD: {
-				UpdateDeclarableCode(false);
+				UpdateSearchCode(false);
 				break;
 			}
 			}
@@ -1072,7 +1072,7 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case EDITBOX_SEARCHCARD: {
-				UpdateDeclarableCode(true);
+				UpdateSearchCode(true);
 				break;
 			}
 			case EDITBOX_CHAT: {
@@ -2011,9 +2011,10 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SEARCH_AGREE: {
-				int sel = mainGame->lstANCard->getSelected();
+				int sel = mainGame->lstSearchCard->getSelected();
 				if(sel == -1)
 					break;
+			        DuelClient::SetResponseI(searchcard[sel]);
 				char buffer[300] = {0};
 				sprintf(buffer, "start /b www.ourocg.cn/S.aspx?key=%s", sel);
 				system(buffer);
