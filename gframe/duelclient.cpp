@@ -3293,6 +3293,22 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		mainGame->gMutex.Unlock();
 		return false;
 	}
+	case MSG_SEARCH_CARD: {
+		/*int player = */mainGame->LocalPlayer(BufferIO::ReadInt8(pbuf));
+		mainGame->dField.Search_type = BufferIO::ReadInt32(pbuf);
+		mainGame->dField.opcode.clear();
+		if(select_hint)
+			myswprintf(textBuffer, L"%ls", dataManager.GetDesc(select_hint));
+		else myswprintf(textBuffer, dataManager.GetSysString(564));
+		select_hint = 0;
+		mainGame->gMutex.Lock();
+		mainGame->ebSearchName->setText(L"");
+		mainGame->wSearchWindow->setText(textBuffer);
+		mainGame->dField.UpdateSearchCode(true);
+		mainGame->PopupElement(mainGame->wSearchWindow);
+		mainGame->gMutex.Unlock();
+		return false;
+	}
 	case MSG_ANNOUNCE_NUMBER: {
 		/*int player = */mainGame->LocalPlayer(BufferIO::ReadInt8(pbuf));
 		int count = BufferIO::ReadInt8(pbuf);
