@@ -930,6 +930,13 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 				}
 				break;
 			}
+			case LISTBOX_SEARCHCARD: {
+				int sel = mainGame->lstANCard->getSelected();
+				if(sel != -1) {
+					mainGame->ShowCardInfo(ancard[sel]);
+				}
+				break;
+			}
 			}
 			break;
 		}
