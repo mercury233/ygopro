@@ -60,7 +60,6 @@ public:
 	bool select_ready;
 	int announce_count;
 	int declarable_type;
-	int Search_type;
 	int select_counter_count;
 	int select_counter_type;
 	std::vector<ClientCard*> selectable_cards;
@@ -114,13 +113,9 @@ public:
 	void UpdateDeclarableCodeType(bool enter);
 	void UpdateDeclarableCodeOpcode(bool enter);
 	void UpdateDeclarableCode(bool enter);
-	void UpdateSearchCodeType(bool enter);
-	void UpdateSearchCodeOpcode(bool enter);
-	void UpdateSearchCode(bool enter);
 
 	irr::gui::IGUIElement* panel;
 	std::vector<int> ancard;
-	std::vector<int> searchcard;
 	int hovered_controler;
 	int hovered_location;
 	size_t hovered_sequence;
