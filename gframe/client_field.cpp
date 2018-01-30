@@ -1432,3 +1432,74 @@ void ClientField::UpdateDeclarableCode(bool enter) {
 		UpdateDeclarableCodeOpcode(enter);
 }
 }
+void ClientField::UpdateSearchCodeType(bool enter) {
+	const wchar_t* pname = mainGame->ebSearchCard->getText();
+	int trycode = BufferIO::GetVal(pname);
+	CardString cstr;
+	CardData cd;
+	if(dataManager.GetString(trycode, &cstr) && dataManager.GetData(trycode, &cd) && is_Search(cd, Search_type)) {
+		mainGame->lstSearchCard->clear();
+		ancard.clear();
+		mainGame->lstSearchCard->addItem(cstr.name);
+		ancard.push_back(trycode);
+		return;
+	}
+	if((pname[0] == 0 || pname[1] == 0) && !enter)
+		return;
+	mainGame->lstSearchCard->clear();
+	ancard.clear();
+	for(auto cit = dataManager._strings.begin(); cit != dataManager._strings.end(); ++cit) {
+		if(wcsstr(cit->second.name, pname) != 0) {
+			auto cp = dataManager.GetCodePointer(cit->first);	//verified by _strings
+			//datas.alias can be double card names or alias
+			if(is_Search(cp->second, Search_type)) {
+				if(wcscmp(pname, cit->second.name) == 0) { //exact match
+					mainGame->lstSearchCard->insertItem(0, cit->second.name, -1);
+					ancard.insert(ancard.begin(), cit->first);
+				} else {
+					mainGame->lstSearchCard->addItem(cit->second.name);
+					ancard.push_back(cit->first);
+				}
+			}
+		}
+	}
+}
+void ClientField::UpdateSearchCodeOpcode(bool enter) {
+	const wchar_t* pname = mainGame->ebSearchCard->getText();
+	int trycode = BufferIO::GetVal(pname);
+	CardString cstr;
+	CardData cd;
+	if(dataManager.GetString(trycode, &cstr) && dataManager.GetData(trycode, &cd) && is_Search(cd, opcode)) {
+		mainGame->lstSearchCard->clear();
+		ancard.clear();
+		mainGame->lstSearchCard->addItem(cstr.name);
+		ancard.push_back(trycode);
+		return;
+	}
+	if((pname[0] == 0 || pname[1] == 0) && !enter)
+		return;
+	mainGame->lstSearchCard->clear();
+	ancard.clear();
+	for(auto cit = dataManager._strings.begin(); cit != dataManager._strings.end(); ++cit) {
+		if(wcsstr(cit->second.name, pname) != 0) {
+			auto cp = dataManager.GetCodePointer(cit->first);	//verified by _strings
+			//datas.alias can be double card names or alias
+			if(is_Search(cp->second, opcode)) {
+				if(wcscmp(pname, cit->second.name) == 0) { //exact match
+					mainGame->lstSearchCard->insertItem(0, cit->second.name, -1);
+					ancard.insert(ancard.begin(), cit->first);
+				} else {
+					mainGame->lstSearchCard->addItem(cit->second.name);
+					ancard.push_back(cit->first);
+				}
+			}
+		}
+	}
+}
+void ClientField::UpdateSearchCode(bool enter) {
+	if(opcode.size() == 0)
+		UpdateSearchCodeType(enter);
+	else
+		UpdateSearchCodeOpcode(enter);
+}
+}
