@@ -1051,10 +1051,6 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 				UpdateDeclarableCode(false);
 				break;
 			}
-			case EDITBOX_SEARCHCARD: {
-				UpdateSearchCode(false);
-				break;
-			}
 			}
 			break;
 		}
