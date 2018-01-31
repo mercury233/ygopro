@@ -2002,7 +2002,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				BufferIO::EncodeUTF8(mainGame->gameConf.searchname, buf);
 				BufferIO::URLEncode(buf, 256, linebuf, 256);
 				char buffer[300];
-				sprintf(buffer, "start www.baidu.com/s?wd=%s&ie=utf-8", linebuf);
+				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", linebuf);
 				system(buffer);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
