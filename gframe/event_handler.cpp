@@ -1998,7 +1998,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			case BUTTON_SEARCH_AGREE: {
 			        BufferIO::CopyWStr(mainGame->ebSearchName->getText(), mainGame->gameConf.searchname, 256);
 				char buffer[300];
-				sprintf(buffer, "C:\Program Files (x86)\Internet Explorer\iexplore.exe http://www.baidu.com/s?ie=unicode&wd=%CA%6%BB%FA&", mainGame->gameConf.searchname);
+				sprintf(buffer, "C:\Program Files (x86)\Internet Explorer\iexplore.exe http://www.baidu.com/s?ie=unicode&wd=%s", mainGame->gameConf.searchname);
 				system(buffer);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
