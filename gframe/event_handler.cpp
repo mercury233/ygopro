@@ -1996,11 +1996,9 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SEARCH_AGREE: {
-				char buf[256];
 			        BufferIO::CopyWStr(mainGame->ebSearchName->getText(), mainGame->gameConf.searchname, 256);
 				char buffer[300];
-				BufferIO::EncodeUTF8(mainGame->gameConf.searchname, buf);
-				sprintf(buffer, "start www.baidu.com/s?wd=%s", buf);
+				sprintf(buffer, "start www.baidu.com/s?wd=%s", mainGame->gameConf.searchname);
 				system(buffer);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
