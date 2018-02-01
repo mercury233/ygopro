@@ -2000,7 +2000,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			        BufferIO::CopyWStr(mainGame->ebSearchName->getText(), mainGame->gameConf.searchname, 256);
 				BufferIO::EncodeUTF8(mainGame->ebSearchName->getText(), buf);
 				char buffer[300];
-				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", buf);
+				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s^&ie=gb2312", buf);
 				exec(buffer);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
