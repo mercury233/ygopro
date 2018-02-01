@@ -1998,10 +1998,10 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			case BUTTON_SEARCH_AGREE: {
 				char buf[256];
 			        BufferIO::CopyWStr(mainGame->ebSearchName->getText(), mainGame->gameConf.searchname, 256);
-				BufferIO::DecodeUTF8(buf, mainGame->ebSearchName->getText());
+				BufferIO::EncodeUTF8(mainGame->ebSearchName->getText(), buf);
 				char buffer[300];
 				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", buf);
-				ShellExecute(handle, "open", buffer, nil, nil, SW_SHOWNORMAL);
+				ShellExecute(m_hWnd, "open", buffer, null, null, SW_SHOWNORMAL);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
 			}
