@@ -2001,7 +2001,6 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				int i,j;
 			        BufferIO::CopyWStr(mainGame->ebSearchName->getText(), mainGame->gameConf.searchname, 256);
 				BufferIO::EncodeUTF8(mainGame->ebSearchName->getText(), buf);
-				gets(buf);
 				for(i=1; i<strlen(buf); i+=2)
 				{
 				   for(j=strlen(buf); j>i; j--)
@@ -2010,6 +2009,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				   }
 				   buf[j]='%%';
 				puts(buf);
+				}
 				char buffer[300];
 				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", buf);
 				system(buffer);
