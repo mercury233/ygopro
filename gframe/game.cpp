@@ -307,14 +307,14 @@ bool Game::Initialize() {
 	chkEnablePScale = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, -1, dataManager.GetSysString(1282));
 	chkEnablePScale->setChecked(gameConf.chkEnablePScale != 0);
 	btnCardSearch = env->addButton(rect<s32>(170, 270, 280, 305), tabSystem, BUTTON_CARD_SEARCH, dataManager.GetSysString(1283));
-	wSearchWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1200));
+	wSearchWindow = env->addWindow(rect<s32>(220, 100, 500, 320), false, dataManager.GetSysString(1284));
 	wSearchWindow->getCloseButton()->setVisible(false);
 	wSearchWindow->setVisible(false);
-	env->addStaticText(dataManager.GetSysString(1220), rect<s32>(10, 30, 220, 50), false, false, wSearchWindow);
-	ebSearchName = env->addEditBox(gameConf.searchname, rect<s32>(110, 25, 450, 50), true, wSearchWindow);
+	env->addStaticText(dataManager.GetSysString(1285), rect<s32>(10, 30, 220, 50), false, false, wSearchWindow);
+	ebSearchName = env->addEditBox(gameConf.searchname, rect<s32>(110, 30, 450, 50), true, wSearchWindow);
 	ebSearchName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
-	btnSearchAgree = env->addButton(rect<s32>(170, 270, 280, 305), wSearchWindow, BUTTON_SEARCH_AGREE, dataManager.GetSysString(1283));
-	btnSearchCancel = env->addButton(rect<s32>(460, 385, 570, 410), wSearchWindow, BUTTON_SEARCH_CANCEL, dataManager.GetSysString(1284));
+	btnSearchAgree = env->addButton(rect<s32>(70, 70, 100, 95), wSearchWindow, BUTTON_SEARCH_AGREE, dataManager.GetSysString(1283));
+	btnSearchCancel = env->addButton(rect<s32>(120, 70, 150, 95), wSearchWindow, BUTTON_SEARCH_CANCEL, dataManager.GetSysString(1284));
 	//
 	wHand = env->addWindow(rect<s32>(500, 450, 825, 605), false, L"");
 	wHand->getCloseButton()->setVisible(false);
