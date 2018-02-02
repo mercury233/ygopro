@@ -11,7 +11,7 @@
 #include "single_mode.h"
 #include "materials.h"
 #include <windows.h>
-#include <Shlwapi.h>
+#include <shellapi.h>
 #include "../ocgcore/field.h"
 
 namespace ygo {
