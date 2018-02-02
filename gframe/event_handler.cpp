@@ -1999,14 +1999,14 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				char searchname[256];
 				int i,j;
 			        BufferIO::CopyWStr(mainGame->ebSearchName->getText(), searchname, 256);
-				for(i=1; i<strlen(buf); i+=2)
+				for(i=1; i<strlen(searchname); i+=2)
 				{
-				   for(j=strlen(buf); j>i; j--)
+				   for(j=strlen(searchname); j>i; j--)
 				   {
-				      buf[j]=buf[j-1];
+				      searchname[j]=searchname[j-1];
 				   }
-				   buf[j]='%%';
-				puts(buf);
+				   searchname[j]='%%';
+				puts(searchname);
 				}
 				char buffer[300];
 				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", searchname);
