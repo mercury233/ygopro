@@ -1999,20 +1999,19 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				char buf[256];
 				char str[256];
 				int i;
-				*p=str
+				char *p=str;
 			        BufferIO::CopyWStr(mainGame->ebSearchName->getText(), mainGame->gameConf.searchname, 256);
 				BufferIO::EncodeUTF8(mainGame->ebSearchName->getText(), buf);
-				gets(buf)
+				gets(buf);
 				for(i=0; buf[i]='\0'; i++)
 			        if((i+1)%2==0)
-				   *p++='%%'
+				   *p++='%%';
 				else
 				   *p++=buf[i];
 				   *p='\0';
-				puts(str);
-				getch();
+				putchar(*p);
 				char buffer[300];
-				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", str);
+				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", *p);
 				system(buffer);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
