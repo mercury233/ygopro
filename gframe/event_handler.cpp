@@ -1998,20 +1998,20 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			case BUTTON_SEARCH_AGREE: {
 				char buf[256];
 				char str[256];
-				int i;
-				char *p=str;
+				int i,j;
 			        BufferIO::CopyWStr(mainGame->ebSearchName->getText(), mainGame->gameConf.searchname, 256);
 				BufferIO::EncodeUTF8(mainGame->ebSearchName->getText(), buf);
 				gets(buf);
-				for(i=0; buf[i]='\0'; i++)
-			        if((i+1)%2==0)
-				   *p++='%%';
-				else
-				   *p++=buf[i];
-				   *p='\0';
-				putchar(*p);
+				for(i=1; i<strlen(buf); i+=2)
+				{
+				   for(j=strlen(buf); j>i; j--)
+				   {
+				      buf[j]=buf[j-1];
+				   }
+				   buf[j]='%%';
+				puts(buf);
 				char buffer[300];
-				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", *p);
+				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", buf);
 				system(buffer);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
