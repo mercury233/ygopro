@@ -10,6 +10,8 @@
 #include "replay_mode.h"
 #include "single_mode.h"
 #include "materials.h"
+#include <windows.h>
+#include <Shlwapi.h>
 #include "../ocgcore/field.h"
 
 namespace ygo {
@@ -2001,8 +2003,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				BufferIO::EncodeUTF8(pstr, buf);
 				BufferIO::CopyWStr(pstr, mainGame->gameConf.searchname, 256);
 				char buffer[300];
-				sprintf(buffer, "chcp 936&start http://www.ourocg.cn/S.aspx?key=%s", pstr);
-				system(buffer);
+				sprintf(buffer, "chcp 936&start http://www.ourocg.cn/S.aspx?key=%s", buf);
+				ShellExecute(this->m_hWnd, "open", buffer,"","", SW_SHOWNORMAL);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
 			}
