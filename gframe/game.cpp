@@ -306,7 +306,7 @@ bool Game::Initialize() {
 	posY += 30;
 	chkEnablePScale = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, -1, dataManager.GetSysString(1282));
 	chkEnablePScale->setChecked(gameConf.chkEnablePScale != 0);
-	btnCardSearch = env->addButton(rect<s32>(155, 270, 265, 305), tabSystem, BUTTON_CARD_SEARCH, dataManager.GetSysString(1283));
+	btnCardSearch = env->addButton(rect<s32>(165, 270, 275, 305), tabSystem, BUTTON_CARD_SEARCH, dataManager.GetSysString(1283));
 	wSearchWindow = env->addWindow(rect<s32>(220, 100, 520, 220), false, dataManager.GetSysString(1284));
 	wSearchWindow->getCloseButton()->setVisible(false);
 	wSearchWindow->setVisible(false);
