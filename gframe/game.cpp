@@ -310,8 +310,8 @@ bool Game::Initialize() {
 	wSearchWindow = env->addWindow(rect<s32>(220, 100, 520, 220), false, dataManager.GetSysString(1284));
 	wSearchWindow->getCloseButton()->setVisible(false);
 	wSearchWindow->setVisible(false);
-	env->addStaticText(dataManager.GetSysString(1285), rect<s32>(10, 30, 120, 50), false, false, wSearchWindow);
-	ebSearchName = env->addEditBox(gameConf.searchname, rect<s32>(50, 30, 200, 50), true, wSearchWindow);
+	env->addStaticText(dataManager.GetSysString(1285), rect<s32>(10, 30, 120, 60), false, false, wSearchWindow);
+	ebSearchName = env->addEditBox(gameConf.searchname, rect<s32>(30, 30, 200, 60), true, wSearchWindow);
 	ebSearchName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
 	btnSearchAgree = env->addButton(rect<s32>(60, 70, 150, 100), wSearchWindow, BUTTON_SEARCH_AGREE, dataManager.GetSysString(1286));
 	btnSearchCancel = env->addButton(rect<s32>(170, 70, 260, 100), wSearchWindow, BUTTON_SEARCH_CANCEL, dataManager.GetSysString(1287));
