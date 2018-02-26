@@ -17,7 +17,7 @@ install:
   - move libevent-2.0.22-stable event
   - xcopy /E event\WIN32-Code event\include
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://download.savannah.gnu.org/releases/freetype/freetype-2.8.1.tar.bz2 ; exit 0"
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/freetype/freetype-2.8.1.tar.bz2 ; exit 0"
   - tar xf freetype-2.8.1.tar.bz2
   - move freetype-2.8.1.tar.bz2
   
