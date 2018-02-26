@@ -17,9 +17,9 @@ install:
   - move libevent-2.0.22-stable event
   - xcopy /E event\WIN32-Code event\include
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/freetype/freetype-2.8.1.tar.bz2 ; exit 0"
-  - tar xf freetype-2.8.1.tar.bz2
-  - move freetype-2.8.1.tar.bz2
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://download.savannah.gnu.org/releases/freetype/freetype-2.9.tar.bz2 ; exit 0"
+  - tar xf freetype-2.9.tar.bz2
+  - move freetype-2.9 freetype
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.4.zip ; exit 0"
   - 7z x irrlicht-1.8.4.zip
@@ -80,7 +80,7 @@ artifacts:
 cache:
   - premake-5.0.0-alpha12-windows.zip
   - libevent-2.0.22-stable.tar.gz
-  - freetype-2.8.1.tar.bz2
+  - freetype-2.9.tar.bz2
   - irrlicht-1.8.4.zip
   - lua-5.2.4.tar.gz
   - sqlite-amalgamation-3210000.zip
