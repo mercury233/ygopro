@@ -21,7 +21,7 @@ install:
   - tar xf freetype-2.9.tar.bz2
   - move freetype-2.9.tar.bz2
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://sourceforge.net/projects/irrlicht/files/Irrlicht%20SDK/1.8/1.8.4/irrlicht-1.8.4.zip/download?use_mirror=10gbps-io ; exit 0"
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://sourceforge.net/projects/irrlicht/files/Irrlicht%20SDK/1.8/1.8.4/irrlicht-1.8.4.zip/download?use_mirror=cytranet ; exit 0"
   - 7z x irrlicht-1.8.4.zip
   - md irrlicht
   - move irrlicht-1.8.4\source\Irrlicht irrlicht\src
