@@ -42,6 +42,11 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->device->closeDevice();
 				break;
 			}
+			case BUTTON_XPG: {
+                                system("start https://ocg.xpg.jp/deck/deck.fcgi");
+				return true;
+				break;
+			}
 			case BUTTON_LAN_MODE: {
 				mainGame->btnCreateHost->setEnabled(true);
 				mainGame->btnJoinHost->setEnabled(true);
