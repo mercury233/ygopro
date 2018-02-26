@@ -626,5 +626,7 @@ extern Game* mainGame;
 #define BUTTON_SEARCH_AGREE			383
 #define BUTTON_SEARCH_CANCEL			384
 
+#define BUTTON_XPG			        385
+
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
