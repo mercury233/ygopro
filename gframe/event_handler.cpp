@@ -1989,6 +1989,10 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
+			case BUTTON_XPG: {
+                                system("start https://ocg.xpg.jp/deck/deck.fcgi");
+				break;
+			}
 			case BUTTON_CARD_SEARCH: {
 				mainGame->btnSearchAgree->setEnabled(true);
 				mainGame->btnSearchCancel->setEnabled(true);
