@@ -1991,6 +1991,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_XPG: {
                                 system("start https://ocg.xpg.jp/deck/deck.fcgi");
+				return true;
 				break;
 			}
 			case BUTTON_CARD_SEARCH: {
