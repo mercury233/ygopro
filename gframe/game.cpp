@@ -87,7 +87,7 @@ bool Game::Initialize() {
 	//main menu
 	wchar_t strbuf[256];
 	myswprintf(strbuf, L"YGO-VI Version:%X.0%X.%X", PRO_VERSION >> 12, (PRO_VERSION >> 4) & 0xff, PRO_VERSION & 0xf);
-	wMainMenu = env->addWindow(rect<s32>(370, 200, 650, 460), false, strbuf);
+	wMainMenu = env->addWindow(rect<s32>(370, 200, 650, 440), false, strbuf);
 	wMainMenu->getCloseButton()->setVisible(false);
 	btnLanMode = env->addButton(rect<s32>(10, 30, 270, 60), wMainMenu, BUTTON_LAN_MODE, dataManager.GetSysString(1200));
 	btnSingleMode = env->addButton(rect<s32>(10, 65, 270, 95), wMainMenu, BUTTON_SINGLE_MODE, dataManager.GetSysString(1201));
