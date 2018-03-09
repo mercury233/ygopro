@@ -10,8 +10,6 @@
 #include "replay_mode.h"
 #include "single_mode.h"
 #include "materials.h"
-#include<stdio.h>
-#include<string.h>
 #include "../ocgcore/field.h"
 
 namespace ygo {
@@ -2003,9 +2001,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				BufferIO::CopyWStr(pstr, mainGame->gameConf.searchname, 256);
 				int nLength = WideCharToMultiByte(CP_ACP, 0, pstr, -1, NULL, 0, NULL,NULL);
 				WideCharToMultiByte(CP_ACP, 0, pstr, -1, buf, nLength, NULL, NULL);
-				gets(buf);
 				char buffer[300];
-				sprintf(buffer, "start http://www.ourocg.cn/S.aspx?key=%s", buf);
+				sprintf(buffer, "start "http://www.ourocg.cn/S.aspx?key=%s"", buf);
 				system(buffer);
 				mainGame->HideElement(mainGame->wSearchWindow);
 				break;
