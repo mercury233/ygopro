@@ -15,7 +15,6 @@ struct ChainInfo {
 	int code;
 	int desc;
 	int controler;
-	int player;
 	int location;
 	int sequence;
 	bool solved;
