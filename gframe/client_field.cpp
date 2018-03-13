@@ -98,7 +98,7 @@ void ClientField::Initial(int player, int deckc, int extrac) {
 		pcard = new ClientCard;
 		deck[player].push_back(pcard);
 		pcard->owner = player;
-                pcard->controler = player;
+		pcard->controler = player;
 		pcard->location = 0x1;
 		pcard->sequence = i;
 		pcard->position = POS_FACEDOWN_DEFENSE;
