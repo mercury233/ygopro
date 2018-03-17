@@ -64,9 +64,6 @@ after_build:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/fallenstardust/YGOMobile-pics/archive/master.zip ; exit 0"
   - 7z x YGOMobile-pics-master.zip
   - xcopy /E YGOMobile-pics-master\* .
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-images-field/archive/master.zip ; exit 0"
-  - 7z x ygopro-images-field-master.zip
-  - xcopy /E ygopro-images-field-master\* .
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-database/raw/master/locales/zh-CN/cards.cdb ; exit 0"
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-starter-pack/archive/master.zip ; exit 0"
   - 7z x ygopro-starter-pack-master.zip
