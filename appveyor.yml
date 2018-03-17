@@ -72,7 +72,7 @@ after_build:
   - 7z x ygopro-starter-pack-master.zip
   - xcopy /E ygopro-starter-pack-master\* .
   - 7z a ygopro-ver.233.7z ygopro.exe irrKlang.dll ikpMP3.dll LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics pics/field replay -xr!.git*
-  - 7z a ygopro-ver.233.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script sound textures deck single pics pics/field replay -xr!.git*
+  - 7z a ygopro-ver.233.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script sound textures deck single replay -xr!.git*
 
 test: off
 
