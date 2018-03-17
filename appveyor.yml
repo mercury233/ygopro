@@ -63,7 +63,7 @@ after_build:
   - mkdir replay
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-images/archive/master.zip ; exit 0"
   - 7z x ygopro-images-master.zip
-  - xcopy /E ygopro-images-master\* .
+  - xcopy /E ygopro-images-master\pics\* .
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-images-field/archive/master.zip ; exit 0"
   - 7z x ygopro-images-field-master.zip
   - xcopy /E ygopro-images-field-master\* .
