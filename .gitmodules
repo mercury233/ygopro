@@ -4,6 +4,3 @@
 [submodule "script"]
 	path = script
 	url = https://github.com/Fluorohydride/ygopro-scripts.git
-[submodule "pics"]
-	path = pics
-	url = https://github.com/fallenstardust/YGOMobile-pics.git
