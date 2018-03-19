@@ -7,3 +7,6 @@
 [submodule "pics"]
 	path = pics
 	url = https://github.com/fallenstardust/YGOMobile-pics.git
+[submodule "field"]
+	path = field
+	url = https://github.com/moecube/ygopro-images-field.git
