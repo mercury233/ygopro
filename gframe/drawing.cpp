@@ -8,6 +8,7 @@
 #include "tag_duel.h"
 #include "replay_mode.h"
 #include "single_mode.h"
+#include "netserver.h"
 #include "../ocgcore/field.h"
 
 namespace ygo {
@@ -379,13 +380,13 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->setTransform(irr::video::ETS_WORLD, atk);
 		driver->drawVertexPrimitiveList(matManager.vSymbol, 4, matManager.iRectangle, 2);
 	}
-	if(mainGame->chkEnablePScale->isChecked() && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && pcard->sequence == 0)) {
+	if(mainGame->chkEnablePScale->isChecked() && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && (pcard->sequence == 0 || pcard->sequence == 6)) {
 		int scale = pcard->lscale;
 		matManager.mTexture.setTexture(0, imageManager.tLScale[scale]);
 		driver->setMaterial(matManager.mTexture);
 		driver->drawVertexPrimitiveList(matManager.vPScale, 4, matManager.iRectangle, 2);
 	}
-	if(mainGame->chkEnablePScale->isChecked() && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && pcard->sequence == 4)) {
+	if(mainGame->chkEnablePScale->isChecked() && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && (pcard->sequence == 4 || pcard->sequence == 7)) {
 		int scale2 = pcard->rscale;
 		matManager.mTexture.setTexture(0, imageManager.tRScale[scale2]);
 		driver->setMaterial(matManager.mTexture);
