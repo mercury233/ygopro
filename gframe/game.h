@@ -113,8 +113,8 @@ public:
 	void RefreshBot();
 	void DrawSelectionLine(irr::video::S3DVertex* vec, bool strip, int width, float* cv);
 	void DrawBackGround();
-	void DrawYFace();
-	void DrawDFace();
+	void DrawYFace(irr::video::ITexture* texture);
+	void DrawDFace(irr::video::ITexture* texture);
 	void DrawLinkedZones(ClientCard* pcard);
 	void CheckMutual(ClientCard* pcard, int mark);
 	void DrawCards();
