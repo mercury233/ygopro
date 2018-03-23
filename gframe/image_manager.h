@@ -46,6 +46,8 @@ public:
 	irr::video::ITexture* tFieldTransparent[2];
 	irr::video::ITexture* tRScale[14];
 	irr::video::ITexture* tLScale[14];
+	irr::video::ITexture* tYFace[4];
+	irr::video::ITexture* tDFace[4];
 	std::list<std::string> support_types;
 };
 
