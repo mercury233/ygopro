@@ -959,10 +959,12 @@ void Game::DrawBackImage(irr::video::ITexture* texture) {
 }
 void Game::DrawYFace(irr::video::ITexture* texture) {
 	if(!texture)
+		return;
 	driver->draw2DImage(imageManager.tYFace[0], recti(330, 45, 378, 93), recti(0, 0, 48, 48), 0, 0, true);
 }
 void Game::DrawDFace(irr::video::ITexture* texture) {
 	if(!texture)
+		return;
 	driver->draw2DImage(imageManager.tDFace[1], recti(942, 45, 990, 93), recti(0, 0, 48, 48), 0, 0, true);
 }
 void Game::ShowElement(irr::gui::IGUIElement * win, int autoframe) {
