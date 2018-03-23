@@ -4,6 +4,10 @@
 #include "deck_manager.h"
 #include "sound_manager.h"
 #include "duelclient.h"
+#include "single_duel.h"
+#include "tag_duel.h"
+#include "replay_mode.h"
+#include "single_mode.h"
 #include "../ocgcore/field.h"
 
 namespace ygo {
@@ -955,11 +959,13 @@ void Game::DrawBackImage(irr::video::ITexture* texture) {
 }
 void Game::DrawYFace(irr::video::ITexture* texture) {
 	if(!texture)
+	DuelPlayer* dp
 	int face = dp->type;
 	driver->draw2DImage(imageManager.tYFace[face], recti(330, 45, 378, 93), recti(0, 0, 48, 48), 0, 0, true);
 }
 void Game::DrawDFace(irr::video::ITexture* texture) {
 	if(!texture)
+	DuelPlayer* dp
 	int face2 = dp->type;
 	driver->draw2DImage(imageManager.tDFace[face2], (942, 45, 990, 93), recti(0, 0, 48, 48), 0, 0, true);
 }
