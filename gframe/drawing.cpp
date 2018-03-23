@@ -8,6 +8,7 @@
 #include "tag_duel.h"
 #include "replay_mode.h"
 #include "single_mode.h"
+#include "netserver.h"
 #include "../ocgcore/field.h"
 
 namespace ygo {
@@ -379,13 +380,13 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->setTransform(irr::video::ETS_WORLD, atk);
 		driver->drawVertexPrimitiveList(matManager.vSymbol, 4, matManager.iRectangle, 2);
 	}
-	if(mainGame->chkEnablePScale->isChecked() && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && (pcard->sequence == 0 || pcard->sequence == 6)) {
+	if(mainGame->chkEnablePScale->isChecked() && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && (pcard->sequence == 0 || pcard->sequence == 6))) {
 		int scale = pcard->lscale;
 		matManager.mTexture.setTexture(0, imageManager.tLScale[scale]);
 		driver->setMaterial(matManager.mTexture);
 		driver->drawVertexPrimitiveList(matManager.vPScale, 4, matManager.iRectangle, 2);
 	}
-	if(mainGame->chkEnablePScale->isChecked() && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && (pcard->sequence == 4 || pcard->sequence == 7)) {
+	if(mainGame->chkEnablePScale->isChecked() && (pcard->type & TYPE_PENDULUM) && ((pcard->location & LOCATION_SZONE) && (pcard->sequence == 4 || pcard->sequence == 7))) {
 		int scale2 = pcard->rscale;
 		matManager.mTexture.setTexture(0, imageManager.tRScale[scale2]);
 		driver->setMaterial(matManager.mTexture);
@@ -959,11 +960,15 @@ void Game::DrawBackImage(irr::video::ITexture* texture) {
 }
 void Game::DrawYFace(irr::video::ITexture* texture) {
 	if(!texture)
-	driver->draw2DImage(imageManager.tYFace[pcard->controler], recti(330, 45, 378, 93), recti(0, 0, 48, 48), 0, 0, true);
+	DuelPlayer* dp;
+	int face = dp->type;
+	driver->draw2DImage(imageManager.tYFace[face], recti(330, 45, 378, 93), recti(0, 0, 48, 48), 0, 0, true);
 }
 void Game::DrawDFace(irr::video::ITexture* texture) {
 	if(!texture)
-	driver->draw2DImage(imageManager.tDFace[pcard->controler], recti(942, 45, 990, 93), recti(0, 0, 48, 48), 0, 0, true);
+	DuelPlayer* dp;
+	int face2 = dp->type;
+	driver->draw2DImage(imageManager.tDFace[face2], recti(942, 45, 990, 93), recti(0, 0, 48, 48), 0, 0, true);
 }
 void Game::ShowElement(irr::gui::IGUIElement * win, int autoframe) {
 	FadingUnit fu;
