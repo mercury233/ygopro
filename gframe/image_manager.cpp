@@ -48,8 +48,6 @@ bool ImageManager::Initial()  {
 		snprintf(buff, 100, "textures/extra/lscale_%d.png", i);
 		tLScale[i] = driver->getTexture(buff);
 	}
-	tYFace[0] = driver->getTexture("textures/face/Yface_0.png");
-        tDFace[1] = driver->getTexture("textures/face/Dface_1.png");
 	support_types.push_back(std::string("jpg"));
 	support_types.push_back(std::string("png"));
 	support_types.push_back(std::string("bpg"));
