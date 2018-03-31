@@ -175,6 +175,46 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				}
 				break;
 			}
+			case BUTTON_RENAME_DECK: {
+				int sel = mainGame->lstReplayList->getSelected();
+				if(sel == -1)
+					break;
+				mainGame->gMutex.Lock();
+				mainGame->wRenameDeck->setText(dataManager.GetSysString(1364));
+				mainGame->ebREName->setText(mainGame->cbDBDecks->setSelected(sel));
+				mainGame->PopupElement(mainGame->wRenameDeck);
+				mainGame->gMutex.Unlock();
+				prev_operation = id;
+				prev_sel = sel;
+				break;
+			}
+			case BUTTON_RENAME_DECK_SAVE: {
+				mainGame->HideElement(mainGame->wReplaySave);
+				if(prev_operation == BUTTON_RENAME_DECK) {
+					wchar_t newname[256];
+					BufferIO::CopyWStr(mainGame->ebESName->getText(), newname, 256);
+					if(mywcsncasecmp(newname + wcslen(newname) - 4, L".ydk", 4)) {
+						myswprintf(newname, L"%ls.ydk", mainGame->ebREName->getText());
+					}
+					if(DeckManager::RenameDeck(mainGame->cbDBDecks->setSelected(prev_sel), newname)) {
+						mainGame->cbDBDecks->setItem(prev_sel, newname, -1);
+					} else {
+						mainGame->env->addMessageBox(L"", dataManager.GetSysString(1368));
+					}
+				}
+				prev_operation = 0;
+				prev_sel = -1;
+				break;
+			}
+			case BUTTON_RENAME_DECK_CANCEL: {
+				mainGame->HideElement(mainGame->wRenameDeck);
+				prev_operation = 0;
+				prev_sel = -1;
+				break;
+			}
+			}
+			break;
+		}
 			case BUTTON_DELETE_DECK: {
 				int sel = mainGame->cbDBDecks->getSelected();
 				if(sel == -1)
