@@ -240,6 +240,33 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				ReplayMode::StartReplay(start_turn);
 				break;
 			}
+			case BUTTON_DELETE_REPLAY: {
+				int sel = mainGame->lstReplayList->getSelected();
+				if(sel == -1)
+					break;
+				mainGame->gMutex.Lock();
+				wchar_t textBuffer[256];
+				myswprintf(textBuffer, L"%ls\n%ls", mainGame->lstReplayList->getListItem(sel), dataManager.GetSysString(1363));
+				mainGame->SetStaticText(mainGame->stQMessage, 310 * mainGame->xScale, mainGame->textFont, (wchar_t*)textBuffer);
+				mainGame->PopupElement(mainGame->wQuery);
+				mainGame->gMutex.Unlock();
+				prev_operation = id;
+				prev_sel = sel;
+				break;
+			}
+			case BUTTON_RENAME_REPLAY: {
+				int sel = mainGame->lstReplayList->getSelected();
+				if(sel == -1)
+					break;
+				mainGame->gMutex.Lock();
+				mainGame->wReplaySave->setText(dataManager.GetSysString(1364));
+				mainGame->ebRSName->setText(mainGame->lstReplayList->getListItem(sel));
+				mainGame->PopupElement(mainGame->wReplaySave);
+				mainGame->gMutex.Unlock();
+				prev_operation = id;
+				prev_sel = sel;
+				break;
+			}
 			case BUTTON_CANCEL_REPLAY: {
 				mainGame->HideElement(mainGame->wReplay);
 				mainGame->ShowElement(mainGame->wMainMenu);
