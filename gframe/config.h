@@ -13,8 +13,12 @@
 
 #ifdef _MSC_VER
 #define myswprintf _swprintf
+#define mywcsncasecmp _wcsnicmp
+#define mystrncasecmp _strnicmp
 #else
 #define myswprintf swprintf
+#define mywcsncasecmp wcsncasecmp
+#define mystrncasecmp strncasecmp
 #endif
 
 #define socklen_t int
