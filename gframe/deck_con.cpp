@@ -181,7 +181,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 					break;
 				mainGame->gMutex.Lock();
 				mainGame->wRenameDeck->setText(dataManager.GetSysString(1364));
-				mainGame->ebREName->setText(mainGame->cbDBDecks->setSelected(sel));
+				mainGame->ebREName->setText(mainGame->cbDBDecks->getItem(sel));
 				mainGame->PopupElement(mainGame->wRenameDeck);
 				mainGame->gMutex.Unlock();
 				prev_operation = id;
@@ -196,8 +196,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 					if(mywcsncasecmp(newname + wcslen(newname) - 4, L".ydk", 4)) {
 						myswprintf(newname, L"%ls.ydk", mainGame->ebREName->getText());
 					}
-					if(DeckManager::RenameDeck(mainGame->cbDBDecks->setSelected(prev_sel), newname)) {
-						mainGame->cbDBDecks->setItem(prev_sel, newname, -1);
+					if(DeckManager::RenameDeck(mainGame->cbDBDecks->getItem(prev_sel), newname)) {
+						mainGame->cbDBDecks->setSelected(prev_sel, newname, -1);
 					} else {
 						mainGame->env->addMessageBox(L"", dataManager.GetSysString(1368));
 					}
