@@ -59,14 +59,17 @@ bool DeckManager::RenameDeck(const wchar_t* oldname, const wchar_t* newname) {
 	wchar_t newfname[256];
 	myswprintf(oldfname, L"./deck/%ls", oldname);
 	myswprintf(newfname, L"./deck/%ls", newname);
+#ifdef WIN32
 	BOOL result = MoveFileW(oldfname, newfname);
 	return !!result;
+#else
 	char oldfilefn[256];
 	char newfilefn[256];
 	BufferIO::EncodeUTF8(oldfname, oldfilefn);
 	BufferIO::EncodeUTF8(newfname, newfilefn);
 	int result = rename(oldfilefn, newfilefn);
 	return result == 0;
+#endif
 }
 wchar_t* DeckManager::GetLFListName(int lfhash) {
 	for(size_t i = 0; i < _lfList.size(); ++i) {
