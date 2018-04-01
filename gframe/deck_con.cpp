@@ -189,7 +189,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_RENAME_DECK_SAVE: {
-				mainGame->HideElement(mainGame->wReplaySave);
+				mainGame->HideElement(mainGame->wRenameDeck);
 				if(prev_operation == BUTTON_RENAME_DECK) {
 					wchar_t newname[256];
 					BufferIO::CopyWStr(mainGame->ebREName->getText(), newname, 256);
