@@ -176,7 +176,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_RENAME_DECK: {
-				int sel = mainGame->lstReplayList->getSelected();
+				int sel = mainGame->cbDBDecks->getSelected();
 				if(sel == -1)
 					break;
 				mainGame->gMutex.Lock();
@@ -192,7 +192,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				mainGame->HideElement(mainGame->wReplaySave);
 				if(prev_operation == BUTTON_RENAME_DECK) {
 					wchar_t newname[256];
-					BufferIO::CopyWStr(mainGame->ebESName->getText(), newname, 256);
+					BufferIO::CopyWStr(mainGame->ebREName->getText(), newname, 256);
 					if(mywcsncasecmp(newname + wcslen(newname) - 4, L".ydk", 4)) {
 						myswprintf(newname, L"%ls.ydk", mainGame->ebREName->getText());
 					}
@@ -212,9 +212,6 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				prev_sel = -1;
 				break;
 			}
-			}
-			break;
-		}
 			case BUTTON_DELETE_DECK: {
 				int sel = mainGame->cbDBDecks->getSelected();
 				if(sel == -1)
