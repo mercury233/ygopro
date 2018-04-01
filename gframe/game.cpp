@@ -48,8 +48,8 @@ bool Game::Initialize() {
 	is_building = false;
 	menuHandler.prev_operation = 0;
 	menuHandler.prev_sel = -1;
-	deckCon.prev_operation = 0;
-	deckCon.prev_sel = -1;
+	deckBuilder.prev_operation = 0;
+	deckBuilder.prev_sel = -1;
 	memset(&dInfo, 0, sizeof(DuelInfo));
 	memset(chatTiming, 0, sizeof(chatTiming));
 	deckManager.LoadLFList();
