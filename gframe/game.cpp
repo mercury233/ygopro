@@ -1545,6 +1545,10 @@ void Game::OnResize() {
 	wANRace->setRelativePosition(ResizeWin(480, 200, 850, 410));
 	wReplaySave->setRelativePosition(ResizeWin(510, 200, 820, 320));
 	stHintMsg->setRelativePosition(ResizeWin(500, 60, 820, 90));
+	
+	//sound / music volume bar
+	scrSoundVolume->setRelativePosition(rect<s32>(20 + 126, 200 + 4, 20 + (300 * xScale) - 40, 200 + 21));
+	scrMusicVolume->setRelativePosition(rect<s32>(20 + 126, 230 + 4, 20 + (300 * xScale) - 40, 230 + 21));
 
 	//sound / music volume bar
 	scrSoundVolume->setRelativePosition(recti(20 + 126, 200 + 4, 20 + (300 * xScale) - 40, 200 + 21));
