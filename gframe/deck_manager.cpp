@@ -57,8 +57,8 @@ void DeckManager::LoadLFList() {
 bool DeckManager::RenameDeck(const wchar_t* oldname, const wchar_t* newname) {
 	wchar_t oldfname[256];
 	wchar_t newfname[256];
-	myswprintf(oldfname, L"./deck/%ls", oldname);
-	myswprintf(newfname, L"./deck/%ls", newname);
+	myswprintf(oldfname, L"./deck/%ls.ydk", oldname);
+	myswprintf(newfname, L"./deck/%ls.ydk", newname);
 #ifdef WIN32
 	BOOL result = MoveFileW(oldfname, newfname);
 	return !!result;
