@@ -193,8 +193,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				if(prev_operation == BUTTON_RENAME_DECK) {
 					wchar_t newname[256];
 					BufferIO::CopyWStr(mainGame->ebREName->getText(), newname, 256);
-					if(mywcsncasecmp(newname + wcslen(newname) - 4, L".ydk", 4)) {
-						myswprintf(newname, L"%s.ydk", mainGame->ebREName->getText());
+					if(mywcsncasecmp(newname + wcslen(newname) - 4, L"", 4)) {
+						myswprintf(newname, L"%ls.ydk", mainGame->ebREName->getText());
 					}
 					if(DeckManager::RenameDeck(mainGame->cbDBDecks->getItem(prev_sel), newname)) {
 						mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getItemCount() - 1);
