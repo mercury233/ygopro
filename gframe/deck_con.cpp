@@ -180,7 +180,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				if(sel == -1)
 					break;
 				mainGame->gMutex.Lock();
-				mainGame->wRenameDeck->setText(dataManager.GetSysString(1364));
+				mainGame->wRenameDeck->setText(dataManager.GetSysString(1367));
 				mainGame->ebREName->setText(mainGame->cbDBDecks->getItem(sel));
 				mainGame->PopupElement(mainGame->wRenameDeck);
 				mainGame->gMutex.Unlock();
