@@ -197,9 +197,9 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 						myswprintf(newname, L"%ls.ydk", mainGame->ebREName->getText());
 					}
 					if(DeckManager::RenameDeck(mainGame->cbDBDecks->getItem(prev_sel), newname)) {
-						mainGame->cbDBDecks->setSelected(prev_sel);
+						mainGame->cbDBDecks->setSelected(newname);
 					} else {
-						mainGame->env->addMessageBox(L"", dataManager.GetSysString(1368));
+						mainGame->env->addMessageBox(L"", dataManager.GetSysString(1365));
 					}
 				}
 				prev_operation = 0;
