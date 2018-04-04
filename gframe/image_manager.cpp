@@ -1,6 +1,6 @@
 #include "image_manager.h"
 #include "game.h"
-#include <gframe/SFML/Network.hpp>
+#include <gframe/SFML-2.1/include/SFML/Network.hpp>
 
 namespace ygo {
 
