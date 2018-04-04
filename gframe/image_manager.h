@@ -29,6 +29,7 @@ public:
 	void ClearTexture();
 	void RemoveTexture(int code);
 	void LoadSleeve(int player, wchar_t* site, wchar_t* dir);
+	void LoadPendingTextures();
 	irr::video::ITexture* GetTextureFromFile(char* file, s32 width, s32 height);
 	irr::video::ITexture* GetTexture(int code);
 	irr::video::ITexture* GetTextureThumb(int code);
@@ -65,6 +66,7 @@ public:
 	std::list<std::string> support_types;
 	
 	private:
+	std::vector<TextureData *> pendingTextures;
 	void ApplyTexture(TextureData *textureData, ITexture *texture);
 };
 
