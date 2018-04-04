@@ -6,6 +6,21 @@
 #include <unordered_map>
 
 namespace ygo {
+	
+enum TextureType
+{
+	SLEEVE = 0,
+	AVATAR = 1
+};
+
+struct TextureData
+{
+	TextureType type;
+	int player;
+	char hostname[256];
+	char filename[256];
+	char fakename[256];
+};
 
 class ImageManager {
 public:
@@ -13,6 +28,7 @@ public:
 	void SetDevice(irr::IrrlichtDevice* dev);
 	void ClearTexture();
 	void RemoveTexture(int code);
+	void LoadSleeve(int player, wchar_t* site, wchar_t* dir);
 	irr::video::ITexture* GetTextureFromFile(char* file, s32 width, s32 height);
 	irr::video::ITexture* GetTexture(int code);
 	irr::video::ITexture* GetTextureThumb(int code);
@@ -45,9 +61,11 @@ public:
 	irr::video::ITexture* tFieldTransparent[2];
 	irr::video::ITexture* tRScale[14];
 	irr::video::ITexture* tLScale[14];
-	irr::video::ITexture* tYFace[4];
-	irr::video::ITexture* tDFace[4];
+        irr::video::ITexture* tAvatar[4];
 	std::list<std::string> support_types;
+	
+	private:
+	void ApplyTexture(TextureData *textureData, ITexture *texture);
 };
 
 extern ImageManager imageManager;
