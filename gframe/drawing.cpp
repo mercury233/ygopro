@@ -331,8 +331,7 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->drawVertexPrimitiveList(matManager.vCardFront, 4, matManager.iRectangle, 2);
 	}
 	if(m22 < 0.99 || pcard->is_moving) {
-		int player;
-		matManager.mCard.setTexture(0, imageManager.tCover[player]);
+		matManager.mCard.setTexture(0, imageManager.tCover[pcard->controler]);
 		driver->setMaterial(matManager.mCard);
 		driver->drawVertexPrimitiveList(matManager.vCardBack, 4, matManager.iRectangle, 2);
 	}
