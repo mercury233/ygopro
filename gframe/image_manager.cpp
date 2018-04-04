@@ -38,6 +38,11 @@ bool ImageManager::Initial()  {
 	tFieldTransparent[0] = driver->getTexture("textures/field-transparent2.png");
 	tField[1] = driver->getTexture("textures/field3.png");
 	tFieldTransparent[1] = driver->getTexture("textures/field-transparent3.png");
+	char buf[100];
+	for (int e = 0; e < 4; ++e){
+		snprintf(buf, 100, "textures/avatar%d.jpg", e);
+		tAvatar[e] = driver->getTexture(buf);
+	}
         int i = 0;
 	char buff[100];
 	for (; i < 14; i++) {
@@ -261,5 +266,45 @@ irr::video::ITexture* ImageManager::GetTextureField(int code) {
 		return tit->second;
 	else
 		return NULL;
+}
+void ImageManager::LoadSleeve(int player, wchar_t* site, wchar_t* dir)
+{
+	TextureData *sleeve = new TextureData;
+	sleeve->type = SLEEVE;
+	sleeve->player = player;
+	std::wcstombs(sleeve->hostname, site, 256);
+	std::wcstombs(sleeve->filename, dir, 256);
+	if(player == 0)
+		std::wcstombs(sleeve->fakename, L"cover0.jpg", 256);
+	else
+		std::wcstombs(sleeve->fakename, L"cover1.jpg", 256);
+	pendingTextures.push_back(sleeve);
+}
+void ImageManager::LoadPendingTextures()
+{
+	while (!pendingTextures.empty())
+	{
+		TextureData *textureData(pendingTextures.back());
+		pendingTextures.pop_back();
+		ITexture *texture = DownloadTexture(textureData);
+		if (texture)
+			ApplyTexture(textureData, texture);
+		delete textureData;
+	}
+}
+void ImageManager::ApplyTexture(TextureData *textureData, ITexture *texture)
+{
+	switch (textureData->type)
+	{
+	case SLEEVE:
+		if (textureData->player >= 0 && textureData->player < 2)
+			tCover[textureData->player] = texture;
+		break;
+	case AVATAR:
+		if (textureData->player >= 0 && textureData->player < 4)
+			tAvatar[textureData->player] = texture;
+		break;
+	}
+}
 }
 }
