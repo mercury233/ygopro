@@ -420,9 +420,6 @@ void ClientField::ShowSelectCard(bool buttonok, bool chain) {
 					selectable_cards[i]->sequence + 1);
 			mainGame->stCardPos[i]->setText(formatBuffer);
 			// color
-			if (selectable_cards[i]->is_selected)
-				mainGame->stCardPos[i]->setBackgroundColor(0xffffff00);
-			else {
 			if(conti_selecting)
 				mainGame->stCardPos[i]->setBackgroundColor(0xffffffff);
 			else if(selectable_cards[i]->location == LOCATION_OVERLAY) {
@@ -444,8 +441,7 @@ void ClientField::ShowSelectCard(bool buttonok, bool chain) {
 				else
 					mainGame->stCardPos[i]->setBackgroundColor(0xffffffff);
 			}
-			}
-		 } else {
+		} else {
 			if(sort_list[i]) {
 				wchar_t formatBuffer[2048];
 				myswprintf(formatBuffer, L"%d", sort_list[i]);
@@ -649,7 +645,6 @@ void ClientField::ReplaySwap() {
 		(*cit)->is_moving = false;
 	}
 	mainGame->dInfo.isFirst = !mainGame->dInfo.isFirst;
-	mainGame->dInfo.isReplaySwapped = !mainGame->dInfo.isReplaySwapped;
 	std::swap(mainGame->dInfo.lp[0], mainGame->dInfo.lp[1]);
 	std::swap(mainGame->dInfo.strLP[0], mainGame->dInfo.strLP[1]);
 	std::swap(mainGame->dInfo.hostname, mainGame->dInfo.clientname);
