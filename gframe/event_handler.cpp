@@ -214,15 +214,15 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 					break;
 				}
 				case MSG_SELECT_UNSELECT_CARD: {
-                   if (select_cancelable) {
+                    if (select_cancelable) {
                        DuelClient::SetResponseI(-1);
                        ShowCancelOrFinishButton(0);
                        if (mainGame->wCardSelect->isVisible())
-                       mainGame->HideElement(mainGame->wCardSelect, true);
+                           mainGame->HideElement(mainGame->wCardSelect, true);
                        else
-                       DuelClient::SendResponse();
-                      }
-                break;
+                           DuelClient::SendResponse();
+					  }
+			          break;
                 } 
 				case MSG_SELECT_CARD: {
 					if (selected_cards.size() == 0) {
@@ -1507,12 +1507,11 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 					clicked_card->is_selected = false;
 				} else {
 					clicked_card->is_selected = true;
-					selected_cards.push_back(clicked_card);
 				}
 				selected_cards.push_back(clicked_card);
 				if (selected_cards.size() > 0) {
-					SetResponseSelectedCards();
 					ShowCancelOrFinishButton(0);
+                    SetResponseSelectedCards();
 					DuelClient::SendResponse();
 				}
 				break;
@@ -1644,9 +1643,9 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
                        DuelClient::SetResponseI(-1);
                        ShowCancelOrFinishButton(0);
                        if (mainGame->wCardSelect->isVisible())
-                       mainGame->HideElement(mainGame->wCardSelect, true);
+                           mainGame->HideElement(mainGame->wCardSelect, true);
                        else
-                       DuelClient::SendResponse();
+                           DuelClient::SendResponse();
                 }
                 break;
             }
