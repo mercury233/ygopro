@@ -1502,6 +1502,12 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 					ShowCancelOrFinishButton(0);
 					SetResponseSelectedCards();
 					DuelClient::SendResponse();
+				} else {
+					select_ready = false;
+					if (select_cancelable && selected_cards.size() == 0)
+						ShowCancelOrFinishButton(1);
+					else
+						ShowCancelOrFinishButton(0);
 				}
 				break;
 			}
