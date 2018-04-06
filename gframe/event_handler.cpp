@@ -884,6 +884,7 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 					if(select_ready) {
 						SetResponseSelectedCards();
 						ShowCancelOrFinishButton(0);
+						mainGame->HideElement(mainGame->wCardSelect, true);
 					}
 					break;
 				} else if(mainGame->dInfo.curMsg == MSG_CONFIRM_CARDS) {
@@ -893,6 +894,7 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 				} else if(mainGame->dInfo.curMsg == MSG_SELECT_UNSELECT_CARD){
 					DuelClient::SetResponseI(-1);
 					ShowCancelOrFinishButton(0);
+					mainGame->HideElement(mainGame->wCardSelect, true);
 				} else {
 					mainGame->HideElement(mainGame->wCardSelect);
 					if(mainGame->dInfo.curMsg == MSG_SELECT_CHAIN && !chain_forced)
