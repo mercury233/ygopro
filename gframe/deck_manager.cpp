@@ -54,7 +54,7 @@ void DeckManager::LoadLFList() {
 	nolimit.content = new std::unordered_map<int, int>;
 	_lfList.push_back(nolimit);
 }
-bool DeckManager::RenameDeck(const wchar_t* oldname, const wchar_t* newname) {
+bool DeckManager::RenameDeck(Deck& deck, const wchar_t* oldname, const wchar_t* newname) {
 	wchar_t oldfname[256];
 	wchar_t newfname[256];
 	myswprintf(oldfname, L"./deck/%ls.ydk", oldname);
