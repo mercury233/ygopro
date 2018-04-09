@@ -198,7 +198,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 					}
 					if(DeckManager::RenameDeck(mainGame->cbDBDecks->getItem(prev_sel), newname)) {
 						mainGame->RefreshDeck(mainGame->cbDBDecks);
-						mainGame->cbDBDecks->setItem(prev_sel, newname, -1);
+						myswprintf(newname, L"./deck/%ls.ydk", newname);
+	                                        FILE* fp = OpenDeckFile(newname, "r");
 						mainGame->stACMessage->setText(dataManager.GetSysString(1366));
 					        mainGame->PopupElement(mainGame->wACMessage, 20);
 					} else {
