@@ -198,7 +198,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 					}
 					if(DeckManager::RenameDeck(mainGame->cbDBDecks->getItem(prev_sel), newname)) {
 						mainGame->RefreshDeck(mainGame->cbDBDecks);
-						mainGame->cbDBDecks->setSelected(-1);
+						mainGame->cbDBDecks->addItem(newname);
+						mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getItemCount() - 1);
 						mainGame->stACMessage->setText(dataManager.GetSysString(1366));
 					        mainGame->PopupElement(mainGame->wACMessage, 20);
 					} else {
@@ -215,7 +216,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				prev_sel = -1;
 				break;
 			}
-			case BUTTON_DELETE_DECK: 
+			case BUTTON_DELETE_DECK: {
 				int sel = mainGame->cbDBDecks->getSelected();
 				if(sel == -1)
 					break;
