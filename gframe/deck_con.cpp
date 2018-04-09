@@ -202,6 +202,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 						mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getItemCount() - 1);
 						mainGame->stACMessage->setText(dataManager.GetSysString(1366));
 					        mainGame->PopupElement(mainGame->wACMessage, 20);
+						is_modified = false;
 					} else {
 						mainGame->env->addMessageBox(L"", dataManager.GetSysString(1365));
 					}
