@@ -191,15 +191,14 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			case BUTTON_RENAME_DECK_SAVE: {
 				mainGame->HideElement(mainGame->wRenameDeck);
 				if(prev_operation == BUTTON_RENAME_DECK) {
-					const wchar_t newname[256];
+					wchar_t newname[256];
 					BufferIO::CopyWStr(mainGame->ebREName->getText(), newname, 256);
 					if(mywcsncasecmp(newname + wcslen(newname) - 4, L"", 4)) {
 						myswprintf(newname, L"%ls", mainGame->ebREName->getText());
 					}
 					if(DeckManager::RenameDeck(mainGame->cbDBDecks->getItem(prev_sel), newname)) {
 						mainGame->RefreshDeck(mainGame->cbDBDecks);
-						mainGame->cbDBDecks->addItem(newname);
-						mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getItemCount() - 1);
+						mainGame->cbDBDecks->setSelected(-1);
 						mainGame->stACMessage->setText(dataManager.GetSysString(1366));
 					        mainGame->PopupElement(mainGame->wACMessage, 20);
 					} else {
