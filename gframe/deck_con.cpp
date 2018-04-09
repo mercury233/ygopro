@@ -198,8 +198,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 					}
 					if(DeckManager::RenameDeck(mainGame->cbDBDecks->getItem(prev_sel), newname)) {
 						mainGame->RefreshDeck(mainGame->cbDBDecks);
-						BufferIO::CopyWStr(mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getSelected()), newname, 64);
-						mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getSelected());
+						mainGame->cbDBDecks->addItem(newname)
+						mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getItemCount() - 1);
 						mainGame->stACMessage->setText(dataManager.GetSysString(1366));
 					        mainGame->PopupElement(mainGame->wACMessage, 20);
 					} else {
