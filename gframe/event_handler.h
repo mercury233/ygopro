@@ -100,8 +100,7 @@ HRESULT ( STDMETHODCALLTYPE OnObjectAvailable )(
     return E_NOTIMPL;
 }
 
-static const IBindStatusCallbackVtbl IBindStatusCallback_Vtbl =
-{
+static const IBindStatusCallbackVtbl* IBindStatusCallback_Vtbl = {
     QueryInterface,
     AddRef,
     Release,
