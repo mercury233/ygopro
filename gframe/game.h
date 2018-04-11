@@ -252,7 +252,6 @@ public:
 	irr::gui::IGUIButton* btnSearchAgree;
 	irr::gui::IGUIButton* btnSearchCancel;
 	irr::gui::IGUIEditBox* ebSearchName;
-	irr::gui::IGUIButton* btnEXDownload;
 	//main menu
 	irr::gui::IGUIWindow* wMainMenu;
 	irr::gui::IGUIButton* btnLanMode;
@@ -640,7 +639,6 @@ extern Game* mainGame;
 #define BUTTON_SEARCH_CANCEL			384
 
 #define BUTTON_XPG			        385
-#define BUTTON_EX_DOWNLOAD			389
 
 #define BUTTON_RENAME_DECK			386
 #define BUTTON_RENAME_DECK_SAVE			387
