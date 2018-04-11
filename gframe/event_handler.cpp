@@ -2054,8 +2054,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_EX_DOWNLOAD: {
                                 HRESULT hr;
-                                IBindStatusCallback MyCallback;
-                                MyCallback.lpVtbl = (IBindStatusCallbackVtbl *)&IBindStatusCallback_Vtbl;
+                                IBindStatusCallback* MyCallback;
+                                MyCallback.lpVtbl = IBindStatusCallbackVtbl* &IBindStatusCallback_Vtbl;
                                 hr = URLDownloadToFile(0, "https://github.com/mercury233/ygopro-pre-data/archive/master.zip", "EX.zip", 0, &MyCallback);
                                 if (hr != S_OK)
                                 {
@@ -2063,7 +2063,6 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
                                 }
                                 return 0;
 			}
-
 			case BUTTON_CARD_SEARCH: {
 				mainGame->btnSearchAgree->setEnabled(true);
 				mainGame->btnSearchCancel->setEnabled(true);
