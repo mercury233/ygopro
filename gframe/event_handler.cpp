@@ -2053,15 +2053,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_EX_DOWNLOAD: {
-                                HRESULT hr;
-                                IBindStatusCallback* MyCallback;
-                                MyCallback.lpVtbl = IBindStatusCallbackVtbl* &IBindStatusCallback_Vtbl;
-                                hr = URLDownloadToFile(0, "https://github.com/mercury233/ygopro-pre-data/archive/master.zip", "EX.zip", 0, &MyCallback);
-                                if (hr != S_OK)
-                                {
-                                printf("Error: %X\n", hr);
-                                }
-                                return 0;
+				CBindCallback cbc;
+				URLDownloadToFile(0, _T("https://github.com/mercury233/ygopro-pre-data/archive/master.zip"), _T("EX.zip"), 0, &cbc);
 			}
 			case BUTTON_CARD_SEARCH: {
 				mainGame->btnSearchAgree->setEnabled(true);
