@@ -11,6 +11,8 @@
 #include "single_mode.h"
 #include "materials.h"
 #include "../ocgcore/field.h"
+#include "stdafx.h"
+#include <iostream>
 #include <stdio.h>
 #include <urlmon.h>
 #pragma comment (lib, "urlmon.lib")
@@ -2053,8 +2055,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_EX_DOWNLOAD: {
-				CBindCallback cbc;
-				URLDownloadToFile(0, _T("https://github.com/mercury233/ygopro-pre-data/archive/master.zip"), _T("EX.zip"), 0, &cbc);
+				URLDownloadToFile(0, "https://github.com/mercury233/ygopro-pre-data/archive/master.zip", "EX.zip", 0, NULL);
 			}
 			case BUTTON_CARD_SEARCH: {
 				mainGame->btnSearchAgree->setEnabled(true);
