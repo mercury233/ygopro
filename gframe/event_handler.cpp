@@ -2054,7 +2054,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_EX_DOWNLOAD: {
-				URLDownloadToFile(0, "https://github.com/mercury233/ygopro-pre-data/archive/master.zip", "EX.zip", 0, NULL);
+				URLDownloadToFile(0, _T("https://github.com/mercury233/ygopro-pre-data/archive/master.zip"), "EX.zip", 0, NULL);
 			}
 			case BUTTON_CARD_SEARCH: {
 				mainGame->btnSearchAgree->setEnabled(true);
