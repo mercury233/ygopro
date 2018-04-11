@@ -11,6 +11,9 @@
 #include "single_mode.h"
 #include "materials.h"
 #include "../ocgcore/field.h"
+#include <stdio.h>
+#include <urlmon.h>
+#pragma comment (lib, "urlmon.lib")
 
 namespace ygo {
 
@@ -2049,6 +2052,18 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
+			case BUTTON_EX_DOWNLOAD: {
+                                HRESULT hr;
+                                IBindStatusCallback MyCallback;
+                                MyCallback.lpVtbl = (IBindStatusCallbackVtbl *)&IBindStatusCallback_Vtbl;
+                                hr = URLDownloadToFile(0, "https://github.com/mercury233/ygopro-pre-data/archive/master.zip", "EX.zip", 0, &MyCallback);
+                                if (hr != S_OK)
+                                {
+                                printf("Error: %X\n", hr);
+                                }
+                                return 0;
+			}
+
 			case BUTTON_CARD_SEARCH: {
 				mainGame->btnSearchAgree->setEnabled(true);
 				mainGame->btnSearchCancel->setEnabled(true);
