@@ -11,7 +11,6 @@
 #include "single_mode.h"
 #include "materials.h"
 #include "../ocgcore/field.h"
-#include "stdafx.h"
 #include <iostream>
 #include <stdio.h>
 #include <urlmon.h>
