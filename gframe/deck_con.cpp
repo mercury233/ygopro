@@ -262,6 +262,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				for(int i = 0; i < 32; ++i, filter <<= 1)
 					if(mainGame->chkCategory[i]->isChecked())
 						filter_effect |= filter;
+				mainGame->btnEffectFilter->setPressed(filter_effect > 0);
 				mainGame->HideElement(mainGame->wCategories);
 				InstantSearch();
 				break;
@@ -360,6 +361,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 				if (mainGame->btnMark[7]->isPressed())
 					filter_marks |= 0004;
 				mainGame->HideElement(mainGame->wLinkMarks);
+				mainGame->btnMarksFilter->setPressed(filter_marks > 0);
 				InstantSearch();
 				break;
 			}
@@ -682,6 +684,11 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 		case irr::EMIE_MOUSE_WHEEL: {
 			if(!mainGame->scrFilter->isVisible())
 				break;
+			if(mainGame->env->hasFocus(mainGame->scrFilter))
+				break;
+			irr::gui::IGUIElement* root = mainGame->env->getRootGUIElement();
+			if(root->getElementFromPoint(mouse_pos) != root)
+				break;
 			if(event.MouseInput.Wheel < 0) {
 				if(mainGame->scrFilter->getPos() < mainGame->scrFilter->getMax())
 					mainGame->scrFilter->setPos(mainGame->scrFilter->getPos() + 1);
@@ -951,6 +958,8 @@ void DeckBuilder::ClearFilter() {
 	filter_marks = 0;
 	for(int i = 0; i < 8; i++)
 		mainGame->btnMark[i]->setPressed(false);
+	mainGame->btnEffectFilter->setPressed(false);
+	mainGame->btnMarksFilter->setPressed(false);
 }
 void DeckBuilder::SortList() {
 	auto left = results.begin();

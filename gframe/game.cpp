@@ -732,7 +732,7 @@ void Game::MainLoop() {
 		atkdy = (float)sin(atkframe);
 		driver->beginScene(true, true, SColor(0, 0, 0, 0));
 		gMutex.Lock();
-		if(dInfo.isStarted) {
+		if(dInfo.isStarted|| dInfo.isReplaySkiping) {
 			if(mainGame->dInfo.isFinished && mainGame->showcardcode == 1)
 				soundManager.PlayBGM(BGM_WIN);
 			else if(mainGame->dInfo.isFinished && (mainGame->showcardcode == 2 || mainGame->showcardcode == 3))
@@ -824,6 +824,8 @@ void Game::InitStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, u32 cH
 	SetStaticText(pControl, cWidth, font, text);
 	if(font->getDimension(dataManager.strBuffer).Height <= cHeight) {
 		scrCardText->setVisible(false);
+		if(env->hasFocus(scrCardText))
+			env->removeFocus(scrCardText);
 		return;
 	}
 	SetStaticText(pControl, cWidth-25, font, text);
@@ -1451,6 +1453,12 @@ void Game::FlashWindow() {
 	fi.dwTimeout = 0;
 	FlashWindowEx(&fi);
 #endif
+}
+void Game::SetCursor(ECURSOR_ICON icon) {
+	ICursorControl* cursor = mainGame->device->getCursorControl();
+	if(cursor->getActiveIcon() != icon) {
+		cursor->setActiveIcon(icon);
+	}
 }
 
 }
