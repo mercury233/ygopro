@@ -181,7 +181,7 @@ irr::video::ITexture* ImageManager::GetTextureFromFile(char* file, s32 width, s3
 		return driver->getTexture(file);
 	}
 }
-irr::video::ITexture* ImageManager::GetTexture(int code) {
+irr::video::ITexture* ImageManager::GetTexture(int code, bool fit) {
 	if(code == 0)
 		return tUnknown;
 	int width = CARD_IMG_WIDTH;
