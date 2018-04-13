@@ -217,7 +217,7 @@ irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 		return tUnknown;
 	auto tit = tThumb.find(code);
 	int width = CARD_THUMB_WIDTH * mainGame->xScale;
-	int height = CARD_THUMB_WIDTH * 1.4544 * mainGame->yScale;
+	int height = CARD_THUMB_HEIGHT * mainGame->yScale;
 	if(tit == tThumb.end()) {
 		static const std::string exts[] = { ".bpg", ".jpg" };
 		char file[256];

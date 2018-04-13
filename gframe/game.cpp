@@ -208,10 +208,10 @@ bool Game::Initialize() {
 	btnHostPrepStart = env->addButton(rect<s32>(230, 280, 340, 305), wHostPrepare, BUTTON_HP_START, dataManager.GetSysString(1215));
 	btnHostPrepCancel = env->addButton(rect<s32>(350, 280, 460, 305), wHostPrepare, BUTTON_HP_CANCEL, dataManager.GetSysString(1210));
 	//img
-	wCardImg = env->addStaticText(L"", rect<s32>(1, 1, 1 + CARD_IMG_WIDTH + 20, (1 + CARD_IMG_WIDTH * 1.43503) + 18), true, false, 0, -1, true);
+	wCardImg = env->addStaticText(L"", rect<s32>(1, 1, (10 + CARD_IMG_WIDTH) * 1.1796, (9 + CARD_IMG_HEIGHT) * 1.11), true, false, 0, -1, true);
 	wCardImg->setBackgroundColor(0xc0c0c0c0);
 	wCardImg->setVisible(false);
-	imgCard = env->addImage(rect<s32>(10, 9, 10 + CARD_IMG_WIDTH, 9 + CARD_IMG_WIDTH * 1.43503), wCardImg);
+	imgCard = env->addImage(rect<s32>(10, 9, 10 + CARD_IMG_WIDTH, 9 + CARD_IMG_HEIGHT), wCardImg);
 	imgCard->setImage(imageManager.tCover[0]);
 	showingcode = 0;
 	imgCard->setScaleImage(true);
@@ -1582,8 +1582,8 @@ void Game::OnResize() {
 		btnReset->setRelativePosition(recti(1, 1, width, height));
 	}
 
-	wCardImg->setRelativePosition(Resize(1, 1, 1 + CARD_IMG_WIDTH + 20, (1 + CARD_IMG_WIDTH) * 1.43503 + 18));
-	imgCard->setRelativePosition(Resize(10, 9, 10 + CARD_IMG_WIDTH, (9 + CARD_IMG_WIDTH) * 1.43503));
+	wCardImg->setRelativePosition(Resize(1, 1, (10 + CARD_IMG_WIDTH) * 1.1796, (9 + CARD_IMG_HEIGHT) * 1.11));
+	imgCard->setRelativePosition(Resize(10, 9, 10 + CARD_IMG_WIDTH, 9 + CARD_IMG_HEIGHT));
 	wInfos->setRelativePosition(Resize(1, 275, 301, 639));
 	stName->setRelativePosition(recti(10, 10, 287 * xScale, 32));
 	lstLog->setRelativePosition(Resize(10, 10, 290, 290));

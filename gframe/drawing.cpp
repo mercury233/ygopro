@@ -1054,11 +1054,11 @@ void Game::DrawThumb(code_pointer cp, position2di pos, std::unordered_map<int, i
 	if(img == NULL)
 		return; //NULL->getSize() will cause a crash
 	dimension2d<u32> size = img->getOriginalSize();
-	recti dragloc = mainGame->Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, (pos.Y + CARD_THUMB_WIDTH) * 1.4544);
+	recti dragloc = mainGame->Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT);
 	recti limitloc = mainGame->Resize(pos.X, pos.Y, pos.X + 20, pos.Y + 20);
 	recti otloc = Resize(pos.X + 7, pos.Y + 50, pos.X + 37, pos.Y + 65);
 	if(drag) {
-		dragloc = recti(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH * mainGame->xScale, (pos.Y + CARD_THUMB_WIDTH) * 1.4544 * mainGame->yScale);
+		dragloc = recti(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH * mainGame->xScale, pos.Y + CARD_THUMB_HEIGHT * mainGame->yScale);
 		limitloc = recti(pos.X, pos.Y, pos.X + 20 * mainGame->xScale, pos.Y + 20 * mainGame->yScale);
 		otloc = recti(pos.X + 7, pos.Y + 50, pos.X + 37 * mainGame->xScale, pos.Y + 65 * mainGame->yScale);
 	}
@@ -1211,7 +1211,7 @@ void Game::DrawDeckBd() {
 		}
 	}
 	if(deckBuilder.is_draging) {
-		DrawThumb(deckBuilder.draging_pointer, position2di(deckBuilder.dragx - CARD_THUMB_WIDTH / 2 * mainGame->xScale, (deckBuilder.dragy - CARD_THUMB_WIDTH) * 1.4544 / 2 * mainGame->yScale), deckBuilder.filterList, true);
+		DrawThumb(deckBuilder.draging_pointer, position2di(deckBuilder.dragx - CARD_THUMB_WIDTH / 2 * mainGame->xScale, deckBuilder.dragy - CARD_THUMB_HEIGHT / 2 * mainGame->yScale), deckBuilder.filterList, true);
 	}
 }
 }
