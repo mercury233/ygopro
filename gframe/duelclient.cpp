@@ -3744,7 +3744,7 @@ void DuelClient::SendResponse() {
 		mainGame->btnShuffle->setVisible(false);
 		break;
 	}
-	case MSG_SELECT_CARD: 
+	case MSG_SELECT_CARD:
 	case MSG_SELECT_UNSELECT_CARD: {
 		mainGame->dField.ClearSelect();
 		break;
