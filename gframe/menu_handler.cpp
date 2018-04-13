@@ -213,6 +213,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wReplay);
 				mainGame->ebRepStartTurn->setText(L"1");
+				mainGame->stReplayInfo->setText(L"");
 				mainGame->RefreshReplay();
 				break;
 			}
@@ -234,6 +235,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 						break;
 				}
 				mainGame->imgCard->setImage(imageManager.tCover[0]);
+				mainGame->showingcode = 0;
 				mainGame->wCardImg->setVisible(true);
 				mainGame->wInfos->setVisible(true);
 				mainGame->wReplay->setVisible(true);

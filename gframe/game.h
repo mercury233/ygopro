@@ -50,6 +50,10 @@ struct Config {
 	double music_volume;
 	int music_mode;
 	int chkEnablePScale;
+	bool window_maximized;
+	int window_width;
+	int window_height;
+	bool resize_popup_menu;
 };
 
 struct DuelInfo {
@@ -119,6 +123,7 @@ public:
 	void CheckMutual(ClientCard* pcard, int mark);
 	void DrawCards();
 	void DrawCard(ClientCard* pcard);
+	void DrawShadowText(irr::gui::CGUITTFont* font, const core::stringw& text, const core::rect<s32>& position, const core::rect<s32>& padding, video::SColor color = 0xffffffff, video::SColor shadowcolor = 0xff000000, bool hcenter = false, bool vcenter = false, const core::rect<s32>* clip = 0);
 	void DrawMisc();
 	void DrawStatus(ClientCard* pcard, int x1, int y1, int x2, int y2);
 	void DrawGUI();
@@ -132,7 +137,7 @@ public:
 	void DrawDeckBd();
 	void LoadConfig();
 	void SaveConfig();
-	void ShowCardInfo(int code);
+	void ShowCardInfo(int code, bool resize = false);
 	void AddChatMsg(wchar_t* msg, int player);
 	void AddDebugMsg(char* msgbuf);
 	void ClearTextures();
@@ -145,6 +150,14 @@ public:
 		irr::gui::IGUIElement* focus = env->getFocus();
 		return focus && focus->hasType(type);
 	}
+
+	void OnResize();
+	recti Resize(s32 x, s32 y, s32 x2, s32 y2);
+	recti Resize(s32 x, s32 y, s32 x2, s32 y2, s32 dx, s32 dy, s32 dx2, s32 dy2);
+	position2di Resize(s32 x, s32 y);
+	position2di ResizeReverse(s32 x, s32 y);
+	recti ResizeElem(s32 x, s32 y, s32 x2, s32 y2);
+	recti ResizeWin(s32 x, s32 y, s32 x2, s32 y2, bool chat = false);
 
 	void SetWindowsIcon();
 	void FlashWindow();
@@ -175,6 +188,7 @@ public:
 	int waitFrame;
 	int signalFrame;
 	int actionParam;
+	int showingcode;
 	const wchar_t* showingtext;
 	int showcard;
 	int showcardcode;
@@ -196,6 +210,10 @@ public:
 
 	bool is_building;
 	bool is_siding;
+
+	irr::core::dimension2d<irr::u32> window_size;
+	float xScale;
+	float yScale;
 
 	ClientField dField;
 	DeckBuilder deckBuilder;
