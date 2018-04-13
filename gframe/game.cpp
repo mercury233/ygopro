@@ -1582,8 +1582,8 @@ void Game::OnResize() {
 		btnReset->setRelativePosition(recti(1, 1, width, height));
 	}
 
-	wCardImg->setRelativePosition(Resize(1, 1, 1 + CARD_IMG_WIDTH + 20, 1 + CARD_IMG_HEIGHT + 18));
-	imgCard->setRelativePosition(Resize(10, 9, CARD_IMG_WIDTH - 21, 9 + CARD_IMG_HEIGHT));
+	wCardImg->setRelativePosition(Resize(1, 1, CARD_IMG_WIDTH * 1.08, CARD_IMG_HEIGHT * 1.08));
+	imgCard->setRelativePosition(Resize(10, 9, 10 + CARD_IMG_WIDTH, 9 + CARD_IMG_HEIGHT));
 	wInfos->setRelativePosition(Resize(1, 275, 301, 639));
 	stName->setRelativePosition(recti(10, 10, 287 * xScale, 32));
 	lstLog->setRelativePosition(Resize(10, 10, 290, 290));
