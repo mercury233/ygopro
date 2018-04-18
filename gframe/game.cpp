@@ -238,11 +238,11 @@ bool Game::Initialize() {
 	stName = env->addStaticText(L"", rect<s32>(10, 10, 287, 32), true, false, tabInfo, -1, false);
 	stName->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	stInfo = env->addStaticText(L"", rect<s32>(15, 37, 296, 60), false, true, tabInfo, -1, false);
-	stInfo->setOverrideColor(SColor(255, 0, 75, 0));
+	stInfo->setOverrideColor(SColor(255, 0, 50, 0));
 	stDataInfo = env->addStaticText(L"", rect<s32>(15, 60, 296, 83), false, true, tabInfo, -1, false);
-	stDataInfo->setOverrideColor(SColor(255, 191, 40, 0));
+	stDataInfo->setOverrideColor(SColor(255, 197, 16, 0));
 	stSetName = env->addStaticText(L"", rect<s32>(15, 83, 296, 106), false, true, tabInfo, -1, false);
-	stSetName->setOverrideColor(SColor(255, 13, 66, 106));
+	stSetName->setOverrideColor(SColor(255, 11, 35, 78));
 	stText = env->addStaticText(L"", rect<s32>(15, 106, 287, 324), false, true, tabInfo, -1, false);
 	scrCardText = env->addScrollBar(false, rect<s32>(267, 106, 287, 324), tabInfo, SCROLL_CARDTEXT);
 	scrCardText->setLargeStep(1);
