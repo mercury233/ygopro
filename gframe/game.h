@@ -5,6 +5,7 @@
 #include "client_field.h"
 #include "deck_con.h"
 #include "menu_handler.h"
+#include "CGUISkinSystem/CGUISkinSystem.h"
 #include <unordered_map>
 #include <vector>
 #include <list>
@@ -54,6 +55,7 @@ struct Config {
 	int window_width;
 	int window_height;
 	bool resize_popup_menu;
+	int skin_index;
 };
 
 struct DuelInfo {
@@ -65,8 +67,10 @@ struct DuelInfo {
 	bool isTag;
 	bool isSingleMode;
 	bool is_shuffling;
+	bool is_swapped;
 	bool tag_player[2];
 	int lp[2];
+	int start_lp[2];
 	int duel_rule;
 	int turn;
 	short curMsg;
@@ -80,6 +84,9 @@ struct DuelInfo {
 	unsigned char time_player;
 	unsigned short time_limit;
 	unsigned short time_left[2];
+	wchar_t str_time_limit[16];
+	wchar_t str_time_left[2][16];
+	video::SColor time_color[2];
 	bool isReplaySwapped;
 };
 
@@ -108,6 +115,7 @@ class Game {
 public:
 	bool Initialize();
 	void MainLoop();
+	void RefreshTimeDisplay();
 	void BuildProjectionMatrix(irr::core::matrix4& mProjection, f32 left, f32 right, f32 bottom, f32 top, f32 znear, f32 zfar);
 	void InitStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, u32 cHeight, irr::gui::CGUITTFont* font, const wchar_t* text);
 	void SetStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, irr::gui::CGUITTFont* font, const wchar_t* text, u32 pos = 0);
@@ -158,6 +166,7 @@ public:
 	position2di ResizeReverse(s32 x, s32 y);
 	recti ResizeElem(s32 x, s32 y, s32 x2, s32 y2);
 	recti ResizeWin(s32 x, s32 y, s32 x2, s32 y2, bool chat = false);
+	recti ResizeCard(s32 x, s32 y, s32 x2, s32 y2);
 
 	void SetWindowsIcon();
 	void FlashWindow();
@@ -214,6 +223,8 @@ public:
 	irr::core::dimension2d<irr::u32> window_size;
 	float xScale;
 	float yScale;
+	
+	CGUISkinSystem *skinSystem;
 
 	ClientField dField;
 	DeckBuilder deckBuilder;
@@ -455,7 +466,7 @@ public:
 	irr::gui::IGUIStaticText* stSearch;
 	irr::gui::IGUIStaticText* stScale;
 	irr::gui::IGUIButton* btnRenameDeck;
-	//replay save
+	//deck rename
 	irr::gui::IGUIWindow* wRenameDeck;
 	irr::gui::IGUIEditBox* ebREName;
 	irr::gui::IGUIButton* btnREYes;
@@ -674,6 +685,14 @@ extern Game* mainGame;
 #define BUTTON_RENAME_DECK			386
 #define BUTTON_RENAME_DECK_SAVE			387
 #define BUTTON_RENAME_DECK_CANCEL		388
+
+#define TEXTURE_DUEL				0
+#define TEXTURE_DECK				1
+#define TEXTURE_MENU				2
+#define TEXTURE_COVER_S				3
+#define TEXTURE_COVER_O				4
+#define TEXTURE_ATTACK				5
+#define TEXTURE_ACTIVATE			6
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
