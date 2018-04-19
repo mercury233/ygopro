@@ -1021,7 +1021,6 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			mainGame->WaitFrameSignal(30);
 			break;
 		}
-		//playing custom bgm
 		case HINT_MUSIC: {
 			char BGMName[1024];
 			if (data) {
@@ -1033,7 +1032,6 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			}
 			break;
 		}
-		//playing custom sound effect
 		case HINT_SOUND: {
 			char SoundName[1024];
 			if (data) {
@@ -1045,7 +1043,6 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			}
 			break;
 		}
-		//playing custom bgm in ogg format
 		case HINT_MUSIC_OGG: {
 			char BGMName[1024];
 			if (data) {
