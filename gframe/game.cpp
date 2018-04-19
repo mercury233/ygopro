@@ -1639,6 +1639,7 @@ void Game::OnResize() {
 
 	wCardImg->setRelativePosition(ResizeCard(1, 1, 20, 18));
 	imgCard->setRelativePosition(ResizeCard(10, 9, 0, 0));
+	imgCard->setScaleImage(true);
 	wInfos->setRelativePosition(Resize(1, 275, 301, 639));
 	stName->setRelativePosition(recti(10, 10, 287 * xScale, 32));
 	lstLog->setRelativePosition(Resize(10, 10, 290, 290));
