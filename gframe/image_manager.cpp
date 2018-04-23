@@ -194,8 +194,16 @@ irr::video::ITexture* ImageManager::GetTexture(int code, bool fit) {
 	if(tit == tMap[fit ? 1 : 0].end()) {
 		static const std::string exts[] = { ".bpg", ".jpg" };
 		char file[256];
-		sprintf(file, "expansions/pics/%d.jpg", code);
+		sprintf(file, "expansions/pics/%d.png", code);
 		irr::video::ITexture* img = GetTextureFromFile(file, width, height);
+		if(img == NULL) {
+			sprintf(file, "expansions/pics/%d.jpg", code);
+			img = GetTextureFromFile(file, width, height);
+		}
+		if(img == NULL) {
+			sprintf(file, "pics/%d.png", code);
+			img = GetTextureFromFile(file, width, height);
+		}
 		if(img == NULL) {
 			sprintf(file, "pics/%d.jpg", code);
 			img = GetTextureFromFile(file, width, height);
@@ -221,15 +229,31 @@ irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 	if(tit == tThumb.end()) {
 		static const std::string exts[] = { ".bpg", ".jpg" };
 		char file[256];
-		sprintf(file, "expansions/pics/thumbnail/%d.jpg", code);
+		sprintf(file, "expansions/pics/thumbnail/%d.png", code);
 		irr::video::ITexture* img = GetTextureFromFile(file, width, height);
+		if(img == NULL) {
+			sprintf(file, "expansions/pics/thumbnail/%d.jpg", code);
+			img = GetTextureFromFile(file, width, height);
+		}
+		if(img == NULL) {
+			sprintf(file, "pics/thumbnail/%d.png", code);
+			img = GetTextureFromFile(file, width, height);
+		}
 		if(img == NULL) {
 			sprintf(file, "pics/thumbnail/%d.jpg", code);
 			img = GetTextureFromFile(file, width, height);
 		}
 		if(img == NULL && mainGame->gameConf.use_image_scale) {
-			sprintf(file, "expansions/pics/%d.jpg", code);
+			sprintf(file, "expansions/pics/%d.png", code);
 			img = GetTextureFromFile(file, width, height);
+			if(img == NULL) {
+				sprintf(file, "expansions/pics/%d.jpg", code);
+				img = GetTextureFromFile(file, width, height);
+			}
+			if(img == NULL) {
+				sprintf(file, "pics/%d.png", code);
+				img = GetTextureFromFile(file, width, height);
+			}
 			if(img == NULL) {
 				sprintf(file, "pics/%d.jpg", code);
 				img = GetTextureFromFile(file, width, height);
