@@ -440,7 +440,7 @@ bool Game::Initialize() {
 	cbANNumber->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	btnANNumberOK = env->addButton(rect<s32>(80, 60, 150, 85), wANNumber, BUTTON_ANNUMBER_OK, dataManager.GetSysString(1211));
 	//announce card
-	wANCard = env->addWindow(rect<s32>(580, 180, 790, 380), false, L"");
+	wANCard = env->addWindow(rect<s32>(570, 170, 780, 370), false, L"");
 	wANCard->getCloseButton()->setVisible(false);
 	wANCard->setVisible(false);
 	ebANCard = env->addEditBox(L"", rect<s32>(20, 25, 190, 45), true, wANCard, EDITBOX_ANCARD);
@@ -585,7 +585,7 @@ bool Game::Initialize() {
 		btnStartFilter->setRelativePosition(rect<s32>(260, 80 + 125 / 6, 390, 100 + 125 / 6));
 		btnClearFilter = env->addButton(rect<s32>(205, 80 + 125 / 6, 255, 100 + 125 / 6), wFilter, BUTTON_CLEAR_FILTER, dataManager.GetSysString(1304));
 	}
-	wCategories = env->addWindow(rect<s32>(700, 22, 1030, 265), false, dataManager.strBuffer);
+	wCategories = env->addWindow(rect<s32>(630, 60, 1000, 270), false, dataManager.strBuffer);
 	wCategories->getCloseButton()->setVisible(false);
 	wCategories->setDrawTitlebar(false);
 	wCategories->setDraggable(false);
@@ -1575,7 +1575,7 @@ void Game::OnResize() {
 		btnClearFilter->setRelativePosition(Resize(205, 80 + 125 / 6, 255, 100 + 125 / 6));
 	btnMarksFilter->setRelativePosition(Resize(60, 80 + 125 / 6, 190, 100 + 125 / 6));
 
-	wCategories->setRelativePosition(ResizeWin(635, 55, 1005, 265));
+	wCategories->setRelativePosition(ResizeWin(630, 60, 1000, 270));
 	wLinkMarks->setRelativePosition(ResizeWin(700, 30, 820, 150));
 	stBanlist->setRelativePosition(ResizeWin(10, 9, 100, 29));
 	stDeck->setRelativePosition(ResizeWin(10, 39, 100, 59));
