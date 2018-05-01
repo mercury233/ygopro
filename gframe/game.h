@@ -147,6 +147,7 @@ public:
 	void SaveConfig();
 	void ShowCardInfo(int code, bool resize = false);
 	void AddChatMsg(wchar_t* msg, int player);
+	void ClearChatMsg();
 	void AddDebugMsg(char* msgbuf);
 	void ClearTextures();
 	void CloseDuelWindow();
@@ -167,6 +168,11 @@ public:
 	recti ResizeElem(s32 x, s32 y, s32 x2, s32 y2);
 	recti ResizeWin(s32 x, s32 y, s32 x2, s32 y2, bool chat = false);
 	recti ResizeCard(s32 x, s32 y, s32 x2, s32 y2);
+	recti ResizeCardHint(s32 x, s32 y, s32 x2, s32 y2);
+	position2di ResizeCardHint(s32 x, s32 y);
+	recti ResizeCardMid(s32 x, s32 y, s32 x2, s32 y2, s32 midx, s32 midy);
+	position2di ResizeCardMid(s32 x, s32 y, s32 midx, s32 midy);
+	recti ResizeForced(s32 x, s32 y, s32 x2, s32 y2);
 
 	void SetWindowsIcon();
 	void FlashWindow();
@@ -678,7 +684,7 @@ extern Game* mainGame;
 
 #define BUTTON_CARD_SEARCH			382
 #define BUTTON_SEARCH_AGREE			383
-#define BUTTON_SEARCH_CANCEL			384
+#define BUTTON_SEARCH_CANCEL		384
 
 #define BUTTON_XPG			        385
 
