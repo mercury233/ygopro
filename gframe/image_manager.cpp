@@ -10,10 +10,17 @@ bool ImageManager::Initial()  {
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
-	tHead[0] = driver->getTexture("textures/head/head.jpg");
-	tHead[1] = driver->getTexture("textures/head/head2.jpg");
-	if(!tHead[1])
-		tHead[1] = tHead[0];
+	char head[256];
+	const wchar_t* dad = mainGame->lpplayer->getText();
+	BufferIO::CopyWStr(dad, mainGame->lpplayer, 256);
+	int nLength = WideCharToMultiByte(CP_ACP, 0, pstr, -1, NULL, 0, NULL,NULL);
+	WideCharToMultiByte(CP_ACP, 0, pstr, -1, buf, nLength, NULL, NULL);
+	char dad1[300];
+	sprintf(dad1, "textures/head/head_%c.jpg", dad[0]);
+	tHead[0] = driver->getTexture(dad1);
+	char dad2[300];
+	sprintf(dad2, "textures/head2/head_%c.jpg", dad[0]);
+	tHead[1] = driver->getTexture(dad2);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
