@@ -392,15 +392,15 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->drawVertexPrimitiveList(matManager.vNegate, 4, matManager.iRectangle, 2);
 	}
 	if(!dInfo.isReplay && dInfo.player_type < 7) {
-	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(330, 80, 410, 160, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 80, 990, 160, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(415, 79, 440, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
-		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(885, 79, 910, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);		
+	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(330, 60, 410, 140, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 60, 990, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(415, 80, 440, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
+		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(880, 80, 905, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);		
 	} else {
-		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(330, 80, 410, 160, 600, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 80, 990, 160, 707, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(415, 79, 440, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
-		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(885, 79, 910, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
+		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(330, 60, 410, 140, 600, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 60, 990, 140, 707, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(415, 80, 440, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
+		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(880, 80, 905, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
 	}
 	if(pcard->cmdFlag & COMMAND_ATTACK) {
 		matManager.mTexture.setTexture(0, imageManager.tAttack);
