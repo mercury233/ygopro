@@ -392,15 +392,11 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->drawVertexPrimitiveList(matManager.vNegate, 4, matManager.iRectangle, 2);
 	}
 	if(!dInfo.isReplay && dInfo.player_type < 7) {
-	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(325, 50, 405, 130, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(905, 50, 985, 130, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(415, 50, 440, 70), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
-		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(880, 50, 905, 70), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);		
+	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(330, 60, 410, 140, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 60, 990, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);		
 	} else {
-		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(325, 50, 405, 130, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(905, 50, 985, 130, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(415, 50, 440, 70), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
-		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(880, 50, 905, 70), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
+		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(330, 60, 410, 140, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 60, 990, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 	}
 	if(pcard->cmdFlag & COMMAND_ATTACK) {
 		matManager.mTexture.setTexture(0, imageManager.tAttack);
@@ -554,6 +550,9 @@ void Game::DrawMisc() {
 		driver->draw2DRectangleOutline(Resize(525, 34, 625, 44), 0xffffffff);
 		driver->draw2DRectangle(Resize(795 - dInfo.time_left[1] * 100 / dInfo.time_limit, 34, 795, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
 		driver->draw2DRectangleOutline(Resize(695, 34, 795, 44), 0xffffffff);
+	
+	    DrawShadowText(numFont, dInfo.str_card_count[0], Resize(445, 31, 470, 50), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
+		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(862, 31, 887, 50), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
 	}
 	DrawShadowText(numFont, dInfo.strLP[0], Resize(330, 12, 631, 30), Resize(0, 1, 2, 0), 0xffffff00, 0xff000000, true, false, 0);
 	DrawShadowText(numFont, dInfo.strLP[1], Resize(691, 12, 992, 30), Resize(0, 1, 2, 0), 0xffffff00, 0xff000000, true, false, 0);
