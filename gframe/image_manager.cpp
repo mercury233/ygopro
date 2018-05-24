@@ -11,16 +11,16 @@ bool ImageManager::Initial()  {
 	if(!tCover[1])
 		tCover[1] = tCover[0];
 	char head1[256];
-		const wchar_t* daddy1 = mainGame->dInfo.clientname->getText();
-		int nLength = WideCharToMultiByte(CP_ACP, 0, daddy1, -1, NULL, 0, NULL,NULL);
-		WideCharToMultiByte(CP_ACP, 0, daddy1, -1, head1, nLength, NULL, NULL);
+		const wchar_t* daddy1 = mainGame->clientname->getText();
+		int nLength1 = WideCharToMultiByte(CP_ACP, 0, daddy1, -1, NULL, 0, NULL,NULL);
+		WideCharToMultiByte(CP_ACP, 0, daddy1, -1, head1, nLength1, NULL, NULL);
 		char dad1[300];
 		sprintf(dad1, "textures/head/head_%c.jpg", head1[0]);
 	tHead[0] = driver->getTexture(dad1);
 	char head2[256];
-		const wchar_t* daddy2 = mainGame->dInfo.clientname_tag->getText();
-		int nLength = WideCharToMultiByte(CP_ACP, 0, daddy2, -1, NULL, 0, NULL,NULL);
-		WideCharToMultiByte(CP_ACP, 0, daddy2, -1, head2, nLength, NULL, NULL);
+		const wchar_t* daddy2 = mainGame->clientname_tag->getText();
+		int nLength2 = WideCharToMultiByte(CP_ACP, 0, daddy2, -1, NULL, 0, NULL,NULL);
+		WideCharToMultiByte(CP_ACP, 0, daddy2, -1, head2, nLength2, NULL, NULL);
 		char dad2[300];
 		sprintf(dad2, "textures/head/head_%c.jpg", head2[0]);
 	tHead[1] = driver->getTexture(dad2);
