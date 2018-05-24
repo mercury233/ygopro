@@ -10,6 +10,10 @@ bool ImageManager::Initial()  {
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
+	tHead[0] = driver->getTexture("textures/head.jpg");
+	tHead[1] = driver->getTexture("textures/head2.jpg");
+	if(!tHead[1])
+		tHead[1] = tHead[0];
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");

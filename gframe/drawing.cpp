@@ -392,13 +392,13 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->drawVertexPrimitiveList(matManager.vNegate, 4, matManager.iRectangle, 2);
 	}
 	if(!dInfo.isReplay && dInfo.player_type < 7) {
-	    driver->draw2DImage(imageManager.tCover[0], ResizeCardMid(433, 80, 445, 100, 455, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
-		driver->draw2DImage(imageManager.tCover[1], ResizeCardMid(850, 80, 862, 100, 862, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
+	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(433, 40, 445, 100, 455, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(850, 40, 862, 100, 862, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
 		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(445, 79, 470, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
 		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(862, 79, 887, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);		
 	} else {
-		driver->draw2DImage(imageManager.tCover[0], ResizeCardMid(588, 80, 600, 100, 600, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
-		driver->draw2DImage(imageManager.tCover[1], ResizeCardMid(695, 80, 707, 100, 707, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(588, 40, 600, 100, 600, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(695, 40, 707, 100, 707, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
 		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(600, 79, 625, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
 		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(707, 79, 732, 100), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
 	}
