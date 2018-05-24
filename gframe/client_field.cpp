@@ -297,7 +297,6 @@ ClientCard* ClientField::RemoveCard(int controler, int location, int sequence) {
 	}
 	}
 	pcard->location = 0;
-	RefreshCardCountDisplay();
 	return pcard;
 }
 void ClientField::UpdateCard(int controler, int location, int sequence, char* data) {
