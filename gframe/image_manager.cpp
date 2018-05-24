@@ -12,15 +12,13 @@ bool ImageManager::Initial()  {
 		tCover[1] = tCover[0];
 	char head1[256];
 		const wchar_t* daddy1 = mainGame->dInfo.clientname;
-		int nLength1 = WideCharToMultiByte(CP_ACP, 0, daddy1, -1, NULL, 0, NULL,NULL);
-		WideCharToMultiByte(CP_ACP, 0, daddy1, -1, head1, nLength1, NULL, NULL);
+		BufferIO::CopyWStr(daddy1, head1, 256);
 		char dad1[300];
 		sprintf(dad1, "textures/head/head_%c.jpg", head1);
 	tHead[0] = driver->getTexture(dad1);
 	char head2[256];
 		const wchar_t* daddy2 = mainGame->dInfo.clientname_tag;
-		int nLength2 = WideCharToMultiByte(CP_ACP, 0, daddy2, -1, NULL, 0, NULL,NULL);
-		WideCharToMultiByte(CP_ACP, 0, daddy2, -1, head2, nLength2, NULL, NULL);
+		BufferIO::CopyWStr(daddy2, head2, 256);
 		char dad2[300];
 		sprintf(dad2, "textures/head/head_%c.jpg", head2);
 	tHead[1] = driver->getTexture(dad2);
