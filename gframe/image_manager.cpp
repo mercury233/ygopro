@@ -13,12 +13,12 @@ bool ImageManager::Initial()  {
 	char head1[256];
 		const wchar_t* daddy1 = mainGame->dInfo.clientname;
 		char dad1[300];
-		sprintf(dad1, "textures/head/head_%c.jpg", head1[0]);
+		sprintf(dad1, "textures/head/head_%c.jpg", head1);
 	tHead[0] = driver->getTexture(dad1);
 	char head2[256];
 		const wchar_t* daddy2 = mainGame->dInfo.clientname_tag;
 		char dad2[300];
-		sprintf(dad2, "textures/head/head_%c.jpg", head2[0]);
+		sprintf(dad2, "textures/head/head_%c.jpg", head2);
 	tHead[1] = driver->getTexture(dad2);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
