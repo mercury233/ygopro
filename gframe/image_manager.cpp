@@ -29,7 +29,7 @@ bool ImageManager::Initial()  {
 		sprintf(dad3, "textures/head3/head_%c.jpg", head3);
 	tHead[2] = driver->getTexture(dad3);
 	char head4[256];
-		const wchar_t* daddy2 = mainGame->dInfo.clientname_tag;
+		const wchar_t* daddy4 = mainGame->dInfo.clientname_tag;
 		BufferIO::EncodeUTF8(daddy4, head4);
 		char dad4[300];
 		sprintf(dad4, "textures/head4/head_%c.jpg", head4);
