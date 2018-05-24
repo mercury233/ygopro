@@ -10,18 +10,36 @@ bool ImageManager::Initial()  {
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
+	if(!dInfo.isTag || !dInfo.tag_player[0]){
 	char head1[256];
 		const wchar_t* daddy1 = mainGame->dInfo.hostname;
 		BufferIO::EncodeUTF8(daddy1, head1);
 		char dad1[300];
 		sprintf(dad1, "textures/head/head_%1s.jpg", head1);
 	tHead[0] = driver->getTexture(dad1);
+	} else {
 	char head2[256];
-		const wchar_t* daddy2 = mainGame->dInfo.clientname;
+		const wchar_t* daddy2 = mainGame->dInfo.hostname_tag;
 		BufferIO::EncodeUTF8(daddy2, head2);
 		char dad2[300];
 		sprintf(dad2, "textures/head/head_%1s.jpg", head2);
 	tHead[1] = driver->getTexture(dad2);
+	}
+	if(!dInfo.isTag || !dInfo.tag_player[1]){
+	char head3[256];
+		const wchar_t* daddy3 = mainGame->dInfo.clientname;
+		BufferIO::EncodeUTF8(daddy3, head3);
+		char dad3[300];
+		sprintf(dad3, "textures/head/head_%1s.jpg", head3);
+	tHead[2] = driver->getTexture(dad3);
+	} else {
+	char head4[256];
+		const wchar_t* daddy2 = mainGame->dInfo.clientname_tag;
+		BufferIO::EncodeUTF8(daddy2, head2);
+		char dad4[300];
+		sprintf(dad4, "textures/head/head_%1s.jpg", head4);
+	tHead[3] = driver->getTexture(dad4);
+	}
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
