@@ -71,6 +71,7 @@ struct DuelInfo {
 	bool tag_player[2];
 	int lp[2];
 	int start_lp[2];
+	int card_count[2];
 	int duel_rule;
 	int turn;
 	short curMsg;
@@ -87,6 +88,8 @@ struct DuelInfo {
 	wchar_t str_time_limit[16];
 	wchar_t str_time_left[2][16];
 	video::SColor time_color[2];
+	wchar_t str_card_count[2][16];
+	video::SColor card_count_color[2];
 	bool isReplaySwapped;
 };
 
@@ -149,6 +152,8 @@ public:
 	void AddChatMsg(wchar_t* msg, int player);
 	void ClearChatMsg();
 	void AddDebugMsg(char* msgbuf);
+	bool MakeDirectory(const std::string folder);
+	void initUtils();
 	void ClearTextures();
 	void CloseDuelWindow();
 
@@ -176,6 +181,7 @@ public:
 
 	void SetWindowsIcon();
 	void FlashWindow();
+	void takeScreenshot();
 	void SetCursor(ECURSOR_ICON icon);
 
 	Mutex gMutex;
