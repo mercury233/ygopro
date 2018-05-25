@@ -12,7 +12,7 @@ bool ImageManager::Initial()  {
 		tCover[1] = tCover[0];
 	int h = 0;
 	    for (; h < 4; h++) {
-		const wchar_t* pstl = mainGame->stHostPrepDuelist[i]->getText();
+		const wchar_t* pstl = mainGame->stHostPrepDuelist[h]->getText();
 		char head[256];
 		BufferIO::EncodeUTF8(pstl, head);
 		char hair[300];
