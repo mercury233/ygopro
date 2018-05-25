@@ -17,10 +17,10 @@ bool ImageManager::Initial()  {
 		sprintf(hair2, "textures/head/head_%1s.jpg", mainGame->dInfo.hostname_tag);
 		tHead[1] = driver->getTexture(hair2);
 		char hair3[300];
-		sprintf(hair3, "textures/head/head_%1s.jpg", mainGame->mainGame->dInfo.clientname);
+		sprintf(hair3, "textures/head/head_%1s.jpg", mainGame->dInfo.clientname);
 		tHead[2] = driver->getTexture(hair3);
 		char hair4[300];
-		sprintf(hair4, "textures/head/head_%1s.jpg", mainGame->mainGame->dInfo.clientname_tag);
+		sprintf(hair4, "textures/head/head_%1s.jpg", mainGame->dInfo.clientname_tag);
 		tHead[3] = driver->getTexture(hair4);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
