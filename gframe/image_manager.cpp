@@ -10,16 +10,18 @@ bool ImageManager::Initial()  {
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
-	int h = 0;
-	    for (; h < 4; h++) {
-		const wchar_t* pstl = mainGame->stHostPrepDuelist[h]->getText();
-		char head[256];
-		BufferIO::EncodeUTF8(pstl, head);
-		char hair[300];
-		sprintf(hair, "textures/head/head_%1s.jpg", head);
-		tHead[0] = driver->getTexture(hair);
-		tHead[1] = driver->getTexture(hair);
-    }
+		char hair1[300];
+		sprintf(hair1, "textures/head/head_%1s.jpg", mainGame->dInfo.hostname);
+		tHead[0] = driver->getTexture(hair1);
+		char hair2[300];
+		sprintf(hair2, "textures/head/head_%1s.jpg", mainGame->dInfo.hostname_tag);
+		tHead[1] = driver->getTexture(hair2);
+		char hair3[300];
+		sprintf(hair3, "textures/head/head_%1s.jpg", mainGame->mainGame->dInfo.clientname);
+		tHead[2] = driver->getTexture(hair3);
+		char hair4[300];
+		sprintf(hair4, "textures/head/head_%1s.jpg", mainGame->mainGame->dInfo.clientname_tag);
+		tHead[3] = driver->getTexture(hair4);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
