@@ -14,7 +14,7 @@ bool ImageManager::Initial()  {
 	int h = 0;
 	for (h = 0; h < 4; h++) {
 		const wchar_t* pstl = mainGame->stHostPrepDuelist[h]->getText();
-		BufferIO::EncodeUTF8(pstl, head, 256);
+		BufferIO::EncodeUTF8(pstl, head);
 		char hair[300];
 		snprintf(hair, 300, "textures/head/rscale_%1s.jpg", head);
 		tHead[0] = driver->getTexture(hair);
