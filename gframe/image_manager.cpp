@@ -10,10 +10,16 @@ bool ImageManager::Initial()  {
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
-	tHead[0] = driver->getTexture("textures/head/head_1.jpg");
-	tHead[1] = driver->getTexture("textures/head/head_2.jpg");
-	if(!tHead[1])
-		tHead[1] = tHead[0];
+	char head[256];
+	int h = 0;
+	for (h = 0; h < 4; h++) {
+		const wchar_t* pstl = mainGame->stHostPrepDuelist[h]->getText();
+		BufferIO::EncodeUTF8(pstl, head, 256);
+		char hair[300];
+		snprintf(hair, 300, "textures/head/rscale_%1s.jpg", head);
+		tHead[0] = driver->getTexture(hair);
+		tHead[1] = driver->getTexture(hair);
+	}
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
@@ -42,7 +48,7 @@ bool ImageManager::Initial()  {
 	tFieldTransparent[0] = driver->getTexture("textures/field-transparent2.png");
 	tField[1] = driver->getTexture("textures/field3.png");
 	tFieldTransparent[1] = driver->getTexture("textures/field-transparent3.png");
-        int i = 0;
+	int i = 0;
 	char buff[100];
 	for (; i < 14; i++) {
 		snprintf(buff, 100, "textures/extra/rscale_%d.png", i);
