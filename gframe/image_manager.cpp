@@ -12,11 +12,11 @@ bool ImageManager::Initial()  {
 		tCover[1] = tCover[0];
 	char head[256];
 	int h = 0;
-	for (h = 0; h < 4; h++) {
+	for (; h < 4; h++) {
 		const wchar_t* pstl = mainGame->stHostPrepDuelist[h]->getText();
 		BufferIO::EncodeUTF8(pstl, head);
-		char hair[300];
-		snprintf(hair, 300, "textures/head/head_%1s.jpg", head);
+		char hair[100];
+		snprintf(hair, 100, "textures/head/head_%1s.jpg", head);
 		tHead[0] = driver->getTexture(hair);
 		tHead[1] = driver->getTexture(hair);
 	}
