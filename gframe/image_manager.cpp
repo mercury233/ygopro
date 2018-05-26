@@ -18,7 +18,7 @@ bool ImageManager::Initial()  {
 	const wchar_t* pstt = mainGame->ebNickName->getText();
 		BufferIO::EncodeUTF8(pstt, head);
 		char hair[256];
-		sprintf(hair, "textures/head/head_%1s.jpg", head);
+		myswprintf(hair, "textures/head/head_%1s.jpg", head);
 		tHead[0] = driver->getTexture(hair);
 	tHead[1] = GetRandomImage(TEXTURE_HEAD);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
