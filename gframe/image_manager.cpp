@@ -18,7 +18,7 @@ bool ImageManager::Initial()  {
 	char hell[300];
 	const wchar_t* pstt = mainGame->gameConf.nickname;
 		BufferIO::CopyWStr(pstt, head, 256);
-		BufferIO::EncodeUTF8(head, hell)
+		BufferIO::EncodeUTF8(head, hell);
 		char hair[256];
 		sprintf(hair, "textures/head/head_%1s.jpg", hell);
 		tHead[0] = driver->getTexture(hair);
