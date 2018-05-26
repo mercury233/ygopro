@@ -1,57 +1,26 @@
 #include "image_manager.h"
-#include "event_handler.h"
-#include "client_field.h"
-#include "math.h"
-#include "network.h"
-#include "duelclient.h"
-#include "data_manager.h"
-#include "sound_manager.h"
-#include "replay_mode.h"
-#include "single_mode.h"
-#include "materials.h"
-#include "../ocgcore/field.h"
 #include "game.h"
+#ifndef _WIN32
+#include <dirent.h>
+#endif
 
 namespace ygo {
 
 ImageManager imageManager;
 
 bool ImageManager::Initial()  {
+	RefreshRandomImageList();
 	tCover[0] = driver->getTexture("textures/cover.jpg");
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
-        int mplayer = -1;
-		int hovered_player;
-		position2di mousepos(event.MouseInput.X, event.MouseInput.Y);
-		position2di mousepos = position2di(event.MouseInput.X, event.MouseInput.Y);
-				if(mainGame->Resize(327, 8, 630, 51).isPointInside(mousepos))
-					mplayer = 0;
-				else if(mainGame->Resize(689, 8, 991, 51).isPointInside(mousepos))
-					mplayer = 1;
-		if(mplayer != hovered_player) {
-			if(mplayer >= 0) {
-				const wchar_t* player_name1;
-				if(mplayer == 0) {
-					if(!mainGame->dInfo.isTag || !mainGame->dInfo.tag_player[0])
-						player_name1 = mainGame->dInfo.hostname;
-					else
-						player_name1 = mainGame->dInfo.hostname_tag;
-				} else {
-				const wchar_t* player_name2;
-					if(!mainGame->dInfo.isTag || !mainGame->dInfo.tag_player[1])
-						player_name2 = mainGame->dInfo.clientname;
-					else
-						player_name2 = mainGame->dInfo.clientname_tag;
-				}
-			}
-		char hair1[300];
-		sprintf(hair1, "textures/head/head_%1s.jpg", player_name1);
-		tHead[0] = driver->getTexture(hair1);
-		char hair2[300];
-		sprintf(hair2, "textures/head/head_%1s.jpg", player_name2);
-		tHead[1] = driver->getTexture(hair2);
-		}
+	char head[300];
+	const wchar_t* pstt = mainGame->ebNickName->getText()
+		BufferIO::EncodeUTF8(pstt, head);
+		char hair[256];
+		sprintf(hair, "textures/head/head_%1s.jpg", head);
+		tHead[0] = driver->getTexture(hair);
+	tHead[1] = GetRandomImage(TEXTURE_HEAD);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
@@ -94,6 +63,57 @@ bool ImageManager::Initial()  {
 	support_types.push_back(std::string("png"));
 	support_types.push_back(std::string("bpg"));
 	return true;
+}
+irr::video::ITexture* ImageManager::GetRandomImage(int image_type) {
+	int count = ImageList[image_type].size();
+	if(count <= 0)
+		return 0;
+	char ImageName[1024];
+	wchar_t fname[1024];
+	int image_id = rand() % count;
+	auto name = ImageList[image_type][image_id].c_str();
+	myswprintf(fname, L"./textures/%ls", name);
+	BufferIO::EncodeUTF8(fname, ImageName);
+	return driver->getTexture(ImageName);
+}
+void ImageManager::RefreshRandomImageList() {
+	RefreshImageDir(L"head/", TEXTURE_HEAD);
+}
+void ImageManager::RefreshImageDir(std::wstring path, int image_type) {
+#ifdef _WIN32
+	WIN32_FIND_DATAW fdataw;
+	std::wstring search = L"./textures/" + path + L"*.*";
+	HANDLE fh = FindFirstFileW(search.c_str(), &fdataw);
+	if(fh == INVALID_HANDLE_VALUE)
+		return;
+	do {
+		size_t len = wcslen(fdataw.cFileName);
+		if((fdataw.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || len < 5
+			|| !(_wcsicmp(fdataw.cFileName + len - 4, L".jpg") == 0 || _wcsicmp(fdataw.cFileName + len - 4, L".png") == 0))
+			continue;
+		std::wstring filename = path + (std::wstring)fdataw.cFileName;
+		ImageList[image_type].push_back(filename);
+	} while(FindNextFileW(fh, &fdataw));
+	FindClose(fh);
+#else
+	DIR * dir;
+	struct dirent * dirp;
+	std::wstring wsearchpath = L"./textures/" + path;
+	char searchpath[256];
+	BufferIO::EncodeUTF8(wsearchpath.c_str(), searchpath);
+	if((dir = opendir(searchpath)) == NULL)
+		return;
+	while((dirp = readdir(dir)) != NULL) {
+		size_t len = strlen(dirp->d_name);
+		if(len < 5 || !(strcasecmp(dirp->d_name + len - 4, ".jpg") == 0 || strcasecmp(dirp->d_name + len - 4, ".png")))
+			continue;
+		wchar_t wname[256];
+		BufferIO::DecodeUTF8(dirp->d_name, wname);
+		std::wstring filename = path + (std::wstring)wname;
+		ImageList[image_type].push_back(filename);
+	}
+	closedir(dir);
+#endif
 }
 void ImageManager::SetDevice(irr::IrrlichtDevice* dev) {
 	device = dev;
