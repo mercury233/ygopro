@@ -22,6 +22,9 @@ bool ImageManager::Initial()  {
 	if(!tCover[1])
 		tCover[1] = tCover[0];
         int mplayer = -1;
+		int hovered_player;
+		position2di mousepos(event.MouseInput.X, event.MouseInput.Y);
+		position2di mousepos = position2di(event.MouseInput.X, event.MouseInput.Y);
 				if(mainGame->Resize(327, 8, 630, 51).isPointInside(mousepos))
 					mplayer = 0;
 				else if(mainGame->Resize(689, 8, 991, 51).isPointInside(mousepos))
@@ -42,13 +45,13 @@ bool ImageManager::Initial()  {
 						player_name2 = mainGame->dInfo.clientname_tag;
 				}
 			}
-		}
 		char hair1[300];
 		sprintf(hair1, "textures/head/head_%1s.jpg", player_name1);
-	tHead[0] = driver->getTexture(hair1);
+		tHead[0] = driver->getTexture(hair1);
 		char hair2[300];
 		sprintf(hair2, "textures/head/head_%1s.jpg", player_name2);
-	tHead[1] = driver->getTexture(hair2);
+		tHead[1] = driver->getTexture(hair2);
+		}
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
