@@ -14,11 +14,13 @@ bool ImageManager::Initial()  {
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
-	char head[300];
-	const wchar_t* pstt = mainGame->ebNickName->getText();
-		BufferIO::EncodeUTF8(pstt, head);
+	wchar_t head[300];
+	char hell[300];
+	const wchar_t* pstt = mainGame->gameConf.nickname;
+		BufferIO::CopyWStr(pstt, head, 256);
+		BufferIO::EncodeUTF8(head, hell)
 		char hair[256];
-		myswprintf(hair, "textures/head/head_%1s.jpg", head);
+		sprintf(hair, "textures/head/head_%1s.jpg", hell);
 		tHead[0] = driver->getTexture(hair);
 	tHead[1] = GetRandomImage(TEXTURE_HEAD);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
