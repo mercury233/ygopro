@@ -15,7 +15,7 @@ bool ImageManager::Initial()  {
 	if(!tCover[1])
 		tCover[1] = tCover[0];
 	char hair[256];
-		sprintf(hair, "textures/head/head_%1s.jpg", mainGame->ebNickName->getText());
+		sprintf(hair, "textures/head/head_%s.jpg", mainGame->ebNickName->getText());
 		tHead[0] = driver->getTexture(hair);
 	tHead[1] = GetRandomImage(TEXTURE_HEAD);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
