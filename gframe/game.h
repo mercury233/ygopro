@@ -702,6 +702,7 @@ extern Game* mainGame;
 #define TEXTURE_COVER_O				4
 #define TEXTURE_ATTACK				5
 #define TEXTURE_ACTIVATE			6
+#define TEXTURE_HEAD				7
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H

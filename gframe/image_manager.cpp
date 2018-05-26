@@ -15,7 +15,7 @@ bool ImageManager::Initial()  {
 	if(!tCover[1])
 		tCover[1] = tCover[0];
 	char head[300];
-	const wchar_t* pstt = mainGame->ebNickName->getText()
+	const wchar_t* pstt = mainGame->ebNickName->getText();
 		BufferIO::EncodeUTF8(pstt, head);
 		char hair[256];
 		sprintf(hair, "textures/head/head_%1s.jpg", head);
