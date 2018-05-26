@@ -1,4 +1,15 @@
 #include "image_manager.h"
+#include "event_handler.h"
+#include "client_field.h"
+#include "math.h"
+#include "network.h"
+#include "duelclient.h"
+#include "data_manager.h"
+#include "sound_manager.h"
+#include "replay_mode.h"
+#include "single_mode.h"
+#include "materials.h"
+#include "../ocgcore/field.h"
 #include "game.h"
 
 namespace ygo {
@@ -10,18 +21,34 @@ bool ImageManager::Initial()  {
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
 	if(!tCover[1])
 		tCover[1] = tCover[0];
+        int mplayer = -1;
+				if(mainGame->Resize(327, 8, 630, 51).isPointInside(mousepos))
+					mplayer = 0;
+				else if(mainGame->Resize(689, 8, 991, 51).isPointInside(mousepos))
+					mplayer = 1;
+		if(mplayer != hovered_player) {
+			if(mplayer >= 0) {
+				const wchar_t* player_name1;
+				if(mplayer == 0) {
+					if(!mainGame->dInfo.isTag || !mainGame->dInfo.tag_player[0])
+						player_name1 = mainGame->dInfo.hostname;
+					else
+						player_name1 = mainGame->dInfo.hostname_tag;
+				} else {
+				const wchar_t* player_name2;
+					if(!mainGame->dInfo.isTag || !mainGame->dInfo.tag_player[1])
+						player_name2 = mainGame->dInfo.clientname;
+					else
+						player_name2 = mainGame->dInfo.clientname_tag;
+				}
+			}
+		}
 		char hair1[300];
-		sprintf(hair1, "textures/head/head_%1s.jpg", mainGame->dInfo.hostname);
-		tHead[0] = driver->getTexture(hair1);
+		sprintf(hair1, "textures/head/head_%1s.jpg", player_name1);
+	tHead[0] = driver->getTexture(hair1);
 		char hair2[300];
-		sprintf(hair2, "textures/head/head_%1s.jpg", mainGame->dInfo.hostname_tag);
-		tHead[1] = driver->getTexture(hair2);
-		char hair3[300];
-		sprintf(hair3, "textures/head/head_%1s.jpg", mainGame->dInfo.clientname);
-		tHead[2] = driver->getTexture(hair3);
-		char hair4[300];
-		sprintf(hair4, "textures/head/head_%1s.jpg", mainGame->dInfo.clientname_tag);
-		tHead[3] = driver->getTexture(hair4);
+		sprintf(hair2, "textures/head/head_%1s.jpg", player_name2);
+	tHead[1] = driver->getTexture(hair2);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
