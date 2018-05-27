@@ -392,11 +392,11 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->drawVertexPrimitiveList(matManager.vNegate, 4, matManager.iRectangle, 2);
 	}
 	if(!dInfo.isReplay && dInfo.player_type < 7) {
-		RefreshRandomImageList();
+		imageManager.RefreshRandomImageList();
 	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(327, 60, 407, 140, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 60, 990, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 	} else {
-		RefreshRandomImageList();
+		imageManager.RefreshRandomImageList();
 	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(327, 60, 407, 140, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 60, 990, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 	}
