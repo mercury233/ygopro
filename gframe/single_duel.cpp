@@ -1,6 +1,7 @@
 #include "single_duel.h"
 #include "netserver.h"
 #include "game.h"
+#include "image_manager.h"
 #include "../ocgcore/ocgapi.h"
 #include "../ocgcore/card.h"
 #include "../ocgcore/duel.h"

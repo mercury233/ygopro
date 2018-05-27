@@ -1,6 +1,7 @@
 #include "single_mode.h"
 #include "duelclient.h"
 #include "game.h"
+#include "image_manager.h"
 #include "../ocgcore/duel.h"
 #include "../ocgcore/field.h"
 #include "../ocgcore/mtrandom.h"
