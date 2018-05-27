@@ -12,7 +12,7 @@ bool ImageManager::Initial()  {
 	RefreshRandomImageList();
 	tCover[0] = driver->getTexture("textures/cover.jpg");
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
-	tHead[0] = driver->getTexture("textures/head/head_0.jpg");
+	tHead[0] = driver->getTexture("textures/head.jpg");
 	tHead[1] = GetRandomImage(TEXTURE_HEAD_S);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
@@ -70,7 +70,7 @@ irr::video::ITexture* ImageManager::GetRandomImage(int image_type) {
 	return driver->getTexture(ImageName);
 }
 void ImageManager::RefreshRandomImageList() {
-	RefreshImageDir(L"head2/", TEXTURE_HEAD_2);
+	RefreshImageDir(L"head/", TEXTURE_HEAD_S);
 }
 void ImageManager::RefreshImageDir(std::wstring path, int image_type) {
 #ifdef _WIN32
