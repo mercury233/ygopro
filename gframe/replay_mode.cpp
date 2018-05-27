@@ -1,8 +1,8 @@
 #include "replay_mode.h"
 #include "duelclient.h"
 #include "game.h"
-#include "image_manager.h"
 #include "single_mode.h"
+#include "image_manager.h"
 #include "../ocgcore/duel.h"
 #include "../ocgcore/field.h"
 #include "../ocgcore/mtrandom.h"
@@ -165,13 +165,13 @@ bool ReplayMode::StartDuel() {
 	mainGame->dInfo.duel_rule = duel_rule;
 	set_player_info(pduel, 0, start_lp, start_hand, draw_count);
 	set_player_info(pduel, 1, start_lp, start_hand, draw_count);
+	RefreshImageDir(L"head/", TEXTURE_HEAD_S);
 	mainGame->dInfo.lp[0] = start_lp;
 	mainGame->dInfo.lp[1] = start_lp;
 	mainGame->dInfo.start_lp[0] = start_lp;
 	mainGame->dInfo.start_lp[1] = start_lp;
 	myswprintf(mainGame->dInfo.strLP[0], L"%d", mainGame->dInfo.lp[0]);
 	myswprintf(mainGame->dInfo.strLP[1], L"%d", mainGame->dInfo.lp[1]);
-	imageManager.RefreshRandomImageList();
 	mainGame->dInfo.turn = 0;
 	if(!mainGame->dInfo.isSingleMode) {
 		if(!(opt & DUEL_TAG_MODE)) {
