@@ -451,6 +451,7 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	BufferIO::WriteInt8(pbuf, 0);
 	BufferIO::WriteInt32(pbuf, host_info.start_lp);
 	BufferIO::WriteInt32(pbuf, host_info.start_lp);
+	imageManager.RefreshRandomImageList();
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 0, 0x1));
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 0, 0x40));
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 1, 0x1));

@@ -170,6 +170,7 @@ bool ReplayMode::StartDuel() {
 	mainGame->dInfo.start_lp[1] = start_lp;
 	myswprintf(mainGame->dInfo.strLP[0], L"%d", mainGame->dInfo.lp[0]);
 	myswprintf(mainGame->dInfo.strLP[1], L"%d", mainGame->dInfo.lp[1]);
+	imageManager.RefreshRandomImageList();
 	mainGame->dInfo.turn = 0;
 	if(!mainGame->dInfo.isSingleMode) {
 		if(!(opt & DUEL_TAG_MODE)) {
