@@ -695,7 +695,7 @@ extern Game* mainGame;
 #define BUTTON_RENAME_DECK_SAVE			387
 #define BUTTON_RENAME_DECK_CANCEL		388
 
-#define TEXTURE_HEAD				0
+#define TEXTURE_HEAD_S				0
 
 #define DEFAULT_DUEL_RULE			4
 #endif // GAME_H
