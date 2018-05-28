@@ -785,7 +785,6 @@ void Game::MainLoop() {
 			smgr->drawAll();
 			driver->setMaterial(irr::video::IdentityMaterial);
 			driver->clearZBuffer();
-			imageManager.RefreshRandomImageList();
 		} else if(is_building) {
 			soundManager.PlayBGM(BGM_DECK);
 			DrawBackImage(imageManager.tBackGround_deck);
@@ -1580,6 +1579,7 @@ void Game::CloseDuelWindow() {
 	DuelClient::hosts.clear();
 	ClearTextures();
 	closeDoneSignal.Set();
+	imageManager.RefreshRandomImageList();
 }
 int Game::LocalPlayer(int player) {
 	return dInfo.isFirst ? player : 1 - player;
