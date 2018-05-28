@@ -785,6 +785,7 @@ void Game::MainLoop() {
 			smgr->drawAll();
 			driver->setMaterial(irr::video::IdentityMaterial);
 			driver->clearZBuffer();
+			imageManager.RefreshRandomImageList();
 		} else if(is_building) {
 			soundManager.PlayBGM(BGM_DECK);
 			DrawBackImage(imageManager.tBackGround_deck);

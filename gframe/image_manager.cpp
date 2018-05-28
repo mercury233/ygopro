@@ -58,7 +58,6 @@ bool ImageManager::Initial()  {
 	return true;
 }
 irr::video::ITexture* ImageManager::GetRandomImage(int image_type) {
-	RefreshRandomImageList();
 	int count = ImageList[image_type].size();
 	if(count <= 0)
 		return 0;
