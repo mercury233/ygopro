@@ -1528,8 +1528,8 @@ void Game::initUtils() {
 }
 void Game::ClearTextures() {
 	matManager.mCard.setTexture(0, 0);
+	imageManager.tHead[1] = GetRandomImage(TEXTURE_HEAD_S);
 	imgCard->setImage(imageManager.tCover[0]);
-	imgCard->setImage(imageManager.tHead[1]);
 	scrCardText->setVisible(false);
 	imgCard->setScaleImage(true);
 	btnPSAU->setImage();
