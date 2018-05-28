@@ -1500,7 +1500,6 @@ void Game::initUtils() {
 	MakeDirectory("deck");
 	MakeDirectory("single");
 	//original files
-	MakeDirectory("script");
 	MakeDirectory("skin");
 	MakeDirectory("textures");
 	//subdirs in textures

@@ -418,8 +418,6 @@ void ClientField::ShowSelectCard(bool buttonok, bool chain) {
 				myswprintf(formatBuffer, L"%ls[%d](%d)", 
 					dataManager.FormatLocation(selectable_cards[i]->overlayTarget->location, selectable_cards[i]->overlayTarget->sequence),
 					selectable_cards[i]->overlayTarget->sequence + 1, selectable_cards[i]->sequence + 1);
-			else if (selectable_cards[i]->location == 0)
-				myswprintf(formatBuffer, L"");
 			else
 				myswprintf(formatBuffer, L"%ls[%d]", dataManager.FormatLocation(selectable_cards[i]->location, selectable_cards[i]->sequence),
 					selectable_cards[i]->sequence + 1);
