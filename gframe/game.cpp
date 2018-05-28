@@ -1579,7 +1579,7 @@ void Game::CloseDuelWindow() {
 	DuelClient::hosts.clear();
 	ClearTextures();
 	closeDoneSignal.Set();
-	imageManager.RefreshRandomImageList();
+	imageManager.ClearTexture();
 }
 int Game::LocalPlayer(int player) {
 	return dInfo.isFirst ? player : 1 - player;
