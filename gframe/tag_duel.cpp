@@ -1,7 +1,6 @@
 #include "tag_duel.h"
 #include "netserver.h"
 #include "game.h"
-#include "image_manager.h"
 #include "../ocgcore/ocgapi.h"
 #include "../ocgcore/card.h"
 #include "../ocgcore/duel.h"
@@ -393,7 +392,6 @@ void TagDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	pduel = create_duel(rnd.rand());
 	set_player_info(pduel, 0, host_info.start_lp, host_info.start_hand, host_info.draw_count);
 	set_player_info(pduel, 1, host_info.start_lp, host_info.start_hand, host_info.draw_count);
-	imageManager.RefreshImageDir(L"head/", TEXTURE_HEAD_S);
 	int opt = (int)host_info.duel_rule << 16;
 	if(host_info.no_shuffle_deck)
 		opt |= DUEL_PSEUDO_SHUFFLE;

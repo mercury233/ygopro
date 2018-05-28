@@ -1,7 +1,6 @@
 #include "single_mode.h"
 #include "duelclient.h"
 #include "game.h"
-#include "image_manager.h"
 #include "../ocgcore/duel.h"
 #include "../ocgcore/field.h"
 #include "../ocgcore/mtrandom.h"
@@ -46,7 +45,6 @@ int SingleMode::SinglePlayThread(void* param) {
 	pduel = create_duel(rnd.rand());
 	set_player_info(pduel, 0, start_lp, start_hand, draw_count);
 	set_player_info(pduel, 1, start_lp, start_hand, draw_count);
-	imageManager.RefreshImageDir(L"head/", TEXTURE_HEAD_S);
 	mainGame->dInfo.lp[0] = start_lp;
 	mainGame->dInfo.lp[1] = start_lp;
 	mainGame->dInfo.start_lp[0] = start_lp;
