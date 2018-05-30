@@ -393,10 +393,10 @@ void Game::DrawCard(ClientCard* pcard) {
 	}
 	if(!dInfo.isReplay && dInfo.player_type < 7) {
 	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(328, 60, 408, 140, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 60, 990, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910.5, 60, 990.5, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 	} else {
 	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(328, 60, 408, 140, 455, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910, 60, 990, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910.5, 60, 990.5, 140, 862, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 	}
 	if(pcard->cmdFlag & COMMAND_ATTACK) {
 		matManager.mTexture.setTexture(0, imageManager.tAttack);
