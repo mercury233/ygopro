@@ -6,7 +6,7 @@
 	url = https://github.com/Fluorohydride/ygopro-scripts.git
 [submodule "pics"]
 	path = pics
-	url = https://github.com/fallenstardust/YGOMobile-pics.git
+	url = https://github.com/Ygoproco/Live-images.git
 [submodule "field"]
 	path = field
 	url = https://github.com/moecube/ygopro-images-field.git
