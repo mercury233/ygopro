@@ -12,6 +12,8 @@ bool ImageManager::Initial()  {
 	RefreshRandomImageList();
 	tCover[0] = driver->getTexture("textures/cover.jpg");
 	tCover[1] = driver->getTexture("textures/cover2.jpg");
+	if(!tCover[1])
+		tCover[1] = tCover[0];
 	tHead[0] = driver->getTexture("textures/head.jpg");
 	tHead[1] = GetRandomImage(TEXTURE_HEAD_S);
 	tUnknown = driver->getTexture("textures/unknown.jpg");
