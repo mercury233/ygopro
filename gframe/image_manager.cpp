@@ -54,7 +54,6 @@ bool ImageManager::Initial()  {
 		snprintf(buff, 100, "textures/extra/lscale_%d.png", i);
 		tLScale[i] = driver->getTexture(buff);
 	}
-	tClock = driver->getTexture("textures/clock.png");
 	support_types.push_back(std::string("jpg"));
 	support_types.push_back(std::string("png"));
 	support_types.push_back(std::string("bpg"));
