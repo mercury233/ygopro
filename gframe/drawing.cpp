@@ -483,7 +483,7 @@ void Game::DrawMisc() {
 			if(dField.chains[i].solved)
 				break;
 			matManager.mTRTexture.setTexture(0, imageManager.tChain);
-			matManager.mTRTexture.AmbientColor = 0xff0097ff;
+			matManager.mTRTexture.AmbientColor = 0xffffff00;
 			ic.setRotationRadians(act_rot);
 			ic.setTranslation(dField.chains[i].chain_pos);
 			driver->setMaterial(matManager.mTRTexture);
@@ -503,7 +503,7 @@ void Game::DrawMisc() {
 	}
 	//finish button
 	if(btnCancelOrFinish->isVisible() && dField.select_ready)
-		DrawSelectionLine(btnCancelOrFinish, 2, 0xffffff00);
+		DrawSelectionLine(btnCancelOrFinish, 2, 0xffffb500);
 	//lp bar
 	if((dInfo.turn % 2 && dInfo.isFirst && !dInfo.is_swapped) || (!(dInfo.turn % 2) && !dInfo.isFirst && !dInfo.is_swapped) || (!(dInfo.turn % 2) && dInfo.isFirst && dInfo.is_swapped) || (dInfo.turn % 2 && !dInfo.isFirst && dInfo.is_swapped)) {
 		driver->draw2DRectangle(0xa0000000, Resize(327, 8, 630, 51));
