@@ -53,6 +53,7 @@ public:
 	irr::video::ITexture* tRScale[14];
 	irr::video::ITexture* tLScale[14];
 	std::list<std::string> support_types;
+	irr::video::ITexture* tClock;
 };
 
 extern ImageManager imageManager;
