@@ -84,6 +84,7 @@ struct DuelInfo {
 	unsigned char time_player;
 	unsigned short time_limit;
 	unsigned short time_left[2];
+	wchar_t str_time_limit[16];
 	wchar_t str_time_left[2][16];
 	video::SColor time_color[2];
 	bool isReplaySwapped;
