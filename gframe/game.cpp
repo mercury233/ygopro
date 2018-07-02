@@ -1145,7 +1145,7 @@ void Game::LoadConfig() {
 	gameConf.window_height = 640;
 	gameConf.resize_popup_menu = false;
 	gameConf.chkEnablePScale = 1;
-	gameConf.skin_index = -1;
+	gameConf.skin_index = 1;
 	while(fgets(linebuf, 256, fp)) {
 		sscanf(linebuf, "%s = %s", strbuf, valbuf);
 		if(!strcmp(strbuf, "antialias")) {

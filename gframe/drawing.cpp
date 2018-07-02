@@ -547,17 +547,16 @@ void Game::DrawMisc() {
 
 		driver->draw2DImage(imageManager.tCover[0], ResizeCardMid(433, 32, 445, 50, 455, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
 		driver->draw2DImage(imageManager.tCover[1], ResizeCardMid(850, 32, 862, 50, 862, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
-
-		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(445, 31, 470, 50), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
-		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(862, 31, 887, 50), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
-
+		
 	}
 	else {
 		driver->draw2DImage(imageManager.tCover[0], ResizeCardMid(588, 32, 600, 50, 600, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
 		driver->draw2DImage(imageManager.tCover[1], ResizeCardMid(695, 32, 707, 50, 707, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
 
-		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(600, 31, 625, 50), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
-		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(707, 31, 732, 50), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
+		driver->draw2DRectangle(Resize(525, 34, 525 + dInfo.time_left[0] * 100 / dInfo.time_limit, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
+		driver->draw2DRectangleOutline(Resize(525, 34, 625, 44), 0xffffffff);
+		driver->draw2DRectangle(Resize(795 - dInfo.time_left[1] * 100 / dInfo.time_limit, 34, 795, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
+		driver->draw2DRectangleOutline(Resize(695, 34, 795, 44), 0xffffffff);
 	}
 	DrawShadowText(numFont, dInfo.strLP[0], Resize(330, 12, 631, 30), Resize(0, 1, 2, 0), 0xffffff00, 0xff000000, true, false, 0);
 	DrawShadowText(numFont, dInfo.strLP[1], Resize(691, 12, 992, 30), Resize(0, 1, 2, 0), 0xffffff00, 0xff000000, true, false, 0);
