@@ -1566,6 +1566,9 @@ void Game::CloseDuelWindow() {
 	wReplaySave->setVisible(false);
 	stHintMsg->setVisible(false);
 	btnSideOK->setVisible(false);
+	btnSideShuffle->setVisible(false);
+	btnSideSort->setVisible(false);
+	btnSideReload->setVisible(false);
 	btnLeaveGame->setVisible(false);
 	btnSpectatorSwap->setVisible(false);
 	btnChainIgnore->setVisible(false);
@@ -1708,7 +1711,10 @@ void Game::OnResize() {
 	imgCard->setRelativePosition(ResizeCard(10, 9, 0, 0));
 	imgCard->setScaleImage(true);
 	wInfos->setRelativePosition(Resize(1, 275, 301, 639));
-	stName->setRelativePosition(recti(10, 10, 287 * xScale, 32));
+	stName->setRelativePosition(recti(10, 10, 300 * xScale - 13, 10 + 22));
+	//stName->setRelativePosition(recti(10, 10, 300 * xScale - 13, 10 + 22 * yScale));
+	//stInfo->setRelativePosition(recti(15, 37 * yScale, 300 * xScale - 13, 60 * yScale));
+	//stDataInfo->setRelativePosition(recti(15, 60 * yScale, 300 * xScale - 13, 83 * yScale));
 	lstLog->setRelativePosition(Resize(10, 10, 290, 290));
 	//const auto& tsize = stText->getRelativePosition();
 	if(showingcode)
