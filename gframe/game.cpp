@@ -1379,7 +1379,7 @@ void Game::ShowCardInfo(int code, bool resize) {
 		stDataInfo->setText(formatBuffer);
 		if ((cd.type & TYPE_LINK) && (cd.level > 5)) {
 			stDataInfo->setRelativePosition(rect<s32>(15, 60, 296, 98));
-			stSetName->setRelativePosition(rect<s32>(15, 98, 296 * xScale, 121));
+			stSetName->setRelativePosition(rect<s32>(15, 98, 300 * xScale - 13, 121));
 			stText->setRelativePosition(rect<s32>(15, 98 + offset, 287 * xScale, 324 * yScale));
 			scrCardText->setRelativePosition(rect<s32>(287 * xScale - 20, 98 + offset, 287 * xScale, 324 * yScale));
 		} else {
