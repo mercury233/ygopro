@@ -7,3 +7,6 @@
 [submodule "field"]
 	path = field
 	url = https://github.com/moecube/ygopro-images-field.git
+[submodule "Common"]
+	path = pics
+	url = https://github.com/zh99998/ygopro-images.git
