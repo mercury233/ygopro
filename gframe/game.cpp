@@ -1379,7 +1379,7 @@ void Game::ShowCardInfo(int code, bool resize) {
 		stDataInfo->setText(formatBuffer);
 		int offset_arrows = 0;
 		if(cd.type & TYPE_LINK && cd.level > 5 && window_size.Width < 1220.0) 
-			offset_arrows = 23;
+			offset_arrows = 80;
 		 else 
 			offset_arrows = 0;
 		stDataInfo->setRelativePosition(recti(15, 60, 300 * xScale - 13, (83 + offset_arrows)));
