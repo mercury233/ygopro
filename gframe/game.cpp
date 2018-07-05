@@ -1377,11 +1377,11 @@ void Game::ShowCardInfo(int code, bool resize) {
 			wcscat(formatBuffer, scaleBuffer);
 		}
 		stDataInfo->setText(formatBuffer);
-		int offset_arrows = 0;
+		int offset_arrows = 23;
 		if(cd.type & TYPE_LINK && cd.level > 5 && window_size.Width < 1220.0) 
-			offset_arrows = 23;
+			offset_arrows = 27;
 		 else 
-			offset_arrows = 0;
+			offset_arrows = 23;
 		stDataInfo->setRelativePosition(recti(15, 60, 300 * xScale - 13, (83 + offset_arrows)));
 		stSetName->setRelativePosition(rect<s32>(15, (83 + offset_arrows), 296 * xScale, (83 + offset_arrows) + offset));
 		stText->setRelativePosition(rect<s32>(15, (83 + offset_arrows) + offset, 287 * xScale, 324 * yScale));
