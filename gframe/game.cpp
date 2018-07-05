@@ -1379,7 +1379,7 @@ void Game::ShowCardInfo(int code, bool resize) {
 		stDataInfo->setText(formatBuffer);
 		int offset_arrows = 0;
 		if(cd.type & TYPE_LINK && cd.level > 5 && window_size.Width < 1220.0) 
-			offset_arrows = 80;
+			offset_arrows = 23;
 		 else 
 			offset_arrows = 0;
 		stDataInfo->setRelativePosition(recti(15, 60, 300 * xScale - 13, (83 + offset_arrows)));
@@ -1709,7 +1709,6 @@ void Game::OnResize() {
 	imgCard->setRelativePosition(ResizeCard(10, 9, 0, 0));
 	imgCard->setScaleImage(true);
 	wInfos->setRelativePosition(Resize(1, 275, 301, 639));
-	stName->setRelativePosition(recti(10, 10, 300 * xScale - 13, 10 + 22));
 	lstLog->setRelativePosition(Resize(10, 10, 290, 290));
 	//const auto& tsize = stText->getRelativePosition();
 	if(showingcode)
