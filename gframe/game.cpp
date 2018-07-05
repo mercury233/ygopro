@@ -1377,7 +1377,7 @@ void Game::ShowCardInfo(int code, bool resize) {
 			wcscat(formatBuffer, scaleBuffer);
 		}
 		stDataInfo->setText(formatBuffer);
-		int offset_arrows = 0;
+		int offset_arrows;
 		if(cd.type & TYPE_LINK && cd.level > 5 && window_size.Width < 1220.0)
 			offset_arrows = 15;
 		else
