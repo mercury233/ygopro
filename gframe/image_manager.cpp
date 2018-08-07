@@ -35,7 +35,13 @@ bool ImageManager::Initial()  {
 	tHand[2] = driver->getTexture("textures/f3.jpg");
 	tBackGround = driver->getTexture("textures/bg.jpg");
 	tBackGround_menu = driver->getTexture("textures/bg_menu.jpg");
-	tCardType = driver->getTexture("textures/cardtype.png");
+	tCardType[0] = driver->getTexture("textures/type/monster.jpg");
+	tCardType[1] = driver->getTexture("textures/type/spell.jpg");
+	tCardType[2] = driver->getTexture("textures/type/trap.jpg");
+	tCardType[3] = driver->getTexture("textures/type/fusion.jpg");
+	tCardType[4] = driver->getTexture("textures/type/synchro.jpg");
+	tCardType[5] = driver->getTexture("textures/type/xyz.jpg");
+	tCardType[6] = driver->getTexture("textures/type/link.jpg");
 	if(!tBackGround_menu)
 		tBackGround_menu = tBackGround;
 	tBackGround_deck = driver->getTexture("textures/bg_deck.jpg");
