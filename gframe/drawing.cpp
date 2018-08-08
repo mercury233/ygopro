@@ -1139,14 +1139,14 @@ void Game::DrawDeckBd() {
 	driver->draw2DRectangle(Resize(638, 137, 797, 157), 0x400000ff, 0x400000ff, 0x40000000, 0x40000000);
 	driver->draw2DRectangleOutline(Resize(637, 136, 797, 157));
 	//monster count
-	driver->draw2DImage(imageManager.tCardType[0], Resize(645, 136, (645+14), 156), rect<s32>(0, 0, 14, 20), 0, 0, true);
-	DrawShadowText(numFont, dataManager.numStrings[deckManager.GetTypeCount(deckManager.current_deck.main, TYPE_MONSTER)], Resize(670, 137, 690, 157), Resize(0, 1, 2, 0), 0xffffffff, 0xff000000, true, false);
+	driver->draw2DImage(imageManager.tCardType[0], Resize(645, 137, (645+14), 157), rect<s32>(0, 0, 14, 20), 0, 0, true);
+	DrawShadowText(numFont, dataManager.numStrings[deckManager.GetTypeCount(deckManager.current_deck.main, TYPE_MONSTER)], Resize(670, 138, 690, 158), Resize(0, 1, 2, 0), 0xffffffff, 0xff000000, true, false);
 	//spell count
-	driver->draw2DImage(imageManager.tCardType[1], Resize(695, 136, (695+14), 156), rect<s32>(0, 0, 14, 20), 0, 0, true);
+	driver->draw2DImage(imageManager.tCardType[1], Resize(695, 137, (695+14), 157), rect<s32>(0, 0, 14, 20), 0, 0, true);
 	DrawShadowText(numFont, dataManager.numStrings[deckManager.GetTypeCount(deckManager.current_deck.main, TYPE_SPELL)], Resize(720, 138, 740, 158), Resize(0, 1, 2, 0), 0xffffffff, 0xff000000, true, false);
     //trap count
-	driver->draw2DImage(imageManager.tCardType[2], Resize(745, 136, (745+14), 156), rect<s32>(0, 0, 14, 20), 0, 0, true);
-	DrawShadowText(numFont, dataManager.numStrings[deckManager.GetTypeCount(deckManager.current_deck.main, TYPE_TRAP)], Resize(770, 137, 790, 157), Resize(0, 1, 2, 0), 0xffffffff, 0xff000000, true, false);
+	driver->draw2DImage(imageManager.tCardType[2], Resize(745, 137, (745+14), 157), rect<s32>(0, 0, 14, 20), 0, 0, true);
+	DrawShadowText(numFont, dataManager.numStrings[deckManager.GetTypeCount(deckManager.current_deck.main, TYPE_TRAP)], Resize(770, 138, 790, 158), Resize(0, 1, 2, 0), 0xffffffff, 0xff000000, true, false);
     int lx;
 	float dx;
 	if(deckManager.current_deck.main.size() <= 40) {
