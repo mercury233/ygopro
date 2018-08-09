@@ -539,8 +539,8 @@ void Game::DrawMisc() {
 	}
 	if(!dInfo.isReplay && dInfo.player_type < 7 && dInfo.time_limit) {
 		if(imageManager.tClock) {
-			driver->draw2DImage(imageManager.tClock, ResizeCardMid(582, 32, 600, 50, 600, 41), recti(0, 0, 34, 34), 0, 0, true);
-			driver->draw2DImage(imageManager.tClock, ResizeCardMid(695, 32, 713, 50, 713, 41), recti(0, 0, 34, 34), 0, 0, true);
+			driver->draw2DImage(imageManager.tClock, ResizeCardMid(582, 32, 600, 50, 600, 41), recti(0, 0, 18, 18), 0, 0, true);
+			driver->draw2DImage(imageManager.tClock, ResizeCardMid(695, 32, 713, 50, 713, 41), recti(0, 0, 18, 18), 0, 0, true);
 		}
 		DrawShadowText(numFont, dInfo.str_time_left[0], Resize(600, 31, 630, 50), Resize(0, 1, 2, 0), dInfo.time_color[0], 0xff000000, true, false, 0);
 		DrawShadowText(numFont, dInfo.str_time_left[1], Resize(713, 31, 743, 50), Resize(0, 1, 2, 0), dInfo.time_color[1], 0xff000000, true, false, 0);
