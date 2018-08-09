@@ -51,6 +51,7 @@ bool ImageManager::Initial()  {
 	tFieldTransparent[0] = driver->getTexture("textures/field-transparent2.png");
 	tField[1] = driver->getTexture("textures/field3.png");
 	tFieldTransparent[1] = driver->getTexture("textures/field-transparent3.png");
+	tClock = driver->getTexture("textures/clock.png");
 	int i = 0;
 	char buff[100];
 	for (; i < 14; i++) {

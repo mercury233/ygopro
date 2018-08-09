@@ -855,7 +855,13 @@ void DeckBuilder::FilterCards() {
 	}
 	for (auto elements_track_iterator = query_elements_track.begin(); elements_track_iterator != query_elements_track.end(); elements_track_iterator++) {
 		query_elements.erase(*elements_track_iterator);
-	}
+	unsigned int set_code = 0;
+	if(pstr[0] == L'@')
+		set_code = dataManager.GetSetCode(&pstr[1]);
+	else
+		set_code = dataManager.GetSetCode(&pstr[0]);
+	if(pstr[0] == 0 || (pstr[0] == L'$' && pstr[1] == 0) || (pstr[0] == L'@' && pstr[1] == 0))
+		pstr = 0;
 	auto strpointer = dataManager._strings.begin();
 	for(code_pointer ptr = dataManager._datas.begin(); ptr != dataManager._datas.end(); ++ptr, ++strpointer) {
 		const CardDataC& data = ptr->second;
@@ -944,14 +950,21 @@ void DeckBuilder::FilterCards() {
 					break;
 				}
 			} else {
-				if (!CardNameContains(text.name.c_str(), elements_iterator->c_str()) && text.text.find(elements_iterator->c_str()) == std::wstring::npos
+				int trycode = BufferIO::GetVal(elements_iterator->c_str());
+				bool tryresult = dataManager.GetData(trycode, 0);
+				if(!tryresult && !CardNameContains(text.name.c_str(), elements_iterator->c_str()) && text.text.find(elements_iterator->c_str()) == std::wstring::npos
 					&& (!set_code_map[*elements_iterator] || !check_set_code(data, set_code_map[*elements_iterator]))) {
+					is_target = false;
+					break;
+				}
+				if(tryresult && data.code != trycode
+					&& !(data.alias == trycode && (data.alias - data.code < CARD_ARTWORK_VERSIONS_OFFSET || data.code - data.alias < CARD_ARTWORK_VERSIONS_OFFSET))) {
 					is_target = false;
 					break;
 				}
 			}
 		}
-		if (is_target)
+		if(is_target)
 			results.push_back(ptr);
 		else
 			continue;

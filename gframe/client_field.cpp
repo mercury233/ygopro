@@ -94,6 +94,7 @@ void ClientField::Clear() {
 	pzone_act[1] = false;
 	conti_act = false;
 	deck_reversed = false;
+	RefreshCardCountDisplay();
 }
 void ClientField::Initial(int player, int deckc, int extrac) {
 	ClientCard* pcard;
@@ -117,6 +118,7 @@ void ClientField::Initial(int player, int deckc, int extrac) {
 		pcard->position = POS_FACEDOWN_DEFENSE;
 		GetCardLocation(pcard, &pcard->curPos, &pcard->curRot, true);
 	}
+	RefreshCardCountDisplay();
 }
 ClientCard* ClientField::GetCard(int controler, int location, int sequence, int sub_seq) {
 	std::vector<ClientCard*>* lst = 0;
@@ -226,6 +228,7 @@ void ClientField::AddCard(ClientCard* pcard, int controler, int location, int se
 		break;
 	}
 	}
+	RefreshCardCountDisplay();
 }
 ClientCard* ClientField::RemoveCard(int controler, int location, int sequence) {
 	ClientCard* pcard = 0;
@@ -297,12 +300,14 @@ ClientCard* ClientField::RemoveCard(int controler, int location, int sequence) {
 	}
 	}
 	pcard->location = 0;
+	RefreshCardCountDisplay();
 	return pcard;
 }
 void ClientField::UpdateCard(int controler, int location, int sequence, char* data) {
 	ClientCard* pcard = GetCard(controler, location, sequence);
 	if(pcard)
 		pcard->UpdateInfo(data + 4);
+	RefreshCardCountDisplay();
 }
 void ClientField::UpdateFieldCard(int controler, int location, char* data) {
 	std::vector<ClientCard*>* lst = 0;
@@ -339,6 +344,7 @@ void ClientField::UpdateFieldCard(int controler, int location, char* data) {
 			(*cit)->UpdateInfo(data);
 		data += len - 4;
 	}
+	RefreshCardCountDisplay();
 }
 void ClientField::ClearCommandFlag() {
 	std::vector<ClientCard*>::iterator cit;
@@ -381,6 +387,7 @@ void ClientField::ClearChainSelect() {
 		(*cit)->is_selected = false;
 	}
 	conti_cards.clear();
+	deck_act = false;
 	grave_act = false;
 	remove_act = false;
 	extra_act = false;
@@ -658,6 +665,7 @@ void ClientField::ReplaySwap() {
 	std::swap(mainGame->dInfo.start_lp[0], mainGame->dInfo.start_lp[1]);
 	std::swap(mainGame->dInfo.hostname, mainGame->dInfo.clientname);
 	std::swap(mainGame->dInfo.hostname_tag, mainGame->dInfo.clientname_tag);
+	RefreshCardCountDisplay();
 	for(auto chit = chains.begin(); chit != chains.end(); ++chit) {
 		chit->controler = 1 - chit->controler;
 		GetChainLocation(chit->controler, chit->location, chit->sequence, &chit->chain_pos);
@@ -1460,4 +1468,34 @@ void ClientField::UpdateDeclarableCode(bool enter) {
 	else
 		UpdateDeclarableCodeOpcode(enter);
 }
+void ClientField::RefreshCardCountDisplay() {
+	ClientCard* pcard;
+	for(int p = 0; p < 2; ++p) {
+		mainGame->dInfo.card_count[p] = hand[p].size();
+		for(auto it = mzone[p].begin(); it != mzone[p].end(); ++it) {
+			pcard = *it;
+			if(pcard) {
+				if(pcard->type & TYPE_LINK && pcard->link)
+					mainGame->dInfo.card_count[p] += pcard->link;
+				else
+					mainGame->dInfo.card_count[p]++;
+			}
+		}
+		for(auto it = szone[p].begin(); it != szone[p].end(); ++it) {
+			pcard = *it;
+			if(pcard)
+				mainGame->dInfo.card_count[p]++;
+		}
+		myswprintf(mainGame->dInfo.str_card_count[p], L"%d", mainGame->dInfo.card_count[p]);
+	}
+	if(mainGame->dInfo.card_count[0] > mainGame->dInfo.card_count[1]) {
+		mainGame->dInfo.card_count_color[0] = 0xffffff00;
+		mainGame->dInfo.card_count_color[1] = 0xffff0000;
+	} else if(mainGame->dInfo.card_count[1] > mainGame->dInfo.card_count[0]) {
+		mainGame->dInfo.card_count_color[1] = 0xffffff00;
+		mainGame->dInfo.card_count_color[0] = 0xffff0000;
+	} else {
+		mainGame->dInfo.card_count_color[0] = 0xffffffff;
+		mainGame->dInfo.card_count_color[1] = 0xffffffff;
+	}
 }
