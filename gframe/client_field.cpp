@@ -1499,3 +1499,4 @@ void ClientField::RefreshCardCountDisplay() {
 		mainGame->dInfo.card_count_color[1] = 0xffffffff;
 	}
 }
+}
