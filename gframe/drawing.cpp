@@ -2,7 +2,6 @@
 #include "materials.h"
 #include "image_manager.h"
 #include "deck_manager.h"
-#include "client_field.h"
 #include "sound_manager.h"
 #include "duelclient.h"
 #include "single_duel.h"
@@ -352,7 +351,7 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->drawVertexPrimitiveList(matManager.vCardFront, 4, matManager.iRectangle, 2);
 	}
 	if(m22 < 0.99 || pcard->is_moving) {
-		matManager.mCard.setTexture(0, imageManager.tCover[pcard->controler + 2]);
+		matManager.mCard.setTexture(0, imageManager.tCover[pcard->controler]);
 		driver->setMaterial(matManager.mCard);
 		driver->drawVertexPrimitiveList(matManager.vCardBack, 4, matManager.iRectangle, 2);
 	}
