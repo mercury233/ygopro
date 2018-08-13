@@ -2,6 +2,7 @@
 #include "materials.h"
 #include "image_manager.h"
 #include "deck_manager.h"
+#include "client_field.h"
 #include "sound_manager.h"
 #include "duelclient.h"
 #include "single_duel.h"
