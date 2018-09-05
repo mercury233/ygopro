@@ -2,9 +2,7 @@
 #include "netserver.h"
 #include "game.h"
 #include "../ocgcore/ocgapi.h"
-#include "../ocgcore/card.h"
-#include "../ocgcore/duel.h"
-#include "../ocgcore/field.h"
+#include "../ocgcore/common.h"
 #include "../ocgcore/mtrandom.h"
 
 namespace ygo {
@@ -1553,19 +1551,9 @@ void SingleDuel::RefreshSingle(int player, int location, int sequence, int flag)
 	}
 }
 byte* SingleDuel::ScriptReaderEx(const char* script_name, int* slen) {
-	char sname[256] = "./specials";
-	strcat(sname, script_name + 8);//default script name: ./script/c%d.lua
+	char sname[256] = "./expansions";
+	strcat(sname, script_name + 1);//default script name: ./script/c%d.lua
 	byte* buffer = default_script_reader(sname, slen);
-	if(!buffer) {
-		char sname[256] = "./expansions";
-		strcat(sname, script_name + 1);
-		buffer = default_script_reader(sname, slen);
-	}
-	if(!buffer) {
-		char sname[256] = "./beta";
-		strcat(sname, script_name + 1);
-		buffer = default_script_reader(sname, slen);
-	}
 	if(buffer)
 		return buffer;
 	else
