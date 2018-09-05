@@ -39,7 +39,7 @@ int SingleMode::SinglePlayThread(void* param) {
 	mtrandom rnd;
 	time_t seed = time(0);
 	rnd.reset(seed);
-	set_script_reader((script_reader)ScriptReader);
+	set_script_reader((script_reader)ScriptReaderEx);
 	set_card_reader((card_reader)DataManager::CardReader);
 	set_message_handler((message_handler)MessageHandler);
 	pduel = create_duel(rnd.rand());
@@ -417,6 +417,7 @@ bool SingleMode::SinglePlayAnalyze(char* msg, unsigned int len) {
 			break;
 		}
 		case MSG_SHUFFLE_SET_CARD: {
+			pbuf++;
 			count = BufferIO::ReadInt8(pbuf);
 			pbuf += count * 8;
 			DuelClient::ClientAnalyze(offset, pbuf - offset);
@@ -895,6 +896,25 @@ void SingleMode::SinglePlayReload() {
 	mainGame->dField.UpdateFieldCard(mainGame->LocalPlayer(0), LOCATION_REMOVED, (char*)queryBuffer);
 	/*len = */query_field_card(pduel, 1, LOCATION_REMOVED, flag, queryBuffer, 0);
 	mainGame->dField.UpdateFieldCard(mainGame->LocalPlayer(1), LOCATION_REMOVED, (char*)queryBuffer);
+}
+byte* SingleMode::ScriptReaderEx(const char* script_name, int* slen) {
+	char sname[256] = "./specials";
+	strcat(sname, script_name + 8);//default script name: ./script/c%d.lua
+	byte* buffer = ScriptReader(sname, slen);
+	if(!buffer) {
+		char sname[256] = "./expansions";
+		strcat(sname, script_name + 1);
+		buffer = ScriptReader(sname, slen);
+	}
+	if(!buffer) {
+		char sname[256] = "./beta";
+ 		strcat(sname, script_name + 1);
+ 		buffer = ScriptReader(sname, slen);
+ 	}
+	if(buffer)
+		return buffer;
+	else
+		return ScriptReader(script_name, slen);
 }
 byte* SingleMode::ScriptReader(const char* script_name, int* slen) {
 	FILE *fp;
