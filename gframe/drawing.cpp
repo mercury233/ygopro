@@ -542,8 +542,8 @@ void Game::DrawMisc() {
 			driver->draw2DImage(imageManager.tClock, ResizeCardMid(579, 32, 597, 50, 597, 41), recti(0, 0, 34, 34), 0, 0, true);
 			driver->draw2DImage(imageManager.tClock, ResizeCardMid(695, 32, 713, 50, 713, 41), recti(0, 0, 34, 34), 0, 0, true);
 		}
-		DrawShadowText(numFont, dInfo.str_time_left[0], Resize(597, 32, 627, 51), Resize(0, 1, 2, 0), dInfo.time_color[0], 0xff000000, true, false, 0);
-		DrawShadowText(numFont, dInfo.str_time_left[1], Resize(713, 32, 743, 51), Resize(0, 1, 2, 0), dInfo.time_color[1], 0xff000000, true, false, 0);
+		DrawShadowText(numFont, dInfo.str_time_left[0], Resize(597, 32, 627, 51), rect<s32>(0, 1, 2, 0), dInfo.time_color[0], 0xff000000, true, false, 0);
+		DrawShadowText(numFont, dInfo.str_time_left[1], Resize(713, 32, 743, 51), rect<s32>(0, 1, 2, 0), dInfo.time_color[1], 0xff000000, true, false, 0);
 
 		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(541, 32, 559, 50, 559, 41), Resize(0, 0, 80, 80), 0, 0, true);
 		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(746, 32, 764, 50, 764, 41), Resize(0, 0, 80, 80), 0, 0, true);
@@ -559,8 +559,8 @@ void Game::DrawMisc() {
 		*/
 	}
 	else {
-		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(595, 32, 613, 50, 613, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(688, 32, 706, 50, 706, 41), rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(595, 32, 613, 50, 613, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(688, 32, 706, 50, 706, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 
 		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(614, 32, 632, 51), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
 		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(707, 32, 730, 51), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
