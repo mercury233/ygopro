@@ -885,14 +885,8 @@ int SingleDuel::Analyze(char* msgbuffer, unsigned int len) {
 			NetServer::ReSendToPlayer(players[1]);
 			for(auto oit = observers.begin(); oit != observers.end(); ++oit)
 				NetServer::ReSendToPlayer(*oit);
-			if(loc == LOCATION_MZONE) {
-				RefreshMzone(0, 0x181fff, 0);
-				RefreshMzone(1, 0x181fff, 0);
-			}
-			else {
-				RefreshSzone(0, 0x181fff, 0);
-				RefreshSzone(1, 0x181fff, 0);
-			}
+			RefreshMzone(0, 0x181fff, 0);
+			RefreshMzone(1, 0x181fff, 0);
 			break;
 		}
 		case MSG_NEW_TURN: {
