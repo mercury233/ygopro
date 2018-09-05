@@ -560,10 +560,10 @@ void Game::DrawMisc() {
 	}
 	else {
 		driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(595, 32, 613, 50, 613, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(689, 32, 707, 50, 707, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(692, 32, 710, 50, 710, 41), rect<s32>(0, 0, 80, 80), 0, 0, true);
 
 		DrawShadowText(numFont, dInfo.str_card_count[0], Resize(614, 32, 632, 51), Resize(0, 1, 2, 0), dInfo.card_count_color[0], 0xff000000, true, false, 0);
-		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(708, 32, 730, 51), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
+		DrawShadowText(numFont, dInfo.str_card_count[1], Resize(711, 32, 730, 51), Resize(0, 1, 2, 0), dInfo.card_count_color[1], 0xff000000, true, false, 0);
 	}
 	DrawShadowText(numFont, dInfo.strLP[0], Resize(330, 12, 631, 30), Resize(0, 1, 2, 0), 0xffffff00, 0xff000000, true, false, 0);
 	DrawShadowText(numFont, dInfo.strLP[1], Resize(691, 12, 992, 30), Resize(0, 1, 2, 0), 0xffffff00, 0xff000000, true, false, 0);
