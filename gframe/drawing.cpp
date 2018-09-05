@@ -396,7 +396,7 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910.5, 60, 990.5, 140, 990.5, 140), recti(0, 0, 80, 80), 0, 0, true);
 	} else {
 	    driver->draw2DImage(imageManager.tHead[0], ResizeCardMid(328, 60, 408, 140, 328, 60), recti(0, 0, 80, 80), 0, 0, true);
-		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910.5, 60, 408, 140, 990.5, 140), recti(0, 0, 80, 80), 0, 0, true);
+		driver->draw2DImage(imageManager.tHead[1], ResizeCardMid(910.5, 60, 990.5, 140, 990.5, 140), recti(0, 0, 80, 80), 0, 0, true);
 	}
 	if(pcard->cmdFlag & COMMAND_ATTACK) {
 		matManager.mTexture.setTexture(0, imageManager.tAttack);
