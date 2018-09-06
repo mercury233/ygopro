@@ -53,6 +53,7 @@ int SingleMode::SinglePlayThread(void* param) {
 	BufferIO::CopyWStr(mainGame->ebNickName->getText(), mainGame->dInfo.hostname, 20);
 	mainGame->dInfo.clientname[0] = 0;
 	mainGame->dInfo.turn = 0;
+	mainGame->dInfo.announce_cache.clear();
 	char filename[256];
 	size_t slen = 0;
 	if(open_file) {
@@ -725,70 +726,25 @@ bool SingleMode::SinglePlayAnalyze(char* msg, unsigned int len) {
 			break;
 		}
 		case MSG_RELOAD_FIELD: {
-			mainGame->gMutex.Lock();
-			mainGame->dField.Clear();
-			mainGame->dInfo.duel_rule = BufferIO::ReadInt8(pbuf);
-			int val = 0;
+			pbuf++;
 			for(int p = 0; p < 2; ++p) {
-				mainGame->dInfo.lp[p] = BufferIO::ReadInt32(pbuf);
-				myswprintf(mainGame->dInfo.strLP[p], L"%d", mainGame->dInfo.lp[p]);
+				pbuf += 4;
 				for(int seq = 0; seq < 7; ++seq) {
-					val = BufferIO::ReadInt8(pbuf);
-					if(val) {
-						ClientCard* ccard = new ClientCard;
-						mainGame->dField.AddCard(ccard, p, LOCATION_MZONE, seq);
-						ccard->position = BufferIO::ReadInt8(pbuf);
-						val = BufferIO::ReadInt8(pbuf);
-						if(val) {
-							for(int xyz = 0; xyz < val; ++xyz) {
-								ClientCard* xcard = new ClientCard;
-								ccard->overlayed.push_back(xcard);
-								mainGame->dField.overlay_cards.insert(xcard);
-								xcard->overlayTarget = ccard;
-								xcard->location = 0x80;
-								xcard->sequence = ccard->overlayed.size() - 1;
-							}
-						}
-					}
+					int val = BufferIO::ReadInt8(pbuf);
+					if(val)
+						pbuf += 2;
 				}
 				for(int seq = 0; seq < 8; ++seq) {
-					val = BufferIO::ReadInt8(pbuf);
-					if(val) {
-						ClientCard* ccard = new ClientCard;
-						mainGame->dField.AddCard(ccard, p, LOCATION_SZONE, seq);
-						ccard->position = BufferIO::ReadInt8(pbuf);
-					}
+					int val = BufferIO::ReadInt8(pbuf);
+					if(val)
+						pbuf++;
 				}
-				val = BufferIO::ReadInt8(pbuf);
-				for(int seq = 0; seq < val; ++seq) {
-					ClientCard* ccard = new ClientCard;
-					mainGame->dField.AddCard(ccard, p, LOCATION_DECK, seq);
-				}
-				val = BufferIO::ReadInt8(pbuf);
-				for(int seq = 0; seq < val; ++seq) {
-					ClientCard* ccard = new ClientCard;
-					mainGame->dField.AddCard(ccard, p, LOCATION_HAND, seq);
-				}
-				val = BufferIO::ReadInt8(pbuf);
-				for(int seq = 0; seq < val; ++seq) {
-					ClientCard* ccard = new ClientCard;
-					mainGame->dField.AddCard(ccard, p, LOCATION_GRAVE, seq);
-				}
-				val = BufferIO::ReadInt8(pbuf);
-				for(int seq = 0; seq < val; ++seq) {
-					ClientCard* ccard = new ClientCard;
-					mainGame->dField.AddCard(ccard, p, LOCATION_REMOVED, seq);
-				}
-				val = BufferIO::ReadInt8(pbuf);
-				for(int seq = 0; seq < val; ++seq) {
-					ClientCard* ccard = new ClientCard;
-					mainGame->dField.AddCard(ccard, p, LOCATION_EXTRA, seq);
-				}
-				val = BufferIO::ReadInt8(pbuf);
-				mainGame->dField.extra_p_count[p] = val;
+				pbuf += 6;
 			}
-			BufferIO::ReadInt8(pbuf); //chain count, always 0
+			pbuf++;
+			DuelClient::ClientAnalyze(offset, pbuf - offset);
 			SinglePlayReload();
+			mainGame->gMutex.Lock();
 			mainGame->dField.RefreshAllCards();
 			mainGame->gMutex.Unlock();
 			break;

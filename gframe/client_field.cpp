@@ -311,7 +311,6 @@ void ClientField::UpdateCard(int controler, int location, int sequence, char* da
 }
 void ClientField::UpdateFieldCard(int controler, int location, char* data) {
 	std::vector<ClientCard*>* lst = 0;
-	std::vector<ClientCard*>::iterator cit;
 	switch(location) {
 	case LOCATION_DECK:
 		lst = &deck[controler];
@@ -338,7 +337,7 @@ void ClientField::UpdateFieldCard(int controler, int location, char* data) {
 	if(!lst)
 		return;
 	int len;
-	for(cit = lst->begin(); cit != lst->end(); ++cit) {
+	for(auto cit = lst->begin(); cit != lst->end(); ++cit) {
 		len = BufferIO::ReadInt32(data);
 		if(len > 8)
 			(*cit)->UpdateInfo(data);
@@ -347,20 +346,19 @@ void ClientField::UpdateFieldCard(int controler, int location, char* data) {
 	RefreshCardCountDisplay();
 }
 void ClientField::ClearCommandFlag() {
-	std::vector<ClientCard*>::iterator cit;
-	for(cit = activatable_cards.begin(); cit != activatable_cards.end(); ++cit)
+	for(auto cit = activatable_cards.begin(); cit != activatable_cards.end(); ++cit)
 		(*cit)->cmdFlag = 0;
-	for(cit = summonable_cards.begin(); cit != summonable_cards.end(); ++cit)
+	for(auto cit = summonable_cards.begin(); cit != summonable_cards.end(); ++cit)
 		(*cit)->cmdFlag = 0;
-	for(cit = spsummonable_cards.begin(); cit != spsummonable_cards.end(); ++cit)
+	for(auto cit = spsummonable_cards.begin(); cit != spsummonable_cards.end(); ++cit)
 		(*cit)->cmdFlag = 0;
-	for(cit = msetable_cards.begin(); cit != msetable_cards.end(); ++cit)
+	for(auto cit = msetable_cards.begin(); cit != msetable_cards.end(); ++cit)
 		(*cit)->cmdFlag = 0;
-	for(cit = ssetable_cards.begin(); cit != ssetable_cards.end(); ++cit)
+	for(auto cit = ssetable_cards.begin(); cit != ssetable_cards.end(); ++cit)
 		(*cit)->cmdFlag = 0;
-	for(cit = reposable_cards.begin(); cit != reposable_cards.end(); ++cit)
+	for(auto cit = reposable_cards.begin(); cit != reposable_cards.end(); ++cit)
 		(*cit)->cmdFlag = 0;
-	for(cit = attackable_cards.begin(); cit != attackable_cards.end(); ++cit)
+	for(auto cit = attackable_cards.begin(); cit != attackable_cards.end(); ++cit)
 		(*cit)->cmdFlag = 0;
 	conti_cards.clear();
 	deck_act = false;
@@ -372,15 +370,13 @@ void ClientField::ClearCommandFlag() {
 	conti_act = false;
 }
 void ClientField::ClearSelect() {
-	std::vector<ClientCard*>::iterator cit;
-	for(cit = selectable_cards.begin(); cit != selectable_cards.end(); ++cit) {
+	for(auto cit = selectable_cards.begin(); cit != selectable_cards.end(); ++cit) {
 		(*cit)->is_selectable = false;
 		(*cit)->is_selected = false;
 	}
 }
 void ClientField::ClearChainSelect() {
-	std::vector<ClientCard*>::iterator cit;
-	for(cit = activatable_cards.begin(); cit != activatable_cards.end(); ++cit) {
+	for(auto cit = activatable_cards.begin(); cit != activatable_cards.end(); ++cit) {
 		(*cit)->cmdFlag = 0;
 		(*cit)->chain_code = 0;
 		(*cit)->is_selectable = false;
@@ -1412,10 +1408,25 @@ void ClientField::UpdateDeclarableCodeType(bool enter) {
 		ancard.push_back(trycode);
 		return;
 	}
-	if((pname[0] == 0 || pname[1] == 0) && !enter)
-		return;
+	bool try_cache = false;
+	if(pname[0] == 0 || pname[1] == 0) {
+		if(!enter)
+			return;
+		try_cache = true;
+	}
 	mainGame->lstANCard->clear();
 	ancard.clear();
+	if(try_cache && mainGame->dInfo.announce_cache.size()) {
+		for(int i = 0; i < mainGame->dInfo.announce_cache.size(); ++i) {
+			unsigned int cache_code = mainGame->dInfo.announce_cache[i];
+			if(dataManager.GetString(cache_code, &cstr) && dataManager.GetData(cache_code, &cd) && is_declarable(cd, declarable_type)) {
+				mainGame->lstANCard->addItem(cstr.name.c_str());
+				ancard.push_back(cache_code);
+			}
+		}
+		if(ancard.size())
+			return;
+	}
 	for(auto cit = dataManager._strings.begin(); cit != dataManager._strings.end(); ++cit) {
 		if(cit->second.name.find(pname) != std::wstring::npos) {
 			auto cp = dataManager.GetCodePointer(cit->first);	//verified by _strings
@@ -1444,10 +1455,25 @@ void ClientField::UpdateDeclarableCodeOpcode(bool enter) {
 		ancard.push_back(trycode);
 		return;
 	}
-	if((pname[0] == 0 || pname[1] == 0) && !enter)
-		return;
+	bool try_cache = false;
+	if(pname[0] == 0 || pname[1] == 0) {
+		if(!enter)
+			return;
+		try_cache = true;
+	}
 	mainGame->lstANCard->clear();
 	ancard.clear();
+	if(try_cache && mainGame->dInfo.announce_cache.size()) {
+		for(int i = 0; i < mainGame->dInfo.announce_cache.size(); ++i) {
+			unsigned int cache_code = mainGame->dInfo.announce_cache[i];
+			if(dataManager.GetString(cache_code, &cstr) && dataManager.GetData(cache_code, &cd) && is_declarable(cd, opcode)) {
+				mainGame->lstANCard->addItem(cstr.name.c_str());
+				ancard.push_back(cache_code);
+			}
+		}
+		if(ancard.size())
+			return;
+	}
 	for(auto cit = dataManager._strings.begin(); cit != dataManager._strings.end(); ++cit) {
 		if(cit->second.name.find(pname) != std::wstring::npos) {
 			auto cp = dataManager.GetCodePointer(cit->first);	//verified by _strings

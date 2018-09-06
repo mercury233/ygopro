@@ -411,7 +411,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 					break;
 				}
 				int sel = mainGame->cbDBDecks->getSelected();
-				deckManager.LoadDeck(mainGame->cbDBDecks->getItem(sel));
+				if(sel >= 0)
+					deckManager.LoadDeck(mainGame->cbDBDecks->getItem(sel));
 				prev_deck = sel;
 				is_modified = false;
 				break;
@@ -818,22 +819,13 @@ void DeckBuilder::StartFilter() {
 void DeckBuilder::FilterCards() {
 	results.clear();
 	const wchar_t* pstr = mainGame->ebCardName->getText();
-	int trycode = BufferIO::GetVal(pstr);
-	if(dataManager.GetData(trycode, 0)) {
-		auto ptr = dataManager.GetCodePointer(trycode);	// verified by GetData()
-		results.push_back(ptr);
-		mainGame->scrFilter->setVisible(false);
-		mainGame->scrFilter->setPos(0);
-		myswprintf(result_string, L"%d", results.size());
-		return;
-	}
 	std::wstring str = std::wstring(pstr);
 	std::vector<std::wstring> query_elements;
 	std::vector<std::vector<std::wstring>::iterator> query_elements_track;
 	size_t element_start = 0;
-	while (1) {
+	while(1) {
 		size_t element_end = str.find_first_of(L' ', element_start);
-		if (element_end == std::wstring::npos)
+		if(element_end == std::wstring::npos)
 			break;
 		size_t length = element_end - element_start;
 		if(length > 0) {
@@ -844,18 +836,24 @@ void DeckBuilder::FilterCards() {
 	}
 	query_elements.push_back(str.substr(element_start));
 	std::unordered_map<std::wstring, unsigned int> set_code_map;
-	for (auto elements_iterator = query_elements.begin(); elements_iterator != query_elements.end(); elements_iterator++) {
+	for(auto elements_iterator = query_elements.begin(); elements_iterator != query_elements.end(); elements_iterator++) {
 		const wchar_t* element_pointer = elements_iterator->c_str();
-		if (element_pointer[0] == L'@')
+		if(element_pointer[0] == L'@')
 			set_code_map[*elements_iterator] = dataManager.GetSetCode(&element_pointer[1]);
 		else
 			set_code_map[*elements_iterator] = dataManager.GetSetCode(&element_pointer[0]);			
-		if (element_pointer[0] == 0 || (element_pointer[0] == L'$' && element_pointer[1] == 0) || (element_pointer[0] == L'@' && element_pointer[1] == 0))
+		if(element_pointer[0] == 0 || (element_pointer[0] == L'$' && element_pointer[1] == 0) || (element_pointer[0] == L'@' && element_pointer[1] == 0))
 			query_elements_track.push_back(elements_iterator);
 	}
-	for (auto elements_track_iterator = query_elements_track.begin(); elements_track_iterator != query_elements_track.end(); elements_track_iterator++) {
+	for(auto elements_track_iterator = query_elements_track.begin(); elements_track_iterator != query_elements_track.end(); elements_track_iterator++)
 		query_elements.erase(*elements_track_iterator);
-	}
+	unsigned int set_code = 0;
+	if(pstr[0] == L'@')
+		set_code = dataManager.GetSetCode(&pstr[1]);
+	else
+		set_code = dataManager.GetSetCode(&pstr[0]);
+	if(pstr[0] == 0 || (pstr[0] == L'$' && pstr[1] == 0) || (pstr[0] == L'@' && pstr[1] == 0))
+		pstr = 0;
 	auto strpointer = dataManager._strings.begin();
 	for(code_pointer ptr = dataManager._datas.begin(); ptr != dataManager._datas.end(); ++ptr, ++strpointer) {
 		const CardDataC& data = ptr->second;
@@ -944,14 +942,21 @@ void DeckBuilder::FilterCards() {
 					break;
 				}
 			} else {
-				if (!CardNameContains(text.name.c_str(), elements_iterator->c_str()) && text.text.find(elements_iterator->c_str()) == std::wstring::npos
+				int trycode = BufferIO::GetVal(elements_iterator->c_str());
+				bool tryresult = dataManager.GetData(trycode, 0);
+				if(!tryresult && !CardNameContains(text.name.c_str(), elements_iterator->c_str()) && text.text.find(elements_iterator->c_str()) == std::wstring::npos
 					&& (!set_code_map[*elements_iterator] || !check_set_code(data, set_code_map[*elements_iterator]))) {
+					is_target = false;
+					break;
+				}
+				if(tryresult && data.code != trycode
+					&& !(data.alias == trycode && (data.alias - data.code < CARD_ARTWORK_VERSIONS_OFFSET || data.code - data.alias < CARD_ARTWORK_VERSIONS_OFFSET))) {
 					is_target = false;
 					break;
 				}
 			}
 		}
-		if (is_target)
+		if(is_target)
 			results.push_back(ptr);
 		else
 			continue;
