@@ -1060,9 +1060,7 @@ void Game::RefreshBot() {
 	if(!gameConf.enable_bot_mode)
 		return;
 	botInfo.clear();
-	FILE* fp = fopen(GetLocaleDir("bot.conf"), "r");
-	if(!fp)
-		fp = fopen("bot.conf", "r");
+	FILE* fp = fopen("bot.conf", "r");
 	char linebuf[256];
 	char strbuf[256];
 	if(fp) {
