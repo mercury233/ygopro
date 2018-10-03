@@ -394,7 +394,7 @@ bool Game::Initialize() {
 	wOptions = env->addWindow(rect<s32>(490, 200, 840, 340), false, L"");
 	wOptions->getCloseButton()->setVisible(false);
 	wOptions->setVisible(false);
-	stOptions =  env->addStaticText(L"", rect<s32>(20, 20, 350, 100), false, true, wOptions, -1, false);
+	stOptions = env->addStaticText(L"", rect<s32>(20, 20, 350, 100), false, true, wOptions, -1, false);
 	stOptions->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
 	btnOptionOK = env->addButton(rect<s32>(130, 105, 220, 130), wOptions, BUTTON_OPTION_OK, dataManager.GetSysString(1211));
 	btnOptionp = env->addButton(rect<s32>(20, 105, 60, 130), wOptions, BUTTON_OPTION_PREV, L"<<<");
@@ -1408,6 +1408,16 @@ void Game::ShowCardInfo(int code, bool resize) {
 	const auto& tsize = stText->getRelativePosition();
 	InitStaticText(stText, tsize.getWidth(), tsize.getHeight(), guiFont, showingtext);
 }
+void Game::ShowCardNoInfo(int player) {
+	imgCard->setImage(imageManager.tCover[player]);
+	showingcode = 0;
+	stName->setText(L"");
+	stInfo->setText(L"");
+	stDataInfo->setText(L"");
+	stSetName->setText(L"");
+	stText->setText(L"");
+	scrCardText->setVisible(false);
+}
 void Game::AddChatMsg(wchar_t* msg, int player) {
 	for(int i = 7; i > 0; --i) {
 		chatMsg[i] = chatMsg[i - 1];
@@ -1453,6 +1463,10 @@ void Game::AddChatMsg(wchar_t* msg, int player) {
 			chatMsg[0].append(L"[---]: ");
 	}
 	chatMsg[0].append(msg);
+	wchar_t msg_front[256];
+	myswprintf(msg_front, L"[Chat]%ls", chatMsg[0].c_str());
+	lstLog->addItem(msg_front);
+	logParam.push_back(0);
 }
 void Game::ClearChatMsg() {
 	for(int i = 7; i >= 0; --i) {
