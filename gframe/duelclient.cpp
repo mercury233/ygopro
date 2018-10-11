@@ -668,6 +668,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->btnCancelOrFinish->setVisible(false);
 		if(!mainGame->dInfo.isReplay && mainGame->dInfo.isReplaySkiping)
 			mainGame->dInfo.isReplaySkiping = false;
+		mainGame->wSurrender->setVisible(false);
 		mainGame->stMessage->setText(dataManager.GetSysString(1500));
 		mainGame->PopupElement(mainGame->wMessage);
 		mainGame->gMutex.Unlock();
@@ -702,6 +703,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 	case STOC_REPLAY: {
 		mainGame->gMutex.Lock();
 		mainGame->wPhase->setVisible(false);
+		mainGame->wSurrender->setVisible(false);
 		if(mainGame->dInfo.player_type < 7)
 			mainGame->btnLeaveGame->setVisible(false);
 		mainGame->btnChainIgnore->setVisible(false);
@@ -2323,6 +2325,8 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			mainGame->dInfo.is_swapped = !mainGame->dInfo.is_swapped;
 			return true;
 		}
+		if(mainGame->wSurrender->isVisible())
+			mainGame->HideElement(mainGame->wSurrender);
 		if(!mainGame->dInfo.isTag && !mainGame->dInfo.isReplay && mainGame->dInfo.player_type < 7) {
 			mainGame->btnLeaveGame->setText(dataManager.GetSysString(1351));
 			mainGame->btnLeaveGame->setVisible(true);

@@ -52,6 +52,7 @@ int SingleMode::SinglePlayThread(void* param) {
 	myswprintf(mainGame->dInfo.strLP[1], L"%d", mainGame->dInfo.lp[1]);
 	BufferIO::CopyWStr(mainGame->ebNickName->getText(), mainGame->dInfo.hostname, 20);
 	mainGame->dInfo.clientname[0] = 0;
+	mainGame->dInfo.player_type = 0;
 	mainGame->dInfo.turn = 0;
 	mainGame->dInfo.announce_cache.clear();
 	char filename[256];
@@ -85,16 +86,11 @@ int SingleMode::SinglePlayThread(void* param) {
 	rh.seed = seed;
 	mainGame->gMutex.Lock();
 	mainGame->HideElement(mainGame->wSinglePlay);
+	mainGame->ClearCardInfo();
 	mainGame->wCardImg->setVisible(true);
 	mainGame->wInfos->setVisible(true);
 	mainGame->btnLeaveGame->setVisible(true);
 	mainGame->btnLeaveGame->setText(dataManager.GetSysString(1210));
-	mainGame->stName->setText(L"");
-	mainGame->stInfo->setText(L"");
-	mainGame->stDataInfo->setText(L"");
-	mainGame->stSetName->setText(L"");
-	mainGame->stText->setText(L"");
-	mainGame->scrCardText->setVisible(false);
 	mainGame->wPhase->setVisible(true);
 	mainGame->dField.Clear();
 	mainGame->dInfo.isFirst = true;
