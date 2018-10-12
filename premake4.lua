@@ -2,9 +2,10 @@ solution "ygo"
     location "build"
     language "C++"
     objdir "obj"
+    startproject "ygopro"
 
-    configurations { "Debug", "Release" }
-
+    configurations { "Release", "Debug" }
+    defines { "LUA_COMPAT_5_2" }
     configuration "windows"
         defines { "WIN32", "_WIN32" }
 
@@ -15,8 +16,10 @@ solution "ygo"
 
     configuration "macosx"
         defines { "LUA_USE_MACOSX" }
-        includedirs { "/opt/local/include" }
-        libdirs { "/opt/local/lib" }
+        includedirs { "/usr/local/include/*" }
+        libdirs { "/usr/local/lib", "/usr/X11/lib" }
+        buildoptions { "-stdlib=libc++" }
+        links {"OpenGL.framework","Cocoa.framework","IOKit.framework"}
 
     configuration "linux"
         defines { "LUA_USE_LINUX" }
