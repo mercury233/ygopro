@@ -1660,6 +1660,7 @@ void Game::OnResize() {
 	s32 tabHelperLastY = elmTabHelperLast->getRelativePosition().LowerRightCorner.Y;
 	if(tabHelperLastY > tabHelperPos.LowerRightCorner.Y) {
 		scrTabHelper->setMax(tabHelperLastY - tabHelperPos.LowerRightCorner.Y + 5);
+		scrTabHelper->setPos(0);
 		scrTabHelper->setVisible(true);
 	}
 	else
@@ -1671,6 +1672,7 @@ void Game::OnResize() {
 	s32 tabSystemLastY = elmTabSystemLast->getRelativePosition().LowerRightCorner.Y;
 	if(tabSystemLastY > tabSystemPos.LowerRightCorner.Y) {
 		scrTabSystem->setMax(tabSystemLastY - tabSystemPos.LowerRightCorner.Y + 5);
+		scrTabSystem->setPos(0);
 		scrTabSystem->setVisible(true);
 	} else
 		scrTabSystem->setVisible(false);
