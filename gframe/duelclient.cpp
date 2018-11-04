@@ -2350,6 +2350,10 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			else
 				mainGame->dInfo.tag_player[1] = !mainGame->dInfo.tag_player[1];
 		}
+		if(mainGame->dInfo.isTag && !mainGame->dInfo.isReplaySkiping &&  mainGame->dInfo.turn != 1) {
+			delay_swap = true;
+			swap_player = (player == 0) ? 0 : 1;
+		}
 		if(!mainGame->dInfo.isReplaySkiping) {
 			soundManager.PlaySoundEffect(SOUND_NEXT_TURN);
 			mainGame->showcardcode = 10;
@@ -3609,6 +3613,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			}
 			mainGame->WaitFrameSignal(5);
 		}
+		delay_swap = false;
 		//
 		if(!mainGame->dInfo.isReplaySkiping)
 			mainGame->gMutex.Lock();

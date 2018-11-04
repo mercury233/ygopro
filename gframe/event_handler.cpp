@@ -857,9 +857,10 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 						mainGame->btnCardSelect[i]->setImage(imageManager.GetTexture(selectable_cards[i + pos]->code));
 					else if(conti_selecting)
 						mainGame->btnCardSelect[i]->setImage(imageManager.GetTexture(selectable_cards[i + pos]->chain_code));
-					else
+					else {
 						int tagOffset = mainGame->dInfo.tag_player[selectable_cards[i + pos]->controler] ? 2 : 0;
 						mainGame->btnCardSelect[i]->setImage(imageManager.tCover[selectable_cards[i + pos]->controler + tagOffset], rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT));
+					}
 						mainGame->btnCardSelect[i]->setRelativePosition(rect<s32>(30 + i * 125, 55, 30 + 120 + i * 125, 225));
 					// text
 					wchar_t formatBuffer[2048];

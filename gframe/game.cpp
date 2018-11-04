@@ -23,6 +23,9 @@
 
 unsigned short PRO_VERSION = 0x1346;
 
+bool delay_swap = false;
+int swap_player = 0;
+
 namespace ygo {
 
 Game* mainGame;
