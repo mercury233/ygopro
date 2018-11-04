@@ -370,7 +370,11 @@ void Game::DrawCard(ClientCard* pcard) {
 		driver->drawVertexPrimitiveList(matManager.vCardFront, 4, matManager.iRectangle, 2);
 	}
 	if(m22 < 0.99 || pcard->is_moving) {
-		matManager.mCard.setTexture(0, imageManager.tCover[pcard->controler]);
+	int locationOffset = pcard->location == LOCATION_EXTRA ? 4 : 0;
+	int tagOffset = mainGame->dInfo.tag_player[pcard->controler] ? 2 : 0;
+	if(delay_swap && pcard->controler == swap_player)
+		tagOffset = 2 - tagOffset;
+		matManager.mCard.setTexture(0, imageManager.tCover[pcard->controler + tagOffset + locationOffset]);
 		driver->setMaterial(matManager.mCard);
 		driver->drawVertexPrimitiveList(matManager.vCardBack, 4, matManager.iRectangle, 2);
 	}
