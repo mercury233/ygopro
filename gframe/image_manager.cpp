@@ -15,6 +15,8 @@ bool ImageManager::Initial()  {
 	if(!tCover[1])
 		tCover[1] = tCover[0];
 	tCover[2] = driver->getTexture("textures/cover3.jpg");
+	if(!tCover[2])
+		tCover[2] = tCover[1];
 	tCover[3] = driver->getTexture("textures/cover4.jpg");
 	if(!tCover[3])
 		tCover[3] = tCover[2];
