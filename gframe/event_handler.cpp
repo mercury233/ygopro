@@ -922,9 +922,10 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 					mainGame->stDisplayPos[i]->enableOverrideColor(false);
 					if(display_cards[i + pos]->code)
 						mainGame->btnCardDisplay[i]->setImage(imageManager.GetTexture(display_cards[i + pos]->code));
-					else
+					else {
 						int tagOffset = mainGame->dInfo.tag_player[display_cards[i + pos]->controler] ? 2 : 0;
 						mainGame->btnCardDisplay[i]->setImage(imageManager.tCover[display_cards[i + pos]->controler + tagOffset], rect<s32>(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT));
+					}
 					mainGame->btnCardDisplay[i]->setRelativePosition(rect<s32>(30 + i * 125, 55, 30 + 120 + i * 125, 225));
 					wchar_t formatBuffer[2048];
 					if(display_cards[i + pos]->location == LOCATION_OVERLAY) {
