@@ -308,7 +308,14 @@ public:
 	irr::gui::IGUIButton* btnTestMode;
 	irr::gui::IGUIButton* btnDeckEdit;
 	irr::gui::IGUIButton* btnModeExit;
+	irr::gui::IGUIButton* btnOther;
+	//other
+	irr::gui::IGUIWindow* wOther;
 	irr::gui::IGUIButton* btnXPG;
+	irr::gui::IGUIButton* btnKANabell;
+	irr::gui::IGUIButton* btnOCNK;
+	irr::gui::IGUIButton* btnOtherExit;
+	irr::gui::IGUIButton* btnLantern;
 	//lan
 	irr::gui::IGUIWindow* wLanWindow;
 	irr::gui::IGUIEditBox* ebNickName;
@@ -707,12 +714,17 @@ extern Game* mainGame;
 #define BUTTON_SEARCH_AGREE			383
 #define BUTTON_SEARCH_CANCEL		384
 
-#define BUTTON_XPG			        385
+#define BUTTON_OTHER			        385
 
 #define BUTTON_RENAME_DECK			386
 #define BUTTON_RENAME_DECK_SAVE			387
 #define BUTTON_RENAME_DECK_CANCEL		388
 
+#define BUTTON_XPG						389
+#define BUTTON_KANABELL					390
+#define BUTTON_OCNK						391
+#define BUTTON_LANTERN					392
+#define BUTTON_OTHER_EXIT				393
 #define TEXTURE_HEAD_S				0
 
 #define DEFAULT_DUEL_RULE			4

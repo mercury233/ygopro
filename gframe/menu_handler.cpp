@@ -62,9 +62,41 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->device->closeDevice();
 				break;
 			}
+			case BUTTON_OTHER: {
+				mainGame->btnXPG->setEnabled(true);
+				mainGame->btnbtnKANabell->setEnabled(true);
+				mainGame->btnOCNK->setEnabled(true);
+				mainGame->btnLantern->setEnabled(true);
+				mainGame->btnOtherExit->setEnabled(true);
+				mainGame->HideElement(mainGame->wMainMenu);
+				mainGame->ShowElement(mainGame->wOther);
+				break;
+			}
 			case BUTTON_XPG: {
-                                system("start https://ocg.xpg.jp/deck/deck.fcgi");
+                system("start https://ocg.xpg.jp/deck/deck.fcgi");
 				return true;
+				break;
+			}
+			case BUTTON_KANABELL: {
+                system("start https://www.ka-nabell.com");
+				return true;
+				break;
+			}
+			case BUTTON_OCNK: {
+                system("start http://netsaru2012.ocnk.net/");
+				return true;
+				break;
+			}
+			case BUTTON_LANTERN: {
+                system("start https://github.com/getlantern/download");
+				return true;
+				break;
+			}
+			case BUTTON_OTHER_EXIT: {
+				mainGame->HideElement(mainGame->wOther);
+				mainGame->ShowElement(mainGame->wMainMenu);
+				if(exit_on_return)
+					mainGame->device->closeDevice();
 				break;
 			}
 			case BUTTON_LAN_MODE: {
