@@ -725,6 +725,7 @@ extern Game* mainGame;
 #define BUTTON_OCNK						391
 #define BUTTON_LANTERN					392
 #define BUTTON_OTHER_EXIT				393
+
 #define TEXTURE_HEAD_S				0
 
 #define DEFAULT_DUEL_RULE			4
