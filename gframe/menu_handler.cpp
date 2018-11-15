@@ -64,7 +64,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_OTHER: {
 				mainGame->btnXPG->setEnabled(true);
-				mainGame->btnbtnKANabell->setEnabled(true);
+				mainGame->btnKANabell->setEnabled(true);
 				mainGame->btnOCNK->setEnabled(true);
 				mainGame->btnLantern->setEnabled(true);
 				mainGame->btnOtherExit->setEnabled(true);

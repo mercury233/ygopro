@@ -135,7 +135,7 @@ bool Game::Initialize() {
 	wOther->getCloseButton()->setVisible(false);
 	wOther->setVisible(false);
 	btnXPG = env->addButton(rect<s32>(10, 30, 270, 60), wOther, BUTTON_XPG, dataManager.GetSysString(1376));
-	btnbtnKANabell = env->addButton(rect<s32>(10, 65, 270, 95), wOther, BUTTON_KANABELL, dataManager.GetSysString(1377));
+	btnKANabell = env->addButton(rect<s32>(10, 65, 270, 95), wOther, BUTTON_KANABELL, dataManager.GetSysString(1377));
 	btnOCNK = env->addButton(rect<s32>(10, 100, 270, 130), wOther, BUTTON_OCNK, dataManager.GetSysString(1378));
 	btnLantern = env->addButton(rect<s32>(10, 135, 270, 165), wOther, BUTTON_LANTERN, dataManager.GetSysString(1379));
 	btnOtherExit = env->addButton(rect<s32>(10, 170, 270, 200), wOther, BUTTON_OTHER_EXIT, dataManager.GetSysString(1210));
