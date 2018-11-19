@@ -247,10 +247,6 @@ irr::video::ITexture* ImageManager::GetTextureFromFile(char* file, s32 width, s3
 		return driver->getTexture(name);
 	}
 }
-irr::video::ITexture* ImageManager::GetTexture(int code, bool fit, bool fit) {
-	if(code == 0)
-		return tUnknown;
-}
 irr::video::ITexture* ImageManager::GetTextureExpansions(char* file, s32 width, s32 height) {
 	irr::video::ITexture* img = GetTextureExpansionsDirectry("./expansions", file, width, height);
 	if(img != NULL)
@@ -275,6 +271,8 @@ irr::video::ITexture* ImageManager::GetTextureExpansionsDirectry(const char* pat
 	return GetTextureFromFile(fpath, width, height);
 }
 irr::video::ITexture* ImageManager::GetTexture(int code, bool fit) {
+	if(code == 0)
+		return tUnknown;
 	int width = CARD_IMG_WIDTH;
 	int height = CARD_IMG_HEIGHT;
 	if(fit) {

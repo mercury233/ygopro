@@ -1948,7 +1948,6 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			}
 			break;
 		}
-#endif
 		case irr::gui::EGET_EDITBOX_ENTER: {
 			switch(id) {
 			case EDITBOX_CHAT: {
