@@ -201,10 +201,12 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 						myswprintf(newname, L"%ls", mainGame->ebREName->getText());
 					}
 					if(DeckManager::RenameDeck(mainGame->cbDBDecks->getItem(prev_sel), newname)) {
-						mainGame->RefreshDeck(mainGame->cbDBDecks);
-						mainGame->cbDBDecks->setSelected(prev_sel);
+						mainGame->cbDBDecks->removeItem(prev_sel);
+						mainGame->cbDBDecks->addItem(newname);
+						mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getItemCount() - 1);
 						mainGame->stACMessage->setText(dataManager.GetSysString(1375));
 					        mainGame->PopupElement(mainGame->wACMessage, 20);
+						is_modified = false;
 					} else {
 						mainGame->env->addMessageBox(L"", dataManager.GetSysString(1365));
 					}

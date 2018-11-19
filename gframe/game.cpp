@@ -397,7 +397,7 @@ bool Game::Initialize() {
 	ebSearchName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
 	btnSearchAgree = env->addButton(rect<s32>(70, 80, 140, 105), wSearchWindow, BUTTON_SEARCH_AGREE, dataManager.GetSysString(1286));
 	btnSearchCancel = env->addButton(rect<s32>(170, 80, 240, 105), wSearchWindow, BUTTON_SEARCH_CANCEL, dataManager.GetSysString(1287));
-	elmTabSystemLast = btnCardSearch;
+	elmTabSystemLast = chkEnablePScale;
 	//
 	wHand = env->addWindow(rect<s32>(500, 450, 825, 605), false, L"");
 	wHand->getCloseButton()->setVisible(false);
@@ -1517,6 +1517,8 @@ void Game::initUtils() {
 	FileSystem::MakeDir("textures/bg_menu");
 	FileSystem::MakeDir("textures/cover");
 	FileSystem::MakeDir("textures/cover2");
+	FileSystem::MakeDir("textures/cover3");
+	FileSystem::MakeDir("textures/cover4");
 	FileSystem::MakeDir("textures/pscale");
 	//sound
 	FileSystem::MakeDir("sound");
