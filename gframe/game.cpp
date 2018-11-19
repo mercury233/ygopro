@@ -83,12 +83,10 @@ bool Game::Initialize() {
 		return false;
 	}
 	LoadExpansionDB();
-	if(dataManager.LoadDB(GetLocaleDir("cards.cdb"))) {} else
 	if(!dataManager.LoadDB("cards.cdb")) {
 		ErrorLog("Failed to load card database (cards.cdb)!");
 		return false;
 	}
-	if(dataManager.LoadStrings(GetLocaleDir("strings.conf"))) {} else
 	if(!dataManager.LoadStrings("strings.conf")) {
 		ErrorLog("Failed to load strings!");
 		return false;
@@ -335,7 +333,6 @@ bool Game::Initialize() {
 	posY += 30;
 	chkRegex = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabHelper, CHECKBOX_REGEX, dataManager.GetSysString(1379));
 	chkRegex->setChecked(gameConf.search_regex > 0);
-	RefreshLocales();
 	elmTabHelperLast = chkRegex;
 	//system
 	irr::gui::IGUITab* _tabSystem = wInfos->addTab(dataManager.GetSysString(1273));
@@ -350,7 +347,7 @@ bool Game::Initialize() {
 	scrTabSystem->setSmallStep(1);
 	scrTabSystem->setVisible(false);
 	posY = 0;
-	chkIgnore1 = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, CHECKBOX_DISABLE_CHAT, dataManager.GetSysString(1290));
+	chkIgnore1 = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, -1, dataManager.GetSysString(1290));
 	chkIgnore1->setChecked(gameConf.chkIgnore1 != 0);
 	posY += 30;
 	chkIgnore2 = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, -1, dataManager.GetSysString(1291));
@@ -400,7 +397,7 @@ bool Game::Initialize() {
 	ebSearchName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
 	btnSearchAgree = env->addButton(rect<s32>(70, 80, 140, 105), wSearchWindow, BUTTON_SEARCH_AGREE, dataManager.GetSysString(1286));
 	btnSearchCancel = env->addButton(rect<s32>(170, 80, 240, 105), wSearchWindow, BUTTON_SEARCH_CANCEL, dataManager.GetSysString(1287));
-	elmTabSystemLast = ebSearchName;
+	elmTabSystemLast = btnCardSearch;
 	//
 	wHand = env->addWindow(rect<s32>(500, 450, 825, 605), false, L"");
 	wHand->getCloseButton()->setVisible(false);
@@ -1053,20 +1050,6 @@ void Game::RefreshSingleplay() {
 			lstSinglePlayList->addItem(name);
 	});
 }
-void Game::RefreshLocales() {
-	cbLocale->clear();
-	cbLocale->addItem(L"default");
-	FileSystem::TraversalDir(L"./locales", [this](const wchar_t* name, bool isdir) {
-		if(isdir && wcscmp(name, L".") && wcscmp(name, L".."))
-			cbLocale->addItem(name);
-	});
-	for(size_t i = 0; i < cbLocale->getItemCount(); ++i) {
-		if(!wcscmp(cbLocale->getItem(i), gameConf.locale)) {
-			cbLocale->setSelected(i);
-			break;
-		}
-	}
-}
 void Game::RefreshBot() {
 	if(!gameConf.enable_bot_mode)
 		return;
@@ -1406,10 +1389,11 @@ void Game::ShowCardInfo(int code, bool resize) {
 			wcscat(formatBuffer, scaleBuffer);
 		}
 		stDataInfo->setText(formatBuffer);
-		int offset_arrows = 0;
-		irr::core::dimension2d<unsigned int> dtxt = mainGame->guiFont->getDimension(formatBuffer);
-		if(dtxt.Width > (300 * xScale - 13) - 15)
+		int offset_arrows;
+		if(cd.type & TYPE_LINK && cd.level > 5 && window_size.Width < 1220.0)
 			offset_arrows = 15;
+		else
+			offset_arrows = 0;
 		stDataInfo->setRelativePosition(rect<s32>(15, 60, 300 * xScale - 13, (83 + offset_arrows)));
 		stSetName->setRelativePosition(rect<s32>(15, (83 + offset_arrows), 296 * xScale, (83 + offset_arrows) + offset));
 		stText->setRelativePosition(rect<s32>(15, (83 + offset_arrows) + offset, 287 * xScale, 324 * yScale));
@@ -1417,6 +1401,7 @@ void Game::ShowCardInfo(int code, bool resize) {
 	} else {
 		myswprintf(formatBuffer, L"[%ls]", dataManager.FormatType(cd.type));
 		stInfo->setText(formatBuffer);
+		stDataInfo->setRelativePosition(recti(15, 60, 300 * xScale - 13, 83));
 		stDataInfo->setText(L"");
 		stSetName->setRelativePosition(rect<s32>(15, 60, 296 * xScale, 60 + offset));
 		stText->setRelativePosition(rect<s32>(15, 60 + offset, 287 * xScale, 324 * yScale));
@@ -1522,7 +1507,6 @@ void Game::initUtils() {
 	FileSystem::MakeDir("deck");
 	FileSystem::MakeDir("single");
 	//original files
-	FileSystem::MakeDir("script");
 	FileSystem::MakeDir("skin");
 	FileSystem::MakeDir("textures");
 	//subdirs in textures
@@ -1715,7 +1699,6 @@ void Game::OnResize() {
 	//sound / music volume bar
 	scrSoundVolume->setRelativePosition(recti(scrSoundVolume->getRelativePosition().UpperLeftCorner.X, scrSoundVolume->getRelativePosition().UpperLeftCorner.Y, 20 + (300 * xScale) - 70, scrSoundVolume->getRelativePosition().LowerRightCorner.Y));
 	scrMusicVolume->setRelativePosition(recti(scrMusicVolume->getRelativePosition().UpperLeftCorner.X, scrMusicVolume->getRelativePosition().UpperLeftCorner.Y, 20 + (300 * xScale) - 70, scrMusicVolume->getRelativePosition().LowerRightCorner.Y));
-	cbLocale->setRelativePosition(recti(cbLocale->getRelativePosition().UpperLeftCorner.X, cbLocale->getRelativePosition().UpperLeftCorner.Y, 20 + (300 * xScale) - 70, cbLocale->getRelativePosition().LowerRightCorner.Y));
 
 	recti tabHelperPos = recti(0, 0, 300 * xScale - 50, 365 * yScale - 65);
 	tabHelper->setRelativePosition(tabHelperPos);
@@ -1952,16 +1935,6 @@ bool Game::CheckRegEx(std::wstring text, const wchar_t* exp, bool exact) {
 		result = false;
 	}
 	return result;
-}
-const char* Game::GetLocaleDir(const char* dir) {
-	if(!gameConf.locale || !wcscmp(gameConf.locale, L"default"))
-		return dir;
-	wchar_t locale_buf[256];
-	wchar_t orig_dir[64];
-	BufferIO::DecodeUTF8(dir, orig_dir);
-	myswprintf(locale_buf, L"locales/%ls/%ls", gameConf.locale, orig_dir);
-	BufferIO::EncodeUTF8(locale_buf, locale_buf_utf8);
-	return locale_buf_utf8;
 }
 void Game::SetCursor(ECURSOR_ICON icon) {
 	ICursorControl* cursor = mainGame->device->getCursorControl();

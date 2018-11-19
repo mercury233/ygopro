@@ -247,7 +247,7 @@ irr::video::ITexture* ImageManager::GetTextureFromFile(char* file, s32 width, s3
 		return driver->getTexture(name);
 	}
 }
-irr::video::ITexture* ImageManager::GetTexture(int code, bool fit, bool forced_fit) {
+irr::video::ITexture* ImageManager::GetTexture(int code, bool fit, bool fit) {
 	if(code == 0)
 		return tUnknown;
 }
@@ -287,16 +287,14 @@ irr::video::ITexture* ImageManager::GetTexture(int code, bool fit) {
 		width = width * mainGame->xScale;
 		height = height * mainGame->yScale;
 	}
-	auto tit = tMap[forced_fit ? 2 : (fit ? 1 : 0)].find(code);
-	if(tit == tMap[forced_fit ? 2 : (fit ? 1 : 0)].end()) {
+	auto tit = tMap[fit ? 1 : 0].find(code);
+	if(tit == tMap[fit ? 1 : 0].end()) {
 		char file[256];
 		sprintf(file, "pics/%d.png", code);
 		irr::video::ITexture* img = GetTextureExpansions(file, width, height);
 		if(img == NULL) {
 			sprintf(file, "pics/%d.jpg", code);
 			img = GetTextureExpansions(file, width, height);
-		}
-			img = GetTextureFromFile(file, width, height);
 		}
 		if(img == NULL) {
 			sprintf(file, "pics/%d.png", code);
@@ -310,7 +308,7 @@ irr::video::ITexture* ImageManager::GetTexture(int code, bool fit) {
 			tMap[fit ? 1 : 0][code] = NULL;
 			return GetTextureThumb(code);
 		}
-		tMap[forced_fit ? 2 : (fit ? 1 : 0)][code] = img;
+		tMap[fit ? 1 : 0][code] = img;
 		return (img == NULL) ? tUnknown : img;
 	}
 	if(tit->second)
@@ -333,8 +331,6 @@ irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 			sprintf(file, "pics/thumbnail/%d.jpg", code);
 			img = GetTextureExpansions(file, width, height);
 		}
-			img = GetTextureFromFile(file, width, height);
-		}
 		if(img == NULL) {
 			sprintf(file, "pics/thumbnail/%d.png", code);
 			img = GetTextureFromFile(file, width, height);
@@ -350,7 +346,6 @@ irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 				sprintf(file, "pics/%d.jpg", code);
 				img = GetTextureExpansions(file, width, height);
 			}
-			img = GetTextureFromFile(file, width, height);
 			if(img == NULL) {
 				sprintf(file, "expansions/pics/%d.jpg", code);
 				img = GetTextureFromFile(file, width, height);
