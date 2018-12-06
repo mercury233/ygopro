@@ -30,6 +30,7 @@ private:
 	static char duel_client_write[0x2000];
 	static bool is_closing;
 	static int select_hint;
+	static int select_unselect_hint;
 	static wchar_t event_string[256];
 	static mtrandom rnd;
 public:
@@ -78,6 +79,8 @@ protected:
 	static std::set<unsigned int> remotes;
 public:
 	static std::vector<HostPacket> hosts;
+	static std::vector<std::wstring> hosts_srvpro;
+	static bool is_srvpro;
 	static void BeginRefreshHost();
 	static int RefreshThread(void* arg);
 	static void BroadcastReply(evutil_socket_t fd, short events, void* arg);

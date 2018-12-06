@@ -96,7 +96,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->HideElement(mainGame->wOther);
 				mainGame->ShowElement(mainGame->wMainMenu);
 				if(exit_on_return)
-					mainGame->device->closeDevice();
+				mainGame->device->closeDevice();
 				break;
 			}
 			case BUTTON_LAN_MODE: {
@@ -503,6 +503,10 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				int sel = mainGame->lstHostList->getSelected();
 				if(sel == -1)
 					break;
+				if(DuelClient::is_srvpro) {
+					mainGame->ebJoinPass->setText(DuelClient::hosts_srvpro[sel].c_str());
+					break;
+				}
 				int addr = DuelClient::hosts[sel].ipaddr;
 				int port = DuelClient::hosts[sel].port;
 				wchar_t buf[20];
