@@ -992,7 +992,7 @@ void Game::SetStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, irr::gu
 void Game::LoadExpansionDB() {
 	LoadExpansionDBDirectry("./expansions");
 	FileSystem::TraversalDir("./expansions", [this](const char* name, bool isdir) {
-		if(isdir && strcmp(name, ".") && strcmp(name, "..")) {
+		if(isdir && strcmp(name, ".") && strcmp(name, "..") && strcmp(name, "pics") && strcmp(name, "script")) {
 			char subdir[1024];
 			sprintf(subdir, "./expansions/%s", name);
 			LoadExpansionDBDirectry(subdir);
@@ -1011,7 +1011,7 @@ void Game::LoadExpansionDBDirectry(const char* path) {
 void Game::LoadExpansionStrings() {
 	dataManager.LoadStrings("./expansions/strings.conf");
 	FileSystem::TraversalDir("./expansions", [](const char* name, bool isdir) {
-		if(isdir && strcmp(name, ".") && strcmp(name, "..")) {
+		if(isdir && strcmp(name, ".") && strcmp(name, "..") && strcmp(name, "pics") && strcmp(name, "script")) {
 			char fpath[1024];
 			sprintf(fpath, "./expansions/%s/strings.conf", name);
 			dataManager.LoadStrings(fpath);
@@ -1914,20 +1914,6 @@ void Game::takeScreenshot() {
 		device->getLogger()->log(L"Failed to take screenshot.", irr::ELL_WARNING);
 }
 bool Game::CheckRegEx(const std::wstring& text, const std::wstring& exp, bool exact) {
-	if(!gameConf.search_regex)
-		return false;
-	bool result;
-	try {
-		if(exact)
-			result = std::regex_match(text, std::wregex(exp));
-		else
-			result = std::regex_search(text, std::wregex(exp));
-	} catch(...) {
-		result = false;
-	}
-	return result;
-}
-bool Game::CheckRegEx(std::wstring text, const wchar_t* exp, bool exact) {
 	if(!gameConf.search_regex)
 		return false;
 	bool result;
