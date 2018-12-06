@@ -554,7 +554,7 @@ void ClientField::ShowLocationCard() {
 	}
 	for(size_t i = 0; i < ct; ++i) {
 		mainGame->stDisplayPos[i]->enableOverrideColor(false);
-		if(display_cards[i]->code) {
+		if(display_cards[i]->code)
 			mainGame->imageLoading.insert(std::make_pair(mainGame->btnCardDisplay[i], display_cards[i]->code));
 		} else {
 			int tagOffset = mainGame->dInfo.tag_player[display_cards[i]->controler] ? 2 : 0;
