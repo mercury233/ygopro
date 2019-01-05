@@ -56,7 +56,6 @@ public:
 	irr::video::ITexture* tLScale[14];
 	irr::video::ITexture* tCardType[7];
 	irr::video::ITexture* tClock;
-	irr::video::ITexture* tLPBarFrame;
 	std::list<std::string> support_types;
 };
 
