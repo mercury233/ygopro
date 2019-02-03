@@ -1662,9 +1662,9 @@ void Game::OnResize() {
 	btnMarksFilter->setRelativePosition(Resize(60, 80 + 125 / 6, 190, 100 + 125 / 6));
 
 	wCategories->setRelativePosition(ResizeCardMid(630, 60, 1000, 270, 1000, 270));
-	btnCategoryOK->setRelativePosition(ResizeCardMid(135, 175, 235, 200, 135, 175));
+	btnCategoryOK->setRelativePosition(ResizeWin(135, 175, 235, 200));
 	for(int i = 0; i < 32; ++i)
-		chkCategory[i]->setRelativePosition(ResizeCardMid(10 + (i % 4) * 90, 10 + (i / 4) * 20, 100 + (i % 4) * 90, 30 + (i / 4) * 20, 10 + (i % 4) * 90, 10 + (i / 4) * 20));
+		chkCategory[i]->setRelativePosition(ResizeWin(10 + (i % 4) * 90, 10 + (i / 4) * 20, 100 + (i % 4) * 90, 30 + (i / 4) * 20));
 	wLinkMarks->setRelativePosition(ResizeWin(700, 30, 820, 150));
 	stBanlist->setRelativePosition(ResizeWin(10, 9, 100, 29));
 	stDeck->setRelativePosition(ResizeWin(10, 39, 100, 59));
