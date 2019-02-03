@@ -652,27 +652,12 @@ bool Game::Initialize() {
 	}
 	wCategories = env->addWindow(rect<s32>(600, 60, 1000, 305), false, L"");
 	wCategories->getCloseButton()->setVisible(false);
+	wCategories->setDrawTitlebar(false);
+	wCategories->setDraggable(false);
 	wCategories->setVisible(false);
-	btnCategoryOK = env->addButton(rect<s32>(150, 210, 250, 235), wCategories, BUTTON_CATEGORY_OK, dataManager.GetSysString(1211));
-	unsigned int catewidth[4];
-	for(int i = 0; i < 3; ++i)
-		catewidth[i] = 0;
-	for(int i = 0; i < 32; ++i) {
-		unsigned char col = i % 4;
-		irr::core::dimension2d<unsigned int> dtxt = mainGame->guiFont->getDimension(dataManager.GetSysString(1100 + i));
-		if(dtxt.Width + 40 > catewidth[col])
-			catewidth[col] = dtxt.Width + 40;
-	}
-	for(int i = 0; i < 32; ++i) {
-		unsigned char col = i % 4;
-		unsigned int left_size = 0;
-		for (int j = 0; j < col; ++j)
-			left_size += catewidth[j];
-		chkCategory[i] = env->addCheckBox(false, recti(10 + left_size, 5 + (i / 4) * 25, 10 + left_size + catewidth[col], 5 + (i / 4 + 1) * 25), wCategories, -1, dataManager.GetSysString(1100 + i));
-	}
-	unsigned int wcatewidth = catewidth[0] + catewidth[1] + catewidth[2] + catewidth[3] + 16;
-	wCategories->setRelativePosition(rect<s32>(1000 - wcatewidth, 60, 1000, 305));
-	btnCategoryOK->setRelativePosition(recti(wcatewidth / 2 - 50, 210, wcatewidth / 2 + 50, 235));
+	btnCategoryOK = env->addButton(rect<s32>(135, 175, 235, 200), wCategories, BUTTON_CATEGORY_OK, dataManager.GetSysString(1211));
+	for(int i = 0; i < 32; ++i)
+		chkCategory[i] = env->addCheckBox(false, recti(10 + (i % 4) * 90, 10 + (i / 4) * 20, 100 + (i % 4) * 90, 30 + (i / 4) * 20), wCategories, -1, dataManager.GetSysString(1100 + i));
 	btnMarksFilter = env->addButton(rect<s32>(60, 80 + 125 / 6, 190, 100 + 125 / 6), wFilter, BUTTON_MARKS_FILTER, dataManager.GetSysString(1374));
 	wLinkMarks = env->addWindow(rect<s32>(700, 30, 820, 150), false, dataManager.strBuffer);
 	wLinkMarks->getCloseButton()->setVisible(false);
@@ -1676,13 +1661,7 @@ void Game::OnResize() {
 		btnClearFilter->setRelativePosition(Resize(205, 80 + 125 / 6, 255, 100 + 125 / 6));
 	btnMarksFilter->setRelativePosition(Resize(60, 80 + 125 / 6, 190, 100 + 125 / 6));
 
-	recti btncatepos = btnEffectFilter->getAbsolutePosition();
-	wCategories->setRelativePosition(recti(
-		btncatepos.LowerRightCorner.X - wCategories->getRelativePosition().getWidth(),
-		btncatepos.LowerRightCorner.Y - btncatepos.getHeight() / 2,
-		btncatepos.LowerRightCorner.X,
-		btncatepos.LowerRightCorner.Y - btncatepos.getHeight() / 2 + 245));
-
+	wCategories->setRelativePosition(ResizeWin(450, 60, 1000, 270));
 	wLinkMarks->setRelativePosition(ResizeWin(700, 30, 820, 150));
 	stBanlist->setRelativePosition(ResizeWin(10, 9, 100, 29));
 	stDeck->setRelativePosition(ResizeWin(10, 39, 100, 59));
