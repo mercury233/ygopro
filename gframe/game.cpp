@@ -650,7 +650,7 @@ bool Game::Initialize() {
 		btnStartFilter->setRelativePosition(rect<s32>(260, 80 + 125 / 6, 390, 100 + 125 / 6));
 		btnClearFilter = env->addButton(rect<s32>(205, 80 + 125 / 6, 255, 100 + 125 / 6), wFilter, BUTTON_CLEAR_FILTER, dataManager.GetSysString(1304));
 	}
-	wCategories = env->addWindow(rect<s32>(600, 60, 1000, 305), false, L"");
+	wCategories = env->addWindow(rect<s32>(600, 60, 1000, 305), false, dataManager.GetSysString(1326));
 	wCategories->getCloseButton()->setVisible(false);
 	wCategories->setVisible(false);
 	btnCategoryOK = env->addButton(rect<s32>(150, 210, 250, 235), wCategories, BUTTON_CATEGORY_OK, dataManager.GetSysString(1211));
