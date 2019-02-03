@@ -652,6 +652,7 @@ bool Game::Initialize() {
 	}
 	wCategories = env->addWindow(rect<s32>(630, 60, 1000, 270), false, L"");
 	wCategories->getCloseButton()->setVisible(false);
+	wLinkMarks->setDrawTitlebar(false);
 	wCategories->setVisible(false);
 	btnCategoryOK = env->addButton(rect<s32>(135, 175, 235, 200), wCategories, BUTTON_CATEGORY_OK, dataManager.GetSysString(1211));
 	for(int i = 0; i < 32; ++i)
