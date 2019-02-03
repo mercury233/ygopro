@@ -1661,7 +1661,7 @@ void Game::OnResize() {
 		btnClearFilter->setRelativePosition(Resize(205, 80 + 125 / 6, 255, 100 + 125 / 6));
 	btnMarksFilter->setRelativePosition(Resize(60, 80 + 125 / 6, 190, 100 + 125 / 6));
 
-	wCategories->setRelativePosition(ResizeWin(630, 60, 1000, 270));
+	wCategories->setRelativePosition(ResizeCardMid(630, 60, 1000, 270, 1000, 270));
 	wLinkMarks->setRelativePosition(ResizeWin(700, 30, 820, 150));
 	stBanlist->setRelativePosition(ResizeWin(10, 9, 100, 29));
 	stDeck->setRelativePosition(ResizeWin(10, 39, 100, 59));
