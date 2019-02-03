@@ -652,8 +652,6 @@ bool Game::Initialize() {
 	}
 	wCategories = env->addWindow(rect<s32>(600, 60, 1000, 305), false, L"");
 	wCategories->getCloseButton()->setVisible(false);
-	wCategories->setDrawTitlebar(false);
-	wCategories->setDraggable(false);
 	wCategories->setVisible(false);
 	btnCategoryOK = env->addButton(rect<s32>(150, 210, 250, 235), wCategories, BUTTON_CATEGORY_OK, dataManager.GetSysString(1211));
 	unsigned int catewidth[4];
