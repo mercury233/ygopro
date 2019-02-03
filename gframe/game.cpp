@@ -656,22 +656,8 @@ bool Game::Initialize() {
 	wCategories->setDraggable(false);
 	wCategories->setVisible(false);
 	btnCategoryOK = env->addButton(rect<s32>(135, 175, 235, 200), wCategories, BUTTON_CATEGORY_OK, dataManager.GetSysString(1211));
-	unsigned int catewidth[4];
-	for(int i = 0; i < 3; ++i)
-		catewidth[i] = 0;
-	for(int i = 0; i < 32; ++i) {
-		unsigned char col = i % 4;
-		irr::core::dimension2d<unsigned int> dtxt = mainGame->guiFont->getDimension(dataManager.GetSysString(1100 + i));
-		if(dtxt.Width + 40 > catewidth[col])
-			catewidth[col] = dtxt.Width + 40;
-	}
-	for(int i = 0; i < 32; ++i) {
-		unsigned char col = i % 4;
-		unsigned int left_size = 0;
-		for (int j = 0; j < col; ++j)
-			left_size += catewidth[j];
-		chkCategory[i] = env->addCheckBox(false, recti(10 + left_size, 5 + (i / 4) * 25, 10 + left_size + catewidth[col], 5 + (i / 4 + 1) * 25), wCategories, -1, dataManager.GetSysString(1100 + i));
-	}
+	for(int i = 0; i < 32; ++i)
+		chkCategory[i] = env->addCheckBox(false, recti(10 + (i % 4) * 90, 10 + (i / 4) * 20, 100 + (i % 4) * 90, 30 + (i / 4) * 20), wCategories, -1, dataManager.GetSysString(1100 + i));
 	btnMarksFilter = env->addButton(rect<s32>(60, 80 + 125 / 6, 190, 100 + 125 / 6), wFilter, BUTTON_MARKS_FILTER, dataManager.GetSysString(1374));
 	wLinkMarks = env->addWindow(rect<s32>(700, 30, 820, 150), false, dataManager.strBuffer);
 	wLinkMarks->getCloseButton()->setVisible(false);
