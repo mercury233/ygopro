@@ -336,12 +336,23 @@ public:
 	irr::gui::IGUIEditBox* ebNickName;
 	irr::gui::IGUIListBox* lstHostList;
 	irr::gui::IGUIButton* btnLanRefresh;
+	irr::gui::IGUIButton* btnSC;
 	irr::gui::IGUIEditBox* ebJoinHost;
 	irr::gui::IGUIEditBox* ebJoinPort;
 	irr::gui::IGUIEditBox* ebJoinPass;
 	irr::gui::IGUIButton* btnJoinHost;
 	irr::gui::IGUIButton* btnJoinCancel;
 	irr::gui::IGUIButton* btnCreateHost;
+	//server choose
+	irr::gui::IGUIWindow* wSC;
+	irr::gui::IGUIButton* btn233;
+	irr::gui::IGUIButton* btn23333;
+	irr::gui::IGUIButton* btn7210;
+	irr::gui::IGUIButton* btn222;
+	irr::gui::IGUIButton* btn765;
+	irr::gui::IGUIButton* btnJP;
+	irr::gui::IGUIButton* btnNK;
+	irr::gui::IGUIButton* btnSCExit;
 	//create host
 	irr::gui::IGUIWindow* wCreateHost;
 	irr::gui::IGUIComboBox* cbLFlist;
@@ -746,6 +757,15 @@ extern Game* mainGame;
 #define BUTTON_LANTERN					392
 #define BUTTON_OTHER_EXIT				393
 
+#define BUTTON_SERVER_CHOOSE			394
+#define BUTTON_233						395
+#define BUTTON_23333					396
+#define BUTTON_7210						397
+#define BUTTON_222						398
+#define BUTTON_765						399
+#define BUTTON_JP						400
+#define BUTTON_SC_EXIT					401
+#define BUTTON_NK						402
 #define TEXTURE_HEAD_S				0
 
 #define DEFAULT_DUEL_RULE			4
