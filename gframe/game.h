@@ -764,8 +764,9 @@ extern Game* mainGame;
 #define BUTTON_222						398
 #define BUTTON_765						399
 #define BUTTON_JP						400
-#define BUTTON_SC_EXIT					401
-#define BUTTON_NK						402
+#define BUTTON_NK						401
+#define BUTTON_SC_EXIT					402
+
 #define TEXTURE_HEAD_S				0
 
 #define DEFAULT_DUEL_RULE			4
