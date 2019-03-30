@@ -11,8 +11,7 @@ solution "ygo"
         defines { "WIN32", "_WIN32", "WINVER=0x0501" }
         libdirs { "$(DXSDK_DIR)Lib/x86" }
         entrypoint "mainCRTStartup"
-        --toolset "v141_xp"
-        systemversion "latest"
+        toolset "v140_xp"
         startproject "ygopro"
 
     configuration "bsd"
@@ -21,7 +20,7 @@ solution "ygo"
         libdirs { "/usr/local/lib" }
 
     configuration "macosx"
-        defines { "LUA_USE_MACOSX", "DBL_MAX_10_EXP=+308", "DBL_MANT_DIG=53" }
+        defines { "LUA_USE_MACOSX" }
         includedirs { "/usr/local/include", "/usr/local/include/*" }
         libdirs { "/usr/local/lib", "/usr/X11/lib" }
         buildoptions { "-stdlib=libc++" }
@@ -41,8 +40,7 @@ solution "ygo"
         targetdir "bin/debug"
 
     configuration { "Release", "vs*" }
-        flags { "LinkTimeOptimization" }
-        staticruntime "On"
+        flags { "StaticRuntime", "LinkTimeOptimization" }
         disablewarnings { "4244", "4267", "4838", "4577", "4819", "4018", "4996", "4477", "4091", "4305", "4828", "4800" }
 
     configuration { "Release", "not vs*" }
@@ -56,7 +54,6 @@ solution "ygo"
 
     configuration "vs*"
         vectorextensions "SSE2"
-        buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
     
     configuration "not vs*"
