@@ -2,8 +2,9 @@ solution "ygo"
     location "build"
     language "C++"
     objdir "obj"
-
+    if (os.ishost("windows") or os.getenv("USE_IRRKLANG")) and not os.getenv("NO_IRRKLANG") then
     USE_IRRKLANG = true
+    end
 
     configurations { "Release", "Debug" }
 if os.getenv("YGOPRO_LUA_SAVE") then
@@ -53,7 +54,10 @@ end
         targetdir "bin/debug"
 
     configuration { "Release", "vs*" }
-        flags { "StaticRuntime", "LinkTimeOptimization" }
+        flags { "LinkTimeOptimization" }
+if not os.ishost("macosx") then
+        staticruntime "On"
+end
         disablewarnings { "4244", "4267", "4838", "4577", "4819", "4018", "4996", "4477", "4091", "4305", "4828", "4800" }
 
     configuration { "Release", "not vs*" }
