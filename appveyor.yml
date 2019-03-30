@@ -1,5 +1,5 @@
 version: '{build}'
-image: Visual Studio 2017
+skip_tags: true
 
 environment:
   access_token:

@@ -10,7 +10,7 @@ project "ygopro"
     links { "ocgcore", "clzma", "cspmemvfs", "Irrlicht", "freetype", "sqlite3", "lua" , "event" }
     if USE_IRRKLANG then
         defines { "YGOPRO_USE_IRRKLANG" }
-        links { "ikpmp3" }
+        links { "irrKlang", "ikpmp3" }
         includedirs { "../irrklang/include" }
         if IRRKLANG_PRO then
             defines { "IRRKLANG_STATIC" }
