@@ -353,7 +353,7 @@ byte* DataManager::ScriptReaderEx(const char* script_name, int* slen) {
 	byte* buffer = ScriptReaderExSingle("specials/", script_name, slen, 9);
 	if(buffer)
 		return buffer;
-	buffer = ScriptReaderExDirectry("beta/", script_name, slen);
+	buffer = ScriptReaderExSingle("beta/", script_name, slen);
 	if(buffer)
 		return buffer;
 	buffer = ScriptReaderExSingle("expansions/", script_name, slen);
