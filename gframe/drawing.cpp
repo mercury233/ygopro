@@ -155,10 +155,10 @@ void Game::DrawBackGround() {
 		driver->setMaterial(matManager.mTexture);
 		if (dInfo.duel_rule >= 4) {
 		    driver->drawVertexPrimitiveList(matManager.vTotalAtkme, 4, matManager.iRectangle, 2);
-			DrawShadowText(numFont, dInfo.str_total_attack[0], ResizeCardMid(430, 346, 445, 366, 430, 346), recti(0, 1, 2, 0), dInfo.total_attack_color[0], 0xff000000, true, false, 0);
+			DrawShadowText(numFont, dInfo.str_total_attack[0], Resize(430, 346, 445, 366), Resize(0, 1, 2, 0), dInfo.total_attack_color[0], 0xff000000, true, false, 0);
 	    } else {
 			driver->drawVertexPrimitiveList(matManager.vTotalAtkmeT, 4, matManager.iRectangle, 2);
-		    DrawShadowText(numFont, dInfo.str_total_attack[0], ResizeCardMid(590, 326, 610, 346, 590, 326), recti(0, 1, 2, 0), dInfo.total_attack_color[0], 0xff000000, true, false, 0);
+		    DrawShadowText(numFont, dInfo.str_total_attack[0], Resize(590, 326, 610, 346), Resize(0, 1, 2, 0), dInfo.total_attack_color[0], 0xff000000, true, false, 0);
 	    }
 	}
 	if (mainGame->dInfo.total_attack[1] > 0) {
@@ -166,10 +166,10 @@ void Game::DrawBackGround() {
 		driver->setMaterial(matManager.mTexture);
 		if (dInfo.duel_rule >= 4) {
 		    driver->drawVertexPrimitiveList(matManager.vTotalAtkop, 4, matManager.iRectangle, 2);
-		    DrawShadowText(numFont, dInfo.str_total_attack[1], recti(885, 271, 905, 291, 905, 291), recti(0, 1, 2, 0), dInfo.total_attack_color[1], 0xff000000, true, false, 0);
+		    DrawShadowText(numFont, dInfo.str_total_attack[1], Resize(885, 271, 905, 291), Resize(0, 1, 2, 0), dInfo.total_attack_color[1], 0xff000000, true, false, 0);
 	    } else {
 			driver->drawVertexPrimitiveList(matManager.vTotalAtkopT, 4, matManager.iRectangle, 2);
-		    DrawShadowText(numFont, dInfo.str_total_attack[1], recti(740, 295, 760, 315, 760, 315), recti(0, 1, 2, 0), dInfo.total_attack_color[1], 0xff000000, true, false, 0);
+		    DrawShadowText(numFont, dInfo.str_total_attack[1], Resize(740, 295, 760, 315), Resize(0, 1, 2, 0), dInfo.total_attack_color[1], 0xff000000, true, false, 0);
 		
 	    }
 	}
