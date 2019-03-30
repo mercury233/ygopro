@@ -10,6 +10,7 @@ if os.getenv("YGOPRO_LUA_SAVE") then
     defines { "LUA_COMPAT_5_2", "YGOPRO_LUA_SAFE" }
 else
     defines { "LUA_COMPAT_5_2" }
+end
     configuration "windows"
         defines { "WIN32", "_WIN32", "WINVER=0x0501" }
         libdirs { "$(DXSDK_DIR)Lib/x86" }
