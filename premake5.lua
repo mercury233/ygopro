@@ -6,13 +6,25 @@ solution "ygo"
     USE_IRRKLANG = true
 
     configurations { "Release", "Debug" }
+if os.getenv("YGOPRO_LUA_SAVE") then
+    defines { "LUA_COMPAT_5_2", "YGOPRO_LUA_SAFE" }
+else
     defines { "LUA_COMPAT_5_2" }
     configuration "windows"
         defines { "WIN32", "_WIN32", "WINVER=0x0501" }
         libdirs { "$(DXSDK_DIR)Lib/x86" }
         entrypoint "mainCRTStartup"
-        toolset "v140_xp"
+        --toolset "v141_xp"
+        systemversion "latest"
         startproject "ygopro"
+
+if not os.getenv("YGOPRO_NO_XP_TOOLSET") then
+    configuration { "windows", "vs2017" }
+        toolset "v141_xp"
+
+    configuration { "windows", "not vs2017" }
+        toolset "v140_xp"
+end
 
     configuration "bsd"
         defines { "LUA_USE_POSIX" }
@@ -20,7 +32,7 @@ solution "ygo"
         libdirs { "/usr/local/lib" }
 
     configuration "macosx"
-        defines { "LUA_USE_MACOSX" }
+        defines { "LUA_USE_MACOSX", "DBL_MAX_10_EXP=+308", "DBL_MANT_DIG=53" }
         includedirs { "/usr/local/include", "/usr/local/include/*" }
         libdirs { "/usr/local/lib", "/usr/X11/lib" }
         buildoptions { "-stdlib=libc++" }
@@ -54,6 +66,7 @@ solution "ygo"
 
     configuration "vs*"
         vectorextensions "SSE2"
+        buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
     
     configuration "not vs*"

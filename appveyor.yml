@@ -1,5 +1,5 @@
 version: '{build}'
-skip_tags: true
+image: Visual Studio 2017
 
 environment:
   access_token:
@@ -44,7 +44,7 @@ install:
   - patch -p0 < ikpmp3\ikpmp3.patch
 
   # premake
-  - premake5 vs2015
+  - premake5 vs2017
   
 configuration: Release
 
