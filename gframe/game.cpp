@@ -84,7 +84,7 @@ bool Game::Initialize() {
 	}
 	dataManager.FileSystem = device->getFileSystem();
 	LoadExpansions();
-	if(!dataManager.LoadDB("cards.cdb")) {
+	if(!dataManager.LoadDB(L"cards.cdb")) {
 		ErrorLog("Failed to load card database (cards.cdb)!");
 		return false;
 	}
