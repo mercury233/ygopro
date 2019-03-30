@@ -29,7 +29,7 @@ bool ImageManager::Initial()  {
 	tUnknown = driver->getTexture("textures/unknown.jpg");
 	tAct = driver->getTexture("textures/act.png");
 	tAttack = driver->getTexture("textures/attack.png");
-	tTotalAtk = driver->getTexture("/textures/totalAtk.png");
+	tTotalAtk = driver->getTexture("textures/totalAtk.png");
 	tChain = driver->getTexture("textures/chain.png");
 	tNegated = driver->getTexture("textures/negated.png");
 	tNumber = driver->getTexture("textures/number.png");
