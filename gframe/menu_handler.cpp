@@ -174,7 +174,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_7210: {
-				wcscpy(mainGame->gameConf.lasthost, L"koishi.ygopro.cn");
+				wcscpy(mainGame->gameConf.lasthost, L"koishi.moecube.com");
 				wcscpy(mainGame->gameConf.lastport, L"7210");
 				wchar_t buf[256];
 				wchar_t buff[256];
@@ -704,6 +704,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 						message.append(wlinebuf);
 					}
 				}
+				fclose(fp);
 				mainGame->SetStaticText(mainGame->stSinglePlayInfo, 200, mainGame->guiFont, message.c_str());
 				break;
 			}

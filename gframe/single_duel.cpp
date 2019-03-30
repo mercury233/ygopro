@@ -408,7 +408,7 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	}
 	time_limit[0] = host_info.time_limit;
 	time_limit[1] = host_info.time_limit;
-	set_script_reader((script_reader)ScriptReaderEx);
+	set_script_reader((script_reader)DataManager::ScriptReaderEx);
 	set_card_reader((card_reader)DataManager::CardReader);
 	set_message_handler((message_handler)SingleDuel::MessageHandler);
 	rnd.reset(seed);
@@ -449,20 +449,21 @@ void SingleDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	char startbuf[32], *pbuf = startbuf;
 	BufferIO::WriteInt8(pbuf, MSG_START);
 	BufferIO::WriteInt8(pbuf, 0);
+	BufferIO::WriteInt8(pbuf, host_info.duel_rule);
 	BufferIO::WriteInt32(pbuf, host_info.start_lp);
 	BufferIO::WriteInt32(pbuf, host_info.start_lp);
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 0, 0x1));
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 0, 0x40));
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 1, 0x1));
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 1, 0x40));
-	NetServer::SendBufferToPlayer(players[0], STOC_GAME_MSG, startbuf, 18);
+	NetServer::SendBufferToPlayer(players[0], STOC_GAME_MSG, startbuf, 19);
 	startbuf[1] = 1;
-	NetServer::SendBufferToPlayer(players[1], STOC_GAME_MSG, startbuf, 18);
+	NetServer::SendBufferToPlayer(players[1], STOC_GAME_MSG, startbuf, 19);
 	if(!swapped)
 		startbuf[1] = 0x10;
 	else startbuf[1] = 0x11;
 	for(auto oit = observers.begin(); oit != observers.end(); ++oit)
-		NetServer::SendBufferToPlayer(*oit, STOC_GAME_MSG, startbuf, 18);
+		NetServer::SendBufferToPlayer(*oit, STOC_GAME_MSG, startbuf, 19);
 	RefreshExtra(0);
 	RefreshExtra(1);
 	start_duel(pduel, opt);
@@ -1550,36 +1551,6 @@ void SingleDuel::RefreshSingle(int player, int location, int sequence, int flag)
 		for(auto pit = observers.begin(); pit != observers.end(); ++pit)
 			NetServer::ReSendToPlayer(*pit);
 	}
-}
-byte* SingleDuel::ScriptReaderEx(const char* script_name, int* slen) {
-	byte* buffer = ScriptReaderExDirectry("./specials", script_name, slen, 8);
-	if(buffer)
-		return buffer;
-	buffer = ScriptReaderExDirectry("./expansions", script_name, slen);
-	if(buffer)
-		return buffer;
-	buffer = ScriptReaderExDirectry("./beta", script_name, slen);
-	if(buffer)
-		return buffer;
-	bool find = false;
-	FileSystem::TraversalDir("./expansions", [script_name, slen, &buffer, &find](const char* name, bool isdir) {
-		if(!find && isdir && strcmp(name, ".") && strcmp(name, "..") && strcmp(name, "pics") && strcmp(name, "script")) {
-			char subdir[1024];
-			sprintf(subdir, "./expansions/%s", name);
-			buffer = ScriptReaderExDirectry(subdir, script_name, slen);
-			if(buffer)
-				find = true;
-		}
-	});
-	if(find)
-		return buffer;
-	return default_script_reader(script_name, slen);
-}
-byte* SingleDuel::ScriptReaderExDirectry(const char* path, const char* script_name, int* slen, int pre_len) {
-	char sname[256];
-	strcpy(sname, path);
-	strcat(sname, script_name + pre_len);//default script name: ./script/c%d.lua
-	return default_script_reader(sname, slen);
 }
 int SingleDuel::MessageHandler(long fduel, int type) {
 	if(!enable_log)

@@ -12,7 +12,7 @@
 #include <sstream>
 #include <regex>
 
-unsigned short PRO_VERSION = 0x1348;
+unsigned short PRO_VERSION = 0x1349;
 
 bool delay_swap = false;
 int swap_player = 0;
@@ -82,7 +82,8 @@ bool Game::Initialize() {
 		ErrorLog("Failed to load textures!");
 		return false;
 	}
-	LoadExpansionDB();
+	dataManager.FileSystem = device->getFileSystem();
+	LoadExpansions();
 	if(!dataManager.LoadDB("cards.cdb")) {
 		ErrorLog("Failed to load card database (cards.cdb)!");
 		return false;
@@ -91,7 +92,7 @@ bool Game::Initialize() {
 		ErrorLog("Failed to load strings!");
 		return false;
 	}
-	LoadExpansionStrings();
+	dataManager.LoadStrings("./expansions/strings.conf");
 	env = device->getGUIEnvironment();
 	numFont = irr::gui::CGUITTFont::createTTFont(env, gameConf.numfont, 16);
 	adFont = irr::gui::CGUITTFont::createTTFont(env, gameConf.numfont, 12);
@@ -302,7 +303,7 @@ bool Game::Initialize() {
 	scrCardText->setSmallStep(1);
 	scrCardText->setVisible(false);
 	//log
-	irr::gui::IGUITab* tabLog =  wInfos->addTab(dataManager.GetSysString(1271));
+	irr::gui::IGUITab* tabLog = wInfos->addTab(dataManager.GetSysString(1271));
 	lstLog = env->addListBox(rect<s32>(10, 10, 290, 290), tabLog, LISTBOX_LOG, false);
 	lstLog->setItemHeight(18);
 	btnClearLog = env->addButton(rect<s32>(160, 300, 260, 325), tabLog, BUTTON_CLEAR_LOG, dataManager.GetSysString(1272));
@@ -1001,34 +1002,47 @@ void Game::SetStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth, irr::gu
 	dataManager.strBuffer[pbuffer] = 0;
 	pControl->setText(dataManager.strBuffer);
 }
-void Game::LoadExpansionDB() {
-	LoadExpansionDBDirectry("./expansions");
-	FileSystem::TraversalDir("./expansions", [this](const char* name, bool isdir) {
-		if(isdir && strcmp(name, ".") && strcmp(name, "..") && strcmp(name, "pics") && strcmp(name, "script")) {
-			char subdir[1024];
-			sprintf(subdir, "./expansions/%s", name);
-			LoadExpansionDBDirectry(subdir);
-		}
-	});
-}
-void Game::LoadExpansionDBDirectry(const char* path) {
-	FileSystem::TraversalDir(path, [path](const char* name, bool isdir) {
-		if(!isdir && strrchr(name, '.') && !mystrncasecmp(strrchr(name, '.'), ".cdb", 4)) {
-			char fpath[1024];
-			sprintf(fpath, "%s/%s", path, name);
+void Game::LoadExpansions() {
+	FileSystem::TraversalDir(L"./expansions", [](const wchar_t* name, bool isdir) {
+		if(!isdir && wcsrchr(name, '.') && !mywcsncasecmp(wcsrchr(name, '.'), L".cdb", 4)) {
+			wchar_t fpath[1024];
+			myswprintf(fpath, L"./expansions/%ls", name);
 			dataManager.LoadDB(fpath);
 		}
-	});
-}
-void Game::LoadExpansionStrings() {
-	dataManager.LoadStrings("./expansions/strings.conf");
-	FileSystem::TraversalDir("./expansions", [](const char* name, bool isdir) {
-		if(isdir && strcmp(name, ".") && strcmp(name, "..") && strcmp(name, "pics") && strcmp(name, "script")) {
-			char fpath[1024];
-			sprintf(fpath, "./expansions/%s/strings.conf", name);
-			dataManager.LoadStrings(fpath);
+		if(!isdir && wcsrchr(name, '.') && !mywcsncasecmp(wcsrchr(name, '.'), L".zip", 4)) {
+			wchar_t fpath[1024];
+			myswprintf(fpath, L"./expansions/%ls", name);
+#ifdef _WIN32
+			dataManager.FileSystem->addFileArchive(fpath, true, false);
+#else
+			char upath[1024];
+			BufferIO::EncodeUTF8(fpath, upath);
+			dataManager.FileSystem->addFileArchive(upath, true, false);
+#endif
 		}
 	});
+	for(u32 i = 0; i < DataManager::FileSystem->getFileArchiveCount(); ++i) {
+		const IFileList* archive = DataManager::FileSystem->getFileArchive(i)->getFileList();
+		for(u32 j = 0; j < archive->getFileCount(); ++j) {
+#ifdef _WIN32
+			const wchar_t* fname = archive->getFullFileName(j).c_str();
+#else
+			wchar_t fname[1024];
+			const char* uname = archive->getFullFileName(j).c_str();
+			BufferIO::DecodeUTF8(uname, fname);
+#endif
+			if(wcsrchr(fname, '.') && !mywcsncasecmp(wcsrchr(fname, '.'), L".cdb", 4))
+				dataManager.LoadDB(fname);
+			if(wcsrchr(fname, '.') && !mywcsncasecmp(wcsrchr(fname, '.'), L".conf", 5)) {
+#ifdef _WIN32
+				IReadFile* reader = DataManager::FileSystem->createAndOpenFile(fname);
+#else
+				IReadFile* reader = DataManager::FileSystem->createAndOpenFile(uname);
+#endif
+				dataManager.LoadStrings(reader);
+			}
+		}
+	}
 }
 void Game::RefreshDeck(irr::gui::IGUIComboBox* cbDeck) {
 	cbDeck->clear();

@@ -9,6 +9,7 @@
 
 int enable_log = 0;
 bool exit_on_return = false;
+bool auto_watch_mode = false;
 bool open_file = false;
 wchar_t open_file_name[256] = L"";
 bool bot_mode = false;
@@ -77,17 +78,13 @@ int main(int argc, char* argv[]) {
 	bool keep_on_return = false;
 	for(int i = 1; i < wargc; ++i) {
 		if(wargv[i][0] == L'-' && wargv[i][1] == L'e' && wargv[i][2] != L'\0') {
-			char param[128];
-			BufferIO::EncodeUTF8(&wargv[i][2], param);
-			ygo::dataManager.LoadDB(param);
+			ygo::dataManager.LoadDB(&wargv[i][2]);
 			continue;
 		}
 		if(!wcscmp(wargv[i], L"-e")) { // extra database
 			++i;
 			if(i < wargc) {
-				char param[128];
-				BufferIO::EncodeUTF8(wargv[i], param);
-				ygo::dataManager.LoadDB(param);
+				ygo::dataManager.LoadDB(wargv[i]);
 			}
 			continue;
 		} else if(!wcscmp(wargv[i], L"-n")) { // nickName
@@ -113,6 +110,8 @@ int main(int argc, char* argv[]) {
 		} else if(!wcscmp(wargv[i], L"-k")) { // Keep on return
 			exit_on_return = false;
 			keep_on_return = true;
+		} else if(!wcscmp(wargv[i], L"--auto-watch")) { // Auto watch mode
+			auto_watch_mode = true;
 		} else if(!wcscmp(wargv[i], L"-d")) { // Deck
 			++i;
 			if(i + 1 < wargc) { // select deck

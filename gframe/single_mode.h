@@ -17,7 +17,7 @@ public:
 	static void SetResponse(unsigned char* resp, unsigned int len);
 	static int SinglePlayThread(void* param);
 	static bool SinglePlayAnalyze(char* msg, unsigned int len);
-
+	
 	static void SinglePlayRefresh(int flag = 0xf81fff);
 	static void SinglePlayRefreshHand(int player, int flag = 0x781fff);
 	static void SinglePlayRefreshGrave(int player, int flag = 0x181fff);
@@ -26,9 +26,6 @@ public:
 	static void SinglePlayRefreshSingle(int player, int location, int sequence, int flag = 0xf81fff);
 	static void SinglePlayReload();
 
-	static byte* ScriptReaderEx(const char* script_name, int* slen);
-	static byte* ScriptReaderExDirectry(const char* path, const char* script_name, int* slen, int pre_len = 1);
-	static byte* ScriptReader(const char* script_name, int* slen);
 	static int MessageHandler(long fduel, int type);
 
 protected:
