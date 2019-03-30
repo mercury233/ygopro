@@ -19,8 +19,6 @@ project "ygopro"
     if os.getenv("YGOPRO_COMPAT_MYCARD") then
         defines { "YGOPRO_COMPAT_MYCARD" }
     end
-    local mr=os.getenv("YGOPRO_DEFAULT_DUEL_RULE")
-    if mr and tonumber(mr) then defines { "DEFAULT_DUEL_RULE="..tonumber(mr) } end
 
     configuration "windows"
         files "ygopro.rc"
@@ -39,16 +37,7 @@ project "ygopro"
         excludes { "COSOperator.*" }
         links { "event_pthreads", "GL", "dl", "pthread" }
     configuration "linux"
-        includedirs { "../irrlicht_linux/include" }
-        links { "X11", "Xxf86vm" }
         if USE_IRRKLANG then
-            links { "IrrKlang" }
             linkoptions{ "-Wl,-rpath=./" }
             libdirs { "../irrklang/bin/linux-gcc-64" }
-        end
-    configuration "macosx"
-        includedirs { "/usr/include/irrlicht" }
-        if USE_IRRKLANG then
-            links { "irrklang" }
-            libdirs { "../irrklang/bin/macosx-gcc" }
         end

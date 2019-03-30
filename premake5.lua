@@ -2,16 +2,11 @@ solution "ygo"
     location "build"
     language "C++"
     objdir "obj"
-    if (os.ishost("windows") or os.getenv("USE_IRRKLANG")) and not os.getenv("NO_IRRKLANG") then
+
     USE_IRRKLANG = true
-    end
 
     configurations { "Release", "Debug" }
-if os.getenv("YGOPRO_LUA_SAVE") then
-    defines { "LUA_COMPAT_5_2", "YGOPRO_LUA_SAFE" }
-else
     defines { "LUA_COMPAT_5_2" }
-end
     configuration "windows"
         defines { "WIN32", "_WIN32", "WINVER=0x0501" }
         libdirs { "$(DXSDK_DIR)Lib/x86" }
@@ -19,14 +14,6 @@ end
         --toolset "v141_xp"
         systemversion "latest"
         startproject "ygopro"
-
-if not os.getenv("YGOPRO_NO_XP_TOOLSET") then
-    configuration { "windows", "vs2017" }
-        toolset "v141_xp"
-
-    configuration { "windows", "not vs2017" }
-        toolset "v140_xp"
-end
 
     configuration "bsd"
         defines { "LUA_USE_POSIX" }
@@ -55,9 +42,7 @@ end
 
     configuration { "Release", "vs*" }
         flags { "LinkTimeOptimization" }
-if not os.ishost("macosx") then
         staticruntime "On"
-end
         disablewarnings { "4244", "4267", "4838", "4577", "4819", "4018", "4996", "4477", "4091", "4305", "4828", "4800" }
 
     configuration { "Release", "not vs*" }
