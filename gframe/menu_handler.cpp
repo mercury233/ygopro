@@ -63,13 +63,13 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_OTHER: {
+				mainGame->HideElement(mainGame->wMainMenu);
+				mainGame->ShowElement(mainGame->wOther);
 				mainGame->btnSEM->setEnabled(true);
 				mainGame->btnKANabell->setEnabled(true);
 				mainGame->btnOCNK->setEnabled(true);
 				mainGame->btnLantern->setEnabled(true);
 				mainGame->btnOtherExit->setEnabled(true);
-				mainGame->HideElement(mainGame->wMainMenu);
-				mainGame->ShowElement(mainGame->wOther);
 				break;
 			}
 			case BUTTON_SEM: {
@@ -126,8 +126,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->ebJoinHost->setText(buf);
 				myswprintf(buff, L"%s", mainGame->gameConf.lastport);
 				mainGame->ebJoinPort->setText(buff);
-				mainGame->stACMessage->setText(dataManager.GetSysString(1437));
-				mainGame->PopupElement(mainGame->wACMessage, 20);
 				mainGame->HideElement(mainGame->wSC);
 				break;
 			}
@@ -140,8 +138,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->ebJoinHost->setText(buf);
 				myswprintf(buff, L"%s", mainGame->gameConf.lastport);
 				mainGame->ebJoinPort->setText(buff);
-				mainGame->stACMessage->setText(dataManager.GetSysString(1437));
-				mainGame->PopupElement(mainGame->wACMessage, 20);
 				mainGame->HideElement(mainGame->wSC);
 				break;
 			}
@@ -154,8 +150,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->ebJoinHost->setText(buf);
 				myswprintf(buff, L"%s", mainGame->gameConf.lastport);
 				mainGame->ebJoinPort->setText(buff);
-				mainGame->stACMessage->setText(dataManager.GetSysString(1437));
-				mainGame->PopupElement(mainGame->wACMessage, 20);
 				mainGame->HideElement(mainGame->wSC);
 				break;
 			}
@@ -168,8 +162,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->ebJoinHost->setText(buf);
 				myswprintf(buff, L"%s", mainGame->gameConf.lastport);
 				mainGame->ebJoinPort->setText(buff);
-				mainGame->stACMessage->setText(dataManager.GetSysString(1437));
-				mainGame->PopupElement(mainGame->wACMessage, 20);
 				mainGame->HideElement(mainGame->wSC);
 				break;
 			}
@@ -182,8 +174,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->ebJoinHost->setText(buf);
 				myswprintf(buff, L"%s", mainGame->gameConf.lastport);
 				mainGame->ebJoinPort->setText(buff);
-				mainGame->stACMessage->setText(dataManager.GetSysString(1437));
-				mainGame->PopupElement(mainGame->wACMessage, 20);
 				mainGame->HideElement(mainGame->wSC);
 				break;
 			}
@@ -196,8 +186,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->ebJoinHost->setText(buf);
 				myswprintf(buff, L"%s", mainGame->gameConf.lastport);
 				mainGame->ebJoinPort->setText(buff);
-				mainGame->stACMessage->setText(dataManager.GetSysString(1437));
-				mainGame->PopupElement(mainGame->wACMessage, 20);
 				mainGame->HideElement(mainGame->wSC);
 				break;
 			}
@@ -210,8 +198,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->ebJoinHost->setText(buf);
 				myswprintf(buff, L"%s", mainGame->gameConf.lastport);
 				mainGame->ebJoinPort->setText(buff);
-				mainGame->stACMessage->setText(dataManager.GetSysString(1437));
-				mainGame->PopupElement(mainGame->wACMessage, 20);
 				mainGame->HideElement(mainGame->wSC);
 				break;
 			}

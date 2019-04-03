@@ -436,7 +436,7 @@ bool Game::Initialize() {
 	stMessage->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
 	btnMsgOK = env->addButton(rect<s32>(130, 105, 220, 130), wMessage, BUTTON_MSG_OK, dataManager.GetSysString(1211));
 	//auto fade message (310)
-	wACMessage = env->addWindow(rect<s32>(440, 240, 790, 300), false, L"");
+	wACMessage = env->addWindow(rect<s32>(490, 240, 840, 300), false, L"");
 	wACMessage->getCloseButton()->setVisible(false);
 	wACMessage->setVisible(false);
 	wACMessage->setDrawBackground(false);
@@ -1733,7 +1733,7 @@ void Game::OnResize() {
 	wHand->setRelativePosition(ResizeWin(500, 450, 825, 605));
 	wFTSelect->setRelativePosition(ResizeWin(550, 240, 780, 340));
 	wMessage->setRelativePosition(ResizeWin(490, 200, 840, 340));
-	wACMessage->setRelativePosition(ResizeWin(440, 240, 790, 300));
+	wACMessage->setRelativePosition(ResizeWin(490, 240, 840, 300));
 	wQuery->setRelativePosition(ResizeWin(490, 200, 840, 340));
 	wSurrender->setRelativePosition(ResizeWin(490, 200, 840, 340));
 	wOptions->setRelativePosition(ResizeWin(490, 200, 840, 340));
@@ -1744,7 +1744,8 @@ void Game::OnResize() {
 	wANAttribute->setRelativePosition(ResizeWin(500, 200, 830, 285));
 	wANRace->setRelativePosition(ResizeWin(480, 200, 850, 410));
 	wReplaySave->setRelativePosition(ResizeWin(510, 200, 820, 320));
-	stHintMsg->setRelativePosition(ResizeWin(500, 60, 820, 90));
+
+	stHintMsg->setRelativePosition(ResizeWin(660 - 160 * xScale, 60, 660 + 160 * xScale, 90));
 
 	//sound / music volume bar
 	scrSoundVolume->setRelativePosition(recti(scrSoundVolume->getRelativePosition().UpperLeftCorner.X, scrSoundVolume->getRelativePosition().UpperLeftCorner.Y, 20 + (300 * xScale) - 70, scrSoundVolume->getRelativePosition().LowerRightCorner.Y));
