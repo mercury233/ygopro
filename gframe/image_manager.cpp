@@ -318,11 +318,10 @@ irr::video::ITexture* ImageManager::GetTexture(int code, bool fit) {
 }
 irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 	if(code == 0)
-		return tUnknown;
+		return tUnknownThumb;
 	auto tit = tThumb.find(code);
 	int width = CARD_THUMB_WIDTH * mainGame->xScale;
 	int height = CARD_THUMB_HEIGHT * mainGame->yScale;
-	tUnknownThumb = GetTextureFromFile("textures/unknown.jpg", width, height);
 	if(tit == tThumb.end()) {
 		static const std::string exts[] = { ".bpg", ".jpg" };
 		char file[256];
@@ -361,6 +360,7 @@ irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 			}
 		}
 		tThumb[code] = img;
+		tUnknownThumb = GetTextureFromFile("textures/unknown.jpg", width, height);
 		return (img == NULL) ? tUnknownThumb : img;
 	}
 	if(tit->second)
