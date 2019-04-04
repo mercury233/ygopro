@@ -33,6 +33,8 @@ public:
 	irr::video::ITexture* tCover[8];
 	irr::video::ITexture* tHead[2];
 	irr::video::ITexture* tUnknown;
+	irr::video::ITexture* tUnknownFit;
+	irr::video::ITexture* tUnknownThumb;
 	irr::video::ITexture* tAct;
 	irr::video::ITexture* tAttack;
 	irr::video::ITexture* tTotalAtk;
