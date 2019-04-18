@@ -1881,6 +1881,11 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
+			case CHECKBOX_SKIN: {
+				mainGame->gameConf.skin_index = mainGame->chkSkin->isChecked() ? 1 : 0;
+				return true;
+				break;
+			}
 			}
 			break;
 		}
