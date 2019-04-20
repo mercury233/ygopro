@@ -744,9 +744,11 @@ extern Game* mainGame;
 #define SCROLL_VOLUME				363
 #define CHECKBOX_QUICK_ANIMATION	364
 #define CHECKBOX_SKIN				365
+#define CHECKBOX_D3D				366
 
 #define COMBOBOX_SORTTYPE			370
 #define COMBOBOX_LIMIT				371
+#define COMBOBOX_FONT				372
 
 #define BUTTON_MARKS_FILTER			380
 #define BUTTON_MARKERS_OK			381
