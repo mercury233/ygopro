@@ -145,22 +145,22 @@ bool Game::Initialize() {
 	btnLantern = env->addButton(rect<s32>(10, 135, 270, 165), wOther, BUTTON_LANTERN, dataManager.GetSysString(1426));
 	btnOtherExit = env->addButton(rect<s32>(10, 170, 270, 200), wOther, BUTTON_OTHER_EXIT, dataManager.GetSysString(1210));
 	//system setting
-	wSystem = env->addWindow(rect<s32>(212, 160, 812, 320), false, dataManager.GetSysString(1207));
+	wSystem = env->addWindow(rect<s32>(212, 160, 812, 325), false, dataManager.GetSysString(1207));
 	wSystem->getCloseButton()->setVisible(false);
 	wSystem->setVisible(false);
-	chkAutoSearch = env->addCheckBox(false, rect<s32>(30, 20, 260, 45), wSystem, CHECKBOX_AUTO_SEARCH, dataManager.GetSysString(1358));
+	chkAutoSearch = env->addCheckBox(false, rect<s32>(30, 25, 260, 50), wSystem, CHECKBOX_AUTO_SEARCH, dataManager.GetSysString(1358));
 	chkAutoSearch->setChecked(gameConf.auto_search_limit >= 0);
-	chkSkin = env->addCheckBox(false, rect<s32>(30, 50, 260, 75), wSystem, CHECKBOX_SKIN, dataManager.GetSysString(1438));
+	chkSkin = env->addCheckBox(false, rect<s32>(30, 55, 260, 80), wSystem, CHECKBOX_SKIN, dataManager.GetSysString(1438));
 	chkSkin->setChecked(gameConf.skin_index != 0);
-	chkD3D = env->addCheckBox(false, rect<s32>(30, 80, 260, 105), wSystem, CHECKBOX_D3D, dataManager.GetSysString(1205));
+	chkD3D = env->addCheckBox(false, rect<s32>(30, 85, 260, 110), wSystem, CHECKBOX_D3D, dataManager.GetSysString(1205));
 	chkD3D->setChecked(gameConf.use_d3d != 0);
-	chkMultiKeywords = env->addCheckBox(false, rect<s32>(270, 20, 430, 45), wSystem, CHECKBOX_MULTI_KEYWORDS, dataManager.GetSysString(1378));
+	chkMultiKeywords = env->addCheckBox(false, rect<s32>(270, 25, 430, 50), wSystem, CHECKBOX_MULTI_KEYWORDS, dataManager.GetSysString(1378));
 	chkMultiKeywords->setChecked(gameConf.search_multiple_keywords > 0);
-	chkRegex = env->addCheckBox(false, rect<s32>(270, 50, 430, 75), wSystem, CHECKBOX_REGEX, dataManager.GetSysString(1379));
+	chkRegex = env->addCheckBox(false, rect<s32>(270, 55, 430, 80), wSystem, CHECKBOX_REGEX, dataManager.GetSysString(1379));
 	chkRegex->setChecked(gameConf.search_regex > 0);
-	env->addStaticText(dataManager.GetSysString(1206), rect<s32>(270, 83, 426, 108), false, false, wSystem);
-	cbFont = env->addComboBox(rect<s32>(427, 80, 590, 105), wSystem, COMBOBOX_FONT);
-	btnSystemExit = env->addButton(rect<s32>(200, 120, 400, 150), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
+	env->addStaticText(dataManager.GetSysString(1206), rect<s32>(270, 88, 426, 113), false, false, wSystem);
+	cbFont = env->addComboBox(rect<s32>(427, 85, 590, 110), wSystem, COMBOBOX_FONT);
+	btnSystemExit = env->addButton(rect<s32>(200, 125, 400, 155), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	
 	//lan mode
@@ -1695,7 +1695,7 @@ void Game::OnResize() {
 
 	wMainMenu->setRelativePosition(ResizeWin(370, 200, 650, 485));
 	wOther->setRelativePosition(ResizeWin(370, 200, 650, 415));
-	wSystem->setRelativePosition(ResizeWin(212, 160, 812, 320));
+	wSystem->setRelativePosition(ResizeWin(212, 160, 812, 325));
 	wDeckEdit->setRelativePosition(Resize(309, 8, 605, 130));
 	cbDBLFList->setRelativePosition(Resize(80, 5, 220, 30));
 	cbDBDecks->setRelativePosition(Resize(80, 35, 220, 60));
