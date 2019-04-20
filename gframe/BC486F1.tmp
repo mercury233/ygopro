@@ -145,7 +145,7 @@ bool Game::Initialize() {
 	btnLantern = env->addButton(rect<s32>(10, 135, 270, 165), wOther, BUTTON_LANTERN, dataManager.GetSysString(1426));
 	btnOtherExit = env->addButton(rect<s32>(10, 170, 270, 200), wOther, BUTTON_OTHER_EXIT, dataManager.GetSysString(1210));
 	//system setting
-	wSystem = env->addWindow(rect<s32>(212, 160, 812, 320), false, dataManager.GetSysString(1207));
+	wSystem = env->addWindow(rect<s32>(212, 160, 812, 340), false, dataManager.GetSysString(1207));
 	wSystem->getCloseButton()->setVisible(false);
 	wSystem->setVisible(false);
 	chkAutoSearch = env->addCheckBox(false, rect<s32>(30, 20, 260, 45), wSystem, CHECKBOX_AUTO_SEARCH, dataManager.GetSysString(1358));
@@ -160,7 +160,7 @@ bool Game::Initialize() {
 	chkRegex->setChecked(gameConf.search_regex > 0);
 	env->addStaticText(dataManager.GetSysString(1206), rect<s32>(270, 83, 426, 108), false, false, wSystem);
 	cbFont = env->addComboBox(rect<s32>(427, 80, 590, 105), wSystem, COMBOBOX_FONT);
-	btnSystemExit = env->addButton(rect<s32>(200, 120, 400, 150), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
+	btnSystemExit = env->addButton(rect<s32>(200, 120, 400, 175), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	
 	//lan mode
@@ -360,7 +360,7 @@ bool Game::Initialize() {
 	posY += 30;
 	chkAutoSaveReplay = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabHelper, -1, dataManager.GetSysString(1366));
 	chkAutoSaveReplay->setChecked(gameConf.auto_save_replay != 0);
-	elmTabHelperLast = chkRegex;
+	elmTabHelperLast = AutoSaveReplay;
 	//system
 	irr::gui::IGUITab* _tabSystem = wInfos->addTab(dataManager.GetSysString(1273));
 	_tabSystem->setRelativePosition(recti(16, 49, 299, 362));
@@ -1695,7 +1695,7 @@ void Game::OnResize() {
 
 	wMainMenu->setRelativePosition(ResizeWin(370, 200, 650, 485));
 	wOther->setRelativePosition(ResizeWin(370, 200, 650, 415));
-	wSystem->setRelativePosition(ResizeWin(212, 160, 812, 320));
+	wSystem->setRelativePosition(ResizeWin(212, 160, 812, 340));
 	wDeckEdit->setRelativePosition(Resize(309, 8, 605, 130));
 	cbDBLFList->setRelativePosition(Resize(80, 5, 220, 30));
 	cbDBDecks->setRelativePosition(Resize(80, 35, 220, 60));

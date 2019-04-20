@@ -1886,6 +1886,11 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
+			case CHECKBOX_D3D: {
+				mainGame->gameConf.use_d3d = mainGame->chkD3D->isChecked() ? 1 : 0;
+				return true;
+				break;
+			}
 			}
 			break;
 		}
@@ -1948,6 +1953,16 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				rect<s32> pos = mainGame->tabSystem->getRelativePosition();
 				mainGame->tabSystem->setRelativePosition(recti(0, mainGame->scrTabSystem->getPos() * -1, pos.LowerRightCorner.X, pos.LowerRightCorner.Y));
 				return true;
+				break;
+			}
+			}
+			break;
+		}
+		case irr::gui::EGET_COMBO_BOX_CHANGED: {
+			switch(id) {
+			case COMBOBOX_FONT: {
+				myswprintf(mainGame->gameConf.textfont, L"font/%ls",  mainGame->cbFont->getItem(mainGame->cbFont->getSelected()));
+				mainGame->SaveConfig();
 				break;
 			}
 			}

@@ -134,6 +134,7 @@ public:
 	void RefreshReplay();
 	void RefreshSingleplay();
 	void RefreshBot();
+	void RefreshFont();
 	void DrawSelectionLine(irr::video::S3DVertex* vec, bool strip, int width, float* cv);
 	void DrawSelectionLine(irr::gui::IGUIElement* element, int width, irr::video::SColor color);
 	void DrawBackGround();
@@ -302,10 +303,6 @@ public:
 	irr::gui::IGUICheckBox* chkHideSetname;
 	irr::gui::IGUICheckBox* chkHideHintButton;
 	irr::gui::IGUICheckBox* chkIgnoreDeckChanges;
-	irr::gui::IGUICheckBox* chkSkin;
-	irr::gui::IGUICheckBox* chkAutoSearch;
-	irr::gui::IGUICheckBox* chkMultiKeywords;
-	irr::gui::IGUICheckBox* chkRegex;
 	irr::gui::IGUICheckBox* chkEnableSound;
 	irr::gui::IGUICheckBox* chkEnableMusic;
 	irr::gui::IGUIScrollBar* scrSoundVolume;
@@ -326,6 +323,7 @@ public:
 	irr::gui::IGUIButton* btnDeckEdit;
 	irr::gui::IGUIButton* btnModeExit;
 	irr::gui::IGUIButton* btnOther;
+	irr::gui::IGUIButton* btnSYS;
 	//other
 	irr::gui::IGUIWindow* wOther;
 	irr::gui::IGUIButton* btnSEM;
@@ -333,6 +331,15 @@ public:
 	irr::gui::IGUIButton* btnOCNK;
 	irr::gui::IGUIButton* btnOtherExit;
 	irr::gui::IGUIButton* btnLantern;
+	//system setting
+	irr::gui::IGUIWindow* wSystem;
+	irr::gui::IGUICheckBox* chkSkin;
+	irr::gui::IGUICheckBox* chkD3D;
+	irr::gui::IGUICheckBox* chkAutoSearch;
+	irr::gui::IGUICheckBox* chkMultiKeywords;
+	irr::gui::IGUICheckBox* chkRegex;
+	irr::gui::IGUIComboBox* cbFont;
+	irr::gui::IGUIButton* btnSystemExit;
 	//lan
 	irr::gui::IGUIWindow* wLanWindow;
 	irr::gui::IGUIEditBox* ebNickName;
@@ -770,6 +777,8 @@ extern Game* mainGame;
 #define BUTTON_NK						401
 #define BUTTON_SC_EXIT					402
 
+#define BUTTON_SYS						403
+#define BUTTON_SYS_EXIT					404
 #define TEXTURE_HEAD_S				0
 
 #define DEFAULT_DUEL_RULE			4

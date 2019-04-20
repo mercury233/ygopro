@@ -99,6 +99,25 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					mainGame->device->closeDevice();
 				break;
 			}
+			case BUTTON_SYS: {
+				mainGame->chkSkin->setEnabled(true);
+				mainGame->chkD3D->setEnabled(true);
+				mainGame->chkAutoSearch->setEnabled(true);
+				mainGame->chkMultiKeywords->setEnabled(true);
+				mainGame->chkRegex->setEnabled(true);
+				mainGame->cbFont->setEnabled(true);
+				mainGame->btnSystemExit->setEnabled(true);
+				mainGame->HideElement(mainGame->wMainMenu);
+				mainGame->ShowElement(mainGame->wSystem);
+				break;
+			}
+			case BUTTON_SYS_EXIT: {
+				mainGame->HideElement(mainGame->wSystem);
+				mainGame->ShowElement(mainGame->wMainMenu);
+				if(exit_on_return)
+					mainGame->device->closeDevice();
+				break;
+			}
 			case BUTTON_LAN_MODE: {
 				mainGame->btnCreateHost->setEnabled(true);
 				mainGame->btnJoinHost->setEnabled(true);
