@@ -160,10 +160,10 @@ bool Game::Initialize() {
 	chkRegex->setChecked(gameConf.search_regex > 0);
 	env->addStaticText(dataManager.GetSysString(1206), rect<s32>(270, 88, 426, 113), false, false, wSystem);
 	cbFont = env->addComboBox(rect<s32>(427, 85, 590, 110), wSystem, COMBOBOX_FONT);
-	btnHeadS = env->addButton(rect<s32>(30, 135, 200, 165), wSystem, BUTTON_HDS, dataManager.GetSysString(1439));
-	btnCoverS = env->addButton(rect<s32>(215, 135, 385, 165), wSystem, BUTTON_CRS, dataManager.GetSysString(1441));
-	btnBgS = env->addButton(rect<s32>(400, 135, 570, 165), wSystem, BUTTON_BGS, dataManager.GetSysString(1447));
-	btnSystemExit = env->addButton(rect<s32>(200, 175, 400, 155), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
+	btnHeadS = env->addButton(rect<s32>(30, 125, 200, 155), wSystem, BUTTON_HDS, dataManager.GetSysString(1439));
+	btnCoverS = env->addButton(rect<s32>(215, 125, 385, 155), wSystem, BUTTON_CRS, dataManager.GetSysString(1441));
+	btnBgS = env->addButton(rect<s32>(400, 125, 570, 155), wSystem, BUTTON_BGS, dataManager.GetSysString(1447));
+	btnSystemExit = env->addButton(rect<s32>(200, 170, 400, 200), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	//Head Select
 	wHDS = env->addWindow(rect<s32>(362, 245, 662, 395), false, dataManager.GetSysString(1440));
