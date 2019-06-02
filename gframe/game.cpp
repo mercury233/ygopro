@@ -163,7 +163,7 @@ bool Game::Initialize() {
 	btnHeadS = env->addButton(rect<s32>(30, 125, 200, 155), wSystem, BUTTON_HDS, dataManager.GetSysString(1439));
 	btnCoverS = env->addButton(rect<s32>(215, 125, 385, 155), wSystem, BUTTON_CRS, dataManager.GetSysString(1441));
 	btnBgS = env->addButton(rect<s32>(400, 125, 570, 155), wSystem, BUTTON_BGS, dataManager.GetSysString(1447));
-	btnSystemExit = env->addButton(rect<s32>(200, 170, 400, 200), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
+	btnSystemExit = env->addButton(rect<s32>(200, 160, 400, 190), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	//Head Select
 	wHDS = env->addWindow(rect<s32>(362, 245, 662, 395), false, dataManager.GetSysString(1440));
