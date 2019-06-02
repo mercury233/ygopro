@@ -160,9 +160,9 @@ bool Game::Initialize() {
 	chkRegex->setChecked(gameConf.search_regex > 0);
 	env->addStaticText(dataManager.GetSysString(1206), rect<s32>(270, 88, 426, 113), false, false, wSystem);
 	cbFont = env->addComboBox(rect<s32>(427, 85, 590, 110), wSystem, COMBOBOX_FONT);
-	btnHeadS = env->addButton(rect<s32>(30, 125, 200, 155), wSystem, BUTTON_HDS, dataManager.GetSysString(1439));
-	btnCoverS = env->addButton(rect<s32>(215, 125, 385, 155), wSystem, BUTTON_CRS, dataManager.GetSysString(1441));
-	btnBgS = env->addButton(rect<s32>(400, 125, 570, 155), wSystem, BUTTON_BGS, dataManager.GetSysString(1447));
+	btnHeadS = env->addButton(rect<s32>(30, 120, 200, 150), wSystem, BUTTON_HDS, dataManager.GetSysString(1439));
+	btnCoverS = env->addButton(rect<s32>(215, 120, 385, 150), wSystem, BUTTON_CRS, dataManager.GetSysString(1441));
+	btnBgS = env->addButton(rect<s32>(400, 120, 570, 150), wSystem, BUTTON_BGS, dataManager.GetSysString(1447));
 	btnSystemExit = env->addButton(rect<s32>(200, 160, 400, 190), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	//Head Select
