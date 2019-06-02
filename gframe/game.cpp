@@ -12,7 +12,7 @@
 #include <sstream>
 #include <regex>
 
-unsigned short PRO_VERSION = 0x1349;
+unsigned short PRO_VERSION = 0x134A;
 
 bool delay_swap = false;
 int swap_player = 0;
@@ -145,7 +145,7 @@ bool Game::Initialize() {
 	btnLantern = env->addButton(rect<s32>(10, 135, 270, 165), wOther, BUTTON_LANTERN, dataManager.GetSysString(1426));
 	btnOtherExit = env->addButton(rect<s32>(10, 170, 270, 200), wOther, BUTTON_OTHER_EXIT, dataManager.GetSysString(1210));
 	//system setting
-	wSystem = env->addWindow(rect<s32>(212, 160, 812, 325), false, dataManager.GetSysString(1207));
+	wSystem = env->addWindow(rect<s32>(212, 140, 812, 345), false, dataManager.GetSysString(1207));
 	wSystem->getCloseButton()->setVisible(false);
 	wSystem->setVisible(false);
 	chkAutoSearch = env->addCheckBox(false, rect<s32>(30, 25, 260, 50), wSystem, CHECKBOX_AUTO_SEARCH, dataManager.GetSysString(1358));
@@ -160,9 +160,55 @@ bool Game::Initialize() {
 	chkRegex->setChecked(gameConf.search_regex > 0);
 	env->addStaticText(dataManager.GetSysString(1206), rect<s32>(270, 88, 426, 113), false, false, wSystem);
 	cbFont = env->addComboBox(rect<s32>(427, 85, 590, 110), wSystem, COMBOBOX_FONT);
-	btnSystemExit = env->addButton(rect<s32>(200, 125, 400, 155), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
+	btnHeadS = env->addButton(rect<s32>(30, 135, 200, 165), wSystem, BUTTON_HDS, dataManager.GetSysString(1439));
+	btnCoverS = env->addButton(rect<s32>(215, 135, 385, 165), wSystem, BUTTON_CRS, dataManager.GetSysString(1441));
+	btnBgS = env->addButton(rect<s32>(400, 135, 570, 165), wSystem, BUTTON_BGS, dataManager.GetSysString(1447));
+	btnSystemExit = env->addButton(rect<s32>(200, 175, 400, 155), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
-	
+	//Head Select
+	wHDS = env->addWindow(rect<s32>(362, 245, 662, 395), false, dataManager.GetSysString(1440));
+	wHDS->getCloseButton()->setVisible(false);
+	wHDS->setVisible(false);
+	cbHDS = env->addComboBox(rect<s32>(20, 30, 180, 65), wHDS, COMBOBOX_HDS);
+	cbHDS->setMaxSelectionRows(10);
+	imgHead = env->addImage(rect<s32>(190, 25, 290, 125), wHDS);
+	imgHead->setImage(imageManager.tAvatar[0]);	
+	imgHead->setScaleImage(true);
+	imgHead->setUseAlphaChannel(true);
+	btnHDSOK = env->addButton(rect<s32>(20, 90, 95, 120), wHDS, BUTTON_HDS_OK, dataManager.GetSysString(1211));
+	btnHDSExit = env->addButton(rect<s32>(105, 90, 180, 120), wHDS, BUTTON_HDS_EXIT, dataManager.GetSysString(1210));
+	RefreshHDS();
+	//Cover Select
+	wCRS = env->addWindow(rect<s32>(279.5, 197.5, 744.5, 442.5), false, dataManager.GetSysString(1442));
+	wCRS->getCloseButton()->setVisible(false);
+	wCRS->setVisible(false);
+	cbCRS = env->addComboBox(rect<s32>(165, 162.5, 285, 197.5), wCRS, COMBOBOX_CRS);
+	cbCRS->setMaxSelectionRows(10);
+	imgCover = env->addImage(rect<s32>(305, 25, 445, 225), wCRS);
+	imgCover->setImage(imageManager.tCover[0]);	
+	imgCover->setScaleImage(true);
+	imgCover->setUseAlphaChannel(true);
+	btnCoverOK1 = env->addButton(rect<s32>(30, 52.5, 150, 87.5), wCRS, BUTTON_CRS_OK1, dataManager.GetSysString(1443));
+	btnCoverOK2 = env->addButton(rect<s32>(165, 52.5, 285, 87.5), wCRS, BUTTON_CRS_OK2, dataManager.GetSysString(1444));
+	btnCoverOK3 = env->addButton(rect<s32>(30, 107.5, 150, 142.5), wCRS, BUTTON_CRS_OK3, dataManager.GetSysString(1445));
+	btnCoverOK4 = env->addButton(rect<s32>(165, 107.5, 285, 142.5), wCRS, BUTTON_CRS_OK4, dataManager.GetSysString(1446));
+	btnCRSExit = env->addButton(rect<s32>(30, 162.5, 150, 197.5), wCRS, BUTTON_CRS_EXIT, dataManager.GetSysString(1210));
+	RefreshCRS();
+	//Background Select
+	wBGS = env->addWindow(rect<s32>(157, 120, 867, 480), false, dataManager.GetSysString(1448));
+	wBGS->getCloseButton()->setVisible(false);
+	wBGS->setVisible(false);
+	cbBGS = env->addComboBox(rect<s32>(25, 50, 160, 90), wBGS, COMBOBOX_BGS);
+	cbBGS->setMaxSelectionRows(10);
+	imgBG = env->addImage(rect<s32>(180, 25, 692, 345), wBGS);
+	imgBG->setImage(imageManager.tBackGround);	
+	imgBG->setScaleImage(true);
+	imgBG->setUseAlphaChannel(true);
+	btnBGOK1 = env->addButton(rect<s32>(25, 110, 160, 150), wBGS, BUTTON_BGS_OK1, dataManager.GetSysString(1449));
+	btnBGOK2 = env->addButton(rect<s32>(25, 170, 160, 210), wBGS, BUTTON_BGS_OK2, dataManager.GetSysString(1450));
+	btnBGOK3 = env->addButton(rect<s32>(25, 230, 160, 270), wBGS, BUTTON_BGS_OK3, dataManager.GetSysString(1451));
+	btnBGSExit = env->addButton(rect<s32>(25, 290, 160, 330), wBGS, BUTTON_BGS_EXIT, dataManager.GetSysString(1210));
+	RefreshBGS();
 	//lan mode
 	wLanWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1200));
 	wLanWindow->getCloseButton()->setVisible(false);
@@ -453,6 +499,14 @@ bool Game::Initialize() {
 	stACMessage = env->addStaticText(L"", rect<s32>(0, 0, 350, 60), true, true, wACMessage, -1, true);
 	stACMessage->setBackgroundColor(0xc0c0c0ff);
 	stACMessage->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+	//auto center message (310)
+	wASMessage = env->addWindow(rect<s32>(337, 290, 687, 350), false, L"");
+	wASMessage->getCloseButton()->setVisible(false);
+	wASMessage->setVisible(false);
+	wASMessage->setDrawBackground(false);
+	stASMessage = env->addStaticText(L"", rect<s32>(0, 0, 350, 60), true, true, wASMessage, -1, true);
+	stASMessage->setBackgroundColor(0xc0c0c0ff);
+	stASMessage->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	//yes/no (310)
 	wQuery = env->addWindow(rect<s32>(490, 200, 840, 340), false, dataManager.GetSysString(560));
 	wQuery->getCloseButton()->setVisible(false);
@@ -1114,6 +1168,27 @@ void Game::RefreshFont() {
 		}
 	}
 }
+void Game::RefreshHDS() {
+	cbHDS->clear();
+	FileSystem::TraversalDir(L"./textures/head", [this](const wchar_t* name, bool isdir) {
+		if(!isdir && wcsrchr(name, '.') && !mywcsncasecmp(wcsrchr(name, '.'), L".jpg", 4))
+			cbHDS->addItem(name);
+	});
+}
+void Game::RefreshCRS() {
+	cbCRS->clear();
+	FileSystem::TraversalDir(L"./textures/cover", [this](const wchar_t* name, bool isdir) {
+		if(!isdir && wcsrchr(name, '.') && !mywcsncasecmp(wcsrchr(name, '.'), L".jpg", 4))
+			cbCRS->addItem(name);
+	});
+}
+void Game::RefreshBGS() {
+	cbBGS->clear();
+	FileSystem::TraversalDir(L"./textures/bg", [this](const wchar_t* name, bool isdir) {
+		if(!isdir && wcsrchr(name, '.') && !mywcsncasecmp(wcsrchr(name, '.'), L".jpg", 4))
+			cbBGS->addItem(name);
+	});
+}
 void Game::RefreshBot() {
 	if(!gameConf.enable_bot_mode)
 		return;
@@ -1490,6 +1565,13 @@ void Game::ClearCardInfo(int player) {
 	stText->setText(L"");
 	scrCardText->setVisible(false);
 }
+void Game::AddLog(const wchar_t* msg, int param) {
+	logParam.push_back(param);
+	lstLog->addItem(msg);
+	if(!env->hasFocus(lstLog)) {
+		lstLog->setSelected(-1);
+	}
+}
 void Game::AddChatMsg(const wchar_t* msg, int player) {
 	for(int i = 7; i > 0; --i) {
 		chatMsg[i] = chatMsg[i - 1];
@@ -1537,8 +1619,7 @@ void Game::AddChatMsg(const wchar_t* msg, int player) {
 	chatMsg[0].append(msg);
 	wchar_t msg_front[256];
 	myswprintf(msg_front, L"[Chat]%ls", chatMsg[0].c_str());
-	lstLog->addItem(msg_front);
-	logParam.push_back(0);
+	AddLog(msg_front);
 }
 void Game::ClearChatMsg() {
 	for(int i = 7; i >= 0; --i) {
@@ -1608,6 +1689,12 @@ void Game::ClearTextures() {
 	imgCard->setImage(imageManager.tCover[0]);
 	scrCardText->setVisible(false);
 	imgCard->setScaleImage(true);
+	imgHead->setImage(imageManager.tAvatar[0]);
+	imgHead->setScaleImage(true);
+	imgCover->setImage(imageManager.tCover[0]);
+	imgCover->setScaleImage(true);
+	imgBG->setImage(imageManager.tBackGround);
+	imgBG->setScaleImage(true);
 	btnPSAU->setImage();
 	btnPSDU->setImage();
 	for(int i=0; i<=4; ++i) {
@@ -1695,7 +1782,10 @@ void Game::OnResize() {
 
 	wMainMenu->setRelativePosition(ResizeWin(370, 200, 650, 485));
 	wOther->setRelativePosition(ResizeWin(370, 200, 650, 415));
-	wSystem->setRelativePosition(ResizeWin(212, 160, 812, 325));
+	wSystem->setRelativePosition(ResizeWin(212, 140, 812, 345));
+	wHDS->setRelativePosition(ResizeWin(362, 245, 662, 395));
+	wCRS->setRelativePosition(ResizeWin(279.5, 197.5, 744.5, 442.5));
+	wBGS->setRelativePosition(ResizeWin(157, 120, 867, 480));
 	wDeckEdit->setRelativePosition(Resize(309, 8, 605, 130));
 	cbDBLFList->setRelativePosition(Resize(80, 5, 220, 30));
 	cbDBDecks->setRelativePosition(Resize(80, 35, 220, 60));
@@ -1763,6 +1853,7 @@ void Game::OnResize() {
 	wFTSelect->setRelativePosition(ResizeWin(550, 240, 780, 340));
 	wMessage->setRelativePosition(ResizeWin(490, 200, 840, 340));
 	wACMessage->setRelativePosition(ResizeWin(490, 240, 840, 300));
+	wASMessage->setRelativePosition(ResizeWin(337, 290, 687, 350));
 	wQuery->setRelativePosition(ResizeWin(490, 200, 840, 340));
 	wSurrender->setRelativePosition(ResizeWin(490, 200, 840, 340));
 	wOptions->setRelativePosition(ResizeWin(490, 200, 840, 340));

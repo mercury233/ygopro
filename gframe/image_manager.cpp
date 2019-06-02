@@ -90,6 +90,27 @@ irr::video::ITexture* ImageManager::GetRandomImage(int image_type) {
 	BufferIO::EncodeUTF8(fname, ImageName);
 	return driver->getTexture(ImageName);
 }
+irr::video::ITexture* ImageManager::GetHeadImage() {
+	char ImageNameS[1024];
+	wchar_t fnameS[1024];
+	myswprintf(fnameS, L"./textures/head/%ls", mainGame->cbHDS->getItem(mainGame->cbHDS->getSelected()));
+	BufferIO::EncodeUTF8(fnameS, ImageNameS);
+	return driver->getTexture(ImageNameS);
+}
+irr::video::ITexture* ImageManager::GetCoverImage() {
+	char ImageNameC[1024];
+	wchar_t fnameC[1024];
+	myswprintf(fnameC, L"./textures/cover/%ls", mainGame->cbCRS->getItem(mainGame->cbCRS->getSelected()));
+	BufferIO::EncodeUTF8(fnameC, ImageNameC);
+	return driver->getTexture(ImageNameC);
+}
+irr::video::ITexture* ImageManager::GetBgImage() {
+	char ImageNameB[1024];
+	wchar_t fnameB[1024];
+	myswprintf(fnameB, L"./textures/bg/%ls", mainGame->cbBGS->getItem(mainGame->cbBGS->getSelected()));
+	BufferIO::EncodeUTF8(fnameB, ImageNameB);
+	return driver->getTexture(ImageNameB);
+}
 void ImageManager::RefreshRandomImageList() {
 	RefreshImageDir(L"head", TEXTURE_HEAD_S);
 }

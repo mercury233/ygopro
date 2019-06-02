@@ -170,10 +170,8 @@ void Game::DrawBackGround() {
 	    } else {
 			driver->drawVertexPrimitiveList(matManager.vTotalAtkopT, 4, matManager.iRectangle, 2);
 		    DrawShadowText(numFont, dInfo.str_total_attack[1], Resize(737, 295, 757, 315), rect<s32>(0, 1, 2, 0), dInfo.total_attack_color[1], 0xff000000, true, false, 0);
-		
 	    }
 	}
-	
 	//disabled field
 	{
 		/*float cv[4] = {0.0f, 0.0f, 1.0f, 1.0f};*/

@@ -106,6 +106,9 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->chkMultiKeywords->setEnabled(true);
 				mainGame->chkRegex->setEnabled(true);
 				mainGame->cbFont->setEnabled(true);
+				mainGame->btnHeadS->setEnabled(true);
+				mainGame->btnCoverS->setEnabled(true);
+				mainGame->btnBgS->setEnabled(true);
 				mainGame->btnSystemExit->setEnabled(true);
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wSystem);
@@ -114,6 +117,59 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			case BUTTON_SYS_EXIT: {
 				mainGame->HideElement(mainGame->wSystem);
 				mainGame->ShowElement(mainGame->wMainMenu);
+				if(exit_on_return)
+					mainGame->device->closeDevice();
+				break;
+			}
+			case BUTTON_HDS: {
+				mainGame->cbHDS->setEnabled(true);
+				mainGame->btnHDSOK->setEnabled(true);
+				mainGame->btnHDSExit->setEnabled(true);
+				mainGame->cbHDS->setSelected(0);
+				mainGame->HideElement(mainGame->wSystem);
+				mainGame->ShowElement(mainGame->wHDS);
+				break;
+			}
+			case BUTTON_HDS_EXIT: {
+				mainGame->HideElement(mainGame->wHDS);
+				mainGame->ShowElement(mainGame->wSystem);
+				if(exit_on_return)
+					mainGame->device->closeDevice();
+				break;
+			}
+			case BUTTON_CRS: {
+				mainGame->cbCRS->setEnabled(true);
+				mainGame->btnCoverOK1->setEnabled(true);
+				mainGame->btnCoverOK2->setEnabled(true);
+				mainGame->btnCoverOK3->setEnabled(true);
+				mainGame->btnCoverOK4->setEnabled(true);
+				mainGame->btnCRSExit->setEnabled(true);
+				mainGame->cbCRS->setSelected(0);
+				mainGame->HideElement(mainGame->wSystem);
+				mainGame->ShowElement(mainGame->wCRS);
+				break;
+			}
+			case BUTTON_CRS_EXIT: {
+				mainGame->HideElement(mainGame->wCRS);
+				mainGame->ShowElement(mainGame->wSystem);
+				if(exit_on_return)
+					mainGame->device->closeDevice();
+				break;
+			}
+			case BUTTON_BGS: {
+				mainGame->cbBGS->setEnabled(true);
+				mainGame->btnBGOK1->setEnabled(true);
+				mainGame->btnBGOK2->setEnabled(true);
+				mainGame->btnBGOK3->setEnabled(true);
+				mainGame->btnBGSExit->setEnabled(true);
+				mainGame->cbBGS->setSelected(0);
+				mainGame->HideElement(mainGame->wSystem);
+				mainGame->ShowElement(mainGame->wBGS);
+				break;
+			}
+			case BUTTON_BGS_EXIT: {
+				mainGame->HideElement(mainGame->wBGS);
+				mainGame->ShowElement(mainGame->wSystem);
 				if(exit_on_return)
 					mainGame->device->closeDevice();
 				break;
@@ -197,7 +253,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_222: {
-				wcscpy(mainGame->gameConf.lasthost, L"koishi.ygopro.cn");
+				wcscpy(mainGame->gameConf.lasthost, L"koishi.moecube.com");
 				wcscpy(mainGame->gameConf.lastport, L"222");
 				wchar_t buf[256];
 				wchar_t buff[256];

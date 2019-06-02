@@ -135,6 +135,9 @@ public:
 	void RefreshSingleplay();
 	void RefreshBot();
 	void RefreshFont();
+	void RefreshHDS();
+	void RefreshCRS();
+	void RefreshBGS();
 	void DrawSelectionLine(irr::video::S3DVertex* vec, bool strip, int width, float* cv);
 	void DrawSelectionLine(irr::gui::IGUIElement* element, int width, irr::video::SColor color);
 	void DrawBackGround();
@@ -159,6 +162,7 @@ public:
 	void SaveConfig();
 	void ShowCardInfo(int code, bool resize = false);
 	void ClearCardInfo(int player = 0);
+	void AddLog(const wchar_t* msg, int param = 0);
 	void AddChatMsg(const wchar_t* msg, int player);
 	void ClearChatMsg();
 	void AddDebugMsg(const char* msgbuf);
@@ -339,7 +343,33 @@ public:
 	irr::gui::IGUICheckBox* chkMultiKeywords;
 	irr::gui::IGUICheckBox* chkRegex;
 	irr::gui::IGUIComboBox* cbFont;
+	irr::gui::IGUIButton* btnHeadS;
+	irr::gui::IGUIButton* btnCoverS;
+	irr::gui::IGUIButton* btnBgS;
 	irr::gui::IGUIButton* btnSystemExit;
+	//head select
+	irr::gui::IGUIWindow* wHDS;
+	irr::gui::IGUIComboBox* cbHDS;
+	irr::gui::IGUIImage* imgHead;
+	irr::gui::IGUIButton* btnHDSOK;
+	irr::gui::IGUIButton* btnHDSExit;
+	//cover select
+	irr::gui::IGUIWindow* wCRS;
+	irr::gui::IGUIComboBox* cbCRS;
+	irr::gui::IGUIImage* imgCover;
+	irr::gui::IGUIButton* btnCoverOK1;
+	irr::gui::IGUIButton* btnCoverOK2;
+	irr::gui::IGUIButton* btnCoverOK3;
+	irr::gui::IGUIButton* btnCoverOK4;
+	irr::gui::IGUIButton* btnCRSExit;
+	//background select
+	irr::gui::IGUIWindow* wBGS;
+	irr::gui::IGUIComboBox* cbBGS;
+	irr::gui::IGUIImage* imgBG;
+	irr::gui::IGUIButton* btnBGOK1;
+	irr::gui::IGUIButton* btnBGOK2;
+	irr::gui::IGUIButton* btnBGOK3;
+	irr::gui::IGUIButton* btnBGSExit;
 	//lan
 	irr::gui::IGUIWindow* wLanWindow;
 	irr::gui::IGUIEditBox* ebNickName;
@@ -655,6 +685,9 @@ extern Game* mainGame;
 #define BUTTON_OPTION_PREV			220
 #define BUTTON_OPTION_NEXT			221
 #define BUTTON_OPTION_OK			222
+#define BUTTON_HDS					223
+#define BUTTON_CRS					224
+#define BUTTON_BGS					225
 #define BUTTON_CARD_0				230
 #define BUTTON_CARD_1				231
 #define BUTTON_CARD_2				232
@@ -781,6 +814,27 @@ extern Game* mainGame;
 
 #define BUTTON_SYS						403
 #define BUTTON_SYS_EXIT					404
+
+//head select
+#define BUTTON_HDS_OK		405
+#define BUTTON_HDS_EXIT		406
+#define COMBOBOX_HDS		407
+
+//cover select
+#define BUTTON_CRS_OK1		408
+#define BUTTON_CRS_OK2		409
+#define BUTTON_CRS_OK3		410
+#define BUTTON_CRS_OK4		411
+#define BUTTON_CRS_EXIT		412
+#define COMBOBOX_CRS		413
+
+//bg select
+#define BUTTON_BGS_OK1		414
+#define BUTTON_BGS_OK2		415
+#define BUTTON_BGS_OK3		416
+#define BUTTON_BGS_EXIT		417
+#define COMBOBOX_BGS		418
+
 #define TEXTURE_HEAD_S				0
 
 #define DEFAULT_DUEL_RULE			4
