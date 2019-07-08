@@ -12,7 +12,7 @@
 #include <sstream>
 #include <regex>
 
-unsigned short PRO_VERSION = 0x134A;
+unsigned short PRO_VERSION = 0x134B;
 
 bool delay_swap = false;
 int swap_player = 0;
@@ -1242,7 +1242,7 @@ void Game::LoadConfig() {
 	gameConf.antialias = 0;
 	gameConf.serverport = 7911;
 	gameConf.textfontsize = 12;
-	gameConf.game_version = 4934;
+	gameConf.game_version = 4939;
 	gameConf.nickname[0] = 0;
 	gameConf.gamename[0] = 0;
 	gameConf.lastdeck[0] = 0;

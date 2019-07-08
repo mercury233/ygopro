@@ -182,13 +182,11 @@ bool SingleMode::SinglePlayAnalyze(char* msg, unsigned int len) {
 		mainGame->dInfo.curMsg = BufferIO::ReadUInt8(pbuf);
 		switch (mainGame->dInfo.curMsg) {
 		case MSG_RETRY: {
-			mainGame->gMutex.Lock();
-			mainGame->stMessage->setText(L"Error occurs.");
-			mainGame->PopupElement(mainGame->wMessage);
-			mainGame->gMutex.Unlock();
-			mainGame->actionSignal.Reset();
-			mainGame->actionSignal.Wait();
-			return false;
+			if(!DuelClient::ClientAnalyze(offset, pbuf - offset)) {
+				mainGame->singleSignal.Reset();
+				mainGame->singleSignal.Wait();
+			}
+			break;
 		}
 		case MSG_HINT: {
 			/*int type = */BufferIO::ReadInt8(pbuf);
@@ -686,17 +684,8 @@ bool SingleMode::SinglePlayAnalyze(char* msg, unsigned int len) {
 			}
 			break;
 		}
-		case MSG_ANNOUNCE_CARD: {
-			player = BufferIO::ReadInt8(pbuf);
-			pbuf += 4;
-			if(!DuelClient::ClientAnalyze(offset, pbuf - offset)) {
-				mainGame->singleSignal.Reset();
-				mainGame->singleSignal.Wait();
-			}
-			break;
-		}
-		case MSG_ANNOUNCE_NUMBER:
-		case MSG_ANNOUNCE_CARD_FILTER: {
+		case MSG_ANNOUNCE_CARD:
+		case MSG_ANNOUNCE_NUMBER: {
 			player = BufferIO::ReadInt8(pbuf);
 			count = BufferIO::ReadUInt8(pbuf);
 			pbuf += 4 * count;
