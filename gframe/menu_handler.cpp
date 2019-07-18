@@ -266,7 +266,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_NK: {
 				wcscpy(mainGame->gameConf.lasthost, L"nekoparaserver.com");
-				wcscpy(mainGame->gameConf.lastport, L"2333");
+				wcscpy(mainGame->gameConf.lastport, L"23331");
 				wchar_t buf[256];
 				wchar_t buff[256];
 				myswprintf(buf, L"%s", mainGame->gameConf.lasthost);
