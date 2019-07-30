@@ -302,10 +302,10 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					hints.ai_flags = EVUTIL_AI_ADDRCONFIG;
 					int status = evutil_getaddrinfo(hostname, port, &hints, &answer);
 					if(status != 0) {
-						mainGame->gMutex.Lock();
+						mainGame->gMutex.lock();
 						soundManager.PlaySoundEffect(SOUND_INFO);
 						mainGame->env->addMessageBox(L"", dataManager.GetSysString(1412));
-						mainGame->gMutex.Unlock();
+						mainGame->gMutex.unlock();
 						break;
 					} else {
 						sockaddr_in * sin = ((struct sockaddr_in *)answer->ai_addr);
@@ -467,12 +467,12 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				int sel = mainGame->lstReplayList->getSelected();
 				if(sel == -1)
 					break;
-				mainGame->gMutex.Lock();
+				mainGame->gMutex.lock();
 				wchar_t textBuffer[256];
 				myswprintf(textBuffer, L"%ls\n%ls", mainGame->lstReplayList->getListItem(sel), dataManager.GetSysString(1363));
 				mainGame->SetStaticText(mainGame->stQMessage, 310, mainGame->guiFont, textBuffer);
 				mainGame->PopupElement(mainGame->wQuery);
-				mainGame->gMutex.Unlock();
+				mainGame->gMutex.unlock();
 				prev_operation = id;
 				prev_sel = sel;
 				break;
@@ -481,11 +481,11 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				int sel = mainGame->lstReplayList->getSelected();
 				if(sel == -1)
 					break;
-				mainGame->gMutex.Lock();
+				mainGame->gMutex.lock();
 				mainGame->wReplaySave->setText(dataManager.GetSysString(1364));
 				mainGame->ebRSName->setText(mainGame->lstReplayList->getListItem(sel));
 				mainGame->PopupElement(mainGame->wReplaySave);
-				mainGame->gMutex.Unlock();
+				mainGame->gMutex.unlock();
 				prev_operation = id;
 				prev_sel = sel;
 				break;
@@ -543,7 +543,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					NetServer::StopServer();
 					break;
 				}
-				STARTUPINFO si;
+				STARTUPINFOW si;
 				PROCESS_INFORMATION pi;
 				ZeroMemory(&si, sizeof(si));
 				si.cb = sizeof(si);

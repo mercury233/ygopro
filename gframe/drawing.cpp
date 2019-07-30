@@ -1002,6 +1002,9 @@ void Game::DrawSpec() {
 			break;
 		}
 		}
+		if (auto_watch_mode && showcardcode < 8 && showcardcode > 0) {
+			mainGame->ShowCardInfo(showcardcode);
+		}
 	}
 	if(is_attacking) {
 		irr::core::matrix4 matk;
@@ -1132,7 +1135,7 @@ void Game::WaitFrameSignal(int frame) {
 	signalFrame = (gameConf.quick_animation && frame >= 12) ? 12 : frame;
 	frameSignal.Wait();
 }
-void Game::DrawThumb(code_pointer cp, position2di pos, std::unordered_map<int, int>* lflist, bool drag) {
+void Game::DrawThumb(code_pointer cp, position2di pos, const std::unordered_map<int,int>* lflist, bool drag) {
 	int code = cp->first;
 	int lcode = cp->second.alias;
 	if(lcode == 0)
@@ -1147,11 +1150,11 @@ void Game::DrawThumb(code_pointer cp, position2di pos, std::unordered_map<int, i
 	if(drag) {
 		dragloc = recti(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH * mainGame->xScale, pos.Y + CARD_THUMB_HEIGHT * mainGame->yScale);
 		limitloc = recti(pos.X, pos.Y, pos.X + 20 * mainGame->xScale, pos.Y + 20 * mainGame->yScale);
-		otloc = recti(pos.X + 7, pos.Y + 50, pos.X + 37 * mainGame->xScale, pos.Y + 65 * mainGame->yScale);
+		otloc = recti(pos.X + 7, pos.Y + 50 * mainGame->yScale, pos.X + 37 * mainGame->xScale, pos.Y + 65 * mainGame->yScale);
 	}
 	driver->draw2DImage(img, dragloc, rect<s32>(0, 0, size.Width, size.Height));
 	if(lflist->count(lcode)) {
-		switch((*lflist)[lcode]) {
+		switch((*lflist).at(lcode)) {
 		case 0:
 			driver->draw2DImage(imageManager.tLim, limitloc, recti(0, 0, 64, 64), 0, 0, true);
 			break;
