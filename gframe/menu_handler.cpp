@@ -65,14 +65,14 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			case BUTTON_OTHER: {
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wOther);
-				mainGame->btnSEM->setEnabled(true);
+				mainGame->btnYST->setEnabled(true);
 				mainGame->btnKANabell->setEnabled(true);
 				mainGame->btnOCNK->setEnabled(true);
 				mainGame->btnLantern->setEnabled(true);
 				mainGame->btnOtherExit->setEnabled(true);
 				break;
 			}
-			case BUTTON_SEM: {
+			case BUTTON_YST: {
                 system("start https://yugioh-list.com/");
 				return true;
 				break;

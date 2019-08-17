@@ -329,7 +329,7 @@ public:
 	irr::gui::IGUIButton* btnSYS;
 	//other
 	irr::gui::IGUIWindow* wOther;
-	irr::gui::IGUIButton* btnSEM;
+	irr::gui::IGUIButton* btnYST;
 	irr::gui::IGUIButton* btnKANabell;
 	irr::gui::IGUIButton* btnOCNK;
 	irr::gui::IGUIButton* btnOtherExit;
@@ -798,7 +798,7 @@ extern Game* mainGame;
 #define BUTTON_RENAME_DECK_SAVE			387
 #define BUTTON_RENAME_DECK_CANCEL		388
 
-#define BUTTON_SEM						389
+#define BUTTON_YST						389
 #define BUTTON_KANABELL					390
 #define BUTTON_OCNK						391
 #define BUTTON_LANTERN					392
