@@ -73,7 +73,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SEM: {
-                system("start https://www.ygo-sem.cn/");
+                system("start https://yugioh-list.com/");
 				return true;
 				break;
 			}
