@@ -994,7 +994,7 @@ void Game::MainLoop() {
 		if(cur_time < fps * 17 - 20)
 			std::this_thread::sleep_for(std::chrono::milliseconds(20));
 		if(cur_time >= 1000) {
-			myswprintf(cap, L"YGO-VI-Simple FPS: %d", fps);
+			myswprintf(cap, L"YGO-VI FPS: %d", fps);
 			device->setWindowCaption(cap);
 			fps = 0;
 			cur_time -= 1000;

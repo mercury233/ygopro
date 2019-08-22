@@ -856,6 +856,7 @@ extern Game* mainGame;
 #define BUTTON_RMAI						518
 #define BUTTON_RMA						519
 #define BUTTON_RM_EXIT					520
+
 #define BUTTON_SYS						403
 #define BUTTON_SYS_EXIT					404
 
