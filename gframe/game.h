@@ -375,6 +375,7 @@ public:
 	irr::gui::IGUIListBox* lstHostList;
 	irr::gui::IGUIButton* btnLanRefresh;
 	irr::gui::IGUIButton* btnSC;
+	irr::gui::IGUIButton* btnRM;
 	irr::gui::IGUIEditBox* ebJoinHost;
 	irr::gui::IGUIEditBox* ebJoinPort;
 	irr::gui::IGUIEditBox* ebJoinPass;
@@ -391,6 +392,27 @@ public:
 	irr::gui::IGUIButton* btnJP;
 	irr::gui::IGUIButton* btnNK;
 	irr::gui::IGUIButton* btnSCExit;
+	//room code
+	irr::gui::IGUIWindow* wRM;
+	irr::gui::IGUIButton* btnRM1;
+	irr::gui::IGUIButton* btnRM2;
+	irr::gui::IGUIButton* btnRM3;
+	irr::gui::IGUIButton* btnRM4;
+	irr::gui::IGUIButton* btnRM5;
+	irr::gui::IGUIButton* btnRM6;
+	irr::gui::IGUIButton* btnRM7;
+	irr::gui::IGUIButton* btnRM8;
+	irr::gui::IGUIButton* btnRM9;
+	irr::gui::IGUIButton* btnRM10;
+	irr::gui::IGUIButton* btnRM11;
+	irr::gui::IGUIButton* btnRM12;
+	irr::gui::IGUIButton* btnRM13;
+	irr::gui::IGUIButton* btnRM14;
+	irr::gui::IGUIButton* btnRMCM;
+	irr::gui::IGUIButton* btnRMWN;
+	irr::gui::IGUIButton* btnRMAI;
+	irr::gui::IGUIButton* btnRMA;
+	irr::gui::IGUIButton* btnRMExit;
 	//create host
 	irr::gui::IGUIWindow* wCreateHost;
 	irr::gui::IGUIComboBox* cbLFlist;
@@ -814,6 +836,26 @@ extern Game* mainGame;
 #define BUTTON_NK						401
 #define BUTTON_SC_EXIT					402
 
+#define BUTTON_ROOM_CODE				501
+#define BUTTON_RM1						502
+#define BUTTON_RM2						503
+#define BUTTON_RM3						504
+#define BUTTON_RM4						505
+#define BUTTON_RM5						506
+#define BUTTON_RM6						507
+#define BUTTON_RM7						508
+#define BUTTON_RM8						509
+#define BUTTON_RM9						510
+#define BUTTON_RM10						511
+#define BUTTON_RM11						512
+#define BUTTON_RM12						513
+#define BUTTON_RM13						514
+#define BUTTON_RM14						515
+#define BUTTON_RMCM						516
+#define BUTTON_RMWN						517
+#define BUTTON_RMAI						518
+#define BUTTON_RMA						519
+#define BUTTON_RM_EXIT					520
 #define BUTTON_SYS						403
 #define BUTTON_SYS_EXIT					404
 
