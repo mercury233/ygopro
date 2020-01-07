@@ -963,6 +963,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			switch(id) {
 			case COMBOBOX_BOT_RULE: {
 				mainGame->RefreshBot();
+				wcscpy(mainGame->gameConf.default_rule, DEFAULT_DUEL_RULE);
 				break;
 			}
 			}
