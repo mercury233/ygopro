@@ -1459,7 +1459,7 @@ void Game::SaveConfig() {
 	fprintf(fp, "waitchain = %d\n", (chkWaitChain->isChecked() ? 1 : 0));
 	fprintf(fp, "mute_opponent = %d\n", (chkIgnore1->isChecked() ? 1 : 0));
 	fprintf(fp, "mute_spectators = %d\n", (chkIgnore2->isChecked() ? 1 : 0));
-	fprintf(fp, "default_rule = %d\n", gameConf.default_rule == DEFAULT_DUEL_RULE ? 0 : gameConf.default_rule);
+	fprintf(fp, "default_rule = %d\n", gameConf.default_rule);
 	fprintf(fp, "hide_setname = %d\n", (chkHideSetname->isChecked() ? 1 : 0));
 	fprintf(fp, "hide_hint_button = %d\n", (chkHideHintButton->isChecked() ? 1 : 0));
 	fprintf(fp, "#control_mode = 0: Key A/S/D/R Chain Buttons. control_mode = 1: MouseLeft/MouseRight/NULL/F9 Without Chain Buttons\n");
