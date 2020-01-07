@@ -36,6 +36,7 @@ struct Config {
 	int chkWaitChain;
 	int chkIgnore1;
 	int chkIgnore2;
+	int default_rule;
 	int chkHideSetname;
 	int chkHideHintButton;
 	int control_mode;
@@ -106,6 +107,7 @@ struct BotInfo {
 	wchar_t desc[256];
 	bool support_master_rule_3;
 	bool support_new_master_rule;
+	bool support_master_rule_2020;
 };
 
 struct FadingUnit {
@@ -459,7 +461,7 @@ public:
 	irr::gui::IGUIStaticText* stBotInfo;
 	irr::gui::IGUIButton* btnStartBot;
 	irr::gui::IGUIButton* btnBotCancel;
-	irr::gui::IGUICheckBox* chkBotOldRule;
+	irr::gui::IGUIComboBox* cbBotRule;
 	irr::gui::IGUICheckBox* chkBotHand;
 	irr::gui::IGUICheckBox* chkBotNoCheckDeck;
 	irr::gui::IGUICheckBox* chkBotNoShuffleDeck;
@@ -787,7 +789,7 @@ extern Game* mainGame;
 #define BUTTON_REPLAY_CANCEL		331
 #define BUTTON_BOT_START			340
 #define LISTBOX_BOT_LIST			341
-#define CHECKBOX_BOT_OLD_RULE		342
+#define COMBOBOX_BOT_RULE			342
 #define LISTBOX_SINGLEPLAY_LIST		343
 #define BUTTON_LOAD_SINGLEPLAY		344
 #define BUTTON_CANCEL_SINGLEPLAY	345
