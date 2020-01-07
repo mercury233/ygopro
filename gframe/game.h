@@ -884,7 +884,7 @@ extern Game* mainGame;
 
 #define TEXTURE_HEAD_S				0
 
-#define DEFAULT_DUEL_RULE			4
+#define DEFAULT_DUEL_RULE			5
 
 #define CARD_ARTWORK_VERSIONS_OFFSET	10
 
