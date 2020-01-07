@@ -1233,8 +1233,11 @@ void Game::RefreshBot() {
 				fgets(linebuf, 256, fp);
 				newinfo.support_master_rule_3 = !!strstr(linebuf, "SUPPORT_MASTER_RULE_3");
 				newinfo.support_new_master_rule = !!strstr(linebuf, "SUPPORT_NEW_MASTER_RULE");
-				if((chkBotOldRule->isChecked() && newinfo.support_master_rule_3)
-					|| (!chkBotOldRule->isChecked() && newinfo.support_new_master_rule))
+				newinfo.support_master_rule_2020 = !!strstr(linebuf, "SUPPORT_MASTER_RULE_2020");
+				int rule = cbBotRule->getSelected() + 3;
+				if((rule == 3 && newinfo.support_master_rule_3)
+					|| (rule == 4 && newinfo.support_new_master_rule)
+					|| (rule == 5 && newinfo.support_master_rule_2020))
 					botInfo.push_back(newinfo);
 				continue;
 			}
