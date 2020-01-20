@@ -267,7 +267,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_NK: {
-				wcscpy(mainGame->gameConf.lasthost, L"nekoparaserver.com");
+				wcscpy(mainGame->gameConf.lasthost, L"neko.ygopro.cn");
 				wcscpy(mainGame->gameConf.lastport, L"23331");
 				wchar_t buf[256];
 				wchar_t buff[256];
@@ -402,7 +402,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			case BUTTON_RM14: {
 				const wchar_t* pstr = mainGame->ebJoinPass->getText();
 				wchar_t buff[1024];
-				swprintf(buff, L"%sPR", pstr);
+				swprintf(buff, L"%sDC", pstr);
 				mainGame->ebJoinPass->setText(buff);
 				break;
 			}
