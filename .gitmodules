@@ -7,6 +7,3 @@
 [submodule "field"]
 	path = field
 	url = https://github.com/moecube/ygopro-images-field.git
-[submodule "ygopro-images"]
-	path = ygopro-images
-	url = git@git.mycard.moe:mycard/ygopro-images.git
