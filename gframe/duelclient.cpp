@@ -1208,6 +1208,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			mainGame->dField.selectable_field = 0;
 			break;
 		}
+		}
 		break;
 	}
 	case MSG_WIN: {
