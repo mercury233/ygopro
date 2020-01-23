@@ -1079,7 +1079,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 	}
 	case MSG_HINT: {
 		int type = BufferIO::ReadInt8(pbuf);
-		/*int player = */BufferIO::ReadInt8(pbuf);
+		int player = BufferIO::ReadInt8(pbuf);
 		int data = BufferIO::ReadInt32(pbuf);
 		if(mainGame->dInfo.isReplaySkiping)
 			return true;
