@@ -16,7 +16,11 @@ endif ()
 
 if (MSVC)
     add_executable (ygopro WIN32 ${AUTO_FILES_RESULT})
-    set_target_properties (ygopro PROPERTIES LINK_FLAGS /ENTRY:"mainCRTStartup")
+    set_target_properties (ygopro PROPERTIES
+        LINK_FLAGS /ENTRY:"mainCRTStartup"
+        VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    )
+    set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ygopro)
 else ()
     add_executable (ygopro ${AUTO_FILES_RESULT})
 endif ()
@@ -42,6 +46,12 @@ else ()
         ${OPENGL_INCLUDE_DIR}
     )
     target_link_libraries (ygopro ${CMAKE_THREAD_LIBS_INIT} ${DL_LIBRARIES})
+endif ()
+
+if (APPLE)
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(IOKIT_LIBRARY IOKit)
+    target_link_libraries(ygopro ${COCOA_LIBRARY} ${IOKIT_LIBRARY})
 endif ()
 
 if (USE_IRRKLANG)
