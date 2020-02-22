@@ -335,7 +335,7 @@ public:
 	irr::gui::IGUIButton* btnKANabell;
 	irr::gui::IGUIButton* btnOCNK;
 	irr::gui::IGUIButton* btnOtherExit;
-	irr::gui::IGUIButton* btnLantern;
+	irr::gui::IGUIButton* btnGIT;
 	//system setting
 	irr::gui::IGUIWindow* wSystem;
 	irr::gui::IGUICheckBox* chkSkin;
@@ -825,7 +825,7 @@ extern Game* mainGame;
 #define BUTTON_YST						389
 #define BUTTON_KANABELL					390
 #define BUTTON_OCNK						391
-#define BUTTON_LANTERN					392
+#define BUTTON_GIT					392
 #define BUTTON_OTHER_EXIT				393
 
 #define BUTTON_SERVER_CHOOSE			394

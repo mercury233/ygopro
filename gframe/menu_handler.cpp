@@ -87,8 +87,8 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
-			case BUTTON_LANTERN: {
-                system("start https://github.com/getlantern/download");
+			case BUTTON_GIT: {
+                system("start https://github.com");
 				return true;
 				break;
 			}

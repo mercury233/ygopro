@@ -141,7 +141,7 @@ bool Game::Initialize() {
 	btnYST = env->addButton(rect<s32>(10, 30, 270, 60), wOther, BUTTON_YST, dataManager.GetSysString(1423));
 	btnKANabell = env->addButton(rect<s32>(10, 65, 270, 95), wOther, BUTTON_KANABELL, dataManager.GetSysString(1424));
 	btnOCNK = env->addButton(rect<s32>(10, 100, 270, 130), wOther, BUTTON_OCNK, dataManager.GetSysString(1425));
-	btnLantern = env->addButton(rect<s32>(10, 135, 270, 165), wOther, BUTTON_LANTERN, dataManager.GetSysString(1426));
+	btnGIT = env->addButton(rect<s32>(10, 135, 270, 165), wOther, BUTTON_GIT, dataManager.GetSysString(1426));
 	btnOtherExit = env->addButton(rect<s32>(10, 170, 270, 200), wOther, BUTTON_OTHER_EXIT, dataManager.GetSysString(1210));
 	//system setting
 	wSystem = env->addWindow(rect<s32>(212, 140, 812, 345), false, dataManager.GetSysString(1207));
