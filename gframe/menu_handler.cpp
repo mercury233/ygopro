@@ -68,7 +68,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->btnYST->setEnabled(true);
 				mainGame->btnKANabell->setEnabled(true);
 				mainGame->btnOCNK->setEnabled(true);
-				mainGame->btnLantern->setEnabled(true);
+				mainGame->btnGIT->setEnabled(true);
 				mainGame->btnOtherExit->setEnabled(true);
 				break;
 			}
