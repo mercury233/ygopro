@@ -231,8 +231,8 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_JP: {
-				wcscpy(mainGame->gameConf.lasthost, L"s1.ygo233.com");
-				wcscpy(mainGame->gameConf.lastport, L"2012");
+				wcscpy(mainGame->gameConf.lasthost, L"ads.ygoads.com");
+				wcscpy(mainGame->gameConf.lastport, L"7911");
 				wchar_t buf[256];
 				wchar_t buff[256];
 				myswprintf(buf, L"%s", mainGame->gameConf.lasthost);
