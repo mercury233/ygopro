@@ -1,5 +1,6 @@
 version: '{build}'
 skip_tags: true
+image: Visual Studio 2019
 
 environment:
   access_token:
@@ -9,42 +10,43 @@ install:
   - git submodule update --init --recursive
 
   # environment and system dependency
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha13/premake-5.0.0-alpha13-windows.zip ; exit 0"
-  - 7z x -y premake-5.0.0-alpha13-windows.zip
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha14/premake-5.0.0-alpha14-windows.zip ; exit 0"
+  - 7z x premake-5.0.0-alpha14-windows.zip
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz ; exit 0"
   - tar xf libevent-2.0.22-stable.tar.gz
   - move libevent-2.0.22-stable event
   - xcopy /E event\WIN32-Code event\include
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/freetype/freetype-2.9.1.tar.bz2 ; exit 0"
-  - tar xf freetype-2.9.1.tar.bz2
-  - move freetype-2.9.1 freetype
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/freetype/freetype-2.10.1.tar.gz ; exit 0"
+  - tar xf freetype-2.10.1.tar.gz
+  - move freetype-2.10.1 freetype
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.4.zip ; exit 0"
-  - 7z x -y irrlicht-1.8.4.zip
+  - 7z x irrlicht-1.8.4.zip
   - md irrlicht
   - move irrlicht-1.8.4\source\Irrlicht irrlicht\src
   - move irrlicht-1.8.4\include irrlicht\include
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2018/sqlite-amalgamation-3240000.zip ; exit 0"
-  - 7z x -y sqlite-amalgamation-3240000.zip
-  - move sqlite-amalgamation-3240000 sqlite3
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.3.5.tar.gz ; exit 0"
+  - tar xf lua-5.3.5.tar.gz
+  - move lua-5.3.5\src lua
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
-  - 7z x irrKlang-32bit-1.5.0.zip
-  - move irrKlang-1.5.0 irrklang
-  - move irrklang\plugins\ikpMP3 ikpmp3
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2020/sqlite-amalgamation-3310100.zip ; exit 0"
+  - 7z x sqlite-amalgamation-3310100.zip
+  - move sqlite-amalgamation-3310100 sqlite3
+  
+  - git clone --depth=1 https://%access_token%@github.com/purerosefallen/irrklang
+  - mv -f irrklang/plugins/ikpmp3 .
 
   # let premake happy
-  - cp -rf premake/* .
+  - xcopy /E premake\* .
   
-  # patch irrlicht & ikpmp3
+  # patch irrlicht
   - patch -p0 < irrlicht\irrlicht.patch
-  - patch -p0 < ikpmp3\ikpmp3.patch
 
   # premake
-  - premake5 vs2017
+  - premake5 vs2019
   
 configuration: Release
 
@@ -54,14 +56,14 @@ build:
 
 after_build:
   - mv bin\release\ygopro.exe .
-  - mv irrklang\bin\win32-visualStudio\irrKlang.dll .
-  - mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
+  #- mv irrklang\bin\win32-visualStudio\irrKlang.dll .
+  #- mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
   - mkdir replay
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-database/raw/master/locales/zh-CN/cards.cdb ; exit 0"
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-starter-pack/archive/master.zip ; exit 0"
   - 7z x ygopro-starter-pack-master.zip
   - xcopy /E ygopro-starter-pack-master\* .
-  - 7z a ygopro-ver.233.7z ygopro.exe irrKlang.dll ikpMP3.dll LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single replay skin -xr!.git*
+  #- 7z a ygopro-ver.233.7z ygopro.exe irrKlang.dll ikpMP3.dll LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single replay skin -xr!.git*
   - 7z a ygopro-ver.233.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single field replay skin -xr!.git*
 
 test: off
@@ -73,9 +75,9 @@ artifacts:
     name: ygopro-ver.233
 
 cache:
-  - premake-5.0.0-alpha13-windows.zip
+  - premake-5.0.0-alpha14-windows.zip
   - libevent-2.0.22-stable.tar.gz
-  - freetype-2.9.1.tar.bz2
+  - freetype-2.10.1.tar.gz
   - irrlicht-1.8.4.zip
-  - sqlite-amalgamation-3240000.zip
-  - irrKlang-32bit-1.5.0.zip
+  - lua-5.3.5.tar.gz
+  - sqlite-amalgamation-3310100.zip

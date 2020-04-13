@@ -235,6 +235,7 @@ bool Game::Initialize() {
 	wSC = env->addWindow(rect<s32>(372, 103, 652, 420), false, dataManager.GetSysString(1428));
 	wSC->getCloseButton()->setVisible(false);
 	wSC->setVisible(false);
+	wSC->setDraggable(false);
 	btn233 = env->addButton(rect<s32>(10, 30, 270, 60), wSC, BUTTON_233, dataManager.GetSysString(1429));
 	btn23333 = env->addButton(rect<s32>(10, 65, 270, 95), wSC, BUTTON_23333, dataManager.GetSysString(1430));
 	btn7210 = env->addButton(rect<s32>(10, 100, 270, 130), wSC, BUTTON_7210, dataManager.GetSysString(1431));
@@ -247,6 +248,7 @@ bool Game::Initialize() {
 	wRM = env->addWindow(rect<s32>(232, 135, 792, 420), false, dataManager.GetSysString(1513));
 	wRM->getCloseButton()->setVisible(false);
 	wRM->setVisible(false);
+	wRM->setDraggable(false);
 	btnRM1 = env->addButton(rect<s32>(10, 30, 210, 60), wRM, BUTTON_RM1, dataManager.GetSysString(1514));
 	btnRM2 = env->addButton(rect<s32>(220, 30, 420, 60), wRM, BUTTON_RM2, dataManager.GetSysString(1515));
 	btnRM3 = env->addButton(rect<s32>(10, 65, 210, 95), wRM, BUTTON_RM3, dataManager.GetSysString(1516));

@@ -1,8 +1,5 @@
 #include "sound_manager.h"
-#ifndef _WIN32
-#include <dirent.h>
-#endif
-#ifdef YGOPRO_USE_IRRKLANG
+#ifdef IRRKLANG_STATIC
 #include "../ikpmp3/ikpMP3.h"
 #endif
 
@@ -21,7 +18,9 @@ bool SoundManager::Init() {
 	if(!engineSound || !engineMusic) {
 		return false;
 	} else {
+#ifdef IRRKLANG_STATIC
 		irrklang::ikpMP3Init(engineMusic);
+#endif
 		return true;
 	}
 #endif // YGOPRO_USE_IRRKLANG
@@ -29,7 +28,6 @@ bool SoundManager::Init() {
 	return false;
 }
 void SoundManager::RefreshBGMList() {
-#ifdef YGOPRO_USE_IRRKLANG
 	RefershBGMDir(L"", BGM_DUEL);
 	RefershBGMDir(L"duel", BGM_DUEL);
 	RefershBGMDir(L"menu", BGM_MENU);
@@ -38,7 +36,6 @@ void SoundManager::RefreshBGMList() {
 	RefershBGMDir(L"disadvantage", BGM_DISADVANTAGE);
 	RefershBGMDir(L"win", BGM_WIN);
 	RefershBGMDir(L"lose", BGM_LOSE);
-#endif
 }
 void SoundManager::RefershBGMDir(std::wstring path, int scene) {
 	std::wstring search = L"./sound/BGM/" + path;
@@ -54,6 +51,7 @@ void SoundManager::PlaySoundEffect(int sound) {
 #ifdef YGOPRO_USE_IRRKLANG
 	if(!mainGame->chkEnableSound->isChecked())
 		return;
+	engineSound->setSoundVolume(mainGame->gameConf.sound_volume);
 	switch(sound) {
 	case SOUND_SUMMON: {
 		engineSound->play2D("./sound/summon.wav");
@@ -182,7 +180,6 @@ void SoundManager::PlaySoundEffect(int sound) {
 	default:
 		break;
 	}
-	engineSound->setSoundVolume(mainGame->gameConf.sound_volume);
 #endif
 }
 void SoundManager::PlayDialogSound(irr::gui::IGUIElement * element) {
@@ -214,8 +211,8 @@ void SoundManager::PlayMusic(char* song, bool loop) {
 		return;
 	if(!engineMusic->isCurrentlyPlaying(song)) {
 		engineMusic->stopAllSounds();
-		soundBGM = engineMusic->play2D(song, loop, false, true);
 		engineMusic->setSoundVolume(mainGame->gameConf.music_volume);
+		soundBGM = engineMusic->play2D(song, loop, false, true);
 	}
 #endif
 }

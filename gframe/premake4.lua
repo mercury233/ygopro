@@ -7,27 +7,31 @@ project "ygopro"
     files { "**.cpp", "**.cc", "**.c", "**.h" }
     excludes { "lzma/**", "spmemvfs/**" }
     includedirs { "../ocgcore" }
-    links { "ocgcore", "clzma", "cspmemvfs", "Irrlicht", "freetype", "sqlite3", "lua" , "event" }
-    if USE_IRRKLANG then
-        defines { "YGOPRO_USE_IRRKLANG" }
-        links { "irrKlang", "ikpmp3" }
-        includedirs { "../irrklang/include" }
-        if IRRKLANG_PRO then
-            defines { "IRRKLANG_STATIC" }
-        end
-    end
-    if os.getenv("YGOPRO_COMPAT_MYCARD") then
-        defines { "YGOPRO_COMPAT_MYCARD" }
-    end
+    links { "ocgcore", "clzma", "cspmemvfs", "Irrlicht", "freetype", "sqlite3", "event" }
 
     configuration "windows"
         files "ygopro.rc"
         excludes "CGUIButton.cpp"
         includedirs { "../irrlicht/include", "../freetype/include", "../event/include", "../sqlite3" }
+        links { "lua" }
         if USE_IRRKLANG then
-            libdirs { "../irrklang/lib/Win32-visualStudio" }
+            defines { "YGOPRO_USE_IRRKLANG" }
+            links { "irrKlang" }
+            includedirs { "../irrklang/include" }
+            if IRRKLANG_PRO then
+                defines { "IRRKLANG_STATIC" }
+                links { "ikpmp3" }
+            else
+                libdirs { "../irrklang/lib/Win32-visualStudio" }
+            end
         end
         links { "opengl32", "ws2_32", "winmm", "gdi32", "kernel32", "user32", "imm32" }
+    if IRRKLANG_PRO then
+        configuration { "windows", "not Debug" }
+            libdirs { "../irrklang/lib/Win32-visualStudio" }
+        configuration { "windows", "Debug" }
+            libdirs { "../irrklang/lib/Win32-visualStudio-debug" }
+    end
     configuration {"windows", "not vs*"}
         includedirs { "/mingw/include/irrlicht", "/mingw/include/freetype2" }
     configuration "not vs*"
@@ -35,9 +39,12 @@ project "ygopro"
     configuration "not windows"
         includedirs { "/usr/include/irrlicht", "/usr/include/freetype2" }
         excludes { "COSOperator.*" }
-        links { "event_pthreads", "GL", "dl", "pthread" }
+        links { "lua5.3-c++", "event_pthreads", "GL", "dl", "pthread" }
     configuration "linux"
         if USE_IRRKLANG then
-            linkoptions{ "-Wl,-rpath=./" }
+            defines { "YGOPRO_USE_IRRKLANG" }
+            links { "IrrKlang" }
+            linkoptions{ "-Wl,-rpath=./irrklang/bin/linux-gcc-64/" }
             libdirs { "../irrklang/bin/linux-gcc-64" }
+            includedirs { "../irrklang/include" }
         end
