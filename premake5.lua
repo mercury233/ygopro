@@ -46,9 +46,8 @@ solution "ygo"
         targetdir "bin/debug"
 
     configuration { "Release", "vs*" }
-        flags { "LinkTimeOptimization" }
-        staticruntime "On"
-        disablewarnings { "4244", "4267", "4838", "4577", "4819", "4018", "4996", "4477", "4091", "4828", "4800" }
+        flags { "StaticRuntime", "LinkTimeOptimization" }
+        disablewarnings { "4244", "4267", "4838", "4577", "4819", "4018", "4996", "4477", "4091", "4305", "4828", "4800" }
 
     configuration { "Release", "not vs*" }
         symbols "On"

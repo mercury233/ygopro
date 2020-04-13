@@ -1,6 +1,5 @@
 version: '{build}'
 skip_tags: true
-image: Visual Studio 2019
 
 environment:
   access_token:
@@ -42,10 +41,11 @@ install:
   - move irrklang\plugins\ikpMP3 ikpmp3
 
   # let premake happy
-  - xcopy /E premake\* .
+  - cp -rf premake/* .
   
-  # patch irrlicht
+  # patch irrlicht & ikpmp3
   - patch -p0 < irrlicht\irrlicht.patch
+  - patch -p0 < ikpmp3\ikpmp3.patch
 
   # premake
   - premake5 vs2019
