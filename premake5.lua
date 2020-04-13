@@ -11,14 +11,8 @@ solution "ygo"
         defines { "WIN32", "_WIN32", "WINVER=0x0501" }
         libdirs { "$(DXSDK_DIR)Lib/x86" }
         entrypoint "mainCRTStartup"
-    configuration { "windows", "vs2015" }
         toolset "v140_xp"
-
-    configuration { "windows", "vs2017" }
-        toolset "v141_xp"
-
-    configuration { "windows", "vs2019" }
-        toolset "v141_xp"
+        startproject "ygopro"
 
     configuration "bsd"
         defines { "LUA_USE_POSIX" }
@@ -60,7 +54,6 @@ solution "ygo"
 
     configuration "vs*"
         vectorextensions "SSE2"
-        buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
     
     configuration "not vs*"
