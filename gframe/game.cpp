@@ -485,9 +485,8 @@ bool Game::Initialize() {
 	chkMusicMode = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, -1, dataManager.GetSysString(1281));
 	chkMusicMode->setChecked(gameConf.music_mode != 0);
 	btnCardSearch = env->addButton(rect<s32>(150, 30, 250, 80), tabSystem, BUTTON_CARD_SEARCH, dataManager.GetSysString(1283));
-	wSearchWindow = env->addWindow(rect<s32>(510, 200, 820, 320), false, dataManager.strBuffer);
+	wSearchWindow = env->addWindow(rect<s32>(510, 200, 820, 320), false, dataManager.GetSysString(1284));
 	wSearchWindow->getCloseButton()->setVisible(false);
-	wSearchWindow->setDrawTitlebar(false);
 	wSearchWindow->setVisible(false);
 	env->addStaticText(dataManager.GetSysString(1285), rect<s32>(20, 27, 130, 47), false, false, wSearchWindow);
 	ebSearchName = env->addEditBox(gameConf.searchname, rect<s32>(20, 50, 290, 70), true, wSearchWindow);

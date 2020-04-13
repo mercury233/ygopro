@@ -1818,7 +1818,6 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			case BUTTON_CARD_SEARCH: {
 				mainGame->btnSearchAgree->setEnabled(true);
 				mainGame->btnSearchCancel->setEnabled(true);
-				mainGame->ShowElement(mainGame->wSearchWindow);
 				mainGame->PopupElement(mainGame->wSearchWindow);
 				break;
 			}
