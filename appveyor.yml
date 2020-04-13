@@ -36,7 +36,9 @@ install:
   - 7z x sqlite-amalgamation-3310100.zip
   - move sqlite-amalgamation-3310100 sqlite3
   
-  - git clone --depth=1 https://%access_token%@github.com/purerosefallen/irrklang
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
+  - 7z x irrKlang-32bit-1.5.0.zip
+  - move irrKlang-1.5.0 irrklang
   - mv -f irrklang/plugins/ikpmp3 .
 
   # let premake happy
@@ -74,15 +76,6 @@ artifacts:
   - path: ygopro-ver.233.7z
     name: ygopro-ver.233
 
-deploy:
-    release: latest
-    description: 'Automatic build by Appveyor.\nUpdated on $(APPVEYOR_REPO_COMMIT_TIMESTAMP).'
-    provider: GitHub
-    auth_token: $(access_token)
-    force_update: true
-    on:
-        branch: test
-
 cache:
   - premake-5.0.0-alpha14-windows.zip
   - libevent-2.0.22-stable.tar.gz
@@ -90,3 +83,4 @@ cache:
   - irrlicht-1.8.4.zip
   - lua-5.3.5.tar.gz
   - sqlite-amalgamation-3310100.zip
+  - irrKlang-32bit-1.5.0.zip
