@@ -125,6 +125,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			break;
 		if(mainGame->wRenameDeck->isVisible() && id != BUTTON_RENAME_DECK_SAVE && id != BUTTON_RENAME_DECK_CANCEL)
 			break;
+		if(mainGame->wSearchWindow->isVisible() && id != BUTTON_SEARCH_AGREE && id != BUTTON_SEARCH_CANCEL)
+			break;
 		switch(event.GUIEvent.EventType) {
 		case irr::gui::EGET_BUTTON_CLICKED: {
 			soundManager.PlaySoundEffect(SOUND_BUTTON);
