@@ -25,7 +25,6 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 			break;
 		if(mainGame->wSearchWindow->isVisible() && id != BUTTON_SEARCH_AGREE && id != BUTTON_SEARCH_CANCEL)
 			break;
-		s32 id = event.GUIEvent.Caller->getID();
 		switch(event.GUIEvent.EventType) {
 		case irr::gui::EGET_BUTTON_CLICKED: {
 			switch(id) {
