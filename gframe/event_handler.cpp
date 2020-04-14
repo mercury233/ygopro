@@ -19,6 +19,8 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 		return false;
 	switch(event.EventType) {
 	case irr::EET_GUI_EVENT: {
+		irr::gui::IGUIElement* caller = event.GUIEvent.Caller;
+		s32 id = caller->getID();
 		if(mainGame->fadingList.size())
 			break;
 		if(mainGame->wSearchWindow->isVisible() && id != BUTTON_SEARCH_AGREE && id != BUTTON_SEARCH_CANCEL)
