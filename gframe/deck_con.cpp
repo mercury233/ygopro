@@ -123,7 +123,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			break;
 		if(mainGame->wLinkMarks->isVisible() && id != BUTTON_MARKERS_OK)
 			break;
-		if(mainGame->wRenameDeck->isVisible() && id (!= BUTTON_SEARCH_AGREE || != BUTTON_SEARCH_CANCEL)
+		if(mainGame->wRenameDeck->isVisible() && (id != BUTTON_SEARCH_AGREE || id != BUTTON_SEARCH_CANCEL))
 			break;
 		switch(event.GUIEvent.EventType) {
 		case irr::gui::EGET_BUTTON_CLICKED: {
