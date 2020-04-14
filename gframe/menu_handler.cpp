@@ -41,6 +41,10 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			mainGame->wReplaySave->getParent()->bringToFront(mainGame->wReplaySave);
 			break;
 		}
+		if(mainGame->wSC->isVisible() && id != BUTTON_233 && id != BUTTON_23333 && id != BUTTON_7210 && id != BUTTON_765 && id != BUTTON_222 && id != BUTTON_JP && id != BUTTON_NK && id != BUTTON_SC_EXIT)
+			break;
+		if(mainGame->wRM->isVisible() && id != BUTTON_RM_EXIT)
+			break;
 		switch(event.GUIEvent.EventType) {
 		case irr::gui::EGET_ELEMENT_HOVERED: {
 			if(event.GUIEvent.Caller->getType() == EGUIET_EDIT_BOX)
