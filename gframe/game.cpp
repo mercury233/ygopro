@@ -1881,7 +1881,11 @@ void Game::OnResize() {
 		btnCRpos.LowerRightCorner.Y - 420,
 		btnCRpos.LowerRightCorner.X - 580,
 		btnCRpos.LowerRightCorner.Y - 103));
-	wRM->setRelativePosition(ResizeWin(800, 100, 1230, 460));
+	wRM->setRelativePosition(recti(
+		btnCRpos.LowerRightCorner.X,
+		btnCRpos.LowerRightCorner.Y - 420,
+		btnCRpos.LowerRightCorner.X + 430,
+		btnCRpos.LowerRightCorner.Y - 60));
 	wCreateHost->setRelativePosition(ResizeWin(320, 100, 700, 520));
 	wHostPrepare->setRelativePosition(ResizeWin(270, 120, 750, 440));
 	wReplay->setRelativePosition(ResizeWin(220, 100, 800, 520));
