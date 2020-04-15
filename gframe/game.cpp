@@ -244,7 +244,7 @@ bool Game::Initialize() {
 	btnNK = env->addButton(rect<s32>(10, 240, 270, 270), wSC, BUTTON_NK, dataManager.GetSysString(1435));
 	btnSCExit = env->addButton(rect<s32>(10, 275, 270, 305), wSC, BUTTON_SC_EXIT, dataManager.GetSysString(1436));
 	//room code
-	wRM = env->addWindow(rect<s32>(232, 135, 792, 420), false, dataManager.GetSysString(1513));
+	wRM = env->addWindow(rect<s32>(232, 135, 662, 495), false, dataManager.GetSysString(1513));
 	wRM->getCloseButton()->setVisible(false);
 	wRM->setVisible(false);
 	btnRM1 = env->addButton(rect<s32>(10, 30, 210, 60), wRM, BUTTON_RM1, dataManager.GetSysString(1514));
@@ -261,11 +261,11 @@ bool Game::Initialize() {
 	btnRM12 = env->addButton(rect<s32>(220, 205, 420, 235), wRM, BUTTON_RM12, dataManager.GetSysString(1525));
 	btnRM13 = env->addButton(rect<s32>(10, 240, 210, 270), wRM, BUTTON_RM13, dataManager.GetSysString(1526));
 	btnRM14 = env->addButton(rect<s32>(220, 240, 420, 270), wRM, BUTTON_RM14, dataManager.GetSysString(1527));
-	btnRMCM = env->addButton(rect<s32>(425, 55, 485, 115), wRM, BUTTON_RMCM, dataManager.GetSysString(1528));
-	btnRMWN = env->addButton(rect<s32>(495, 55, 555, 115), wRM, BUTTON_RMWN, dataManager.GetSysString(1529));
-	btnRMAI = env->addButton(rect<s32>(440, 125, 540, 155), wRM, BUTTON_RMAI, dataManager.GetSysString(1530));
-	btnRMA = env->addButton(rect<s32>(440, 165, 540, 195), wRM, BUTTON_RMA, dataManager.GetSysString(1531));
-	btnRMExit = env->addButton(rect<s32>(440, 205, 540, 235), wRM, BUTTON_RM_EXIT, dataManager.GetSysString(1436));
+	btnRMCM = env->addButton(rect<s32>(10, 285, 70, 345), wRM, BUTTON_RMCM, dataManager.GetSysString(1528));
+	btnRMWN = env->addButton(rect<s32>(80, 285, 140, 345), wRM, BUTTON_RMWN, dataManager.GetSysString(1529));
+	btnRMAI = env->addButton(rect<s32>(210, 280, 310, 310), wRM, BUTTON_RMAI, dataManager.GetSysString(1530));
+	btnRMA = env->addButton(rect<s32>(320, 280, 420, 310), wRM, BUTTON_RMA, dataManager.GetSysString(1531));
+	btnRMExit = env->addButton(rect<s32>(260, 320, 360, 350), wRM, BUTTON_RM_EXIT, dataManager.GetSysString(1436));
 	//create host
 	wCreateHost = env->addWindow(rect<s32>(320, 100, 700, 520), false, dataManager.GetSysString(1224));
 	wCreateHost->getCloseButton()->setVisible(false);
