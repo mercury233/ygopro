@@ -232,9 +232,10 @@ bool Game::Initialize() {
 	btnJoinCancel = env->addButton(rect<s32>(460, 385, 570, 410), wLanWindow, BUTTON_JOIN_CANCEL, dataManager.GetSysString(1212));
 	btnCreateHost = env->addButton(rect<s32>(460, 25, 570, 50), wLanWindow, BUTTON_CREATE_HOST, dataManager.GetSysString(1224));
 	//server choose
-	wSC = env->addWindow(rect<s32>(372, 103, 652, 420), false, dataManager.GetSysString(1428));
+	wSC = env->addWindow(rect<s32>(-60, 100, 220, 417), false, dataManager.GetSysString(1428));
 	wSC->getCloseButton()->setVisible(false);
 	wSC->setVisible(false);
+	wSC->setDraggable(false);
 	btn233 = env->addButton(rect<s32>(10, 30, 270, 60), wSC, BUTTON_233, dataManager.GetSysString(1429));
 	btn23333 = env->addButton(rect<s32>(10, 65, 270, 95), wSC, BUTTON_23333, dataManager.GetSysString(1430));
 	btn7210 = env->addButton(rect<s32>(10, 100, 270, 130), wSC, BUTTON_7210, dataManager.GetSysString(1431));
@@ -244,9 +245,10 @@ bool Game::Initialize() {
 	btnNK = env->addButton(rect<s32>(10, 240, 270, 270), wSC, BUTTON_NK, dataManager.GetSysString(1435));
 	btnSCExit = env->addButton(rect<s32>(10, 275, 270, 305), wSC, BUTTON_SC_EXIT, dataManager.GetSysString(1436));
 	//room code
-	wRM = env->addWindow(rect<s32>(232, 135, 662, 495), false, dataManager.GetSysString(1513));
+	wRM = env->addWindow(rect<s32>(800, 100, 1230, 460), false, dataManager.GetSysString(1513));
 	wRM->getCloseButton()->setVisible(false);
 	wRM->setVisible(false);
+	wRM->setDraggable(false);
 	btnRM1 = env->addButton(rect<s32>(10, 30, 210, 60), wRM, BUTTON_RM1, dataManager.GetSysString(1514));
 	btnRM2 = env->addButton(rect<s32>(220, 30, 420, 60), wRM, BUTTON_RM2, dataManager.GetSysString(1515));
 	btnRM3 = env->addButton(rect<s32>(10, 65, 210, 95), wRM, BUTTON_RM3, dataManager.GetSysString(1516));
@@ -1303,8 +1305,8 @@ void Game::LoadConfig() {
 	gameConf.music_volume = 0.5;
 	gameConf.music_mode = 1;
 	gameConf.window_maximized = false;
-	gameConf.window_width = 1024;
-	gameConf.window_height = 640;
+	gameConf.window_width = 1515;
+	gameConf.window_height = 916;
 	gameConf.resize_popup_menu = false;
 	gameConf.chkEnablePScale = 1;
 	gameConf.skin_index = 1;
@@ -1872,8 +1874,8 @@ void Game::OnResize() {
 	btnRenameDeck->setRelativePosition(Resize(170, 99, 220, 120));
 
 	wLanWindow->setRelativePosition(ResizeWin(220, 100, 800, 520));
-	wSC->setRelativePosition(ResizeWin(380, 103, 660, 420));
-	wRM->setRelativePosition(ResizeWin(232, 135, 662, 495));
+	wSC->setRelativePosition(ResizeWin(-60, 100, 220, 417));
+	wRM->setRelativePosition(ResizeWin(800, 100, 1230, 460));
 	wCreateHost->setRelativePosition(ResizeWin(320, 100, 700, 520));
 	wHostPrepare->setRelativePosition(ResizeWin(270, 120, 750, 440));
 	wReplay->setRelativePosition(ResizeWin(220, 100, 800, 520));
