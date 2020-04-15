@@ -212,6 +212,7 @@ bool Game::Initialize() {
 	wLanWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1200));
 	wLanWindow->getCloseButton()->setVisible(false);
 	wLanWindow->setVisible(false);
+	wLanWindow->setDraggable(false);
 	env->addStaticText(dataManager.GetSysString(1220), rect<s32>(10, 30, 220, 50), false, false, wLanWindow);
 	ebNickName = env->addEditBox(gameConf.nickname, rect<s32>(110, 25, 450, 50), true, wLanWindow);
 	ebNickName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
@@ -1874,8 +1875,8 @@ void Game::OnResize() {
 	btnRenameDeck->setRelativePosition(Resize(170, 99, 220, 120));
 
 	wLanWindow->setRelativePosition(ResizeWin(220, 100, 800, 520));
-	wSC->setRelativePosition(ResizeWin(-60, 100, 220, 417));
-	wRM->setRelativePosition(ResizeWin(800, 100, 1230, 460));
+	wSC->setRelativePosition(ResizeCardMid(-60, 100, 220, 417, 220, 417));
+	wRM->setRelativePosition(ResizeCardMid(800, 100, 1230, 460, 800, 100));
 	wCreateHost->setRelativePosition(ResizeWin(320, 100, 700, 520));
 	wHostPrepare->setRelativePosition(ResizeWin(270, 120, 750, 440));
 	wReplay->setRelativePosition(ResizeWin(220, 100, 800, 520));
