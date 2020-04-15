@@ -1875,8 +1875,13 @@ void Game::OnResize() {
 	btnRenameDeck->setRelativePosition(Resize(170, 99, 220, 120));
 
 	wLanWindow->setRelativePosition(ResizeWin(220, 100, 800, 520));
-	wSC->setRelativePosition(ResizeCardMid(-60, 100, 220, 417, 220, 417));
-	wRM->setRelativePosition(ResizeCardMid(800, 100, 1230, 460, 800, 100));
+	recti btnCRpos = wLanWindow->getAbsolutePosition();
+	wSC->setRelativePosition(recti(
+		btnCRpos.LowerLeftCorner.X - 280,
+		btnCRpos.LowerLeftCorner.Y,
+		btnCRpos.LowerLeftCorner.X,
+		btnCRpos.LowerLeftCorner.Y + 317));
+	wRM->setRelativePosition(ResizeWin(800, 100, 1230, 460));
 	wCreateHost->setRelativePosition(ResizeWin(320, 100, 700, 520));
 	wHostPrepare->setRelativePosition(ResizeWin(270, 120, 750, 440));
 	wReplay->setRelativePosition(ResizeWin(220, 100, 800, 520));
