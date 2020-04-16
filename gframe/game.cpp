@@ -268,7 +268,7 @@ bool Game::Initialize() {
 	btnRMWN = env->addButton(rect<s32>(120, 285, 180, 345), wRM, BUTTON_RMWN, dataManager.GetSysString(1529));
 	btnRMAI = env->addButton(rect<s32>(210, 280, 310, 310), wRM, BUTTON_RMAI, dataManager.GetSysString(1530));
 	btnRMA = env->addButton(rect<s32>(320, 280, 420, 310), wRM, BUTTON_RMA, dataManager.GetSysString(1531));
-	btnRMExit = env->addButton(rect<s32>(230, 320, 400, 350), wRM, BUTTON_RM_EXIT, dataManager.GetSysString(1436));
+	btnRMExit = env->addButton(rect<s32>(250, 320, 380, 350), wRM, BUTTON_RM_EXIT, dataManager.GetSysString(1436));
 	//create host
 	wCreateHost = env->addWindow(rect<s32>(320, 100, 700, 520), false, dataManager.GetSysString(1224));
 	wCreateHost->getCloseButton()->setVisible(false);
