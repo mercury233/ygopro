@@ -165,7 +165,8 @@ bool Game::Initialize() {
 	btnHeadS = env->addButton(rect<s32>(30, 120, 200, 150), wSystem, BUTTON_HDS, dataManager.GetSysString(1439));
 	btnCoverS = env->addButton(rect<s32>(215, 120, 385, 150), wSystem, BUTTON_CRS, dataManager.GetSysString(1441));
 	btnBgS = env->addButton(rect<s32>(400, 120, 570, 150), wSystem, BUTTON_BGS, dataManager.GetSysString(1447));
-	btnSystemExit = env->addButton(rect<s32>(200, 160, 400, 190), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
+	btnSkinS = env->addButton(rect<s32>(30, 160, 200, 190), wSystem, BUTTON_SKS, dataManager.GetSysString(1288));
+	btnSystemExit = env->addButton(rect<s32>(300, 160, 500, 190), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	//Head Select
 	wHDS = env->addWindow(rect<s32>(362, 245, 662, 395), false, dataManager.GetSysString(1440));
@@ -214,6 +215,16 @@ bool Game::Initialize() {
 	btnBGOK3 = env->addButton(rect<s32>(25, 230, 160, 270), wBGS, BUTTON_BGS_OK3, dataManager.GetSysString(1451));
 	btnBGSExit = env->addButton(rect<s32>(25, 290, 160, 330), wBGS, BUTTON_BGS_EXIT, dataManager.GetSysString(1210));
 	RefreshBGS();
+	//Skin Select
+	wSKS = env->addWindow(rect<s32>(510, 200, 820, 320), false, dataManager.GetSysString(1376));
+	wSKS->getCloseButton()->setVisible(false);
+	wSKS->setVisible(false);
+	wSKS->setDraggable(false);
+	env->addStaticText(dataManager.GetSysString(1377), rect<s32>(20, 27, 290, 47), false, false, wSKS);
+	ebSKS = env->addEditBox(L"", rect<s32>(20, 50, 290, 70), true, wSKS, -1);
+	ebSKS->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+	btnSKSYes = env->addButton(rect<s32>(70, 80, 140, 105), wSKS, BUTTON_SKS_OK, dataManager.GetSysString(1341));
+	btnSKSNo = env->addButton(rect<s32>(170, 80, 240, 105), wSKS, BUTTON_SKS_CANCEL, dataManager.GetSysString(1212));
 	//lan mode
 	wLanWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1200));
 	wLanWindow->getCloseButton()->setVisible(false);
@@ -700,7 +711,7 @@ bool Game::Initialize() {
 	wRenameDeck->setVisible(false);
 	wRenameDeck->setDraggable(false);
 	env->addStaticText(dataManager.GetSysString(1377), rect<s32>(20, 27, 290, 47), false, false, wRenameDeck);
-	ebREName =  env->addEditBox(L"", rect<s32>(20, 50, 290, 70), true, wRenameDeck, -1);
+	ebREName = env->addEditBox(L"", rect<s32>(20, 50, 290, 70), true, wRenameDeck, -1);
 	ebREName->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	btnREYes = env->addButton(rect<s32>(70, 80, 140, 105), wRenameDeck, BUTTON_RENAME_DECK_SAVE, dataManager.GetSysString(1341));
 	btnRENo = env->addButton(rect<s32>(170, 80, 240, 105), wRenameDeck, BUTTON_RENAME_DECK_CANCEL, dataManager.GetSysString(1212));

@@ -178,6 +178,20 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					mainGame->device->closeDevice();
 				break;
 			}
+			case BUTTON_SKS: {
+				mainGame->gMutex.lock();
+				mainGame->wSKS->setText(dataManager.GetSysString(1376));
+				mainGame->ebSKS->setText(mainGame->gameConf.skin_index->getText());
+				mainGame->PopupElement(mainGame->wSKS);
+				mainGame->gMutex.unlock();
+				break;
+			}
+			case BUTTON_SKS_CANCEL: {
+				mainGame->HideElement(mainGame->wSKS);
+				if(exit_on_return)
+					mainGame->device->closeDevice();
+				break;
+			}
 			case BUTTON_LAN_MODE: {
 				mainGame->btnCreateHost->setEnabled(true);
 				mainGame->btnJoinHost->setEnabled(true);

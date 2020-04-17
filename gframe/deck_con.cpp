@@ -207,7 +207,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 						mainGame->cbDBDecks->removeItem(prev_sel);
 						mainGame->cbDBDecks->addItem(newname);
 						mainGame->cbDBDecks->setSelected(mainGame->cbDBDecks->getItemCount() - 1);
-						mainGame->stACMessage->setText(dataManager.GetSysString(1375));
+						mainGame->stASMessage->setText(dataManager.GetSysString(1375));
 					        mainGame->PopupElement(mainGame->wACMessage, 20);
 						is_modified = false;
 					} else {
