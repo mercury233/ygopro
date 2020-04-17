@@ -1968,11 +1968,11 @@ void Game::OnResize() {
 	btnClearLog->setRelativePosition(Resize(160, 300, 260, 325));
 	
 	recti btnSearchpos = tabSystem->getAbsolutePosition();
-	btnCardSearch->setRelativePosition(recti(
+	btnCardSearch->setRelativePosition(ResizeWin(
 		btnSearchpos.LowerRightCorner.X - 100,
-		btnSearchpos.LowerRightCorner.Y - 300,
+		btnSearchpos.LowerRightCorner.Y - 200,
 		btnSearchpos.LowerRightCorner.X,
-		btnSearchpos.LowerRightCorner.Y - 250));
+		btnSearchpos.LowerRightCorner.Y - 150));
 
 	wPhase->setRelativePosition(Resize(480, 310, 855, 330));
 	btnPhaseStatus->setRelativePosition(Resize(0, 0, 50, 20));
