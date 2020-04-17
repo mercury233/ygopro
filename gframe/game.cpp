@@ -168,35 +168,35 @@ bool Game::Initialize() {
 	btnSystemExit = env->addButton(rect<s32>(200, 160, 400, 190), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	//Head Select
-	wHDS = env->addWindow(rect<s32>(342, 235, 682, 405), false, dataManager.GetSysString(1440));
+	wHDS = env->addWindow(rect<s32>(352, 235, 682, 405), false, dataManager.GetSysString(1440));
 	wHDS->getCloseButton()->setVisible(false);
 	wHDS->setVisible(false);
 	wHDS->setDraggable(false);
-	cbHDS = env->addComboBox(rect<s32>(20, 30, 200, 75), wHDS, COMBOBOX_HDS);
+	cbHDS = env->addComboBox(rect<s32>(30, 30, 200, 75), wHDS, COMBOBOX_HDS);
 	cbHDS->setMaxSelectionRows(10);
 	imgHead = env->addImage(rect<s32>(210, 25, 330, 145), wHDS);
 	imgHead->setImage(imageManager.tHead[0]);	
 	imgHead->setScaleImage(true);
 	imgHead->setUseAlphaChannel(true);
 	btnHDSOK = env->addButton(rect<s32>(20, 110, 105, 140), wHDS, BUTTON_HDS_OK, dataManager.GetSysString(1211));
-	btnHDSExit = env->addButton(rect<s32>(115, 110, 190, 140), wHDS, BUTTON_HDS_EXIT, dataManager.GetSysString(1210));
+	btnHDSExit = env->addButton(rect<s32>(115, 110, 200, 140), wHDS, BUTTON_HDS_EXIT, dataManager.GetSysString(1210));
 	RefreshHDS();
 	//Cover Select
 	wCRS = env->addWindow(rect<s32>(269.5, 187.5, 774.5, 452.5), false, dataManager.GetSysString(1442));
 	wCRS->getCloseButton()->setVisible(false);
 	wCRS->setVisible(false);
 	wCRS->setDraggable(false);
-	cbCRS = env->addComboBox(rect<s32>(170, 172.5, 300, 207.5), wCRS, COMBOBOX_CRS);
+	cbCRS = env->addComboBox(rect<s32>(170, 182.5, 300, 227.5), wCRS, COMBOBOX_CRS);
 	cbCRS->setMaxSelectionRows(10);
-	imgCover = env->addImage(rect<s32>(320, 25, 480, 245), wCRS);
+	imgCover = env->addImage(rect<s32>(320, 20, 490, 250), wCRS);
 	imgCover->setImage(imageManager.tCover[0]);	
 	imgCover->setScaleImage(true);
 	imgCover->setUseAlphaChannel(true);
 	btnCoverOK1 = env->addButton(rect<s32>(30, 47.5, 160, 92.5), wCRS, BUTTON_CRS_OK1, dataManager.GetSysString(1443));
 	btnCoverOK2 = env->addButton(rect<s32>(170, 47.5, 300, 92.5), wCRS, BUTTON_CRS_OK2, dataManager.GetSysString(1444));
-	btnCoverOK3 = env->addButton(rect<s32>(30, 117.5, 160, 152.5), wCRS, BUTTON_CRS_OK3, dataManager.GetSysString(1445));
-	btnCoverOK4 = env->addButton(rect<s32>(170, 117.5, 300, 152.5), wCRS, BUTTON_CRS_OK4, dataManager.GetSysString(1446));
-	btnCRSExit = env->addButton(rect<s32>(30, 172.5, 160, 207.5), wCRS, BUTTON_CRS_EXIT, dataManager.GetSysString(1210));
+	btnCoverOK3 = env->addButton(rect<s32>(30, 117.5, 160, 162.5), wCRS, BUTTON_CRS_OK3, dataManager.GetSysString(1445));
+	btnCoverOK4 = env->addButton(rect<s32>(170, 117.5, 300, 162.5), wCRS, BUTTON_CRS_OK4, dataManager.GetSysString(1446));
+	btnCRSExit = env->addButton(rect<s32>(30, 182.5, 160, 227.5), wCRS, BUTTON_CRS_EXIT, dataManager.GetSysString(1210));
 	RefreshCRS();
 	//Background Select
 	wBGS = env->addWindow(rect<s32>(132, 100, 882, 500), false, dataManager.GetSysString(1448));
@@ -205,7 +205,7 @@ bool Game::Initialize() {
 	wBGS->setDraggable(false);
 	cbBGS = env->addComboBox(rect<s32>(25, 50, 170, 100), wBGS, COMBOBOX_BGS);
 	cbBGS->setMaxSelectionRows(10);
-	imgBG = env->addImage(rect<s32>(180, 25, 692, 345), wBGS);
+	imgBG = env->addImage(rect<s32>(180, 25, 732, 385), wBGS);
 	imgBG->setImage(imageManager.tBackGround);	
 	imgBG->setScaleImage(true);
 	imgBG->setUseAlphaChannel(true);
@@ -1828,7 +1828,7 @@ void Game::OnResize() {
 	wMainMenu->setRelativePosition(ResizeWin(370, 200, 650, 485));
 	wOther->setRelativePosition(ResizeWin(370, 200, 650, 415));
 	wSystem->setRelativePosition(ResizeWin(215, 160, 815, 365));
-	wHDS->setRelativePosition(ResizeWin(342, 235, 682, 405));
+	wHDS->setRelativePosition(ResizeWin(352, 235, 682, 405));
 	wCRS->setRelativePosition(ResizeWin(269.5, 187.5, 774.5, 452.5));
 	wBGS->setRelativePosition(ResizeWin(132, 100, 882, 500));
 	wDeckEdit->setRelativePosition(Resize(309, 8, 605, 130));
