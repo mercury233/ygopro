@@ -181,8 +181,10 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_SKS: {
 				mainGame->gMutex.lock();
-				mainGame->wSKS->setText(dataManager.GetSysString(1376));
-				mainGame->ebSKS->setText(mainGame->gameConf.skin_index);
+				mainGame->wSKS->setText(dataManager.GetSysString(1289));
+				wchar_t buf[256];
+				_itow_s(mainGame->gameConf.skin_index, buf, 256, 256);
+				mainGame->ebSKS->setText(buf);
 				mainGame->PopupElement(mainGame->wSKS);
 				mainGame->gMutex.unlock();
 				break;

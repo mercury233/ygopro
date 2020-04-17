@@ -216,7 +216,7 @@ bool Game::Initialize() {
 	btnBGSExit = env->addButton(rect<s32>(25, 290, 160, 330), wBGS, BUTTON_BGS_EXIT, dataManager.GetSysString(1210));
 	RefreshBGS();
 	//Skin Select
-	wSKS = env->addWindow(rect<s32>(510, 200, 820, 320), false, dataManager.GetSysString(1376));
+	wSKS = env->addWindow(rect<s32>(510, 200, 820, 320), false, dataManager.GetSysString(1288));
 	wSKS->getCloseButton()->setVisible(false);
 	wSKS->setVisible(false);
 	wSKS->setDraggable(false);
