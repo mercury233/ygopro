@@ -1903,7 +1903,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_SKS_OK: {
 				wchar_t wstr[256];
-				myswprintf(wstr, "%s", mainGame->ebSKS->getText());
+				myswprintf(wstr, L"%ls", mainGame->ebSKS->getText());
 				wstring tempstr(wstr);
 				mainGame->gameConf.skin_index = _wtoi(tempstr.c_str());
 				mainGame->SaveConfig();
