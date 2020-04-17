@@ -4,6 +4,3 @@
 [submodule "script"]
 	path = script
 	url = https://github.com/Fluorohydride/ygopro-scripts.git
-[submodule "field"]
-	path = field
-	url = https://github.com/moecube/ygopro-images-field.git
