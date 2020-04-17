@@ -1828,9 +1828,9 @@ void Game::OnResize() {
 	wMainMenu->setRelativePosition(ResizeWin(370, 200, 650, 485));
 	wOther->setRelativePosition(ResizeWin(370, 200, 650, 415));
 	wSystem->setRelativePosition(ResizeWin(215, 160, 815, 365));
-	wHDS->setRelativePosition(ResizeWin(362, 245, 662, 395));
-	wCRS->setRelativePosition(ResizeWin(279.5, 197.5, 744.5, 442.5));
-	wBGS->setRelativePosition(ResizeWin(157, 120, 867, 480));
+	wHDS->setRelativePosition(ResizeWin(342, 235, 682, 405));
+	wCRS->setRelativePosition(ResizeWin(269.5, 187.5, 774.5, 452.5));
+	wBGS->setRelativePosition(ResizeWin(132, 100, 882, 500));
 	wDeckEdit->setRelativePosition(Resize(309, 8, 605, 130));
 	cbDBLFList->setRelativePosition(Resize(80, 5, 220, 30));
 	cbDBDecks->setRelativePosition(Resize(80, 35, 220, 60));
