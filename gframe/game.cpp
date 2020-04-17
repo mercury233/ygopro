@@ -196,7 +196,7 @@ bool Game::Initialize() {
 	btnCoverOK2 = env->addButton(rect<s32>(170, 47.5, 300, 92.5), wCRS, BUTTON_CRS_OK2, dataManager.GetSysString(1444));
 	btnCoverOK3 = env->addButton(rect<s32>(30, 117.5, 160, 162.5), wCRS, BUTTON_CRS_OK3, dataManager.GetSysString(1445));
 	btnCoverOK4 = env->addButton(rect<s32>(170, 117.5, 300, 162.5), wCRS, BUTTON_CRS_OK4, dataManager.GetSysString(1446));
-	btnCRSExit = env->addButton(rect<s32>(30, 182.5, 160, 227.5), wCRS, BUTTON_CRS_EXIT, dataManager.GetSysString(1210));
+	btnCRSExit = env->addButton(rect<s32>(30, 182.5, 160, 222.5), wCRS, BUTTON_CRS_EXIT, dataManager.GetSysString(1210));
 	RefreshCRS();
 	//Background Select
 	wBGS = env->addWindow(rect<s32>(132, 100, 882, 500), false, dataManager.GetSysString(1448));
@@ -212,7 +212,7 @@ bool Game::Initialize() {
 	btnBGOK1 = env->addButton(rect<s32>(25, 110, 170, 160), wBGS, BUTTON_BGS_OK1, dataManager.GetSysString(1449));
 	btnBGOK2 = env->addButton(rect<s32>(25, 180, 170, 230), wBGS, BUTTON_BGS_OK2, dataManager.GetSysString(1450));
 	btnBGOK3 = env->addButton(rect<s32>(25, 250, 170, 300), wBGS, BUTTON_BGS_OK3, dataManager.GetSysString(1451));
-	btnBGSExit = env->addButton(rect<s32>(25, 320, 170, 370), wBGS, BUTTON_BGS_EXIT, dataManager.GetSysString(1210));
+	btnBGSExit = env->addButton(rect<s32>(25, 320, 170, 365), wBGS, BUTTON_BGS_EXIT, dataManager.GetSysString(1210));
 	RefreshBGS();
 	//lan mode
 	wLanWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1200));
