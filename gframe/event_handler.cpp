@@ -11,6 +11,8 @@
 #include "single_mode.h"
 #include "materials.h"
 #include "../ocgcore/common.h"
+#include <stdlib.h>
+using std::wstring;
 
 namespace ygo {
 
