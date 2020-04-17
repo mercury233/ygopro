@@ -56,7 +56,7 @@ build:
     project: build/ygo.sln
     parallel: true
 
-#after_build:
+after_build:
   - mv bin\release\ygopro.exe .
   #- mv irrklang\bin\win32-visualStudio\irrKlang.dll .
   #- mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
