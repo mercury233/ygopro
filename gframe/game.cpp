@@ -203,16 +203,16 @@ bool Game::Initialize() {
 	wBGS->getCloseButton()->setVisible(false);
 	wBGS->setVisible(false);
 	wBGS->setDraggable(false);
-	cbBGS = env->addComboBox(rect<s32>(25, 50, 170, 100), wBGS, COMBOBOX_BGS);
+	cbBGS = env->addComboBox(rect<s32>(25, 40, 170, 90), wBGS, COMBOBOX_BGS);
 	cbBGS->setMaxSelectionRows(10);
 	imgBG = env->addImage(rect<s32>(180, 25, 732, 385), wBGS);
 	imgBG->setImage(imageManager.tBackGround);	
 	imgBG->setScaleImage(true);
 	imgBG->setUseAlphaChannel(true);
-	btnBGOK1 = env->addButton(rect<s32>(25, 120, 170, 170), wBGS, BUTTON_BGS_OK1, dataManager.GetSysString(1449));
-	btnBGOK2 = env->addButton(rect<s32>(25, 190, 170, 240), wBGS, BUTTON_BGS_OK2, dataManager.GetSysString(1450));
-	btnBGOK3 = env->addButton(rect<s32>(25, 260, 170, 310), wBGS, BUTTON_BGS_OK3, dataManager.GetSysString(1451));
-	btnBGSExit = env->addButton(rect<s32>(25, 330, 170, 380), wBGS, BUTTON_BGS_EXIT, dataManager.GetSysString(1210));
+	btnBGOK1 = env->addButton(rect<s32>(25, 110, 170, 160), wBGS, BUTTON_BGS_OK1, dataManager.GetSysString(1449));
+	btnBGOK2 = env->addButton(rect<s32>(25, 180, 170, 230), wBGS, BUTTON_BGS_OK2, dataManager.GetSysString(1450));
+	btnBGOK3 = env->addButton(rect<s32>(25, 250, 170, 300), wBGS, BUTTON_BGS_OK3, dataManager.GetSysString(1451));
+	btnBGSExit = env->addButton(rect<s32>(25, 320, 170, 370), wBGS, BUTTON_BGS_EXIT, dataManager.GetSysString(1210));
 	RefreshBGS();
 	//lan mode
 	wLanWindow = env->addWindow(rect<s32>(220, 100, 800, 520), false, dataManager.GetSysString(1200));
