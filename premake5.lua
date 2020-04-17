@@ -41,7 +41,7 @@ solution "ygo"
 
     configuration { "Release", "vs*" }
         flags { "StaticRuntime", "LinkTimeOptimization" }
-        disablewarnings { "4244", "4267", "4838", "4577", "4819", "4018", "4996", "4477", "4091", "4305", "4828", "4800" }
+        disablewarnings { "4244", "4267", "4838", "4577", "4819", "4018", "4996", "4477", "4091", "4305", "4828", "4800", "9025" }
 
     configuration { "Release", "not vs*" }
         symbols "On"
