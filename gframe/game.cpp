@@ -485,7 +485,8 @@ bool Game::Initialize() {
 	posY += 30;
 	chkMusicMode = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabSystem, -1, dataManager.GetSysString(1281));
 	chkMusicMode->setChecked(gameConf.music_mode != 0);
-	btnCardSearch = env->addButton(rect<s32>(150, 30, 250, 80), tabSystem, BUTTON_CARD_SEARCH, dataManager.GetSysString(1283));
+	//card search
+	btnCardSearch = env->addButton(rect<s32>(200, 0, 300, 50), tabSystem, BUTTON_CARD_SEARCH, dataManager.GetSysString(1283));
 	wSearchWindow = env->addWindow(rect<s32>(510, 200, 820, 320), false, dataManager.GetSysString(1284));
 	wSearchWindow->getCloseButton()->setVisible(false);
 	wSearchWindow->setVisible(false);
@@ -1756,6 +1757,7 @@ void Game::CloseDuelWindow() {
 	wOptions->setVisible(false);
 	wPhase->setVisible(false);
 	wPosSelect->setVisible(false);
+	wSearchWindow->setVisible(false);
 	wQuery->setVisible(false);
 	wSurrender->setVisible(false);
 	wReplayControl->setVisible(false);
@@ -1964,7 +1966,13 @@ void Game::OnResize() {
 	if(showingcode)
 		ShowCardInfo(showingcode, true);
 	btnClearLog->setRelativePosition(Resize(160, 300, 260, 325));
-	btnCardSearch->setRelativePosition(Resize(150, 30, 250, 80));
+	
+	recti btnSearchpos = tabSystem->getAbsolutePosition();
+	btnCardSearch->setRelativePosition(recti(
+		btnSearchpos.LowerRightCorner.X - 100,
+		btnSearchpos.LowerRightCorner.Y - 364,
+		btnSearchpos.LowerRightCorner.X,
+		btnSearchpos.LowerRightCorner.Y - 314));
 
 	wPhase->setRelativePosition(Resize(480, 310, 855, 330));
 	btnPhaseStatus->setRelativePosition(Resize(0, 0, 50, 20));
