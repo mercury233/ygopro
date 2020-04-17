@@ -1828,7 +1828,7 @@ void Game::OnResize() {
 	wMainMenu->setRelativePosition(ResizeWin(370, 200, 650, 485));
 	wOther->setRelativePosition(ResizeWin(370, 200, 650, 415));
 	wSystem->setRelativePosition(ResizeWin(215, 160, 815, 365));
-	wHDS->setRelativePosition(ResizeWin(342, 235, 682, 405));
+	wHDS->setRelativePosition(ResizeWin(342, 235, 682, 395));
 	wCRS->setRelativePosition(ResizeWin(269.5, 187.5, 774.5, 452.5));
 	wBGS->setRelativePosition(ResizeWin(132, 100, 882, 500));
 	wDeckEdit->setRelativePosition(Resize(309, 8, 605, 130));
