@@ -110,7 +110,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->chkMultiKeywords->setEnabled(true);
 				mainGame->chkRegex->setEnabled(true);
 				mainGame->cbFont->setEnabled(true);
-				mainGame->btnSkinS->setEnabled(true);
 				mainGame->btnHeadS->setEnabled(true);
 				mainGame->btnCoverS->setEnabled(true);
 				mainGame->btnBgS->setEnabled(true);
@@ -175,22 +174,6 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			case BUTTON_BGS_EXIT: {
 				mainGame->HideElement(mainGame->wBGS);
 				mainGame->ShowElement(mainGame->wSystem);
-				if(exit_on_return)
-					mainGame->device->closeDevice();
-				break;
-			}
-			case BUTTON_SKS: {
-				mainGame->gMutex.lock();
-				mainGame->wSKS->setText(dataManager.GetSysString(1289));
-				wchar_t buf[256];
-				_itow_s(mainGame->gameConf.skin_index, buf, 256, 256);
-				mainGame->ebSKS->setText(buf);
-				mainGame->PopupElement(mainGame->wSKS);
-				mainGame->gMutex.unlock();
-				break;
-			}
-			case BUTTON_SKS_CANCEL: {
-				mainGame->HideElement(mainGame->wSKS);
 				if(exit_on_return)
 					mainGame->device->closeDevice();
 				break;

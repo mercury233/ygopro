@@ -347,7 +347,6 @@ public:
 	irr::gui::IGUIButton* btnHeadS;
 	irr::gui::IGUIButton* btnCoverS;
 	irr::gui::IGUIButton* btnBgS;
-	irr::gui::IGUIButton* btnSkinS;
 	irr::gui::IGUIButton* btnSystemExit;
 	//head select
 	irr::gui::IGUIWindow* wHDS;
@@ -372,11 +371,6 @@ public:
 	irr::gui::IGUIButton* btnBGOK2;
 	irr::gui::IGUIButton* btnBGOK3;
 	irr::gui::IGUIButton* btnBGSExit;
-	//skin select
-	irr::gui::IGUIWindow* wSKS;
-	irr::gui::IGUIEditBox* ebSKS;
-	irr::gui::IGUIButton* btnSKSYes;
-	irr::gui::IGUIButton* btnSKSNo;
 	//lan
 	irr::gui::IGUIWindow* wLanWindow;
 	irr::gui::IGUIEditBox* ebNickName;
@@ -720,7 +714,6 @@ extern Game* mainGame;
 #define BUTTON_HDS					223
 #define BUTTON_CRS					224
 #define BUTTON_BGS					225
-#define BUTTON_SKS					226
 #define BUTTON_CARD_0				230
 #define BUTTON_CARD_1				231
 #define BUTTON_CARD_2				232
@@ -888,10 +881,6 @@ extern Game* mainGame;
 #define BUTTON_BGS_OK3		416
 #define BUTTON_BGS_EXIT		417
 #define COMBOBOX_BGS		418
-
-//skin select
-#define BUTTON_SKS_OK		419
-#define BUTTON_SKS_CANCEL	420
 
 #define TEXTURE_HEAD_S				0
 

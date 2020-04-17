@@ -11,8 +11,6 @@
 #include "single_mode.h"
 #include "materials.h"
 #include "../ocgcore/common.h"
-#include <stdlib.h>
-using std::wstring;
 
 namespace ygo {
 
@@ -1897,16 +1895,6 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				wchar_t self7[2048];
 				myswprintf(self7, L"./textures/bg/%ls", mainGame->cbBGS->getItem(mainGame->cbBGS->getSelected()));
 				CopyFile(self7, L"./textures/bg_deck.jpg", FALSE);
-				mainGame->stASMessage->setText(dataManager.GetSysString(1452));
-				mainGame->PopupElement(mainGame->wASMessage, 20);
-				break;
-			}
-			case BUTTON_SKS_OK: {
-				wchar_t wstr[256];
-				myswprintf(wstr, L"%ls", mainGame->ebSKS->getText());
-				wstring tempstr(wstr);
-				mainGame->gameConf.skin_index = _wtoi(tempstr.c_str());
-				mainGame->SaveConfig();
 				mainGame->stASMessage->setText(dataManager.GetSysString(1452));
 				mainGame->PopupElement(mainGame->wASMessage, 20);
 				break;
