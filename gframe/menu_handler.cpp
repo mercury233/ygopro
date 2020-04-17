@@ -110,6 +110,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->chkMultiKeywords->setEnabled(true);
 				mainGame->chkRegex->setEnabled(true);
 				mainGame->cbFont->setEnabled(true);
+				mainGame->btnSkinS->setEnabled(true);
 				mainGame->btnHeadS->setEnabled(true);
 				mainGame->btnCoverS->setEnabled(true);
 				mainGame->btnBgS->setEnabled(true);
@@ -181,7 +182,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 			case BUTTON_SKS: {
 				mainGame->gMutex.lock();
 				mainGame->wSKS->setText(dataManager.GetSysString(1376));
-				mainGame->ebSKS->setText(mainGame->gameConf.skin_index->getText());
+				mainGame->ebSKS->setText(mainGame->gameConf.skin_index);
 				mainGame->PopupElement(mainGame->wSKS);
 				mainGame->gMutex.unlock();
 				break;

@@ -1900,7 +1900,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SKS_OK: {
-				myswprintf(mainGame->gameConf.skin_index, L"%ls", mainGame->ebSKS->getText());
+				myswprintf(mainGame->gameConf.skin_index, L"%ls", mainGame->ebSKS->getItem(mainGame->ebSKS->getText()));
 				mainGame->SaveConfig();
 				mainGame->stASMessage->setText(dataManager.GetSysString(1452));
 				mainGame->PopupElement(mainGame->wASMessage, 20);

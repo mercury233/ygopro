@@ -347,7 +347,7 @@ public:
 	irr::gui::IGUIButton* btnHeadS;
 	irr::gui::IGUIButton* btnCoverS;
 	irr::gui::IGUIButton* btnBgS;
-	irr::gui::IGUIButton* btnSKS;
+	irr::gui::IGUIButton* btnSkinS;
 	irr::gui::IGUIButton* btnSystemExit;
 	//head select
 	irr::gui::IGUIWindow* wHDS;
