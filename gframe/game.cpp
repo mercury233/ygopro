@@ -168,7 +168,7 @@ bool Game::Initialize() {
 	btnSystemExit = env->addButton(rect<s32>(200, 160, 400, 190), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	//Head Select
-	wHDS = env->addWindow(rect<s32>(342, 235, 682, 405), false, dataManager.GetSysString(1440));
+	wHDS = env->addWindow(rect<s32>(342, 235, 682, 395), false, dataManager.GetSysString(1440));
 	wHDS->getCloseButton()->setVisible(false);
 	wHDS->setVisible(false);
 	wHDS->setDraggable(false);
