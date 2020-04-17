@@ -50,7 +50,7 @@ bool Game::Initialize() {
 			if(gameConf.skin_index < 0)
 				index = rand() % count;
 			else if((size_t)gameConf.skin_index <= skins.size())
-				index = gameConf.skin_index - 1;
+				index = skins.size() - gameConf.skin_index;
 			if(index >= 0)
 				skinSystem->applySkin(skins[index].c_str());
 		}
