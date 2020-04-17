@@ -168,18 +168,18 @@ bool Game::Initialize() {
 	btnSystemExit = env->addButton(rect<s32>(200, 160, 400, 190), wSystem, BUTTON_SYS_EXIT, dataManager.GetSysString(1210));
 	RefreshFont();
 	//Head Select
-	wHDS = env->addWindow(rect<s32>(352, 235, 682, 405), false, dataManager.GetSysString(1440));
+	wHDS = env->addWindow(rect<s32>(342, 235, 682, 405), false, dataManager.GetSysString(1440));
 	wHDS->getCloseButton()->setVisible(false);
 	wHDS->setVisible(false);
 	wHDS->setDraggable(false);
-	cbHDS = env->addComboBox(rect<s32>(30, 30, 200, 75), wHDS, COMBOBOX_HDS);
+	cbHDS = env->addComboBox(rect<s32>(20, 40, 200, 85), wHDS, COMBOBOX_HDS);
 	cbHDS->setMaxSelectionRows(10);
 	imgHead = env->addImage(rect<s32>(210, 25, 330, 145), wHDS);
 	imgHead->setImage(imageManager.tHead[0]);	
 	imgHead->setScaleImage(true);
 	imgHead->setUseAlphaChannel(true);
-	btnHDSOK = env->addButton(rect<s32>(20, 110, 105, 140), wHDS, BUTTON_HDS_OK, dataManager.GetSysString(1211));
-	btnHDSExit = env->addButton(rect<s32>(115, 110, 200, 140), wHDS, BUTTON_HDS_EXIT, dataManager.GetSysString(1210));
+	btnHDSOK = env->addButton(rect<s32>(20, 105, 105, 135), wHDS, BUTTON_HDS_OK, dataManager.GetSysString(1211));
+	btnHDSExit = env->addButton(rect<s32>(115, 105, 200, 135), wHDS, BUTTON_HDS_EXIT, dataManager.GetSysString(1210));
 	RefreshHDS();
 	//Cover Select
 	wCRS = env->addWindow(rect<s32>(269.5, 187.5, 774.5, 452.5), false, dataManager.GetSysString(1442));
