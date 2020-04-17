@@ -489,6 +489,7 @@ bool Game::Initialize() {
 	wSearchWindow = env->addWindow(rect<s32>(510, 200, 820, 320), false, dataManager.GetSysString(1284));
 	wSearchWindow->getCloseButton()->setVisible(false);
 	wSearchWindow->setVisible(false);
+	wSearchWindow->setDraggable(false);
 	env->addStaticText(dataManager.GetSysString(1285), rect<s32>(20, 27, 130, 47), false, false, wSearchWindow);
 	ebSearchName = env->addEditBox(gameConf.searchname, rect<s32>(20, 50, 290, 70), true, wSearchWindow);
 	ebSearchName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
@@ -605,6 +606,7 @@ bool Game::Initialize() {
 	wANNumber = env->addWindow(rect<s32>(550, 200, 780, 295), false, L"");
 	wANNumber->getCloseButton()->setVisible(false);
 	wANNumber->setVisible(false);
+	wANNumber->setDraggable(false);
 	cbANNumber =  env->addComboBox(rect<s32>(40, 30, 190, 50), wANNumber, -1);
 	cbANNumber->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	btnANNumberOK = env->addButton(rect<s32>(80, 60, 150, 85), wANNumber, BUTTON_ANNUMBER_OK, dataManager.GetSysString(1211));
@@ -612,6 +614,7 @@ bool Game::Initialize() {
 	wANCard = env->addWindow(rect<s32>(510, 120, 820, 420), false, L"");
 	wANCard->getCloseButton()->setVisible(false);
 	wANCard->setVisible(false);
+	wANCard->setDraggable(false);
 	ebANCard = env->addEditBox(L"", rect<s32>(20, 25, 290, 45), true, wANCard, EDITBOX_ANCARD);
 	ebANCard->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	lstANCard = env->addListBox(rect<s32>(20, 50, 290, 265), wANCard, LISTBOX_ANCARD, true);
@@ -1907,7 +1910,12 @@ void Game::OnResize() {
 	wANAttribute->setRelativePosition(ResizeWin(500, 200, 830, 285));
 	wANRace->setRelativePosition(ResizeWin(480, 200, 850, 410));
 	wReplaySave->setRelativePosition(ResizeWin(510, 200, 820, 320));
-	wRenameDeck->setRelativePosition(ResizeWin(510, 200, 820, 320));
+	recti btnREpos = btnRenameDeck->getAbsolutePosition();
+	wRenameDeck->setRelativePosition(recti(
+		btnREpos.LowerRightCorner.X - btnRenameDeck->getRelativePosition().getWidth(),
+		btnREpos.LowerRightCorner.Y,
+		btnREpos.LowerRightCorner.X - btnRenameDeck->getRelativePosition().getWidth() + 310,
+		btnREpos.LowerRightCorner.Y + 120));
 	stHintMsg->setRelativePosition(ResizeWin(500, 82, 820, 112));
 
 	//sound / music volume bar
@@ -1969,9 +1977,9 @@ void Game::OnResize() {
 	recti btnCSpos = btnCardSearch->getAbsolutePosition();
 	wSearchWindow->setRelativePosition(recti(
 		btnCSpos.LowerRightCorner.X - 310,
-		btnCSpos.LowerRightCorner.Y,
+		btnCSpos.LowerRightCorner.Y - 1,
 		btnCSpos.LowerRightCorner.X,
-		btnCSpos.LowerRightCorner.Y + 120));
+		btnCSpos.LowerRightCorner.Y + 119));
 
 	wPhase->setRelativePosition(Resize(480, 310, 855, 330));
 	btnPhaseStatus->setRelativePosition(Resize(0, 0, 50, 20));
