@@ -488,6 +488,19 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->gMutex.unlock();
 		break;
 	}
+	case STOC_DECK_COUNT: {
+		mainGame->gMutex.lock();
+		int deckc = BufferIO::ReadInt16(pdata);
+		int extrac = BufferIO::ReadInt16(pdata);
+		int sidec = BufferIO::ReadInt16(pdata);
+		mainGame->dField.Initial(0, deckc, extrac);
+		deckc = BufferIO::ReadInt16(pdata);
+		extrac = BufferIO::ReadInt16(pdata);
+		sidec = BufferIO::ReadInt16(pdata);
+		mainGame->dField.Initial(1, deckc, extrac);
+		mainGame->gMutex.unlock();
+		break;
+	}
 	case STOC_JOIN_GAME: {
 		temp_ver = 0;
 		STOC_JoinGame* pkt = (STOC_JoinGame*)pdata;
@@ -1268,6 +1281,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		mainGame->WaitFrameSignal(40);
 		mainGame->showcard = 0;
 		mainGame->gMutex.lock();
+		mainGame->dField.Clear();
 		int playertype = BufferIO::ReadInt8(pbuf);
 		mainGame->dInfo.isFirst =  (playertype & 0xf) ? false : true;
 		if(playertype & 0xf0)
@@ -1583,6 +1597,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		int c, l, s, ss;
 		unsigned int code;
 		bool panelmode = false;
+		int handcount = 0;
 		bool select_ready = mainGame->dField.select_min == 0;
 		mainGame->dField.select_ready = select_ready;
 		ClientCard* pcard;
@@ -1608,6 +1623,11 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			pcard->is_selected = false;
 			if (l & 0xf1)
 				panelmode = true;
+			if(l & LOCATION_HAND) {
+				handcount++;
+				if(handcount >= 10)
+					panelmode = true;
+			}
 		}
 		std::sort(mainGame->dField.selectable_cards.begin(), mainGame->dField.selectable_cards.end(), ClientCard::client_card_sort);
 		if(select_hint)

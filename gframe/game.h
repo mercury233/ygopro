@@ -182,6 +182,12 @@ public:
 		return focus && focus->hasType(type);
 	}
 
+	void TrimText(irr::gui::IGUIElement* editbox) const {
+		irr::core::stringw text(editbox->getText());
+		text.trim();
+		editbox->setText(text.c_str());
+	}
+
 	void OnResize();
 	recti Resize(s32 x, s32 y, s32 x2, s32 y2);
 	recti Resize(s32 x, s32 y, s32 x2, s32 y2, s32 dx, s32 dy, s32 dx2, s32 dy2);
@@ -787,6 +793,7 @@ extern Game* mainGame;
 #define BUTTON_REPLAY_SWAP			325
 #define BUTTON_REPLAY_SAVE			330
 #define BUTTON_REPLAY_CANCEL		331
+#define EDITBOX_INPUTS				332
 #define BUTTON_BOT_START			340
 #define LISTBOX_BOT_LIST			341
 #define COMBOBOX_BOT_RULE			342
