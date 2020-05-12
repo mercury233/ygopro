@@ -700,7 +700,6 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->btnM2->setVisible(false);
 		mainGame->btnEP->setVisible(false);
 		mainGame->btnShuffle->setVisible(false);
-		mainGame->wSurrender->setVisible(true);
 		mainGame->btnChainIgnore->setVisible(true);
 		mainGame->btnChainAlways->setVisible(true);
 		mainGame->btnChainWhenAvail->setVisible(true);
