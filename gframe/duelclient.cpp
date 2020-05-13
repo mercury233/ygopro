@@ -712,6 +712,9 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 				mainGame->btnLeaveGame->setText(dataManager.GetSysString(1350));
 				mainGame->btnLeaveGame->setVisible(true);
 				mainGame->btnSpectatorSwap->setVisible(true);
+				mainGame->btnChainIgnore->setVisible(false);
+				mainGame->btnChainAlways->setVisible(false);
+				mainGame->btnChainWhenAvail->setVisible(false);
 			}
 			if(selftype != 1) {
 				BufferIO::CopyWStr(mainGame->stHostPrepDuelist[0]->getText(), mainGame->dInfo.hostname, 20);
@@ -726,6 +729,9 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 				mainGame->btnLeaveGame->setText(dataManager.GetSysString(1350));
 				mainGame->btnLeaveGame->setVisible(true);
 				mainGame->btnSpectatorSwap->setVisible(true);
+				mainGame->btnChainIgnore->setVisible(false);
+				mainGame->btnChainAlways->setVisible(false);
+				mainGame->btnChainWhenAvail->setVisible(false);
 			}
 			if(selftype > 1 && selftype < 4) {
 				BufferIO::CopyWStr(mainGame->stHostPrepDuelist[2]->getText(), mainGame->dInfo.hostname, 20);
