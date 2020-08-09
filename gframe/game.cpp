@@ -1698,7 +1698,6 @@ void Game::initUtils() {
 	FileSystem::MakeDir("replay");
 	//files in ygopro-starter-pack
 	FileSystem::MakeDir("deck");
-	FileSystem::MakeDir("single");
 	//original files
 	FileSystem::MakeDir("skin");
 	FileSystem::MakeDir("textures");
