@@ -29,6 +29,7 @@ ClientField::ClientField() {
 	conti_act = false;
 	deck_reversed = false;
 	conti_selecting = false;
+	cant_check_grave = false;
 	for(int p = 0; p < 2; ++p) {
 		mzone[p].resize(7, 0);
 		szone[p].resize(8, 0);
@@ -96,6 +97,7 @@ void ClientField::Clear() {
 	pzone_act[1] = false;
 	conti_act = false;
 	deck_reversed = false;
+	cant_check_grave = false;
 	RefreshCardCountDisplay();
 }
 void ClientField::Initial(int player, int deckc, int extrac) {
@@ -393,6 +395,18 @@ void ClientField::ClearChainSelect() {
 }
 // needs to be synchronized with EGET_SCROLL_BAR_CHANGED
 void ClientField::ShowSelectCard(bool buttonok, bool chain) {
+	if(cant_check_grave) {
+		bool has_card_in_grave = false;
+		for(size_t i = 0; i < selectable_cards.size(); ++i) {
+			if(selectable_cards[i]->location == LOCATION_GRAVE) {
+				has_card_in_grave = true;
+				break;
+			}
+		}
+		if(has_card_in_grave) {
+			std::random_shuffle(selectable_cards.begin(), selectable_cards.end());
+		}
+	}
 	int startpos;
 	size_t ct;
 	if(selectable_cards.size() <= 5) {
@@ -423,6 +437,8 @@ void ClientField::ShowSelectCard(bool buttonok, bool chain) {
 			wchar_t formatBuffer[2048];
 			if(conti_selecting)
 				myswprintf(formatBuffer, L"%ls", DataManager::unknown_string);
+			else if(cant_check_grave && selectable_cards[i]->location == LOCATION_GRAVE)
+				myswprintf(formatBuffer, L"%ls", dataManager.FormatLocation(selectable_cards[i]->location, 0));
 			else if(selectable_cards[i]->location == LOCATION_OVERLAY)
 				myswprintf(formatBuffer, L"%ls[%d](%d)", 
 					dataManager.FormatLocation(selectable_cards[i]->overlayTarget->location, selectable_cards[i]->overlayTarget->sequence),
@@ -1241,6 +1257,52 @@ bool ClientField::check_sum(std::set<ClientCard*>::const_iterator index, std::se
 	return (acc > l1 && check_sum(index, end, acc - l1, count + 1))
 	       || (l2 > 0 && acc > l2 && check_sum(index, end, acc - l2, count + 1))
 	       || check_sum(index, end, acc, count);
+}
+bool ClientField::check_sel_sum_trib_s(const std::set<ClientCard*>& left, int index, int acc) {
+	if(acc > select_max)
+		return false;
+	if(index == (int)selected_cards.size()) {
+		check_sel_sum_trib_t(left, acc);
+		return acc >= select_min && acc <= select_max;
+	}
+	int l = selected_cards[index]->opParam;
+	int l1 = l & 0xffff;
+	int l2 = l >> 16;
+	bool res1 = false, res2 = false;
+	res1 = check_sel_sum_trib_s(left, index + 1, acc + l1);
+	if(l2 > 0)
+		res2 = check_sel_sum_trib_s(left, index + 1, acc + l2);
+	return res1 || res2;
+}
+void ClientField::check_sel_sum_trib_t(const std::set<ClientCard*>& left, int acc) {
+	for(auto sit = left.begin(); sit != left.end(); ++sit) {
+		if(selectsum_cards.find(*sit) != selectsum_cards.end())
+			continue;
+		std::set<ClientCard*> testlist(left);
+		testlist.erase(*sit);
+		int l = (*sit)->opParam;
+		int l1 = l & 0xffff;
+		int l2 = l >> 16;
+		if(check_sum_trib(testlist.begin(), testlist.end(), acc + l1)
+			|| (l2 > 0 && check_sum_trib(testlist.begin(), testlist.end(), acc + l2))) {
+			selectsum_cards.insert(*sit);
+		}
+	}
+}
+bool ClientField::check_sum_trib(std::set<ClientCard*>::const_iterator index, std::set<ClientCard*>::const_iterator end, int acc) {
+	if(acc >= select_min && acc <= select_max)
+		return true;
+	if(acc > select_max || index == end)
+		return false;
+	int l = (*index)->opParam;
+	int l1 = l & 0xffff;
+	int l2 = l >> 16;
+	if((acc + l1 >= select_min && acc + l1 <= select_max) || (acc + l2 >= select_min && acc + l2 <= select_max))
+		return true;
+	++index;
+	return check_sum_trib(index, end, acc + l1)
+		|| check_sum_trib(index, end, acc + l2)
+		|| check_sum_trib(index, end, acc);
 }
 template <class T>
 static bool is_declarable(T const& cd, const std::vector<int>& opcode) {
