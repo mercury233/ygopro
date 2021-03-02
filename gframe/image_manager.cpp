@@ -67,11 +67,11 @@ bool ImageManager::Initial()  {
 	tClock = driver->getTexture("textures/clock.png");
 	int i = 0;
 	char buff[100];
-	for (; i < 14; i++) {
+	for (; i < 21; i++) {
 		snprintf(buff, 100, "textures/pscale/rscale_%d.png", i);
 		tRScale[i] = driver->getTexture(buff);
 	}
-	for (i = 0; i < 14; i++) {
+	for (i = 0; i < 21; i++) {
 		snprintf(buff, 100, "textures/pscale/lscale_%d.png", i);
 		tLScale[i] = driver->getTexture(buff);
 	}
