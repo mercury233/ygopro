@@ -378,6 +378,18 @@ void ClientField::ClearSelect() {
 		(*cit)->is_selectable = false;
 		(*cit)->is_selected = false;
 	}
+	for(auto cit = selected_cards.begin(); cit != selected_cards.end(); ++cit) {
+		(*cit)->is_selectable = false;
+		(*cit)->is_selected = false;
+	}
+	for(auto cit = selectsum_all.begin(); cit != selectsum_all.end(); ++cit) {
+		(*cit)->is_selectable = false;
+		(*cit)->is_selected = false;
+	}
+	for(auto cit = selectsum_cards.begin(); cit != selectsum_cards.end(); ++cit) {
+		(*cit)->is_selectable = false;
+		(*cit)->is_selected = false;
+	}
 }
 void ClientField::ClearChainSelect() {
 	for(auto cit = activatable_cards.begin(); cit != activatable_cards.end(); ++cit) {
@@ -1194,6 +1206,27 @@ bool ClientField::CheckSelectSum() {
 		}
 		return ret;
 	}
+}
+bool ClientField::CheckSelectTribute() {
+	std::set<ClientCard*> selable;
+	for(auto sit = selectsum_all.begin(); sit != selectsum_all.end(); ++sit) {
+		(*sit)->is_selectable = false;
+		(*sit)->is_selected = false;
+		selable.insert(*sit);
+	}
+	for(size_t i = 0; i < selected_cards.size(); ++i) {
+		selected_cards[i]->is_selectable = true;
+		selected_cards[i]->is_selected = true;
+		selable.erase(selected_cards[i]);
+	}
+	selectsum_cards.clear();
+	bool ret = check_sel_sum_trib_s(selable, 0, 0);
+	selectable_cards.clear();
+	for(auto sit = selectsum_cards.begin(); sit != selectsum_cards.end(); ++sit) {
+		(*sit)->is_selectable = true;
+		selectable_cards.push_back(*sit);
+	}
+	return ret;
 }
 bool ClientField::check_min(const std::set<ClientCard*>& left, std::set<ClientCard*>::const_iterator index, int min, int max) {
 	if (index == left.end())
