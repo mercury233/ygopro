@@ -87,7 +87,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_OCNK: {
-                system("start http://netsaru2012.ocnk.net/");
+                system("start https://yugipedia.com/wiki/Yugipedia");
 				return true;
 				break;
 			}
