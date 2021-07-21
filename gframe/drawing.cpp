@@ -480,7 +480,7 @@ void Game::DrawShadowText(CGUITTFont * font, const core::stringw & text, const c
 void Game::DrawMisc() {
 	static irr::core::vector3df act_rot(0, 0, 0);
 	int rule = (dInfo.duel_rule >= 4) ? 1 : 0;
-	irr::core::matrix4 im, ic, it;
+	irr::core::matrix4 im, ic, it, ig;
 	act_rot.Z += 0.02f;
 	im.setRotationRadians(act_rot);
 	matManager.mTexture.setTexture(0, imageManager.tAct);
