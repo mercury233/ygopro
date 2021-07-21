@@ -1,5 +1,6 @@
 version: '{build}'
 skip_tags: true
+image: Visual Studio 2019
 
 environment:
   access_token:
@@ -9,8 +10,8 @@ install:
   - git submodule update --init --recursive
 
   # environment and system dependency
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha15/premake-5.0.0-alpha15-windows.zip ; exit 0"
-  - 7z x premake-5.0.0-alpha15-windows.zip
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha16/premake-5.0.0-alpha16-windows.zip ; exit 0"
+  - 7z x premake-5.0.0-alpha16-windows.zip
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz ; exit 0"
   - tar xf libevent-2.0.22-stable.tar.gz
@@ -31,9 +32,9 @@ install:
   - tar xf lua-5.3.6.tar.gz
   - move lua-5.3.6\src lua
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2021/sqlite-amalgamation-3350400.zip ; exit 0"
-  - 7z x sqlite-amalgamation-3350400.zip
-  - move sqlite-amalgamation-3350400 sqlite3
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2021/sqlite-amalgamation-3360000.zip ; exit 0"
+  - 7z x sqlite-amalgamation-3360000.zip
+  - move sqlite-amalgamation-3360000 sqlite3
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
   - 7z x irrKlang-32bit-1.5.0.zip
@@ -77,10 +78,10 @@ artifacts:
   # name: ygopro-ver.233
 
 cache:
-  - premake-5.0.0-alpha15-windows.zip
+  - premake-5.0.0-alpha16-windows.zip
   - libevent-2.0.22-stable.tar.gz
   - freetype-2.10.4.tar.gz
   - irrlicht-1.8.4.zip
   - lua-5.3.6.tar.gz
-  - sqlite-amalgamation-3350400.zip
+  - sqlite-amalgamation-3360000.zip
   - irrKlang-32bit-1.5.0.zip
