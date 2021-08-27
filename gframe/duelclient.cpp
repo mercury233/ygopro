@@ -29,7 +29,7 @@ int DuelClient::last_select_hint = 0;
 char DuelClient::last_successful_msg[0x2000];
 unsigned int DuelClient::last_successful_msg_length = 0;
 wchar_t DuelClient::event_string[256];
-mtrandom DuelClient::rnd;
+mt19937 DuelClient::rnd;
 
 bool DuelClient::is_refreshing = false;
 int DuelClient::match_kill = 0;
@@ -67,7 +67,7 @@ bool DuelClient::StartClient(unsigned int ip, unsigned short port, bool create_g
 		return false;
 	}
 	connect_state = 0x1;
-	rnd.reset(time(0));
+	rnd.reset((unsigned int)time(nullptr));
 	if(!create_game) {
 		timeval timeout = {5, 0};
 		event* resp_event = event_new(client_base, 0, EV_TIMEOUT, ConnectTimeout, 0);
@@ -810,7 +810,12 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		char* prep = pdata;
 		Replay new_replay;
 		memcpy(&new_replay.pheader, prep, sizeof(ReplayHeader));
-		time_t starttime = new_replay.pheader.seed;
+		time_t starttime;
+		if (new_replay.pheader.flag & REPLAY_UNIFORM)
+			starttime = new_replay.pheader.start_time;
+		else
+			starttime = new_replay.pheader.seed;
+		
 		tm* localedtime = localtime(&starttime);
 		wchar_t timetext[40];
 		wcsftime(timetext, 40, L"%Y-%m-%d %H-%M-%S", localedtime);
@@ -1818,7 +1823,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			SetResponseI(-1);
 			mainGame->dField.ClearChainSelect();
 			if(mainGame->chkWaitChain->isChecked() && !mainGame->ignore_chain) {
-				mainGame->WaitFrameSignal(rnd.real() * 20 + 20);
+				mainGame->WaitFrameSignal(rnd.get_random_integer(20, 40));
 			}
 			DuelClient::SendResponse();
 			return true;
@@ -1859,9 +1864,14 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 	}
 	case MSG_SELECT_PLACE:
 	case MSG_SELECT_DISFIELD: {
-		/*int selecting_player = */BufferIO::ReadInt8(pbuf);
-		mainGame->dField.select_min = BufferIO::ReadInt8(pbuf);
+		int selecting_player = BufferIO::ReadInt8(pbuf);
+		int count = BufferIO::ReadInt8(pbuf);
+		mainGame->dField.select_min = count > 0 ? count : 1;
+		mainGame->dField.select_ready = false;
+		mainGame->dField.select_cancelable = count == 0;
 		mainGame->dField.selectable_field = ~BufferIO::ReadInt32(pbuf);
+		if(selecting_player == mainGame->LocalPlayer(1))
+			mainGame->dField.selectable_field = (mainGame->dField.selectable_field >> 16) | (mainGame->dField.selectable_field << 16);
 		mainGame->dField.selected_field = 0;
 		unsigned char respbuf[64];
 		int pzone = 0;
@@ -1913,7 +1923,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			if(!pzone) {
 				if(mainGame->chkRandomPos->isChecked()) {
 					do {
-						respbuf[2] = rnd.real() * 7;
+						respbuf[2] = rnd.get_random_integer(0, 6);
 					} while(!(filter & (1 << respbuf[2])));
 				} else {
 					if (filter & 0x40) respbuf[2] = 6;
@@ -1932,6 +1942,9 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			SetResponseB(respbuf, 3);
 			DuelClient::SendResponse();
 			return true;
+		}
+		if(mainGame->dField.select_cancelable) {
+			mainGame->dField.ShowCancelOrFinishButton(1);
 		}
 		return false;
 	}
