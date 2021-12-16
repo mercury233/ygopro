@@ -24,13 +24,11 @@ install:
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.5.zip ; exit 0"
   - 7z x irrlicht-1.8.5.zip
-  - md irrlicht
-  - move irrlicht-1.8.5\source\Irrlicht irrlicht\src
-  - move irrlicht-1.8.5\include irrlicht\include
+  - move irrlicht-1.8.5 irrlicht
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.4.3.tar.gz ; exit 0"
   - tar xf lua-5.4.3.tar.gz
-  - move lua-5.4.3\src lua
+  - move lua-5.4.3 lua
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2021/sqlite-amalgamation-3370000.zip ; exit 0"
   - 7z x sqlite-amalgamation-3370000.zip
@@ -45,7 +43,9 @@ install:
   - cp -rf premake/* .
   
   # patch irrlicht & ikpmp3
-  - patch -p0 < irrlicht\irrlicht.patch
+  - cd irrlicht
+  - patch -p1 < irrlicht.patch
+  - cd ..
   - patch -p0 < ikpmp3\ikpmp3.patch
 
   # premake
@@ -54,7 +54,7 @@ install:
 configuration: Release
 
 build: 
-    project: build/ygo.sln
+    project: build/YGOPro.sln
     parallel: true
 
 after_build:
