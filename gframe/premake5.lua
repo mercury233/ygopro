@@ -1,7 +1,5 @@
 include "lzma/."
 include "spmemvfs/."
-include "CGUISkinSystem/."
-include "CXMLRegistry/."
 
 project "ygopro"
     kind "WindowedApp"
