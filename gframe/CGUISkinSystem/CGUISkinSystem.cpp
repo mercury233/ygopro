@@ -1,5 +1,6 @@
 #include "CGUISkinSystem.h"
 
+using namespace irr;
 CGUISkinSystem::CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev) {
 	device = dev;
 	skinsPath = path;
