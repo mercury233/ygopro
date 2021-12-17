@@ -162,7 +162,7 @@ public:
 	void DrawDeckBd();
 	void LoadConfig();
 	void SaveConfig();
-	bool applySkin(const wchar_t *skinname);
+	const auto& applySkin(const wchar_t *skinname);
 	void ShowCardInfo(int code, bool resize = false);
 	void ClearCardInfo(int player = 0);
 	void AddLog(const wchar_t* msg, int param = 0);
