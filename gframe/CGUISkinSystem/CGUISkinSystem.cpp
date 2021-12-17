@@ -1,6 +1,6 @@
 #include "CGUISkinSystem.h"
 
-CGUISkinSystem::CGUISkinSystem(const auto& path,IrrlichtDevice *dev) {
+CGUISkinSystem::CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev) {
 	device = dev;
 	skinsPath = path;
 	fs = dev->getFileSystem();	
@@ -259,7 +259,7 @@ bool CGUISkinSystem::loadProperty(core::stringw key,gui::CImageGUISkin *skin) {
 	}
 	return false;
 }
-bool CGUISkinSystem::applySkin(const auto& *skinname) {
+bool CGUISkinSystem::applySkin(const wchar_t *skinname) {
 	io::path oldpath = fs->getWorkingDirectory();
 	core::stringc tmp = skinname;
 	fs->changeWorkingDirectoryTo(skinsPath);
