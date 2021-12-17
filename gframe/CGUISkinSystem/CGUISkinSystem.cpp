@@ -1,6 +1,5 @@
 #include "CGUISkinSystem.h"
 
-using namespace irr;
 CGUISkinSystem::CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev) {
 	device = dev;
 	skinsPath = path;
@@ -8,9 +7,6 @@ CGUISkinSystem::CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev) {
 	this->loadSkinList();
 	
 	
-}
-core::array<core::stringw> CGUISkinSystem::listSkins() {
-	return skinsList;
 }
 // This is our version of the skinloader
 

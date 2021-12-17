@@ -20,6 +20,7 @@
 #define SKINSYSTEM_SKINFILE "/skin.xml"
 
 
+using namespace irr;
 class CGUISkinSystem {
 private :
 	IrrlichtDevice *device;
@@ -37,9 +38,11 @@ public:
 	// Constructor
 	// path = Path to skins
 	// dev = Irrlicht device
-	CGUISkinSystem(core::string<wchar_t> path,irr::IrrlichtDevice *dev);
+	CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev);
 	~CGUISkinSystem();
-	core::array<core::stringw> listSkins();
+	const auto& listSkins() {
+		return skinsList;
+	};
 	bool loadSkinList();
 	bool applySkin(const wchar_t *skinname);
 	gui::CGUIProgressBar *addProgressBar(gui::IGUIElement *parent,core::rect<s32> rect,bool bindColorsToSkin=true);
