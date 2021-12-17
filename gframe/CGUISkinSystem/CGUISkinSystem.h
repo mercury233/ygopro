@@ -38,13 +38,11 @@ public:
 	// Constructor
 	// path = Path to skins
 	// dev = Irrlicht device
-	CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev);
+	const auto& CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev);
 	~CGUISkinSystem();
-	const auto& listSkins() {
-		return skinsList;
-	};
+	const auto& listSkins();
 	bool loadSkinList();
-	bool applySkin(const wchar_t *skinname);
+	const auto&& bool applySkin(const wchar_t *skinname);
 	gui::CGUIProgressBar *addProgressBar(gui::IGUIElement *parent,core::rect<s32> rect,bool bindColorsToSkin=true);
 	// Gets property from current skin
 	core::stringw getProperty(core::stringw key);	

@@ -1,12 +1,14 @@
 #include "CGUISkinSystem.h"
 
-CGUISkinSystem::CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev) {
+const auto& CGUISkinSystem::CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev) {
 	device = dev;
 	skinsPath = path;
 	fs = dev->getFileSystem();	
 	this->loadSkinList();	
 }
-}
+const auto& CGUISkinSystem::listSkins() {
+		return skinsList;
+};
 // This is our version of the skinloader
 
 // Generate a list of all directory names in skinsPath that have a skin.xml in them
@@ -259,7 +261,7 @@ bool CGUISkinSystem::loadProperty(core::stringw key,gui::CImageGUISkin *skin) {
 	}
 	return false;
 }
-bool CGUISkinSystem::applySkin(const wchar_t *skinname) {
+const auto&& bool CGUISkinSystem::applySkin(const wchar_t *skinname) {
 	io::path oldpath = fs->getWorkingDirectory();
 	core::stringc tmp = skinname;
 	fs->changeWorkingDirectoryTo(skinsPath);
