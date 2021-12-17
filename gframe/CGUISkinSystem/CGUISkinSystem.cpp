@@ -274,6 +274,6 @@ bool CGUISkinSystem::applySkin(const wchar_t *skinname) {
 	fs->changeWorkingDirectoryTo(oldpath);
 	return true;
 }
-virtual CGUISkinSystem::~CGUISkinSystem() {
+CGUISkinSystem::~CGUISkinSystem() {
 	skinsList.clear();
 }
