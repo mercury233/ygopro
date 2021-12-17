@@ -1,3 +1,7 @@
+#include <fstream>
+#include <fmt/format.h>
+#include <fmt/printf.h>
+#include <irrlicht.h>
 #include "config.h"
 #include "game.h"
 #include "image_manager.h"
@@ -9,6 +13,7 @@
 #include "duelclient.h"
 #include "netserver.h"
 #include "single_mode.h"
+#include "CGUISkinSystem/CGUISkinSystem.h"
 #include <sstream>
 #include <regex>
 

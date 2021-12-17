@@ -1,19 +1,11 @@
 #include "CGUISkinSystem.h"
-#include <IrrlichtDevice.h>
-#include <IFileSystem.h>
-#include <IrrlichtDevice.h>
-#include <IGUIEnvironment.h>
-#include "../CXMLRegistry/CXMLRegistry.h"
-#include <map>
-#include <string>
-#include <set>
 
-CGUISkinSystem::CGUISkinSystem(io::path path, IrrlichtDevice *dev) {
-	loaded_skin = nullptr;
+CGUISkinSystem::CGUISkinSystem(const auto& path,IrrlichtDevice *dev) {
 	device = dev;
 	skinsPath = path;
-	fs = dev->getFileSystem();
-	loadSkinList();
+	fs = dev->getFileSystem();	
+	this->loadSkinList();	
+}
 }
 // This is our version of the skinloader
 
@@ -267,24 +259,20 @@ bool CGUISkinSystem::loadProperty(core::stringw key,gui::CImageGUISkin *skin) {
 	}
 	return false;
 }
-bool CGUISkinSystem::applySkin(const fschar_t *skinname) {
-	/*io::path oldpath = fs->getWorkingDirectory();
-	fs->changeWorkingDirectoryTo(skinsPath);*/
-	workingDir = skinsPath;
+bool CGUISkinSystem::applySkin(const auto& *skinname) {
+	io::path oldpath = fs->getWorkingDirectory();
+	core::stringc tmp = skinname;
+	fs->changeWorkingDirectoryTo(skinsPath);
 	registry = new CXMLRegistry(fs);
-	loaded_skin = nullptr;
-	gui::CImageGUISkin* skin = loadSkinFromFile(skinname);
-	if(skin == NULL) {
-		return false;
-	}
-	device->getGUIEnvironment()->setSkin(skin);
-	loaded_skin = skin;
+	gui::CImageGUISkin* skin = loadSkinFromFile(tmp.c_str());
+    if(skin == NULL) return false;
+	
+    device->getGUIEnvironment()->setSkin(skin);
 	// If we're going to switch skin we need to find all the progress bars and overwrite their colors	
-	skin->drop();
+    skin->drop();	
 	delete registry;
 	registry = NULL;
-	//fs->changeWorkingDirectoryTo(oldpath);
-
+	fs->changeWorkingDirectoryTo(oldpath);
 	return true;
 }
 CGUISkinSystem::~CGUISkinSystem() {
