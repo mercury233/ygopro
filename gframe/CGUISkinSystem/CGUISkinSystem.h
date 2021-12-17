@@ -3,6 +3,8 @@
 
 #ifdef _WIN32
 #include <irrlicht.h>
+#include <path.h>
+#include <irrArray.h>
 #endif
 #include "CImageGUISkin.h"
 #include "CGUIProgressBar.h"
@@ -23,11 +25,12 @@
 using namespace irr;
 class CGUISkinSystem {
 private :
-	irr::IrrlichtDevice* device;
-	irr::io::IFileSystem* fs;
-	irr::io::path skinsPath;
-	irr::gui::IGUISkin* loaded_skin;
+	IrrlichtDevice *device;
+	io::IFileSystem *fs;
+	io::path skinsPath;	
+	irr::io::path workingDir;
 	core::array<core::stringw> skinsList;
+	irr::gui::IGUISkin* loaded_skin;
 	
 	CXMLRegistry *registry;
 	gui::CImageGUISkin* loadSkinFromFile(const c8 *skinfile); 
@@ -39,13 +42,13 @@ public:
 	// Constructor
 	// path = Path to skins
 	// dev = Irrlicht device
-	CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev);
+	CGUISkinSystem(io::path path, IrrlichtDevice* dev);
 	~CGUISkinSystem();
 	const auto& listSkins() {
 		return skinsList;
 	};
 	bool loadSkinList();
-	bool applySkin(const wchar_t *skinname);
+	bool applySkin(const fschar_t* skinname);
 	gui::CGUIProgressBar *addProgressBar(gui::IGUIElement *parent,core::rect<s32> rect,bool bindColorsToSkin=true);
 	// Gets property from current skin
 	core::stringw getProperty(core::stringw key);	
