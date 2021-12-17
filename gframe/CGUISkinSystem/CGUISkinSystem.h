@@ -20,8 +20,6 @@
 #define SKINSYSTEM_SKINFILE "/skin.xml"
 
 
-using namespace irr;
-class IrrlichtDevice;
 class CGUISkinSystem {
 private :
 	IrrlichtDevice *device;
