@@ -23,9 +23,10 @@
 using namespace irr;
 class CGUISkinSystem {
 private :
-	IrrlichtDevice *device;
-	io::IFileSystem *fs;
-	io::path skinsPath;	
+	irr::IrrlichtDevice* device;
+	irr::io::IFileSystem* fs;
+	irr::io::path skinsPath;
+	irr::gui::IGUISkin* loaded_skin;
 	core::array<core::stringw> skinsList;
 	
 	CXMLRegistry *registry;
@@ -38,13 +39,13 @@ public:
 	// Constructor
 	// path = Path to skins
 	// dev = Irrlicht device
-	CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev);
+	CGUISkinSystem(irr::io::path path, irr::IrrlichtDevice* dev);
 	~CGUISkinSystem();
 	const auto& listSkins() {
 		return skinsList;
 	};
 	bool loadSkinList();
-	bool applySkin(const wchar_t *skinname);
+	bool applySkin(const irr::fschar_t* skinname);
 	gui::CGUIProgressBar *addProgressBar(gui::IGUIElement *parent,core::rect<s32> rect,bool bindColorsToSkin=true);
 	// Gets property from current skin
 	core::stringw getProperty(core::stringw key);	
