@@ -26,7 +26,7 @@ private :
 	IrrlichtDevice *device;
 	io::IFileSystem *fs;
 	io::path skinsPath;	
-	core::array<core::stringw> skinsList;
+	std::vector<core::path_string> skinsList;
 	
 	CXMLRegistry *registry;
 	gui::CImageGUISkin* loadSkinFromFile(const c8 *skinfile); 
@@ -38,11 +38,13 @@ public:
 	// Constructor
 	// path = Path to skins
 	// dev = Irrlicht device
-	CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev);
+	CGUISkinSystem(irr::io::path path, irr::IrrlichtDevice* dev);
 	~CGUISkinSystem();
-	core::array<core::stringw> listSkins();
+	const auto& listSkins() {
+		return skinsList;
+	};
 	bool loadSkinList();
-	bool applySkin(const wchar_t *skinname);
+	bool applySkin(const irr::fschar_t* skinname);
 	gui::CGUIProgressBar *addProgressBar(gui::IGUIElement *parent,core::rect<s32> rect,bool bindColorsToSkin=true);
 	// Gets property from current skin
 	core::stringw getProperty(core::stringw key);	
