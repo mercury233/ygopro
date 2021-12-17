@@ -1,15 +1,4 @@
 #include "CGUISkinSystem.h"
-
-CGUISkinSystem::CGUISkinSystem(io::path path, IrrlichtDevice *dev) {
-	loaded_skin = nullptr;
-	device = dev;
-	skinsPath = path;
-	fs = dev->getFileSystem();	
-	loadSkinList();
-	
-	
-}
-
 // This is our version of the skinloader
 
 // Generate a list of all directory names in skinsPath that have a skin.xml in them
@@ -261,26 +250,6 @@ bool CGUISkinSystem::loadProperty(core::stringw key,gui::CImageGUISkin *skin) {
 		return true;
 	}
 	return false;
-}
-bool CGUISkinSystem::applySkin(const fschar_t *skinname) {
-	/*io::path oldpath = fs->getWorkingDirectory();
-	fs->changeWorkingDirectoryTo(skinsPath);*/
-	workingDir = skinsPath;
-	registry = new CXMLRegistry(fs);
-	loaded_skin = nullptr;
-	gui::CImageGUISkin* skin = loadSkinFromFile(skinname);
-	if(skin == NULL) {
-		return false;
-	}
-	device->getGUIEnvironment()->setSkin(skin);
-	loaded_skin = skin;
-	// If we're going to switch skin we need to find all the progress bars and overwrite their colors	
-	skin->drop();
-	delete registry;
-	registry = NULL;
-	//fs->changeWorkingDirectoryTo(oldpath);
-
-	return true;
 }
 CGUISkinSystem::~CGUISkinSystem() {
 	skinsList.clear();

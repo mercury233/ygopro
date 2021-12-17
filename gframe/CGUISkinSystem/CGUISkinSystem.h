@@ -39,13 +39,30 @@ public:
 	// Constructor
 	// path = Path to skins
 	// dev = Irrlicht device
-	CGUISkinSystem(irr::io::path path, irr::IrrlichtDevice* dev);
+	const auto& CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev){
+	device = dev;
+	skinsPath = path;
+	fs = dev->getFileSystem();	
+	this->loadSkinList();
+	};
 	~CGUISkinSystem();
 	const auto& listSkins() {
 		return skinsList;
 	};
 	bool loadSkinList();
-	bool applySkin(const irr::fschar_t* skinname);
+	const auto& applySkin(const wchar_t *skinname){
+	io::path oldpath = fs->getWorkingDirectory();
+	core::stringc tmp = skinname;
+	fs->changeWorkingDirectoryTo(skinsPath);
+	registry = new CXMLRegistry(fs);
+	gui::CImageGUISkin* skin = loadSkinFromFile(tmp.c_str());
+    if(skin == NULL) return false;
+    device->getGUIEnvironment()->setSkin(skin);
+	delete registry;
+	registry = NULL;
+	fs->changeWorkingDirectoryTo(oldpath);
+	return true;
+	};
 	gui::CGUIProgressBar *addProgressBar(gui::IGUIElement *parent,core::rect<s32> rect,bool bindColorsToSkin=true);
 	// Gets property from current skin
 	core::stringw getProperty(core::stringw key);	
