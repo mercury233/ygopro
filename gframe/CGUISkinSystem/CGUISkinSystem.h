@@ -34,17 +34,17 @@ private :
 	bool checkSkinColor(gui::EGUI_DEFAULT_COLOR colToSet,const wchar_t *context,gui::CImageGUISkin *skin);
 	bool checkSkinSize(gui::EGUI_DEFAULT_SIZE sizeToSet,const wchar_t *context,const wchar_t *key,gui::CImageGUISkin *skin);
 	bool loadProperty(core::stringw key,gui::CImageGUISkin *skin);
+	CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev);
+	bool applySkin(const wchar_t *skinname);
 public:
 	// Constructor
 	// path = Path to skins
 	// dev = Irrlicht device
-	void CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev);
 	virtual ~CGUISkinSystem();
 	const auto& listSkins(){
 		return skinsList;
 	};
 	bool loadSkinList();
-	bool applySkin(const wchar_t *skinname);
 	gui::CGUIProgressBar *addProgressBar(gui::IGUIElement *parent,core::rect<s32> rect,bool bindColorsToSkin=true);
 	// Gets property from current skin
 	core::stringw getProperty(core::stringw key);	
