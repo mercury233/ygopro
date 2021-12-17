@@ -9,7 +9,6 @@
 #include <vector>
 #include <list>
 
-class CGUISkinSystem;
 namespace ygo {
 
 struct Config {

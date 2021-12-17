@@ -11,7 +11,6 @@
 #include "duelclient.h"
 #include "netserver.h"
 #include "single_mode.h"
-#include "CGUISkinSystem/CGUISkinSystem.h"
 #include <sstream>
 #include <regex>
 
