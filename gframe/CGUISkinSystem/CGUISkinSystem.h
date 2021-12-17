@@ -23,7 +23,7 @@
 using namespace irr;
 class CGUISkinSystem {
 private :
-	IrrlichtDevice *device;
+	IrrlichtDevice *dev;
 	io::IFileSystem *fs;
 	io::path skinsPath;	
 	core::array<core::stringw> skinsList;
