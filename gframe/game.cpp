@@ -1,5 +1,3 @@
-#include <fstream>
-#include <irrlicht.h>
 #include "config.h"
 #include "game.h"
 #include "image_manager.h"
