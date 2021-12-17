@@ -41,7 +41,7 @@ public:
 	~CGUISkinSystem();
 	core::array<core::stringw> listSkins();
 	bool loadSkinList();
-	bool applySkin(const irr::wchar_t *skinname);
+	bool applySkin(const wchar_t *skinname);
 	gui::CGUIProgressBar *addProgressBar(gui::IGUIElement *parent,core::rect<s32> rect,bool bindColorsToSkin=true);
 	// Gets property from current skin
 	core::stringw getProperty(core::stringw key);	
