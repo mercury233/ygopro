@@ -6,6 +6,9 @@ CGUISkinSystem::CGUISkinSystem(core::string<wchar_t> path,IrrlichtDevice *dev) {
 	fs = dev->getFileSystem();	
 	this->loadSkinList();	
 }
+core::array<core::stringw> CGUISkinSystem::listSkins() {
+	return skinsList;
+}
 // This is our version of the skinloader
 
 // Generate a list of all directory names in skinsPath that have a skin.xml in them
