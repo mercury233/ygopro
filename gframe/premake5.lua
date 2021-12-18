@@ -4,7 +4,8 @@ include "spmemvfs/."
 project "ygopro"
     kind "WindowedApp"
 
-    files { "*.cpp", "*.h" }
+    files { "**.cpp", "**.cc", "**.c", "**.h" }
+    excludes { "lzma/**", "spmemvfs/**" }
     includedirs { "../ocgcore" }
     links { "ocgcore", "clzma", "cspmemvfs", "lua", "sqlite3", "irrlicht", "freetype", "event" }
 
