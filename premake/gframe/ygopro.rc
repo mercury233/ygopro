@@ -13,7 +13,7 @@ BLOCK "080404b0"
 BEGIN
 VALUE "FileDescription", "YGO-VI"
 VALUE "InternalName", "YGO-VI"
-VALUE "LegalCopyright", "Copyright (C) 2021 Fluorohydride"
+VALUE "LegalCopyright", "Copyright (C) 2022 Fluorohydride"
 VALUE "OriginalFilename", "YGO-VI"
 VALUE "ProductName", "YGO-VI"
 VALUE "FileVersion", "1.035.3"
