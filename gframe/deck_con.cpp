@@ -1115,6 +1115,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			if(!is_draging) {
 				if(hovered_pos == 0 || hovered_seq == -1)
 					break;
+				if(readonly)
+					break;
 				soundManager.PlaySoundEffect(SOUND_CARD_DROP);
 				if(hovered_pos == 1) {
 					pop_main(hovered_seq);
@@ -1153,6 +1155,8 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			if (havePopupWindow())
 				break;
 			if (hovered_pos == 0 || hovered_seq == -1)
+				break;
+			if (readonly)
 				break;
 			if (is_draging)
 				break;
@@ -1796,15 +1800,7 @@ void DeckBuilder::RefreshDeckList() {
 	wchar_t catepath[256];
 	deckManager.GetCategoryPath(catepath, lstCategories->getSelected(), lstCategories->getListItem(lstCategories->getSelected()));
 	lstDecks->clear();
-	FileSystem::TraversalDir(catepath, [lstDecks](const wchar_t* name, bool isdir) {
-		if(!isdir && wcsrchr(name, '.') && !mywcsncasecmp(wcsrchr(name, '.'), L".ydk", 4)) {
-			size_t len = wcslen(name);
-			wchar_t deckname[256];
-			wcsncpy(deckname, name, len - 4);
-			deckname[len - 4] = 0;
-			lstDecks->addItem(deckname);
-		}
-		});
+	mainGame->RefreshDeck(catepath, [lstDecks](const wchar_t* item) { lstDecks->addItem(item); });
 }
 void DeckBuilder::RefreshReadonly(int catesel) {
 	bool hasDeck = mainGame->cbDBDecks->getItemCount() != 0;
@@ -1862,7 +1858,7 @@ void DeckBuilder::ShowDeckManage() {
 		if(isdir) {
 			lstCategories->addItem(name);
 		}
-		});
+	});
 	lstCategories->setSelected(prev_category);
 	RefreshDeckList();
 	RefreshReadonly(prev_category);
