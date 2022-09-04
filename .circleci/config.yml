@@ -43,7 +43,7 @@ jobs:
       - run:
           name: "Download premake"
           command: |
-            curl --retry 5 --connect-timeout 30 --location https://github.com/premake/premake-core/releases/download/v5.0.0-beta1/premake-5.0.0-beta1-linux.tar.gz | bsdtar -xf-
+            curl --retry 5 --connect-timeout 30 --location https://github.com/premake/premake-core/releases/download/v5.0.0-beta2/premake-5.0.0-beta2-linux.tar.gz | bsdtar -xf-
       - run:
           name: "Patch irrlicht"
           command: |
