@@ -178,12 +178,10 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", rect<s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
-点击卡片弹出菜单时禁用阶段按钮。\n\
 开发者功能：F2打开当前卡脚本。\n\
 开发者功能：右键清空聊天记录。\n\
 开发者功能：c开头的ID查卡。\n\
 开发者功能：右键粘贴查卡。\n\
-优化卡包展示模式。\n\
 鼠标滚轮浏览卡组中的卡片。\n\
 \n\
 \n已知问题：\n\
