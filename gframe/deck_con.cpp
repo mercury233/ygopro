@@ -1108,7 +1108,9 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			if (mainGame->env->getRootGUIElement()->getElementFromPoint(mouse_pos) == mainGame->ebCardName) {
 				const wchar_t* txt = mainGame->env->getOSOperator()->getTextFromClipboard();
 				if (txt) {
-					mainGame->ebCardName->setText(txt);
+					irr::core::stringw t(txt);
+					t.trim();
+					mainGame->ebCardName->setText(t.c_str());
 					InstantSearch();
 				}
 				break;
