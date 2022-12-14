@@ -4,7 +4,7 @@ image: Visual Studio 2019
 
 environment:
   access_token:
-    secure: wxAvRgqg8ErfZm05ESB2zJxjwhny9wS0kRgK8TBDl2UeXnA06tqZPtNkwfRJc9SE
+    secure: QRJ97uSkoKE5kasZbXJMkRXX9VZYA4jUIl1YgkqMT+KE2hvSGds459bxYHQvvwFP
 
 install:
   - git submodule update --init --recursive
