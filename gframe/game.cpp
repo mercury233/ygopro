@@ -16,8 +16,39 @@ namespace ygo {
 
 Game* mainGame;
 
+void DuelInfo::Clear() {
+	isStarted = false;
+	isFinished = false;
+	isReplay = false;
+	isReplaySkiping = false;
+	isFirst = false;
+	isTag = false;
+	isSingleMode = false;
+	is_shuffling = false;
+	tag_player[0] = false;
+	tag_player[1] = false;
+	isReplaySwapped = false;
+	lp[0] = 0;
+	lp[1] = 0;
+	start_lp = 0;
+	duel_rule = 0;
+	turn = 0;
+	curMsg = 0;
+	hostname[0] = 0;
+	clientname[0] = 0;
+	hostname_tag[0] = 0;
+	clientname_tag[0] = 0;
+	strLP[0][0] = 0;
+	strLP[1][0] = 0;
+	vic_string = 0;
+	player_type = 0;
+	time_player = 0;
+	time_limit = 0;
+	time_left[0] = 0;
+	time_left[1] = 0;
+}
+
 bool Game::Initialize() {
-	srand(time(0));
 	LoadConfig();
 	irr::SIrrlichtCreationParameters params = irr::SIrrlichtCreationParameters();
 	params.AntiAlias = gameConf.antialias;
@@ -50,8 +81,6 @@ bool Game::Initialize() {
 	is_building = false;
 	menuHandler.prev_operation = 0;
 	menuHandler.prev_sel = -1;
-	memset(&dInfo, 0, sizeof(DuelInfo));
-	memset(chatTiming, 0, sizeof(chatTiming));
 	deckManager.LoadLFList();
 	driver = device->getVideoDriver();
 	driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
@@ -1307,57 +1336,6 @@ void Game::LoadConfig() {
 	char strbuf[32];
 	char valbuf[256];
 	wchar_t wstr[256];
-	gameConf.use_d3d = 0;
-	gameConf.use_image_scale = 1;
-	gameConf.antialias = 0;
-	gameConf.serverport = 7911;
-	gameConf.textfontsize = 14;
-	gameConf.nickname[0] = 0;
-	gameConf.gamename[0] = 0;
-	gameConf.lastcategory[0] = 0;
-	gameConf.lastdeck[0] = 0;
-	gameConf.numfont[0] = 0;
-	gameConf.textfont[0] = 0;
-	gameConf.lasthost[0] = 0;
-	gameConf.lastport[0] = 0;
-	gameConf.roompass[0] = 0;
-	gameConf.bot_deck_path[0] = 0;
-	//settings
-	gameConf.chkMAutoPos = 0;
-	gameConf.chkSTAutoPos = 1;
-	gameConf.chkRandomPos = 0;
-	gameConf.chkAutoChain = 0;
-	gameConf.chkWaitChain = 0;
-	gameConf.chkDefaultShowChain = 0;
-	gameConf.chkIgnore1 = 0;
-	gameConf.chkIgnore2 = 0;
-	gameConf.use_lflist = 1;
-	gameConf.default_lflist = 0;
-	gameConf.default_rule = DEFAULT_DUEL_RULE;
-	gameConf.hide_setname = 0;
-	gameConf.hide_hint_button = 0;
-	gameConf.control_mode = 0;
-	gameConf.draw_field_spell = 1;
-	gameConf.separate_clear_button = 1;
-	gameConf.auto_search_limit = -1;
-	gameConf.search_multiple_keywords = 1;
-	gameConf.chkIgnoreDeckChanges = 0;
-	gameConf.defaultOT = 1;
-	gameConf.enable_bot_mode = 0;
-	gameConf.quick_animation = 0;
-	gameConf.auto_save_replay = 0;
-	gameConf.draw_single_chain = 0;
-	gameConf.hide_player_name = 0;
-	gameConf.prefer_expansion_script = 0;
-	gameConf.enable_sound = true;
-	gameConf.sound_volume = 0.5;
-	gameConf.enable_music = true;
-	gameConf.music_volume = 0.5;
-	gameConf.music_mode = 1;
-	gameConf.window_maximized = false;
-	gameConf.window_width = 1024;
-	gameConf.window_height = 640;
-	gameConf.resize_popup_menu = false;
 	while(fgets(linebuf, 256, fp)) {
 		sscanf(linebuf, "%s = %s", strbuf, valbuf);
 		if(!strcmp(strbuf, "antialias")) {
@@ -1566,8 +1544,7 @@ void Game::ShowCardInfo(int code, bool resize) {
 		return;
 	CardData cd;
 	wchar_t formatBuffer[256];
-	if(!dataManager.GetData(code, &cd))
-		memset(&cd, 0, sizeof(CardData));
+	dataManager.GetData(code, &cd);
 	imgCard->setImage(imageManager.GetTexture(code, true));
 	if(cd.alias != 0 && (cd.alias - code < CARD_ARTWORK_VERSIONS_OFFSET || code - cd.alias < CARD_ARTWORK_VERSIONS_OFFSET))
 		myswprintf(formatBuffer, L"%ls[%08d]", dataManager.GetName(cd.alias), cd.alias);

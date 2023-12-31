@@ -19,14 +19,14 @@ unsigned char DuelClient::selftype = 0;
 bool DuelClient::is_host = false;
 event_base* DuelClient::client_base = 0;
 bufferevent* DuelClient::client_bev = 0;
-char DuelClient::duel_client_read[0x2000];
-char DuelClient::duel_client_write[0x2000];
+unsigned char DuelClient::duel_client_read[0x2000];
+unsigned char DuelClient::duel_client_write[0x2000];
 bool DuelClient::is_closing = false;
 bool DuelClient::is_swapping = false;
 int DuelClient::select_hint = 0;
 int DuelClient::select_unselect_hint = 0;
 int DuelClient::last_select_hint = 0;
-char DuelClient::last_successful_msg[0x2000];
+unsigned char DuelClient::last_successful_msg[0x2000];
 unsigned int DuelClient::last_successful_msg_length = 0;
 wchar_t DuelClient::event_string[256];
 mt19937 DuelClient::rnd;
@@ -58,7 +58,7 @@ bool DuelClient::StartClient(unsigned int ip, unsigned short port, bool create_g
 		return false;
 	}
 	connect_state = 0x1;
-	rnd.reset((unsigned int)time(nullptr));
+	rnd.reset((uint_fast32_t)std::random_device()());
 	if(!create_game) {
 		timeval timeout = {5, 0};
 		event* resp_event = event_new(client_base, 0, EV_TIMEOUT, ConnectTimeout, 0);
@@ -233,8 +233,8 @@ int DuelClient::ClientThread() {
 	connect_state = 0;
 	return 0;
 }
-void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
-	char* pdata = data;
+void DuelClient::HandleSTOCPacketLan(unsigned char* data, unsigned int len) {
+	unsigned char* pdata = data;
 	unsigned char pktType = BufferIO::ReadUInt8(pdata);
 	switch(pktType) {
 	case STOC_GAME_MSG: {
@@ -611,7 +611,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->device->setEventReceiver(&mainGame->dField);
 		if(!mainGame->dInfo.isTag) {
 			if(selftype > 1) {
-				mainGame->dInfo.player_type = 7;
+				mainGame->dInfo.player_type = NETPLAYER_TYPE_OBSERVER;
 				mainGame->btnLeaveGame->setText(dataManager.GetSysString(1350));
 				mainGame->btnLeaveGame->setVisible(true);
 				mainGame->btnSpectatorSwap->setVisible(true);
@@ -689,7 +689,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		if(mainGame->dInfo.player_type < 7)
 			mainGame->btnLeaveGame->setVisible(false);
 		mainGame->CloseGameButtons();
-		char* prep = pdata;
+		auto prep = pdata;
 		Replay new_replay;
 		memcpy(&new_replay.pheader, prep, sizeof(ReplayHeader));
 		time_t starttime;
@@ -882,8 +882,9 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 	}
 	}
 }
-int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
-	char* pbuf = msg;
+// Analyze STOC_GAME_MSG packet
+int DuelClient::ClientAnalyze(unsigned char* msg, unsigned int len) {
+	unsigned char* pbuf = msg;
 	wchar_t textBuffer[256];
 	mainGame->dInfo.curMsg = BufferIO::ReadUInt8(pbuf);
 	if(mainGame->dInfo.curMsg != MSG_RETRY) {
@@ -918,7 +919,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 	switch(mainGame->dInfo.curMsg) {
 	case MSG_RETRY: {
 		if(last_successful_msg_length) {
-			char* p = last_successful_msg;
+			auto p = last_successful_msg;
 			auto last_msg = BufferIO::ReadUInt8(p);
 			int err_desc = 1421;
 			switch(last_msg) {
@@ -2524,7 +2525,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		int appear = mainGame->gameConf.quick_animation ? 12 : 20;
 		if (pl == 0) {
-			ClientCard* pcard = new ClientCard();
+			ClientCard* pcard = new ClientCard;
 			pcard->position = cp;
 			pcard->SetCode(code);
 			if(!mainGame->dInfo.isReplay || !mainGame->dInfo.isReplaySkiping) {
@@ -2650,7 +2651,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 					pcard->overlayTarget = olcard;
 					pcard->location = LOCATION_OVERLAY;
 					pcard->sequence = olcard->overlayed.size() - 1;
-					if (olcard->location == 0x4) {
+					if (olcard->location == LOCATION_MZONE) {
 						mainGame->gMutex.lock();
 						mainGame->dField.MoveCard(pcard, 10);
 						if (pl == 0x2)
@@ -3743,7 +3744,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			}
 		} else {
 			while(mainGame->dField.deck[player].size() < mcount) {
-				ClientCard* ccard = new ClientCard();
+				ClientCard* ccard = new ClientCard;
 				ccard->controler = player;
 				ccard->location = LOCATION_DECK;
 				ccard->sequence = mainGame->dField.deck[player].size();
@@ -3758,7 +3759,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			}
 		} else {
 			while(mainGame->dField.hand[player].size() < hcount) {
-				ClientCard* ccard = new ClientCard();
+				ClientCard* ccard = new ClientCard;
 				ccard->controler = player;
 				ccard->location = LOCATION_HAND;
 				ccard->sequence = mainGame->dField.hand[player].size();
@@ -3773,7 +3774,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			}
 		} else {
 			while(mainGame->dField.extra[player].size() < ecount) {
-				ClientCard* ccard = new ClientCard();
+				ClientCard* ccard = new ClientCard;
 				ccard->controler = player;
 				ccard->location = LOCATION_EXTRA;
 				ccard->sequence = mainGame->dField.extra[player].size();
