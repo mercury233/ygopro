@@ -34,7 +34,7 @@ void SingleDuel::JoinGame(DuelPlayer* dp, unsigned char* pdata, bool is_creater)
 		}
 		CTOS_JoinGame packet;
 		std::memcpy(&packet, pdata, sizeof packet);
-		const auto* pkt = &packet;
+		auto pkt = &packet;
 		if(pkt->version != PRO_VERSION) {
 			STOC_ErrorMsg scem;
 			scem.msg = ERRMSG_VERERROR;
@@ -44,6 +44,7 @@ void SingleDuel::JoinGame(DuelPlayer* dp, unsigned char* pdata, bool is_creater)
 			return;
 		}
 		wchar_t jpass[20];
+		BufferIO::NullTerminate(pkt->pass);
 		BufferIO::CopyWStr(pkt->pass, jpass, 20);
 		if(wcscmp(jpass, pass)) {
 			STOC_ErrorMsg scem;
@@ -1417,7 +1418,7 @@ int SingleDuel::Analyze(unsigned char* msgbuffer, unsigned int len) {
 	return 0;
 }
 void SingleDuel::GetResponse(DuelPlayer* dp, unsigned char* pdata, unsigned int len) {
-	byte resb[SIZE_RETURN_VALUE];
+	byte resb[SIZE_RETURN_VALUE]{};
 	if (len > SIZE_RETURN_VALUE)
 		len = SIZE_RETURN_VALUE;
 	std::memcpy(resb, pdata, len);
