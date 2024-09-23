@@ -1577,7 +1577,17 @@ void DeckBuilder::FilterCards() {
 		element_t(): type(type_t::all), exclude(false) {}
 	};
 	const wchar_t* pstr = mainGame->ebCardName->getText();
+	int trycode = BufferIO::GetVal(pstr);
 	std::wstring str = std::wstring(pstr);
+	if (str[0] == 'c') {
+		size_t extension_start = str.find_last_of('.');
+		if (extension_start != std::wstring::npos) {
+			std::wstring cno = str.substr(0, extension_start);
+			trycode = BufferIO::GetVal(cno.c_str() + 1);
+		} else {
+			trycode = BufferIO::GetVal(str.c_str() + 1);
+		}
+	}
 	std::vector<element_t> query_elements;
 	if(mainGame->gameConf.search_multiple_keywords) {
 		const wchar_t separator = mainGame->gameConf.search_multiple_keywords == 1 ? L' ' : L'+';
@@ -1721,19 +1731,12 @@ void DeckBuilder::FilterCards() {
 				match = CardNameContains(text.name.c_str(), elements_iterator->keyword.c_str());
 			} else if (elements_iterator->type == element_t::type_t::setcode) {
 				match = data.is_setcodes(elements_iterator->setcodes);
+			} else if (trycode && (data.code == trycode || data.alias == trycode && data.is_alternative())){
+				match = true;
 			} else {
-				int trycode = BufferIO::GetVal(elements_iterator->keyword.c_str());
-				if (elements_iterator->keyword[0] == 'c') {
-					trycode = BufferIO::GetVal(elements_iterator->keyword.c_str() + 1);
-				}
-				bool tryresult = dataManager.GetData(trycode, 0);
-				if(!tryresult) {
-					match = CardNameContains(text.name.c_str(), elements_iterator->keyword.c_str())
-						|| text.text.find(elements_iterator->keyword) != std::wstring::npos
-						|| data.is_setcodes(elements_iterator->setcodes);
-				} else {
-					match = data.code == trycode || data.alias == trycode;
-				}
+				match = CardNameContains(text.name.c_str(), elements_iterator->keyword.c_str())
+					|| text.text.find(elements_iterator->keyword) != std::wstring::npos
+					|| data.is_setcodes(elements_iterator->setcodes);
 			}
 			if(elements_iterator->exclude)
 				match = !match;
