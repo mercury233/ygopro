@@ -6,8 +6,8 @@
 namespace ygo {
 
 const wchar_t* DataManager::unknown_string = L"???";
-byte DataManager::scriptBuffer[0x20000];
-IFileSystem* DataManager::FileSystem;
+unsigned char DataManager::scriptBuffer[0x100000] = {};
+irr::io::IFileSystem* DataManager::FileSystem = nullptr;
 DataManager dataManager;
 
 DataManager::DataManager() : _datas(32768), _strings(32768) {
@@ -68,7 +68,8 @@ bool DataManager::ReadDB(sqlite3* pDB) {
 				BufferIO::DecodeUTF8(text, strBuffer);
 				cs.text = strBuffer;
 			}
-			for (int i = 0; i < 16; ++i) {
+			constexpr int desc_count = sizeof cs.desc / sizeof cs.desc[0];
+			for (int i = 0; i < desc_count; ++i) {
 				if (const char* text = (const char*)sqlite3_column_text(pStmt, i + 14)) {
 					BufferIO::DecodeUTF8(text, strBuffer);
 					cs.desc[i] = strBuffer;
@@ -88,7 +89,7 @@ bool DataManager::LoadDB(const wchar_t* wfile) {
 #else
 	IReadFile* reader = FileSystem->createAndOpenFile(file);
 #endif
-	if(reader == NULL)
+	if(reader == nullptr)
 		return false;
 	spmemvfs_db_t db;
 	spmembuffer_t* mem = (spmembuffer_t*)calloc(sizeof(spmembuffer_t), 1);
@@ -111,23 +112,23 @@ bool DataManager::LoadStrings(const char* file) {
 	FILE* fp = fopen(file, "r");
 	if(!fp)
 		return false;
-	char linebuf[256];
-	while(fgets(linebuf, 256, fp)) {
+	char linebuf[TEXT_LINE_SIZE]{};
+	while(fgets(linebuf, sizeof linebuf, fp)) {
 		ReadStringConfLine(linebuf);
 	}
 	fclose(fp);
 	return true;
 }
-bool DataManager::LoadStrings(IReadFile* reader) {
-	char ch[2] = " ";
-	char linebuf[256] = "";
-	while(reader->read(&ch[0], 1)) {
-		if(ch[0] == '\0')
+bool DataManager::LoadStrings(irr::io::IReadFile* reader) {
+	char ch{};
+	std::string linebuf;
+	while (reader->read(&ch, 1)) {
+		if (ch == '\0')
 			break;
-		std::strcat(linebuf, ch);
-		if(ch[0] == '\n') {
-			ReadStringConfLine(linebuf);
-			linebuf[0] = '\0';
+		linebuf.push_back(ch);
+		if (ch == '\n' || linebuf.size() >= TEXT_LINE_SIZE - 1) {
+			ReadStringConfLine(linebuf.data());
+			linebuf.clear();
 		}
 	}
 	reader->drop();
@@ -136,7 +137,7 @@ bool DataManager::LoadStrings(IReadFile* reader) {
 void DataManager::ReadStringConfLine(const char* linebuf) {
 	if(linebuf[0] != '!')
 		return;
-	char strbuf[256]{};
+	char strbuf[TEXT_LINE_SIZE]{};
 	int value{};
 	wchar_t strBuffer[4096]{};
 	if (sscanf(linebuf, "!%63s", strbuf) != 1)
@@ -177,16 +178,16 @@ code_pointer DataManager::GetCodePointer(unsigned int code) const {
 string_pointer DataManager::GetStringPointer(unsigned int code) const {
 	return _strings.find(code);
 }
-code_pointer DataManager::datas_begin() {
+code_pointer DataManager::datas_begin() const {
 	return _datas.cbegin();
 }
-code_pointer DataManager::datas_end() {
+code_pointer DataManager::datas_end() const {
 	return _datas.cend();
 }
-string_pointer DataManager::strings_begin() {
+string_pointer DataManager::strings_begin() const {
 	return _strings.cbegin();
 }
-string_pointer DataManager::strings_end() {
+string_pointer DataManager::strings_end() const {
 	return _strings.cend();
 }
 bool DataManager::GetData(unsigned int code, CardData* pData) const {
@@ -259,7 +260,7 @@ const wchar_t* DataManager::GetCounterName(int code) const {
 const wchar_t* DataManager::GetSetName(int code) const {
 	auto csit = _setnameStrings.find(code);
 	if(csit == _setnameStrings.end())
-		return nullptr;
+		return unknown_string;
 	return csit->second.c_str();
 }
 std::vector<unsigned int> DataManager::GetSetCodes(std::wstring setname) const {
@@ -355,11 +356,9 @@ std::wstring DataManager::FormatSetName(const uint16_t setcode[]) const {
 		if (!setcode[i])
 			break;
 		const wchar_t* setname = GetSetName(setcode[i]);
-		if(setname) {
-			if (!buffer.empty())
-				buffer.push_back(L'|');
-			buffer.append(setname);
-		}
+		if (!buffer.empty())
+			buffer.push_back(L'|');
+		buffer.append(setname);
 	}
 	if (buffer.empty())
 		return std::wstring(unknown_string);
@@ -385,28 +384,35 @@ std::wstring DataManager::FormatLinkMarker(unsigned int link_marker) const {
 		buffer.append(L"[\u2198]");
 	return buffer;
 }
-uint32 DataManager::CardReader(uint32 code, card_data* pData) {
+uint32_t DataManager::CardReader(uint32_t code, card_data* pData) {
 	if (!dataManager.GetData(code, pData))
 		pData->clear();
 	return 0;
 }
-byte* DataManager::ScriptReaderEx(const char* script_name, int* slen) {
+unsigned char* DataManager::ScriptReaderEx(const char* script_name, int* slen) {
 	// default script name: ./script/c%d.lua
-	char first[256]{};
-	char second[256]{};
+	if (std::strncmp(script_name, "./script", 8) != 0)
+		return DefaultScriptReader(script_name, slen);
+	char expansions_path[1024]{};
+	std::snprintf(expansions_path, sizeof expansions_path, "./expansions/%s", script_name + 2);
 	if(mainGame->gameConf.prefer_expansion_script) {
-		snprintf(first, sizeof first, "expansions/%s", script_name + 2);
-		snprintf(second, sizeof second, "%s", script_name + 2);
+		if (DefaultScriptReader(expansions_path, slen))
+			return scriptBuffer;
+		else if (ScriptReader(script_name + 2, slen))
+			return scriptBuffer;
+		else if (DefaultScriptReader(script_name, slen))
+			return scriptBuffer;
 	} else {
-		snprintf(first, sizeof first, "%s", script_name + 2);
-		snprintf(second, sizeof second, "expansions/%s", script_name + 2);
+		if (DefaultScriptReader(script_name, slen))
+			return scriptBuffer;
+		else if (DefaultScriptReader(expansions_path, slen))
+			return scriptBuffer;
+		else if (ScriptReader(script_name + 2, slen))
+			return scriptBuffer;
 	}
-	if(ScriptReader(first, slen))
-		return scriptBuffer;
-	else
-		return ScriptReader(second, slen);
+	return nullptr;
 }
-byte* DataManager::ScriptReader(const char* script_name, int* slen) {
+unsigned char* DataManager::ScriptReader(const char* script_name, int* slen) {
 #ifdef _WIN32
 	wchar_t fname[256]{};
 	BufferIO::DecodeUTF8(script_name, fname);
@@ -416,15 +422,93 @@ byte* DataManager::ScriptReader(const char* script_name, int* slen) {
 #endif
 	if (!reader)
 		return nullptr;
-	size_t size = reader->getSize();
-	if (size > sizeof scriptBuffer) {
-		reader->drop();
-		return nullptr;
-	}
-	reader->read(scriptBuffer, size);
+	int size = reader->read(scriptBuffer, sizeof scriptBuffer);
 	reader->drop();
-	*slen = (int)size;
+	if (size >= (int)sizeof scriptBuffer)
+		return nullptr;
+	*slen = size;
 	return scriptBuffer;
+}
+unsigned char* DataManager::DefaultScriptReader(const char* script_name, int* slen) {
+	wchar_t fname[256]{};
+	BufferIO::DecodeUTF8(script_name, fname);
+	FILE* fp = myfopen(fname, "rb");
+	if (!fp)
+		return nullptr;
+	size_t len = std::fread(scriptBuffer, 1, sizeof scriptBuffer, fp);
+	std::fclose(fp);
+	if (len >= sizeof scriptBuffer)
+		return nullptr;
+	*slen = (int)len;
+	return scriptBuffer;
+}
+bool DataManager::deck_sort_lv(code_pointer p1, code_pointer p2) {
+	if ((p1->second.type & 0x7) != (p2->second.type & 0x7))
+		return (p1->second.type & 0x7) < (p2->second.type & 0x7);
+	if ((p1->second.type & 0x7) == 1) {
+		int type1 = (p1->second.type & 0x48020c0) ? (p1->second.type & 0x48020c1) : (p1->second.type & 0x31);
+		int type2 = (p2->second.type & 0x48020c0) ? (p2->second.type & 0x48020c1) : (p2->second.type & 0x31);
+		if (type1 != type2)
+			return type1 < type2;
+		if (p1->second.level != p2->second.level)
+			return p1->second.level > p2->second.level;
+		if (p1->second.attack != p2->second.attack)
+			return p1->second.attack > p2->second.attack;
+		if (p1->second.defense != p2->second.defense)
+			return p1->second.defense > p2->second.defense;
+		return p1->first < p2->first;
+	}
+	if ((p1->second.type & 0xfffffff8) != (p2->second.type & 0xfffffff8))
+		return (p1->second.type & 0xfffffff8) < (p2->second.type & 0xfffffff8);
+	return p1->first < p2->first;
+}
+bool DataManager::deck_sort_atk(code_pointer p1, code_pointer p2) {
+	if ((p1->second.type & 0x7) != (p2->second.type & 0x7))
+		return (p1->second.type & 0x7) < (p2->second.type & 0x7);
+	if ((p1->second.type & 0x7) == 1) {
+		if (p1->second.attack != p2->second.attack)
+			return p1->second.attack > p2->second.attack;
+		if (p1->second.defense != p2->second.defense)
+			return p1->second.defense > p2->second.defense;
+		if (p1->second.level != p2->second.level)
+			return p1->second.level > p2->second.level;
+		int type1 = (p1->second.type & 0x48020c0) ? (p1->second.type & 0x48020c1) : (p1->second.type & 0x31);
+		int type2 = (p2->second.type & 0x48020c0) ? (p2->second.type & 0x48020c1) : (p2->second.type & 0x31);
+		if (type1 != type2)
+			return type1 < type2;
+		return p1->first < p2->first;
+	}
+	if ((p1->second.type & 0xfffffff8) != (p2->second.type & 0xfffffff8))
+		return (p1->second.type & 0xfffffff8) < (p2->second.type & 0xfffffff8);
+	return p1->first < p2->first;
+}
+bool DataManager::deck_sort_def(code_pointer p1, code_pointer p2) {
+	if ((p1->second.type & 0x7) != (p2->second.type & 0x7))
+		return (p1->second.type & 0x7) < (p2->second.type & 0x7);
+	if ((p1->second.type & 0x7) == 1) {
+		if (p1->second.defense != p2->second.defense)
+			return p1->second.defense > p2->second.defense;
+		if (p1->second.attack != p2->second.attack)
+			return p1->second.attack > p2->second.attack;
+		if (p1->second.level != p2->second.level)
+			return p1->second.level > p2->second.level;
+		int type1 = (p1->second.type & 0x48020c0) ? (p1->second.type & 0x48020c1) : (p1->second.type & 0x31);
+		int type2 = (p2->second.type & 0x48020c0) ? (p2->second.type & 0x48020c1) : (p2->second.type & 0x31);
+		if (type1 != type2)
+			return type1 < type2;
+		return p1->first < p2->first;
+	}
+	if ((p1->second.type & 0xfffffff8) != (p2->second.type & 0xfffffff8))
+		return (p1->second.type & 0xfffffff8) < (p2->second.type & 0xfffffff8);
+	return p1->first < p2->first;
+}
+bool DataManager::deck_sort_name(code_pointer p1, code_pointer p2) {
+	const wchar_t* name1 = dataManager.GetName(p1->first);
+	const wchar_t* name2 = dataManager.GetName(p2->first);
+	int res = std::wcscmp(name1, name2);
+	if (res != 0)
+		return res < 0;
+	return p1->first < p2->first;
 }
 
 }

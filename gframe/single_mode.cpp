@@ -1,7 +1,7 @@
 #include "single_mode.h"
 #include "duelclient.h"
 #include "game.h"
-#include "../ocgcore/common.h"
+#include "data_manager.h"
 #include "../ocgcore/mtrandom.h"
 #include <thread>
 
@@ -25,7 +25,7 @@ void SingleMode::StopPlay(bool is_exiting) {
 void SingleMode::SetResponse(unsigned char* resp, unsigned int len) {
 	if(!pduel)
 		return;
-	last_replay.WriteInt8(len);
+	last_replay.Write<uint8_t>(len);
 	last_replay.WriteData(resp, len);
 	set_responseb(pduel, resp);
 }
@@ -55,13 +55,13 @@ int SingleMode::SinglePlayThread() {
 	mainGame->dInfo.turn = 0;
 	if(mainGame->chkSinglePlayReturnDeckTop->isChecked())
 		opt |= DUEL_RETURN_DECK_TOP;
-	char filename[256];
+	char filename[256]{};
 	int slen = 0;
 	if(open_file) {
 		open_file = false;
 		slen = BufferIO::EncodeUTF8(open_file_name, filename);
 		if(!preload_script(pduel, filename)) {
-			wchar_t fname[256];
+			wchar_t fname[256]{};
 			myswprintf(fname, L"./single/%ls", open_file_name);
 			slen = BufferIO::EncodeUTF8(fname, filename);
 			if(!preload_script(pduel, filename))
@@ -69,7 +69,7 @@ int SingleMode::SinglePlayThread() {
 		}
 	} else {
 		const wchar_t* name = mainGame->lstSinglePlayList->getListItem(mainGame->lstSinglePlayList->getSelected());
-		wchar_t fname[256];
+		wchar_t fname[256]{};
 		myswprintf(fname, L"./single/%ls", name);
 		slen = BufferIO::EncodeUTF8(fname, filename);
 		if(!preload_script(pduel, filename))
@@ -109,16 +109,17 @@ int SingleMode::SinglePlayThread() {
 		is_continuing = SinglePlayAnalyze(engineBuffer.data(), len);
 	last_replay.BeginRecord();
 	last_replay.WriteHeader(rh);
-	uint16_t buffer[20];
-	BufferIO::CopyCharArray(mainGame->dInfo.hostname, buffer);
-	last_replay.WriteData(buffer, 40, false);
-	BufferIO::CopyCharArray(mainGame->dInfo.clientname, buffer);
-	last_replay.WriteData(buffer, 40, false);
+	uint16_t host_name[20]{};
+	BufferIO::CopyCharArray(mainGame->dInfo.hostname, host_name);
+	last_replay.WriteData(host_name, sizeof host_name, false);
+	uint16_t client_name[20]{};
+	BufferIO::CopyCharArray(mainGame->dInfo.clientname, client_name);
+	last_replay.WriteData(client_name, sizeof client_name, false);
 	last_replay.WriteInt32(start_lp, false);
 	last_replay.WriteInt32(start_hand, false);
 	last_replay.WriteInt32(draw_count, false);
 	last_replay.WriteInt32(opt, false);
-	last_replay.WriteInt16(slen, false);
+	last_replay.Write<uint16_t>(slen, false);
 	last_replay.WriteData(filename, slen, false);
 	last_replay.Flush();
 	start_duel(pduel, opt);
@@ -134,10 +135,10 @@ int SingleMode::SinglePlayThread() {
 	}
 	last_replay.EndRecord();
 	mainGame->gMutex.lock();
-	time_t nowtime = time(NULL);
+	time_t nowtime = time(nullptr);
 	tm* localedtime = localtime(&nowtime);
 	wchar_t timetext[40];
-	wcsftime(timetext, 40, L"%Y-%m-%d %H-%M-%S", localedtime);
+	std::wcsftime(timetext, 40, L"%Y-%m-%d %H-%M-%S", localedtime);
 	mainGame->ebRSName->setText(timetext);
 	if(!mainGame->chkAutoSaveReplay->isChecked()) {
 		mainGame->wReplaySave->setText(dataManager.GetSysString(1340));
@@ -814,7 +815,7 @@ void SingleMode::SinglePlayRefreshSingle(int player, int location, int sequence,
 	mainGame->dField.UpdateCard(mainGame->LocalPlayer(player), location, sequence, queryBuffer);
 }
 void SingleMode::SinglePlayReload() {
-	std::vector<byte> queryBuffer;
+	std::vector<unsigned char> queryBuffer;
 	queryBuffer.resize(SIZE_QUERY_BUFFER);
 	unsigned int flag = 0xffdfff;
 	ReloadLocation(0, LOCATION_MZONE, flag, queryBuffer);
@@ -833,7 +834,7 @@ void SingleMode::SinglePlayReload() {
 	ReloadLocation(0, LOCATION_REMOVED, flag, queryBuffer);
 	ReloadLocation(1, LOCATION_REMOVED, flag, queryBuffer);
 }
-uint32 SingleMode::MessageHandler(intptr_t fduel, uint32 type) {
+uint32_t SingleMode::MessageHandler(intptr_t fduel, uint32_t type) {
 	if(!enable_log)
 		return 0;
 	char msgbuf[1024];

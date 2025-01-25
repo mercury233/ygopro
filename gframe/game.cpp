@@ -99,7 +99,7 @@ bool Game::Initialize() {
 		ErrorLog("Failed to load textures!");
 		return false;
 	}
-	dataManager.FileSystem = device->getFileSystem();
+	DataManager::FileSystem = device->getFileSystem();
 	if(!dataManager.LoadDB(L"cards.cdb")) {
 		ErrorLog("Failed to load card database (cards.cdb)!");
 		return false;
@@ -1141,7 +1141,7 @@ std::wstring Game::SetStaticText(irr::gui::IGUIStaticText* pControl, u32 cWidth,
 	wchar_t strBuffer[4096];
 	std::wstring ret;
 
-	for(size_t i = 0; text[i] != 0 && i < wcslen(text); ++i) {
+	for(size_t i = 0; text[i] != 0 && i < std::wcslen(text); ++i) {
 		wchar_t c = text[i];
 		u32 w = font->getCharDimension(c).Width + font->getKerningWidth(c, prev);
 		prev = c;
@@ -1187,11 +1187,11 @@ void Game::LoadExpansions() {
 		}
 		if (!isdir && (IsExtension(name, L".zip") || IsExtension(name, L".ypk"))) {
 #ifdef _WIN32
-			dataManager.FileSystem->addFileArchive(fpath, true, false, EFAT_ZIP);
+			DataManager::FileSystem->addFileArchive(fpath, true, false, EFAT_ZIP);
 #else
 			char upath[1024];
 			BufferIO::EncodeUTF8(fpath, upath);
-			dataManager.FileSystem->addFileArchive(upath, true, false, EFAT_ZIP);
+			DataManager::FileSystem->addFileArchive(upath, true, false, EFAT_ZIP);
 #endif
 			return;
 		}
@@ -1240,7 +1240,7 @@ void Game::RefreshCategoryDeck(irr::gui::IGUIComboBox* cbCategory, irr::gui::IGU
 	cbCategory->setSelected(2);
 	if(selectlastused) {
 		for(size_t i = 0; i < cbCategory->getItemCount(); ++i) {
-			if(!wcscmp(cbCategory->getItem(i), gameConf.lastcategory)) {
+			if(!std::wcscmp(cbCategory->getItem(i), gameConf.lastcategory)) {
 				cbCategory->setSelected(i);
 				break;
 			}
@@ -1249,7 +1249,7 @@ void Game::RefreshCategoryDeck(irr::gui::IGUIComboBox* cbCategory, irr::gui::IGU
 	RefreshDeck(cbCategory, cbDeck);
 	if(selectlastused) {
 		for(size_t i = 0; i < cbDeck->getItemCount(); ++i) {
-			if(!wcscmp(cbDeck->getItem(i), gameConf.lastdeck)) {
+			if(!std::wcscmp(cbDeck->getItem(i), gameConf.lastdeck)) {
 				cbDeck->setSelected(i);
 				break;
 			}
@@ -1751,7 +1751,7 @@ void Game::ErrorLog(const char* msg) {
 	FILE* fp = fopen("error.log", "at");
 	if(!fp)
 		return;
-	time_t nowtime = time(NULL);
+	time_t nowtime = time(nullptr);
 	tm* localedtime = localtime(&nowtime);
 	char timebuf[40];
 	strftime(timebuf, 40, "%Y-%m-%d %H:%M:%S", localedtime);
@@ -2156,7 +2156,7 @@ recti Game::ResizeFit(s32 x, s32 y, s32 x2, s32 y2) {
 }
 void Game::SetWindowsIcon() {
 #ifdef _WIN32
-	HINSTANCE hInstance = (HINSTANCE)GetModuleHandleW(NULL);
+	HINSTANCE hInstance = (HINSTANCE)GetModuleHandleW(nullptr);
 	HICON hSmallIcon = (HICON)LoadImageW(hInstance, MAKEINTRESOURCEW(1), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
 	HICON hBigIcon = (HICON)LoadImageW(hInstance, MAKEINTRESOURCEW(1), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR);
 	SendMessageW(hWnd, WM_SETICON, ICON_SMALL, (long)hSmallIcon);
