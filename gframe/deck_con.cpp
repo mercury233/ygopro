@@ -1572,13 +1572,12 @@ void DeckBuilder::FilterCards() {
 			all,
 			name,
 			setcode
-		} type;
-		bool exclude;
-		element_t(): type(type_t::all), exclude(false) {}
+		} type{ type_t::all };
+		bool exclude{ false };
 	};
 	const wchar_t* pstr = mainGame->ebCardName->getText();
 	int trycode = BufferIO::GetVal(pstr);
-	std::wstring str = std::wstring(pstr);
+	std::wstring str{ pstr };
 	if (str[0] == 'c') {
 		size_t extension_start = str.find_last_of('.');
 		if (extension_start != std::wstring::npos) {
