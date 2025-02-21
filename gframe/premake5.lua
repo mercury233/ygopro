@@ -49,7 +49,7 @@ project "YGOPro"
     end
 
     filter "system:windows"
-        defines { "_IRR_WCHAR_FILESYSTEM" }
+        defines { "_IRR_WCHAR_FILESYSTEM", "_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=0" }
         files "ygopro.rc"
         libdirs { "$(DXSDK_DIR)Lib/x86" }
         if USE_IRRKLANG then
