@@ -15,6 +15,7 @@
 #ifdef _WIN32
 
 #define NOMINMAX
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 0
 #include <Windows.h>
 
 class FileSystem {
