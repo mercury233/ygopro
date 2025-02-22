@@ -22,10 +22,6 @@ install:
   - tar xf freetype-2.11.1.tar.gz
   - move freetype-2.11.1 freetype
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.5.zip ; exit 0"
-  - 7z x irrlicht-1.8.5.zip
-  - move irrlicht-1.8.5 irrlicht
-  
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.4.4.tar.gz ; exit 0"
   - tar xf lua-5.4.4.tar.gz
   - move lua-5.4.4 lua
@@ -33,17 +29,14 @@ install:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2022/sqlite-amalgamation-3380200.zip ; exit 0"
   - 7z x sqlite-amalgamation-3380200.zip
   - move sqlite-amalgamation-3380200 sqlite3
+
+  - git clone --depth=1 https://github.com/mercury233/irrlicht
   
   - git clone --depth=1 https://%access_token%@github.com/purerosefallen/irrklang
   - mv -f irrklang/plugins/ikpmp3 .
 
   # let premake happy
   - xcopy /E premake\* .
-  
-  # patch irrlicht
-  - cd irrlicht
-  - patch -p1 < irrlicht.patch
-  - cd ..
 
   # premake
   - premake5 vs2019 --irrklang-pro --winxp-support
@@ -94,6 +87,5 @@ cache:
   - premake-5.0.0-beta2-windows.zip
   - libevent-2.0.22-stable.tar.gz
   - freetype-2.11.1.tar.gz
-  - irrlicht-1.8.5.zip
   - lua-5.4.4.tar.gz
   - sqlite-amalgamation-3380200.zip
