@@ -208,6 +208,7 @@ workspace "YGOPro"
     filter "action:vs*"
         vectorextensions "SSE2"
         buildoptions { "/utf-8" }
+        defines { "_CRT_SECURE_NO_WARNINGS" }
     
     filter "not action:vs*"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }

@@ -2,7 +2,6 @@
 #include "game.h"
 #include <stdio.h>
 #include "spmemvfs/spmemvfs.h"
-#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 0
 
 namespace ygo {
 
