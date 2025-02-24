@@ -29,6 +29,7 @@ jobs:
         url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
     
     - name: Extract premake
+      shell: bash
       run: |
         7z x ${{ steps.premake.outputs.file-path }}
     
@@ -39,6 +40,7 @@ jobs:
         url: https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
     
     - name: Extract libevent
+      shell: bash
       run: |
         tar xf ${{ steps.libevent.outputs.file-path }}
         move libevent-2.0.22-stable event
@@ -51,9 +53,10 @@ jobs:
         url: http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
 
     - name: Extract freetype
+      shell: bash
       run: |
         tar xf ${{ steps.freetype.outputs.file-path }}
-        move freetype-2.13.3 freetype
+        mv freetype-2.13.3 freetype
 
     - name: Download lua
       id: lua
@@ -62,9 +65,10 @@ jobs:
         url: https://www.lua.org/ftp/lua-5.4.7.tar.gz
 
     - name: Extract lua
+      shell: bash
       run: |
         tar xf ${{ steps.lua.outputs.file-path }}
-        move lua-5.4.7 lua
+        mv lua-5.4.7 lua
 
     - name: Download sqlite
       id: sqlite
@@ -73,9 +77,10 @@ jobs:
         url: https://www.sqlite.org/2025/sqlite-amalgamation-3490100.zip
     
     - name: Extract sqlite
+      shell: bash
       run: |
         7z x ${{ steps.sqlite.outputs.file-path }}
-        move sqlite-amalgamation-3490100 sqlite3
+        mv sqlite-amalgamation-3490100 sqlite3
 
     - name: Download irrKlang
       id: irrKlang
@@ -84,9 +89,10 @@ jobs:
         url: https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
 
     - name: Extract irrKlang
+      shell: bash
       run: |
         7z x ${{ steps.irrKlang.outputs.file-path }}
-        move irrKlang-1.6.0 irrKlang
+        mv irrKlang-1.6.0 irrKlang
 
     - name: Download irrlicht
       run: |
