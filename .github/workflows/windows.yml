@@ -114,7 +114,7 @@ jobs:
     - name: Set DirectX SDK environment variables
       run: |
         $dxsdkPath = Resolve-Path 'DXSDK'
-        "DXSDK_DIR=$($dxsdkPath.ProviderPath)/" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "DXSDK_DIR=$($dxsdkPath.ProviderPath)\" | Out-File -FilePath $env:GITHUB_ENV -Append
 
     - name: Use premake to generate Visual Studio solution
       run: |
