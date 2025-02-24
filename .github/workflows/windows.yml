@@ -31,7 +31,7 @@ jobs:
     - name: Extract premake
       shell: bash
       run: |
-        7z x ${{ steps.premake.outputs.file-path }}
+        7z x ${{ steps.premake.outputs.filepath }}
     
     - name: Download libevent
       id: libevent
@@ -42,7 +42,7 @@ jobs:
     - name: Extract libevent
       shell: bash
       run: |
-        tar xf ${{ steps.libevent.outputs.file-path }}
+        tar xf ${{ steps.libevent.outputs.filepath }}
         move libevent-2.0.22-stable event
         xcopy /E event\WIN32-Code event\include
 
@@ -55,7 +55,7 @@ jobs:
     - name: Extract freetype
       shell: bash
       run: |
-        tar xf ${{ steps.freetype.outputs.file-path }}
+        tar xf ${{ steps.freetype.outputs.filepath }}
         mv freetype-2.13.3 freetype
 
     - name: Download lua
@@ -67,7 +67,7 @@ jobs:
     - name: Extract lua
       shell: bash
       run: |
-        tar xf ${{ steps.lua.outputs.file-path }}
+        tar xf ${{ steps.lua.outputs.filepath }}
         mv lua-5.4.7 lua
 
     - name: Download sqlite
@@ -79,7 +79,7 @@ jobs:
     - name: Extract sqlite
       shell: bash
       run: |
-        7z x ${{ steps.sqlite.outputs.file-path }}
+        7z x ${{ steps.sqlite.outputs.filepath }}
         mv sqlite-amalgamation-3490100 sqlite3
 
     - name: Download irrKlang
@@ -91,7 +91,7 @@ jobs:
     - name: Extract irrKlang
       shell: bash
       run: |
-        7z x ${{ steps.irrKlang.outputs.file-path }}
+        7z x ${{ steps.irrKlang.outputs.filepath }}
         mv irrKlang-1.6.0 irrKlang
 
     - name: Download irrlicht
@@ -115,7 +115,7 @@ jobs:
     - name: Install DirectX SDK
       if: steps.dxsdk.outputs.cache-hit != 'true'
       run: |
-        ${{ steps.dxsdk-download.outputs.file-path }} /U /O
+        ${{ steps.dxsdk-download.outputs.filepath }} /U /O
 
     - name: Use premake to generate Visual Studio solution
       run: |
