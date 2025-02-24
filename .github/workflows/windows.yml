@@ -110,7 +110,7 @@ jobs:
       if: steps.dxsdk.outputs.cache-hit != 'true'
       run: |
         ${{ steps.dxsdk-download.outputs.filepath }} /U /O
-        echo %DXSDK_DIR%
+        echo $env:DXSDK_DIR
 
     - name: Set DirectX SDK environment variables
       if: env.DXSDK_DIR == null
