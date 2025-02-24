@@ -24,34 +24,34 @@ jobs:
 
     - name: Download dependencies
       run: |
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
           https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
         7z x premake-5.0.0-beta5-windows.zip
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
           https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
         tar xf libevent-2.0.22-stable.tar.gz
         move libevent-2.0.22-stable event
         xcopy /E event\WIN32-Code event\include
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
           http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
         tar xf freetype-2.13.3.tar.gz
         move freetype-2.13.3 freetype
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
           https://www.lua.org/ftp/lua-5.4.7.tar.gz
         tar xf lua-5.4.7.tar.gz
         move lua-5.4.7 lua
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
           https://www.sqlite.org/2025/sqlite-amalgamation-3490100.zip
         7z x sqlite-amalgamation-3490100.zip
         move sqlite-amalgamation-3490100 sqlite3
 
         git clone --depth=1 https://github.com/mercury233/irrlicht
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
           https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
         7z x irrKlang-32bit-1.6.0.zip
         move irrKlang-32bit-1.6.0 irrKlang
