@@ -58,7 +58,7 @@ jobs:
 
         xcopy /E premake\* .
 
-        premake5 vs2019 --winxp-support
+        .\premake5.exe vs2019 --winxp-support
 
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
