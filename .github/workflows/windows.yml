@@ -77,16 +77,16 @@ jobs:
         7z x ${{ steps.sqlite.outputs.filepath }}
         move sqlite-amalgamation-3490100 sqlite3
 
-#    - name: Download irrKlang
-#      id: irrKlang
-#      uses: mercury233/action-cache-download-file@main
-#      with:
-#        url: https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
+    - name: Download irrKlang
+      id: irrKlang
+      uses: mercury233/action-cache-download-file@main
+      with:
+        url: https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
 
-#    - name: Extract irrKlang
-#      run: |
-#        7z x ${{ steps.irrKlang.outputs.filepath }}
-#        move irrKlang-1.6.0 irrKlang
+    - name: Extract irrKlang
+      run: |
+        7z x ${{ steps.irrKlang.outputs.filepath }}
+        move irrKlang-1.6.0 irrKlang
 
     - name: Download irrlicht
       run: |
@@ -97,7 +97,7 @@ jobs:
       uses: actions/cache@v4
       with:
         key: dxsdk
-        path: ${{ env.DXSDK_DIR || 'C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)' }}
+        path: DXSDK
 
     - name: Download DirectX SDK
       if: steps.dxsdk.outputs.cache-hit != 'true'
@@ -109,14 +109,14 @@ jobs:
     - name: Install DirectX SDK
       if: steps.dxsdk.outputs.cache-hit != 'true'
       run: |
-        ${{ steps.dxsdk-download.outputs.filepath }} /U /O
-        echo $env:DXSDK_DIR
+        7z x ${{ steps.dxsdk-download.outputs.filepath }}
 
     - name: Set DirectX SDK environment variables
-      if: env.DXSDK_DIR == null
       shell: bash
       run: |
-        echo "DXSDK_DIR=C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\" >> "$GITHUB_ENV"
+        DXSDK_DIR=$(cd DXSDK && pwd)
+        echo "DXSDK_DIR=${DXSDK_DIR}" >> "$GITHUB_ENV"
+        cd ..
 
     - name: Use premake to generate Visual Studio solution
       run: |
