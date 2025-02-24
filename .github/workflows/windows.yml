@@ -109,7 +109,7 @@ jobs:
     - name: Install DirectX SDK
       if: steps.dxsdk.outputs.cache-hit != 'true'
       run: |
-        7z x ${{ steps.dxsdk-download.outputs.filepath }}
+        7z x ${{ steps.dxsdk-download.outputs.filepath }} -aoa
 
     - name: Set DirectX SDK environment variables
       shell: bash
