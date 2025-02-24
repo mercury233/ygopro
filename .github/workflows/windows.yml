@@ -54,7 +54,7 @@ jobs:
         curl --retry 5 --connect-timeout 30 --location --remote-name-all `
           https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
         7z x irrKlang-32bit-1.6.0.zip
-        move irrKlang-32bit-1.6.0 irrKlang
+        move irrKlang-1.6.0 irrKlang
 
         xcopy /E premake\* .
 
