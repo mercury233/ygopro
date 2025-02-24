@@ -24,7 +24,7 @@ jobs:
 
     - name: Download premake
       id: premake
-      uses: mercury233/action-cache-download-file
+      uses: mercury233/action-cache-download-file@v0
       with:
         url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
     
@@ -34,7 +34,7 @@ jobs:
     
     - name: Download libevent
       id: libevent
-      uses: mercury233/action-cache-download-file
+      uses: mercury233/action-cache-download-file@v0
       with:
         url: https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
     
@@ -46,7 +46,7 @@ jobs:
 
     - name: Download freetype
       id: freetype
-      uses: mercury233/action-cache-download-file
+      uses: mercury233/action-cache-download-file@v0
       with:
         url: http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
 
@@ -57,7 +57,7 @@ jobs:
 
     - name: Download lua
       id: lua
-      uses: mercury233/action-cache-download-file
+      uses: mercury233/action-cache-download-file@v0
       with:
         url: https://www.lua.org/ftp/lua-5.4.7.tar.gz
 
@@ -68,7 +68,7 @@ jobs:
 
     - name: Download sqlite
       id: sqlite
-      uses: mercury233/action-cache-download-file
+      uses: mercury233/action-cache-download-file@v0
       with:
         url: https://www.sqlite.org/2025/sqlite-amalgamation-3490100.zip
     
@@ -79,7 +79,7 @@ jobs:
 
     - name: Download irrKlang
       id: irrKlang
-      uses: mercury233/action-cache-download-file
+      uses: mercury233/action-cache-download-file@v0
       with:
         url: https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
 
@@ -102,7 +102,7 @@ jobs:
     - name: Download DirectX SDK
       if: steps.dxsdk.outputs.cache-hit != 'true'
       id: dxsdk-download
-      uses: mercury233/action-cache-download-file
+      uses: mercury233/action-cache-download-file@v0
       with:
         url: https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe
 
