@@ -77,16 +77,16 @@ jobs:
         7z x ${{ steps.sqlite.outputs.filepath }}
         move sqlite-amalgamation-3490100 sqlite3
 
-    - name: Download irrKlang
-      id: irrKlang
-      uses: mercury233/action-cache-download-file@main
-      with:
-        url: https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
+#    - name: Download irrKlang
+#      id: irrKlang
+#      uses: mercury233/action-cache-download-file@main
+#      with:
+#        url: https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
 
-    - name: Extract irrKlang
-      run: |
-        7z x ${{ steps.irrKlang.outputs.filepath }}
-        move irrKlang-1.6.0 irrKlang
+#    - name: Extract irrKlang
+#      run: |
+#        7z x ${{ steps.irrKlang.outputs.filepath }}
+#        move irrKlang-1.6.0 irrKlang
 
     - name: Download irrlicht
       run: |
@@ -110,6 +110,7 @@ jobs:
       if: steps.dxsdk.outputs.cache-hit != 'true'
       run: |
         ${{ steps.dxsdk-download.outputs.filepath }} /U /O
+        echo %DXSDK_DIR%
 
     - name: Set DirectX SDK environment variables
       if: env.DXSDK_DIR == null
