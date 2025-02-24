@@ -112,11 +112,9 @@ jobs:
         7z x ${{ steps.dxsdk-download.outputs.filepath }} -aoa
 
     - name: Set DirectX SDK environment variables
-      shell: bash
       run: |
-        DXSDK_DIR=$(cd DXSDK && pwd)
-        echo "DXSDK_DIR=${DXSDK_DIR}/" >> "$GITHUB_ENV"
-        cd ..
+        $dxsdkPath = Resolve-Path 'DXSDK'
+        "DXSDK_DIR=$($dxsdkPath.ProviderPath)/" | Out-File -FilePath $env:GITHUB_ENV -Append
 
     - name: Use premake to generate Visual Studio solution
       run: |
