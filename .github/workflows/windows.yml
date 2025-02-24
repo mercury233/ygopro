@@ -115,7 +115,7 @@ jobs:
       shell: bash
       run: |
         DXSDK_DIR=$(cd DXSDK && pwd)
-        echo "DXSDK_DIR=${DXSDK_DIR}" >> "$GITHUB_ENV"
+        echo "DXSDK_DIR=${DXSDK_DIR}/" >> "$GITHUB_ENV"
         cd ..
 
     - name: Use premake to generate Visual Studio solution
