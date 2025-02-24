@@ -1,0 +1,76 @@
+name: Automated Test Build (Windows)
+
+on:
+  push:
+    branches:
+      - test
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-2019
+#    env:
+#      access_token: ${{ secrets.ACCESS_TOKEN }}
+    steps:
+    - name: Checkout repository with submodules
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: true
+
+    - name: Update submodules
+      shell: bash
+      run: |
+        git submodule update --init --recursive
+
+    - name: Download dependencies
+      shell: bash
+      run: |
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+          https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
+        7z x premake-5.0.0-beta5-windows.zip
+
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+          https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
+        tar xf libevent-2.0.22-stable.tar.gz
+        move libevent-2.0.22-stable event
+        xcopy /E event\WIN32-Code event\include
+
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+          http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
+        tar xf freetype-2.13.3.tar.gz
+        move freetype-2.13.3 freetype
+
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+          https://www.lua.org/ftp/lua-5.4.7.tar.gz
+        tar xf lua-5.4.7.tar.gz
+        move lua-5.4.7 lua
+
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+          https://www.sqlite.org/2025/sqlite-amalgamation-3490100.zip
+        7z x sqlite-amalgamation-3490100.zip
+        move sqlite-amalgamation-3490100 sqlite3
+
+        git clone --depth=1 https://github.com/mercury233/irrlicht
+
+        curl --retry 5 --connect-timeout 30 --location --remote-name-all \
+          https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
+        7z x irrKlang-32bit-1.6.0.zip
+        move irrKlang-32bit-1.6.0 irrKlang
+
+        xcopy /E premake\* .
+
+        premake5 vs2019 --winxp-support
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build solution
+      run: |
+        MSBuild.exe build\YGOPro.sln /m /p:Configuration=Release
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        path: |
+          bin/release/YGOPro.exe
