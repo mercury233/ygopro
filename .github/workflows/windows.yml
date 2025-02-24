@@ -22,42 +22,98 @@ jobs:
       run: |
         git submodule update --init --recursive
 
-    - name: Download dependencies
+    - name: Download premake
+      id: premake
+      uses: mercury233/action-cache-download-file
+      with:
+        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
+    
+    - name: Extract premake
       run: |
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
-          https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
-        7z x premake-5.0.0-beta5-windows.zip
-
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
-          https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
-        tar xf libevent-2.0.22-stable.tar.gz
+        7z x ${{ steps.premake.outputs.file-path }}
+    
+    - name: Download libevent
+      id: libevent
+      uses: mercury233/action-cache-download-file
+      with:
+        url: https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
+    
+    - name: Extract libevent
+      run: |
+        tar xf ${{ steps.libevent.outputs.file-path }}
         move libevent-2.0.22-stable event
         xcopy /E event\WIN32-Code event\include
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
-          http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
-        tar xf freetype-2.13.3.tar.gz
+    - name: Download freetype
+      id: freetype
+      uses: mercury233/action-cache-download-file
+      with:
+        url: http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
+
+    - name: Extract freetype
+      run: |
+        tar xf ${{ steps.freetype.outputs.file-path }}
         move freetype-2.13.3 freetype
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
-          https://www.lua.org/ftp/lua-5.4.7.tar.gz
-        tar xf lua-5.4.7.tar.gz
+    - name: Download lua
+      id: lua
+      uses: mercury233/action-cache-download-file
+      with:
+        url: https://www.lua.org/ftp/lua-5.4.7.tar.gz
+
+    - name: Extract lua
+      run: |
+        tar xf ${{ steps.lua.outputs.file-path }}
         move lua-5.4.7 lua
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
-          https://www.sqlite.org/2025/sqlite-amalgamation-3490100.zip
-        7z x sqlite-amalgamation-3490100.zip
+    - name: Download sqlite
+      id: sqlite
+      uses: mercury233/action-cache-download-file
+      with:
+        url: https://www.sqlite.org/2025/sqlite-amalgamation-3490100.zip
+    
+    - name: Extract sqlite
+      run: |
+        7z x ${{ steps.sqlite.outputs.file-path }}
         move sqlite-amalgamation-3490100 sqlite3
 
-        git clone --depth=1 https://github.com/mercury233/irrlicht
+    - name: Download irrKlang
+      id: irrKlang
+      uses: mercury233/action-cache-download-file
+      with:
+        url: https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
 
-        curl --retry 5 --connect-timeout 30 --location --remote-name-all `
-          https://www.ambiera.at/downloads/irrKlang-32bit-1.6.0.zip
-        7z x irrKlang-32bit-1.6.0.zip
+    - name: Extract irrKlang
+      run: |
+        7z x ${{ steps.irrKlang.outputs.file-path }}
         move irrKlang-1.6.0 irrKlang
 
-        xcopy /E premake\* .
+    - name: Download irrlicht
+      run: |
+        git clone --depth=1 https://github.com/mercury233/irrlicht
 
+    - name: Check DirectX SDK
+      id: dxsdk
+      uses: actions/cache@v4
+      with:
+        key: dxsdk
+        path: ${{ env.DXSDK_DIR }}
+
+    - name: Download DirectX SDK
+      if: steps.dxsdk.outputs.cache-hit != 'true'
+      id: dxsdk-download
+      uses: mercury233/action-cache-download-file
+      with:
+        url: https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe
+
+    - name: Install DirectX SDK
+      if: steps.dxsdk.outputs.cache-hit != 'true'
+      run: |
+        ${{ steps.dxsdk-download.outputs.file-path }} /U /O
+
+    - name: Use premake to generate Visual Studio solution
+      run: |
+        xcopy /E premake\* .
         .\premake5.exe vs2019 --winxp-support
 
     - name: Add msbuild to PATH
