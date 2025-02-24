@@ -113,8 +113,9 @@ jobs:
 
     - name: Set DirectX SDK environment variables
       if: env.DXSDK_DIR == null
+      shell: bash
       run: |
-        echo DXSDK_DIR='C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\' >> %GITHUB_ENV%
+        echo "DXSDK_DIR='C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\'" >> "$GITHUB_ENV"
 
     - name: Use premake to generate Visual Studio solution
       run: |
