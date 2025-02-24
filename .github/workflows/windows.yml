@@ -19,12 +19,10 @@ jobs:
         submodules: true
 
     - name: Update submodules
-      shell: bash
       run: |
         git submodule update --init --recursive
 
     - name: Download dependencies
-      shell: bash
       run: |
         curl --retry 5 --connect-timeout 30 --location --remote-name-all \
           https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
