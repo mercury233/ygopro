@@ -97,7 +97,7 @@ jobs:
       uses: actions/cache@v4
       with:
         key: dxsdk
-        path: ${{ env.DXSDK_DIR }}
+        path: ${{ env.DXSDK_DIR || 'C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)' }}
 
     - name: Download DirectX SDK
       if: steps.dxsdk.outputs.cache-hit != 'true'
