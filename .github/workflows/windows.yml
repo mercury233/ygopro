@@ -112,7 +112,7 @@ jobs:
         ${{ steps.dxsdk-download.outputs.filepath }} /U /O
 
     - name: Set DirectX SDK environment variables
-      if: !env.DXSDK_DIR
+      if: env.DXSDK_DIR == null
       run: |
         echo DXSDK_DIR='C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\ >> %GITHUB_ENV%
 
