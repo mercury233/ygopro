@@ -74,9 +74,8 @@ after_build:
               }
           }
       } catch {
-          Write-Warning "Failed to delete latest release: $_"
+          Write-Output "Failed to delete latest release: $_"
       }
-      exit 0
 
 test: off
 
