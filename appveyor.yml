@@ -64,7 +64,20 @@ after_build:
   - bash -c "git tag -d latest ; exit 0"
   - git tag latest HEAD
   - git push -f origin latest
-  - ps: $url = 'https://api.github.com/repos/mercury233/ygopro/releases/' ; $j = Invoke-RestMethod ($url+'latest') ; Invoke-RestMethod ($url+$j.id) -Method Delete -Headers @{"Authorization" = "Bearer $($env:access_token)"}
+  - ps: |
+      try {
+          $url = 'https://api.github.com/repos/mercury233/ygopro/releases/'
+          $latest = Invoke-RestMethod ($url+'latest')
+          if ($latest.id) {
+              Invoke-RestMethod ($url+$latest.id) -Method Delete -Headers @{
+                  "Authorization" = "Bearer $($env:access_token)"
+              }
+          }
+      } catch {
+          Write-Warning "Failed to delete latest release: $_"
+          # Continue execution even if delete fails
+          exit 0
+      }
 
 test: off
 
