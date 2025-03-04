@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: windows-2019
-#    env:
-#      access_token: ${{ secrets.ACCESS_TOKEN }}
     steps:
     - name: Checkout repository with submodules
       uses: actions/checkout@v4
@@ -113,7 +111,7 @@ jobs:
       run: |
         7z x ${{ steps.dxsdk-download.outputs.filepath }} -aoa
 
-    - name: Set DirectX SDK environment variables
+    - name: Set DirectX SDK environment variable
       run: |
         $dxsdkPath = Resolve-Path 'DXSDK'
         "DXSDK_DIR=$($dxsdkPath.ProviderPath)\" | Out-File -FilePath $env:GITHUB_ENV -Append
