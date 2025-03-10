@@ -62,7 +62,7 @@ function TryPath(testfile, ...)
         end
     end
     print("Warning: Could not find " .. testfile .. " in any of the specified paths. Using default.")
-    return {...}[1]
+    return "."
 end
 
 if GetParam("build-lua") then
