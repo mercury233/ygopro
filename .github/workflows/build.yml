@@ -247,7 +247,7 @@ jobs:
       with:
         name: YGOPro-${{ matrix.os }}
         path: |
-          bin/*
+          bin/release/YGOPro
 
   build-macos:
     strategy:
@@ -287,12 +287,6 @@ jobs:
 #    - name: Install dependencies
 #      run: |
 #        brew install freetype libevent libx11 sqlite zlib
-
-    - name: Test path
-      if: runner.arch == 'X64'
-      run: |
-        brew --prefix sqlite
-        sudo ls /usr/local/opt/sqlite
 
     - name: Download premake
       id: premake

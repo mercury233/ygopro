@@ -107,8 +107,8 @@ elseif GetParam("no-build-sqlite") then
     BUILD_SQLITE = false
 end
 if not BUILD_SQLITE then
-    SQLITE_INCLUDE_DIR = GetParam("sqlite-include-dir") or TryPath("sqlite3.h", "/usr/local/include/sqlite", "/usr/include/sqlite", "/usr/local/include", "/usr/include", "/usr/local/opt/sqlite", "/opt/homebrew/include", "/opt/homebrew/opt/sqlite/include", "./sqlite3")
-    SQLITE_LIB_DIR = GetParam("sqlite-lib-dir") or TryPath("libsqlite3.a", "/usr/local/lib/sqlite", "/usr/lib/sqlite", "/usr/lib/x86_64-linux-gnu", "/usr/local/opt/sqlite", "/opt/homebrew/lib", "/opt/homebrew/opt/sqlite/lib", "./sqlite3")
+    SQLITE_INCLUDE_DIR = GetParam("sqlite-include-dir") or TryPath("sqlite3.h", "/usr/local/include/sqlite", "/usr/include/sqlite", "/usr/local/include", "/usr/include", "/usr/local/opt/sqlite/include", "/opt/homebrew/include", "/opt/homebrew/opt/sqlite/include", "./sqlite3")
+    SQLITE_LIB_DIR = GetParam("sqlite-lib-dir") or TryPath("libsqlite3.a", "/usr/local/lib/sqlite", "/usr/lib/sqlite", "/usr/lib/x86_64-linux-gnu", "/usr/local/opt/sqlite/lib", "/opt/homebrew/lib", "/opt/homebrew/opt/sqlite/lib", "./sqlite3")
 end
 
 if GetParam("build-irrlicht") then
