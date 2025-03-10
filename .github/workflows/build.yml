@@ -165,10 +165,10 @@ jobs:
         include:
           - os: ubuntu-20.04
             env:
-              PREMAKE_VERSION: 5.0.0-beta5
+              PREMAKE_VERSION: 5.0.0-beta3
           - os: ubuntu-22.04
             env:
-              PREMAKE_VERSION: 5.0.0-beta5
+              PREMAKE_VERSION: 5.0.0-beta4
           - os: ubuntu-24.04
             env:
               PREMAKE_VERSION: 5.0.0-beta5
@@ -235,6 +235,7 @@ jobs:
 
     - name: Make
       run: |
+        cd build
         make -j 4 config=release
 
     - name: Upload build artifacts
