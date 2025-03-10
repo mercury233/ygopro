@@ -87,7 +87,7 @@ elseif GetParam("no-build-event") then
     BUILD_EVENT = false
 end
 if not BUILD_EVENT then
-    EVENT_INCLUDE_DIR = GetParam("event-include-dir") or TryPath("event.h", "/usr/local/include/event2", "/usr/include/event2", "/opt/homebrew/include/event2", "./event/include")
+    EVENT_INCLUDE_DIR = GetParam("event-include-dir") or TryPath("event2/event.h", "/usr/local/include", "/usr/include", "/opt/homebrew/include", "./event/include")
     EVENT_LIB_DIR = GetParam("event-lib-dir") or TryPath("libevent.a", "/usr/local/lib", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "./event/lib")
 end
 
@@ -107,7 +107,7 @@ elseif GetParam("no-build-sqlite") then
     BUILD_SQLITE = false
 end
 if not BUILD_SQLITE then
-    SQLITE_INCLUDE_DIR = GetParam("sqlite-include-dir") or TryPath("sqlite3.h", "/usr/local/include", "/usr/include", "/opt/homebrew/include", "/opt/homebrew/opt/sqlite", "./sqlite3")
+    SQLITE_INCLUDE_DIR = GetParam("sqlite-include-dir") or TryPath("sqlite3.h", "/usr/local/include", "/usr/include", "/opt/homebrew/include", "/opt/homebrew/opt/sqlite/include", "./sqlite3")
     SQLITE_LIB_DIR = GetParam("sqlite-lib-dir") or TryPath("libsqlite3.a", "/usr/local/lib", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "/opt/homebrew/opt/sqlite/lib", "./sqlite3")
 end
 
