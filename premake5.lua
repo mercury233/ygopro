@@ -58,6 +58,9 @@ end
 function TryPath(testfile, ...)
     for i, path in ipairs({...}) do
         if os.isdir(path) and os.isfile(path .. "/" .. testfile) then
+            if path:sub(1, 1) == "." then
+                path = "." .. path -- used in ./gframe/premake5.lua, so add extra . to the front
+            end
             return path
         end
     end

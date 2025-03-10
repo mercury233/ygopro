@@ -203,10 +203,17 @@ jobs:
  
     - name: Test path 2
       run: |
+        echo "listing /usr/local/lib"
         sudo ls /usr/local/lib
-        echo oooooooooooooooo
+        echo "listing /usr/local/include"
         sudo ls /usr/local/include
-        echo oooooooooooooooo
+        echo "listing /usr/lib"
+        sudo ls /usr/lib
+        echo "listing /usr/include"
+        sudo ls /usr/include
+        echo "listing /usr/lib/x86_64-linux-gnu"
+        sudo ls /usr/lib/x86_64-linux-gnu
+        echo "listing /usr/include/freetype2"
         sudo ls /usr/include/freetype2
 
     - name: Download premake
@@ -300,11 +307,12 @@ jobs:
       if: runner.arch == 'ARM64'
       run: |
         brew --prefix freetype
-        echo oooooooooooooooo
+        brew --prefix sqlite
+        echo "listing /opt/homebrew"
         sudo ls /opt/homebrew
-        echo oooooooooooooooo
+        echo "listing /opt/homebrew/include"
         sudo ls /opt/homebrew/include
-        echo oooooooooooooooo
+        echo "listing /opt/homebrew/lib"
         sudo ls /opt/homebrew/lib
 
     - name: Download premake
