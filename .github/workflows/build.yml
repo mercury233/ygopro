@@ -248,3 +248,99 @@ jobs:
         name: YGOPro-${{ matrix.os }}
         path: |
           bin/*
+
+  build-macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: 
+          - macos-13
+          - macos-15
+        include:
+          - os: macos-13
+            env:
+              PREMAKE_VERSION: 5.0.0-beta5
+          - os: macos-15
+            env:
+              PREMAKE_VERSION: 5.0.0-beta5
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository with submodules
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+        submodules: true
+
+    - name: Update submodules
+      run: |
+        cd ocgcore
+        git checkout master
+        git pull origin master
+        cd ..
+#        cd script
+#        git checkout master
+#        git pull origin master
+#        cd ..
+
+    - name: Install dependencies
+      run: |
+        brew install freetype libevent libx11 sqlite zlib
+
+    - name: Download premake
+      id: premake
+      uses: mercury233/action-cache-download-file@main
+      with:
+        url: https://github.com/premake/premake-core/releases/download/v${{ matrix.env.PREMAKE_VERSION }}/premake-${{ matrix.env.PREMAKE_VERSION }}-macosx.tar.gz
+        filename: premake5.tar.gz
+    
+    - name: Extract premake
+      run: |
+        tar xf ${{ steps.premake.outputs.filepath }}
+        chmod +x ./premake5
+
+    - name: Download lua
+      id: lua
+      uses: mercury233/action-cache-download-file@main
+      with:
+        url: https://www.lua.org/ftp/lua-5.4.7.tar.gz
+
+    - name: Extract lua
+      run: |
+        tar xf ${{ steps.lua.outputs.filepath }}
+        mv lua-5.4.7 lua
+
+    - name: Download irrlicht
+      run: |
+        git clone --depth=1 https://github.com/mercury233/irrlicht
+
+    - name: Build irrlicht
+      run: |
+        cd irrlicht
+        cp -r include /usr/local/include/irrlicht
+        cd source/Irrlicht/MacOSX
+        xcodebuild -project MacOSX.xcodeproj
+        cp build/Release/libIrrlicht.a /usr/local/lib/
+        cd ../../../..
+
+    - name: Copy premake files
+      run: |
+        cp -r premake/* .
+
+    - name: Use premake to generate make files
+      run: |
+        ./premake5 gmake --cc=clang --no-use-irrklang
+
+    - name: Make
+      run: |
+        cd build
+        make -j 3 config=release
+        cd ..
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: YGOPro-${{ matrix.os }}
+        path: |
+          bin/*
