@@ -107,8 +107,8 @@ elseif GetParam("no-build-sqlite") then
     BUILD_SQLITE = false
 end
 if not BUILD_SQLITE then
-    SQLITE_INCLUDE_DIR = GetParam("sqlite-include-dir") or TryPath("sqlite3.h", "/usr/local/include", "/usr/include", "/opt/homebrew/include", "/opt/homebrew/opt/sqlite/include", "./sqlite3")
-    SQLITE_LIB_DIR = GetParam("sqlite-lib-dir") or TryPath("libsqlite3.a", "/usr/local/lib", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "/opt/homebrew/opt/sqlite/lib", "./sqlite3")
+    SQLITE_INCLUDE_DIR = GetParam("sqlite-include-dir") or TryPath("sqlite3.h", "/usr/local/include/sqlite", "/usr/include/sqlite", "/opt/homebrew/include", "/opt/homebrew/opt/sqlite/include", "./sqlite3")
+    SQLITE_LIB_DIR = GetParam("sqlite-lib-dir") or TryPath("libsqlite3.a", "/usr/local/lib/sqlite", "/usr/lib/sqlite", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "/opt/homebrew/opt/sqlite/lib", "./sqlite3")
 end
 
 if GetParam("build-irrlicht") then
@@ -147,7 +147,7 @@ end
 if IRRKLANG_PRO then
     -- irrklang pro can't use the pro lib to debug
     IRRKLANG_PRO_RELEASE_LIB_DIR = GetParam("irrklang-pro-release-lib-dir") or "../irrklang/lib/Win32-vs2019"
-    IRRKLANG_PRO_DEBUG_LIB_DIR = GetParam("irrklang-pro-debug-lib-dir") or "../irrklang/lib/Win32-visualStudio-debug"  
+    IRRKLANG_PRO_DEBUG_LIB_DIR = GetParam("irrklang-pro-debug-lib-dir") or "../irrklang/lib/Win32-visualStudio-debug"
 end
 
 BUILD_IKPMP3 = USE_IRRKLANG and (GetParam("build-ikpmp3") or IRRKLANG_PRO)
@@ -199,7 +199,7 @@ workspace "YGOPro"
         targetdir "bin/debug"
 
     filter { "configurations:Release", "action:vs*" }
-        flags { "LinkTimeOptimization" }
+        linktimeoptimization "On"
         staticruntime "On"
         disablewarnings { "4244", "4267", "4838", "4577", "4018", "4996", "4477", "4091", "4800", "6011", "6031", "6054", "6262" }
 
@@ -217,7 +217,7 @@ workspace "YGOPro"
         vectorextensions "SSE2"
         buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
-    
+
     filter "not action:vs*"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }
 

@@ -39,18 +39,18 @@ jobs:
       with:
         url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
         filename: premake5.zip
-    
+
     - name: Extract premake
       run: |
         7z x ${{ steps.premake.outputs.filepath }}
-    
+
     - name: Download libevent
       id: libevent
       uses: mercury233/action-cache-download-file@main
       with:
         url: https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
         filename: libevent.tar.gz
-    
+
     - name: Extract libevent
       run: |
         tar xf ${{ steps.libevent.outputs.filepath }}
@@ -84,7 +84,7 @@ jobs:
       uses: mercury233/action-cache-download-file@main
       with:
         url: https://www.sqlite.org/2025/sqlite-amalgamation-3490100.zip
-    
+
     - name: Extract sqlite
       run: |
         7z x ${{ steps.sqlite.outputs.filepath }}
@@ -161,7 +161,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: 
+        os:
 #          - ubuntu-20.04
           - ubuntu-22.04
           - ubuntu-24.04
@@ -200,21 +200,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libevent-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libsqlite3-dev libxxf86vm-dev
- 
-    - name: Test path 2
-      run: |
-        echo "listing /usr/local/lib"
-        sudo ls /usr/local/lib
-        echo "listing /usr/local/include"
-        sudo ls /usr/local/include
-        echo "listing /usr/lib"
-        sudo ls /usr/lib
-        echo "listing /usr/include"
-        sudo ls /usr/include
-        echo "listing /usr/lib/x86_64-linux-gnu"
-        sudo ls /usr/lib/x86_64-linux-gnu
-        echo "listing /usr/include/freetype2"
-        sudo ls /usr/include/freetype2
 
     - name: Download premake
       id: premake
@@ -222,7 +207,7 @@ jobs:
       with:
         url: https://github.com/premake/premake-core/releases/download/v${{ matrix.env.PREMAKE_VERSION }}/premake-${{ matrix.env.PREMAKE_VERSION }}-linux.tar.gz
         filename: premake5.tar.gz
-    
+
     - name: Extract premake
       run: |
         tar xf ${{ steps.premake.outputs.filepath }}
@@ -268,7 +253,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: 
+        os:
           - macos-13
           - macos-15
         include:
@@ -303,29 +288,13 @@ jobs:
 #      run: |
 #        brew install freetype libevent libx11 sqlite zlib
 
-    - name: Test path
-      if: runner.arch == 'ARM64'
-      run: |
-        brew --prefix freetype
-        brew --prefix sqlite
-        echo "listing /opt/homebrew"
-        sudo ls /opt/homebrew
-        echo "listing /opt/homebrew/include"
-        sudo ls /opt/homebrew/include
-        echo "listing /opt/homebrew/lib"
-        sudo ls /opt/homebrew/lib
-        echo "listing /opt/homebrew/opt/sqlite"
-        sudo ls /opt/homebrew/opt/sqlite
-        echo "listing /opt/homebrew/opt/freetype"
-        sudo ls /opt/homebrew/opt/freetype
-
     - name: Download premake
       id: premake
       uses: mercury233/action-cache-download-file@main
       with:
         url: https://github.com/premake/premake-core/releases/download/v${{ matrix.env.PREMAKE_VERSION }}/premake-${{ matrix.env.PREMAKE_VERSION }}-macosx.tar.gz
         filename: premake5.tar.gz
-    
+
     - name: Extract premake
       run: |
         tar xf ${{ steps.premake.outputs.filepath }}
@@ -352,18 +321,6 @@ jobs:
         xcodebuild -project MacOSX.xcodeproj
         cd ../../../..
 
-#    - name: Install Irrlicht (Intel)
-#      if: runner.arch == 'X64'
-#      run: |
-#        sudo cp -r irrlicht/include /usr/local/include/irrlicht
-#        sudo cp irrlicht/source/Irrlicht/MacOSX/build/Release/libIrrlicht.a /usr/local/lib/
-
-#    - name: Install Irrlicht (ARM)
-#      if: runner.arch == 'ARM64'
-#      run: |
-#        sudo cp -r irrlicht/include /opt/homebrew/include/irrlicht
-#        sudo cp irrlicht/source/Irrlicht/MacOSX/build/Release/libIrrlicht.a /opt/homebrew/lib/
-
     - name: Copy premake files
       run: |
         cp -r premake/* .
@@ -372,7 +329,7 @@ jobs:
       if: runner.arch == 'X64'
       run: |
         ./premake5 gmake --cc=clang --no-use-irrklang
-    
+
     - name: Use premake to generate make files (ARM)
       if: runner.arch == 'ARM64'
       run: |
