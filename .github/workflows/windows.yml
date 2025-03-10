@@ -9,6 +9,7 @@ on:
 jobs:
   checkout:
     name: Checkout repository
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout repository with submodules
       uses: actions/checkout@v4
