@@ -337,9 +337,12 @@ jobs:
       if: runner.arch == 'ARM64'
       run: |
         brew --prefix freetype
+        echo oooooooooooooooo
         sudo ls /opt/homebrew
+        echo oooooooooooooooo
         sudo ls /opt/homebrew/include
-
+        echo oooooooooooooooo
+        sudo ls /opt/homebrew/lib
 
     - name: Copy premake files
       run: |
@@ -348,12 +351,12 @@ jobs:
     - name: Use premake to generate make files (Intel)
       if: runner.arch == 'X64'
       run: |
-        ./premake5 gmake --cc=clang --no-use-irrklang --irrlicht-include-dir="../irrlicht/include" --irrlicht-lib-dir="../irrlicht/source/Irrlicht/MacOSX/build/Release"
+        ./premake5 gmake --cc=clang --no-use-irrklang
     
     - name: Use premake to generate make files (ARM)
       if: runner.arch == 'ARM64'
       run: |
-        ./premake5 gmake --cc=clang --no-use-irrklang --mac-arm --irrlicht-include-dir="../irrlicht/include" --irrlicht-lib-dir="../irrlicht/source/Irrlicht/MacOSX/build/Release"
+        ./premake5 gmake --cc=clang --no-use-irrklang --mac-arm
 
     - name: Make
       run: |
