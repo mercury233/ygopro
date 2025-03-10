@@ -333,6 +333,14 @@ jobs:
 #        sudo cp -r irrlicht/include /opt/homebrew/include/irrlicht
 #        sudo cp irrlicht/source/Irrlicht/MacOSX/build/Release/libIrrlicht.a /opt/homebrew/lib/
 
+    - name: Test path
+      if: runner.arch == 'ARM64'
+      run: |
+        brew --prefix freetype
+        sudo ls /opt/homebrew
+        sudo ls /opt/homebrew/include
+
+
     - name: Copy premake files
       run: |
         cp -r premake/* .
