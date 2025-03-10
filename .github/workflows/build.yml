@@ -1,4 +1,4 @@
-name: Automated Test Build (Windows)
+name: Automated Test Build
 
 on:
   push:
@@ -28,10 +28,10 @@ jobs:
         git checkout master
         git pull origin master
         cd ..
-        cd script
-        git checkout master
-        git pull origin master
-        cd ..
+#        cd script
+#        git checkout master
+#        git pull origin master
+#        cd ..
 
     - name: Download premake
       id: premake
@@ -153,5 +153,6 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
+        name: YGOPro-${{ matrix.os }}
         path: |
           bin/release/YGOPro.exe
