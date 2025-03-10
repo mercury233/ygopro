@@ -7,9 +7,13 @@ on:
   pull_request:
 
 jobs:
-  checkout:
-    name: Checkout repository
-    runs-on: ubuntu-latest
+  strategy:
+    matrix:
+      os: [windows-2019, windows-2022]
+
+  build-windows:
+    if: matrix.os.startsWith('windows')
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository with submodules
       uses: actions/checkout@v4
@@ -28,11 +32,6 @@ jobs:
         git pull origin master
         cd ..
 
-  build-windows:
-    name: Build Windows
-    needs: checkout
-    runs-on: windows-2019
-    steps:
     - name: Download premake
       id: premake
       uses: mercury233/action-cache-download-file@main
@@ -129,10 +128,19 @@ jobs:
         $dxsdkPath = Resolve-Path 'DXSDK'
         "DXSDK_DIR=$($dxsdkPath.ProviderPath)\" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-    - name: Use premake to generate Visual Studio solution
+    - name: Copy premake files
       run: |
         xcopy /E premake\* .
+
+    - name: Use premake to generate Visual Studio solution (2019)
+      if: matrix.os == 'windows-2019'
+      run: |
         .\premake5.exe vs2019 --winxp-support
+
+    - name: Use premake to generate Visual Studio solution (2022)
+      if: matrix.os == 'windows-2022'
+      run: |
+        .\premake5.exe vs2022
 
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
