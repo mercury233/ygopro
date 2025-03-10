@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  build:
-    runs-on: windows-2019
+  checkout:
+    name: Checkout repository
     steps:
     - name: Checkout repository with submodules
       uses: actions/checkout@v4
@@ -18,8 +18,20 @@ jobs:
 
     - name: Update submodules
       run: |
-        git submodule update --init --recursive
+        cd ocgcore
+        git checkout master
+        git pull origin master
+        cd ..
+        cd script
+        git checkout master
+        git pull origin master
+        cd ..
 
+  build-windows:
+    name: Build Windows
+    needs: checkout
+    runs-on: windows-2019
+    steps:
     - name: Download premake
       id: premake
       uses: mercury233/action-cache-download-file@main
