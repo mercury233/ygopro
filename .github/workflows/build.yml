@@ -216,7 +216,7 @@ jobs:
 
     - name: Copy premake files
       run: |
-        cp premake/* .
+        cp -r premake/* .
 
     - name: Use premake to generate make files
       run: |
