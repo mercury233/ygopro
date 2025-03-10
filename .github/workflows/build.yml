@@ -314,6 +314,10 @@ jobs:
         sudo ls /opt/homebrew/include
         echo "listing /opt/homebrew/lib"
         sudo ls /opt/homebrew/lib
+        echo "listing /opt/homebrew/opt/sqlite"
+        sudo ls /opt/homebrew/opt/sqlite
+        echo "listing /opt/homebrew/opt/freetype"
+        sudo ls /opt/homebrew/opt/freetype
 
     - name: Download premake
       id: premake

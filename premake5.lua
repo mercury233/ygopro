@@ -76,8 +76,8 @@ end
 if not BUILD_LUA then
     -- at most times you need to change this if you change BUILD_LUA to false
     -- make sure your lua lib is built with C++ and version >= 5.3
-    LUA_INCLUDE_DIR = GetParam("lua-include-dir") or TryPath("lua.h", "/usr/local/include/lua", "/usr/include/lua", "/opt/homebrew/include/lua", "../lua/src")
-    LUA_LIB_DIR = GetParam("lua-lib-dir") or TryPath("liblua.a", "/usr/local/lib", "/usr/lib", "/opt/homebrew/lib", "../lua")
+    LUA_INCLUDE_DIR = GetParam("lua-include-dir") or TryPath("lua.h", "/usr/local/include/lua", "/usr/include/lua", "/opt/homebrew/include/lua", "./lua/src")
+    LUA_LIB_DIR = GetParam("lua-lib-dir") or TryPath("liblua.a", "/usr/local/lib", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "./lua")
     LUA_LIB_NAME = GetParam("lua-lib-name")
 end
 
@@ -87,8 +87,8 @@ elseif GetParam("no-build-event") then
     BUILD_EVENT = false
 end
 if not BUILD_EVENT then
-    EVENT_INCLUDE_DIR = GetParam("event-include-dir") or TryPath("event.h", "/usr/local/include/event2", "/usr/include/event2", "/opt/homebrew/include/event2", "../event/include")
-    EVENT_LIB_DIR = GetParam("event-lib-dir") or TryPath("libevent.a", "/usr/local/lib", "/usr/lib", "/opt/homebrew/lib", "../event/lib")
+    EVENT_INCLUDE_DIR = GetParam("event-include-dir") or TryPath("event.h", "/usr/local/include/event2", "/usr/include/event2", "/opt/homebrew/include/event2", "./event/include")
+    EVENT_LIB_DIR = GetParam("event-lib-dir") or TryPath("libevent.a", "/usr/local/lib", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "./event/lib")
 end
 
 if GetParam("build-freetype") then
@@ -97,8 +97,8 @@ elseif GetParam("no-build-freetype") then
     BUILD_FREETYPE = false
 end
 if not BUILD_FREETYPE then
-    FREETYPE_INCLUDE_DIR = GetParam("freetype-include-dir") or TryPath("ft2build.h", "/usr/local/include/freetype2", "/usr/include/freetype2", "/opt/homebrew/include/freetype2", "../freetype/include")
-    FREETYPE_LIB_DIR = GetParam("freetype-lib-dir") or TryPath("libfreetype.a", "/usr/local/lib", "/usr/lib", "/opt/homebrew/lib", "../freetype/lib")
+    FREETYPE_INCLUDE_DIR = GetParam("freetype-include-dir") or TryPath("ft2build.h", "/usr/local/include/freetype2", "/usr/include/freetype2", "/opt/homebrew/include/freetype2", "./freetype/include")
+    FREETYPE_LIB_DIR = GetParam("freetype-lib-dir") or TryPath("libfreetype.a", "/usr/local/lib", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "./freetype/lib")
 end
 
 if GetParam("build-sqlite") then
@@ -107,8 +107,8 @@ elseif GetParam("no-build-sqlite") then
     BUILD_SQLITE = false
 end
 if not BUILD_SQLITE then
-    SQLITE_INCLUDE_DIR = GetParam("sqlite-include-dir") or TryPath("sqlite3.h", "/usr/local/include", "/usr/include", "/opt/homebrew/include", "../sqlite3")
-    SQLITE_LIB_DIR = GetParam("sqlite-lib-dir") or TryPath("libsqlite3.a", "/usr/local/lib", "/usr/lib", "/opt/homebrew/lib", "../sqlite3")
+    SQLITE_INCLUDE_DIR = GetParam("sqlite-include-dir") or TryPath("sqlite3.h", "/usr/local/include", "/usr/include", "/opt/homebrew/include", "/opt/homebrew/opt/sqlite", "./sqlite3")
+    SQLITE_LIB_DIR = GetParam("sqlite-lib-dir") or TryPath("libsqlite3.a", "/usr/local/lib", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "/opt/homebrew/opt/sqlite/lib", "./sqlite3")
 end
 
 if GetParam("build-irrlicht") then
@@ -117,8 +117,8 @@ elseif GetParam("no-build-irrlicht") then
     BUILD_IRRLICHT = false
 end
 if not BUILD_IRRLICHT then
-    IRRLICHT_INCLUDE_DIR = GetParam("irrlicht-include-dir") or TryPath("irrlicht.h", "/usr/local/include/irrlicht", "/usr/include/irrlicht", "/opt/homebrew/include/irrlicht", "../irrlicht/include")
-    IRRLICHT_LIB_DIR = GetParam("irrlicht-lib-dir") or TryPath("libIrrlicht.a", "/usr/local/lib", "/usr/lib", "/opt/homebrew/lib", "../irrlicht/source/Irrlicht/MacOSX/build/Release", "../irrlicht/lib")
+    IRRLICHT_INCLUDE_DIR = GetParam("irrlicht-include-dir") or TryPath("irrlicht.h", "/usr/local/include/irrlicht", "/usr/include/irrlicht", "/opt/homebrew/include/irrlicht", "./irrlicht/include")
+    IRRLICHT_LIB_DIR = GetParam("irrlicht-lib-dir") or TryPath("libIrrlicht.a", "/usr/local/lib", "/usr/lib", "/usr/lib/x86_64-linux-gnu", "/opt/homebrew/lib", "./irrlicht/source/Irrlicht/MacOSX/build/Release", "./irrlicht/lib")
 end
 
 if GetParam("use-irrklang") then
