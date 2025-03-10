@@ -156,3 +156,79 @@ jobs:
         name: YGOPro-${{ matrix.os }}
         path: |
           bin/release/YGOPro.exe
+
+  build-linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-24.04]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository with submodules
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+        submodules: true
+
+    - name: Update submodules
+      run: |
+        cd ocgcore
+        git checkout master
+        git pull origin master
+        cd ..
+#        cd script
+#        git checkout master
+#        git pull origin master
+#        cd ..
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libevent-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libsqlite3-dev libxxf86vm-dev
+
+    - name: Download premake
+      id: premake
+      uses: mercury233/action-cache-download-file@main
+      with:
+        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-linux.tar.gz
+        filename: premake5.tar.gz
+    
+    - name: Extract premake
+      run: |
+        tar xf ${{ steps.premake.outputs.filepath }}
+
+    - name: Download lua
+      id: lua
+      uses: mercury233/action-cache-download-file@main
+      with:
+        url: https://www.lua.org/ftp/lua-5.4.7.tar.gz
+
+    - name: Extract lua
+      run: |
+        tar xf ${{ steps.lua.outputs.filepath }}
+        mv lua-5.4.7 lua
+
+    - name: Download irrlicht
+      run: |
+        git clone --depth=1 https://github.com/mercury233/irrlicht
+
+    - name: Copy premake files
+      run: |
+        cp premake/* .
+
+    - name: Use premake to generate make files
+      run: |
+        ./premake5 gmake --no-use-irrklang
+
+    - name: Make
+      run: |
+        make -j 4 config=release
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: YGOPro-${{ matrix.os }}
+        path: |
+          bin/release/ygopro
