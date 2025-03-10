@@ -162,6 +162,16 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-20.04, ubuntu-22.04, ubuntu-24.04]
+        include:
+          - os: ubuntu-20.04
+            env:
+              PREMAKE_VERSION: 5.0.0-beta5
+          - os: ubuntu-22.04
+            env:
+              PREMAKE_VERSION: 5.0.0-beta5
+          - os: ubuntu-24.04
+            env:
+              PREMAKE_VERSION: 5.0.0-beta5
 
     runs-on: ${{ matrix.os }}
 
@@ -192,12 +202,13 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@main
       with:
-        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-linux.tar.gz
+        url: https://github.com/premake/premake-core/releases/download/v${{ matrix.env.PREMAKE_VERSION }}/premake-${{ matrix.env.PREMAKE_VERSION }}-linux.tar.gz
         filename: premake5.tar.gz
     
     - name: Extract premake
       run: |
         tar xf ${{ steps.premake.outputs.filepath }}
+        chmod +x ./premake5
 
     - name: Download lua
       id: lua
