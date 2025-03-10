@@ -7,13 +7,14 @@ on:
   pull_request:
 
 jobs:
-  strategy:
-    matrix:
-      os: [windows-2019, windows-2022]
-
   build-windows:
-    if: matrix.os.startsWith('windows')
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2019, windows-2022]
+
     runs-on: ${{ matrix.os }}
+
     steps:
     - name: Checkout repository with submodules
       uses: actions/checkout@v4
