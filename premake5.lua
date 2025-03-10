@@ -94,7 +94,7 @@ elseif GetParam("no-build-freetype") then
     BUILD_FREETYPE = false
 end
 if not BUILD_FREETYPE then
-    FREETYPE_INCLUDE_DIR = GetParam("freetype-include-dir") or TryPath("freetype.h", "/usr/local/include/freetype2", "/usr/include/freetype2", "/opt/homebrew/include/freetype2", "../freetype/include")
+    FREETYPE_INCLUDE_DIR = GetParam("freetype-include-dir") or TryPath("ft2build.h", "/usr/local/include/freetype2", "/usr/include/freetype2", "/opt/homebrew/include/freetype2", "../freetype/include")
     FREETYPE_LIB_DIR = GetParam("freetype-lib-dir") or TryPath("libfreetype.a", "/usr/local/lib", "/usr/lib", "/opt/homebrew/lib", "../freetype/lib")
 end
 
