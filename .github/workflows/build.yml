@@ -161,11 +161,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-24.04]
+        os: 
+#          - ubuntu-20.04
+          - ubuntu-22.04
+          - ubuntu-24.04
         include:
-          - os: ubuntu-20.04
-            env:
-              PREMAKE_VERSION: 5.0.0-beta2
+#          - os: ubuntu-20.04
+#            env:
+#              PREMAKE_VERSION: 5.0.0-beta2
           - os: ubuntu-22.04
             env:
               PREMAKE_VERSION: 5.0.0-beta4
@@ -244,4 +247,4 @@ jobs:
       with:
         name: YGOPro-${{ matrix.os }}
         path: |
-          bin/release/ygopro
+          bin/*
