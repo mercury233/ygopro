@@ -321,17 +321,17 @@ jobs:
         xcodebuild -project MacOSX.xcodeproj
         cd ../../../..
 
-    - name: Install Irrlicht (Intel)
-      if: runner.arch == 'X64'
-      run: |
-        sudo cp -r irrlicht/include /usr/local/include/irrlicht
-        sudo cp irrlicht/source/Irrlicht/MacOSX/build/Release/libIrrlicht.a /usr/local/lib/
+#    - name: Install Irrlicht (Intel)
+#      if: runner.arch == 'X64'
+#      run: |
+#        sudo cp -r irrlicht/include /usr/local/include/irrlicht
+#        sudo cp irrlicht/source/Irrlicht/MacOSX/build/Release/libIrrlicht.a /usr/local/lib/
 
-    - name: Install Irrlicht (ARM)
-      if: runner.arch == 'ARM64'
-      run: |
-        sudo cp -r irrlicht/include /opt/homebrew/include/irrlicht
-        sudo cp irrlicht/source/Irrlicht/MacOSX/build/Release/libIrrlicht.a /opt/homebrew/lib/
+#    - name: Install Irrlicht (ARM)
+#      if: runner.arch == 'ARM64'
+#      run: |
+#        sudo cp -r irrlicht/include /opt/homebrew/include/irrlicht
+#        sudo cp irrlicht/source/Irrlicht/MacOSX/build/Release/libIrrlicht.a /opt/homebrew/lib/
 
     - name: Copy premake files
       run: |
@@ -340,12 +340,12 @@ jobs:
     - name: Use premake to generate make files (Intel)
       if: runner.arch == 'X64'
       run: |
-        ./premake5 gmake --cc=clang --no-use-irrklang
+        ./premake5 gmake --cc=clang --no-use-irrklang --irrlicht-include-dir="irrlicht/include" --irrlicht-lib-dir="irrlicht/source/Irrlicht/MacOSX/build/Release"
     
     - name: Use premake to generate make files (ARM)
       if: runner.arch == 'ARM64'
       run: |
-        ./premake5 gmake --cc=clang --no-use-irrklang --mac-arm
+        ./premake5 gmake --cc=clang --no-use-irrklang --mac-arm --irrlicht-include-dir="irrlicht/include" --irrlicht-lib-dir="irrlicht/source/Irrlicht/MacOSX/build/Release"
 
     - name: Make
       run: |
