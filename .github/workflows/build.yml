@@ -288,6 +288,12 @@ jobs:
 #      run: |
 #        brew install freetype libevent libx11 sqlite zlib
 
+    - name: Test path
+      if: runner.arch == 'X64'
+      run: |
+        brew --prefix sqlite
+        sudo ls /usr/local/opt/sqlite
+
     - name: Download premake
       id: premake
       uses: mercury233/action-cache-download-file@main
