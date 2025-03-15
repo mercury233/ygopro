@@ -84,7 +84,7 @@ elseif GetParam("no-build-freetype") then
     BUILD_FREETYPE = false
 end
 if not BUILD_FREETYPE then
-    FREETYPE_INCLUDE_DIR = GetParam("freetype-include-dir") or os.findheader("freetype")
+    FREETYPE_INCLUDE_DIR = GetParam("freetype-include-dir") or os.findheader("freetype2")
     FREETYPE_LIB_DIR = GetParam("freetype-lib-dir") or os.findlib("freetype")
 end
 

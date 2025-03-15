@@ -327,7 +327,11 @@ jobs:
 
     - name: Use premake to generate make files
       run: |
-        ./premake5 gmake --cc=clang --no-use-irrklang
+        ./premake5 gmake \
+          --cc=clang \
+          --no-use-irrklang \
+          --irrlicht-include-dir="../irrlicht/include" \
+          --irrlicht-lib-dir="../irrlicht/source/Irrlicht/MacOSX/build/Release"
 
     - name: Make
       run: |
