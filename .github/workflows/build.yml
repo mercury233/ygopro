@@ -333,7 +333,7 @@ jobs:
     - name: Use premake to generate make files (ARM)
       if: runner.arch == 'ARM64'
       run: |
-        ./premake5 gmake --cc=clang --no-use-irrklang --mac-arm
+        ./premake5 gmake --cc=clang --no-use-irrklang
 
     - name: Make
       run: |
