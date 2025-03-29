@@ -37,9 +37,10 @@ install:
 
   # let premake happy
   - xcopy /E premake\* .
+  - xcopy /E resource\* .
 
   # premake
-  - premake5 vs2019 --irrklang-pro --winxp-support
+  - premake5 vs2019 --audio-lib=irrklang --irrklang-pro --winxp-support
   
 configuration: Release
 
