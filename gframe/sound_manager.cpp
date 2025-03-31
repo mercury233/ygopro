@@ -128,6 +128,10 @@ void SoundManager::PlaySoundEffect(int sound) {
 		strcpy(soundName, "token");
 		break;
 	}
+	case SOUND_NEGATE: {
+		strcpy(soundName, "negate");
+		break;
+	}
 	case SOUND_ATTACK: {
 		strcpy(soundName, "attack");
 		break;
@@ -149,7 +153,7 @@ void SoundManager::PlaySoundEffect(int sound) {
 		break;
 	}
 	case SOUND_RECOVER: {
-		strcpy(soundName, "recover");
+		strcpy(soundName, "gainlp");
 		break;
 	}
 	case SOUND_COUNTER_ADD: {
@@ -161,11 +165,11 @@ void SoundManager::PlaySoundEffect(int sound) {
 		break;
 	}
 	case SOUND_COIN: {
-		strcpy(soundName, "coin");
+		strcpy(soundName, "coinflip");
 		break;
 	}
 	case SOUND_DICE: {
-		strcpy(soundName, "dice");
+		strcpy(soundName, "diceroll");
 		break;
 	}
 	case SOUND_NEXT_TURN: {
@@ -205,7 +209,7 @@ void SoundManager::PlaySoundEffect(int sound) {
 		break;
 	}
 	case SOUND_CHAT: {
-		strcpy(soundName, "chat");
+		strcpy(soundName, "chatmessage");
 		break;
 	}
 	default:
@@ -263,7 +267,13 @@ void SoundManager::PlayMusic(char* song, bool loop) {
 		StopBGM();
 #ifdef YGOPRO_USE_MINIAUDIO
 		strcpy(currentPlayingMusic, song);
+#ifdef _WIN32
+		wchar_t song_w[1024];
+		BufferIO::DecodeUTF8(song, song_w);
+		ma_sound_init_from_file_w(&engineMusic, song_w, MA_SOUND_FLAG_ASYNC | MA_SOUND_FLAG_STREAM, nullptr, nullptr, &soundBGM);
+#else
 		ma_sound_init_from_file(&engineMusic, song, MA_SOUND_FLAG_ASYNC | MA_SOUND_FLAG_STREAM, nullptr, nullptr, &soundBGM);
+#endif
 		ma_sound_set_looping(&soundBGM, loop);
 		ma_sound_start(&soundBGM);
 #endif
