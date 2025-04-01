@@ -90,6 +90,8 @@ project "irrlicht"
             "source/Irrlicht/libpng/pngwrite.c",
             "source/Irrlicht/libpng/pngwtran.c",
             "source/Irrlicht/libpng/pngwutil.c",
+            "source/Irrlicht/libpng/intel/intel_init.c",
+            "source/Irrlicht/libpng/intel/filter_sse2_intrinsics.c",
             "source/Irrlicht/aesGladman/*.h",
             "source/Irrlicht/aesGladman/*.cpp" }
 
