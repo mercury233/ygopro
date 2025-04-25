@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2019, windows-2022]
+        os: [windows-2019, windows-2022, windows-2025]
 
     runs-on: ${{ matrix.os }}
 
@@ -129,6 +129,11 @@ jobs:
         $dxsdkPath = Resolve-Path 'DXSDK'
         "DXSDK_DIR=$($dxsdkPath.ProviderPath)\" | Out-File -FilePath $env:GITHUB_ENV -Append
 
+    - name: Install v141_xp toolset
+      if: matrix.os == 'windows-2022'
+      run: |
+        "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\setup.exe" modify --quiet --productId Microsoft.VisualStudio.Product.Enterprise --channelId VisualStudio.17.Release --add Microsoft.VisualStudio.Component.WinXP
+
     - name: Copy premake files
       run: |
         xcopy /E premake\* .
@@ -141,6 +146,11 @@ jobs:
 
     - name: Use premake to generate Visual Studio solution (2022)
       if: matrix.os == 'windows-2022'
+      run: |
+        .\premake5.exe vs2022 --winxp-support
+
+    - name: Use premake to generate Visual Studio solution (2025)
+      if: matrix.os == 'windows-2025'
       run: |
         .\premake5.exe vs2022
 
