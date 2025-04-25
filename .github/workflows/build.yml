@@ -131,6 +131,7 @@ jobs:
 
     - name: Install v141_xp toolset
       if: matrix.os == 'windows-2022'
+      shell: cmd
       run: |
         "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\setup.exe" modify --quiet --productId Microsoft.VisualStudio.Product.Enterprise --channelId VisualStudio.17.Release --add Microsoft.VisualStudio.Component.WinXP
 
