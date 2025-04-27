@@ -10,8 +10,8 @@ install:
   - git submodule update --init --recursive
 
   # environment and system dependency
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip ; exit 0"
-  - 7z x premake-5.0.0-beta5-windows.zip
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-beta6/premake-5.0.0-beta6-windows.zip ; exit 0"
+  - 7z x premake-5.0.0-beta6-windows.zip
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz ; exit 0"
   - tar xf libevent-2.0.22-stable.tar.gz
@@ -58,7 +58,7 @@ after_build:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-starter-pack/archive/master.zip ; exit 0"
   - 7z x ygopro-starter-pack-master.zip
   - xcopy /E ygopro-starter-pack-master\* .
-  - 7z a YGOPro-ver.233.7z YGOPro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay -xr!.git*
+  - 7z a YGOPro-ver.233.7z YGOPro.exe LICENSE README.md lflist.conf strings.conf cards.cdb script textures deck single pics replay -xr!.git*
 
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
@@ -96,7 +96,7 @@ deploy:
         branch: test
 
 cache:
-  - premake-5.0.0-beta5-windows.zip
+  - premake-5.0.0-beta6-windows.zip
   - libevent-2.0.22-stable.tar.gz
   - freetype-2.13.3.tar.gz
   - lua-5.4.7.tar.gz
