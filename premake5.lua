@@ -3,15 +3,17 @@
 BUILD_LUA = true
 LUA_LIB_NAME = "lua"
 
-BUILD_EVENT = os.istarget("windows")
-BUILD_FREETYPE = os.istarget("windows")
-BUILD_SQLITE = os.istarget("windows")
+BUILD_EVENT = true
+BUILD_FREETYPE = true
+BUILD_SQLITE = true
 BUILD_IRRLICHT = true
 
 USE_AUDIO = true
 AUDIO_LIB = "miniaudio"
+-- BUILD_MINIAUDIO is always true
 MINIAUDIO_SUPPORT_OPUS_VORBIS = true
-MINIAUDIO_BUILD_OPUS_VORBIS = os.istarget("windows")
+MINIAUDIO_BUILD_OPUS_VORBIS = true
+-- BUILD_IRRKLANG is impossible because irrKlang is not open source
 IRRKLANG_PRO = false
 IRRKLANG_PRO_BUILD_IKPMP3 = false
 
@@ -91,7 +93,7 @@ if not BUILD_LUA then
 end
 
 if GetParam("build-event") then
-    BUILD_EVENT = os.istarget("windows") -- only on windows for now
+    BUILD_EVENT = true
 elseif GetParam("no-build-event") then
     BUILD_EVENT = false
 end
