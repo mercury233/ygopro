@@ -353,6 +353,12 @@ jobs:
         tar xf ${{ steps.ogg.outputs.filepath }}
         mv libogg-1.3.5 miniaudio/external/ogg
 
+    - name: Configure ogg
+      run: |
+        cd miniaudio/external/ogg
+        ./configure
+        cd ../../..
+
     - name: Download opus
       id: opus
       uses: mercury233/action-cache-download-file@v1.0.0
