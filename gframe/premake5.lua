@@ -94,7 +94,7 @@ project "YGOPro"
             links { "irrklang" }
         end
     filter "system:linux"
-        links { "GL", "X11", "Xxf86vm" }
+        links { "bsd", "GL", "X11", "Xxf86vm" }
         if USE_AUDIO and AUDIO_LIB == "irrklang" then
             links { "IrrKlang" }
             linkoptions{ IRRKLANG_LINK_RPATH }
