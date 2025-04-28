@@ -266,10 +266,10 @@ jobs:
 #        git pull origin master
 #        cd ..
 
-#    - name: Install dependencies
-#      run: |
-#        sudo apt-get update
-#        sudo apt-get install -y libevent-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libsqlite3-dev libxxf86vm-dev libopusfile-dev libvorbis-dev
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libxxf86vm-dev
 
     - name: Download premake
       id: premake
