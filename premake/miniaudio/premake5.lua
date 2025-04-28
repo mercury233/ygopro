@@ -103,7 +103,7 @@ project "miniaudio"
                 "external/vorbis/lib/vorbisfile.c",
                 "external/vorbis/lib/window.c",
             }
-            if os.hostarch() == "x86_64" then
+            if not M1 then
                 files {
                     "external/opus/celt/x86/pitch_avx.c",
                     "external/opus/celt/x86/pitch_sse.c",
@@ -121,10 +121,14 @@ project "miniaudio"
                 "external/vorbis/include",
             }
             defines {
-                "OPUS_BUILD", "USE_ALLOCA", "CPU_INFO_BY_ASM",
-                "OPUS_X86_PRESUME_SSE", "OPUS_X86_PRESUME_SSE2",
-                "OPUS_HAVE_RTCD", "OPUS_X86_MAY_HAVE_SSE", "OPUS_X86_MAY_HAVE_SSE4_1", "OPUS_X86_MAY_HAVE_AVX2",
+                "OPUS_BUILD", "USE_ALLOCA", "CPU_INFO_BY_ASM", "OPUS_HAVE_RTCD"
             }
+            if not M1 then
+                defines {
+                    "OPUS_X86_PRESUME_SSE", "OPUS_X86_PRESUME_SSE2",
+                    "OPUS_X86_MAY_HAVE_SSE", "OPUS_X86_MAY_HAVE_SSE4_1", "OPUS_X86_MAY_HAVE_AVX2",
+                }
+            end
         else
             includedirs { OPUS_INCLUDE_DIR, VORBIS_INCLUDE_DIR, OGG_INCLUDE_DIR }
         end

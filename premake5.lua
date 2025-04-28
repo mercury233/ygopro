@@ -74,6 +74,7 @@ newoption { trigger = 'build-ikpmp3', category = "YGOPro - irrklang - ikpmp3", d
 
 newoption { trigger = "winxp-support", category = "YGOPro", description = "" }
 newoption { trigger = "mac-arm", category = "YGOPro", description = "Cross compile for Apple Silicon" }
+newoption { trigger = "m1", category = "YGOPro", description = "test" }
 
 function GetParam(param)
     return _OPTIONS[param] or os.getenv(string.upper(string.gsub(param,"-","_")))
@@ -206,6 +207,9 @@ if GetParam("winxp-support") and os.istarget("windows") then
 end
 if GetParam("mac-arm") and os.istarget("macosx") then
     MAC_ARM = true
+end
+if GetParam("M1") and os.istarget("macosx") then
+    M1 = true
 end
 
 workspace "YGOPro"

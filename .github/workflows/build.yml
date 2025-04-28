@@ -581,7 +581,7 @@ jobs:
     - name: Use premake to generate make files (ARM64)
       if: runner.arch == 'ARM64'
       run: |
-        ./premake5 gmake
+        ./premake5 gmake --m1
 
     - name: Make
       run: |
