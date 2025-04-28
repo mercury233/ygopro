@@ -266,10 +266,10 @@ jobs:
 #        git pull origin master
 #        cd ..
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libevent-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libsqlite3-dev libxxf86vm-dev libopusfile-dev libvorbis-dev
+#    - name: Install dependencies
+#      run: |
+#        sudo apt-get update
+#        sudo apt-get install -y libevent-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libsqlite3-dev libxxf86vm-dev libopusfile-dev libvorbis-dev
 
     - name: Download premake
       id: premake
@@ -445,9 +445,9 @@ jobs:
 #        git pull origin master
 #        cd ..
 
-    - name: Install dependencies
-      run: |
-        brew install freetype libevent libx11 sqlite opus opusfile libvorbis
+#    - name: Install dependencies
+#      run: |
+#        brew install freetype libevent libx11 sqlite opus opusfile libvorbis
 
     - name: Download premake
       id: premake
