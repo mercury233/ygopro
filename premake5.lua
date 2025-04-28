@@ -73,8 +73,7 @@ newoption { trigger = "irrklang-pro-debug-lib-dir", category = "YGOPro - irrklan
 newoption { trigger = 'build-ikpmp3', category = "YGOPro - irrklang - ikpmp3", description = "" }
 
 newoption { trigger = "winxp-support", category = "YGOPro", description = "" }
-newoption { trigger = "mac-arm", category = "YGOPro", description = "Cross compile for Apple Silicon" }
-newoption { trigger = "m1", category = "YGOPro", description = "test" }
+newoption { trigger = "mac-arm", category = "YGOPro", description = "Compile for Apple Silicon" }
 
 function GetParam(param)
     return _OPTIONS[param] or os.getenv(string.upper(string.gsub(param,"-","_")))
@@ -208,9 +207,6 @@ end
 if GetParam("mac-arm") and os.istarget("macosx") then
     MAC_ARM = true
 end
-if GetParam("M1") and os.istarget("macosx") then
-    M1 = true
-end
 
 workspace "YGOPro"
     location "build"
@@ -233,7 +229,7 @@ workspace "YGOPro"
     filter "system:macosx"
         libdirs { "/usr/local/lib" }
         if MAC_ARM then
-            buildoptions { "--target=arm64-apple-macos12" }
+            buildoptions { "-arch arm64" }
         end
         links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
 
@@ -261,9 +257,6 @@ workspace "YGOPro"
     filter { "configurations:Release", "not action:vs*" }
         symbols "On"
         defines "NDEBUG"
-        if not MAC_ARM then
-            buildoptions "-march=native"
-        end
 
     filter { "configurations:Debug", "action:vs*" }
         disablewarnings { "6011", "6031", "6054", "6262" }

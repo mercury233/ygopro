@@ -87,7 +87,6 @@ project "YGOPro"
         links { "z" }
         defines { "GL_SILENCE_DEPRECATION" }
         if MAC_ARM then
-            buildoptions { "--target=arm64-apple-macos12" }
             linkoptions { "-arch arm64" }
         end
         if USE_AUDIO and AUDIO_LIB == "irrklang" then

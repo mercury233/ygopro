@@ -103,7 +103,7 @@ project "miniaudio"
                 "external/vorbis/lib/vorbisfile.c",
                 "external/vorbis/lib/window.c",
             }
-            if not M1 then
+            if not MAC_ARM then
                 files {
                     "external/opus/celt/x86/pitch_avx.c",
                     "external/opus/celt/x86/pitch_sse.c",
@@ -123,7 +123,7 @@ project "miniaudio"
             defines {
                 "OPUS_BUILD", "USE_ALLOCA", "CPU_INFO_BY_ASM", "OPUS_HAVE_RTCD"
             }
-            if not M1 then
+            if not MAC_ARM then
                 defines {
                     "OPUS_X86_PRESUME_SSE", "OPUS_X86_PRESUME_SSE2",
                     "OPUS_X86_MAY_HAVE_SSE", "OPUS_X86_MAY_HAVE_SSE4_1", "OPUS_X86_MAY_HAVE_AVX2",
