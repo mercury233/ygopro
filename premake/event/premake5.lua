@@ -13,5 +13,8 @@ project "event"
         files { "win32select.c", "evthread_win32.c", "buffer_iocp.c", "event_iocp.c", "bufferevent_async.c" }
         defines { "WIN32" } -- quirk of old libevent
 
-    filter "system:not windows"
+    filter "system:linux"
+        files { "epoll.c", "epoll_sub.c", "select.c" }
+
+    filter "system:macosx"
         files { "poll.c", "select.c" }

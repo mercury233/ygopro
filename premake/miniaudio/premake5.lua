@@ -33,12 +33,6 @@ project "miniaudio"
                 "external/opus/celt/rate.c",
                 "external/opus/celt/vq.c",
 
-                "external/opus/celt/x86/pitch_avx.c",
-                "external/opus/celt/x86/pitch_sse.c",
-                "external/opus/celt/x86/vq_sse2.c",
-                "external/opus/celt/x86/x86_celt_map.c",
-                "external/opus/celt/x86/x86cpu.c",
-
                 "external/opus/silk/bwexpander.c",
                 "external/opus/silk/bwexpander_32.c",
                 "external/opus/silk/CNG.c",
@@ -109,6 +103,15 @@ project "miniaudio"
                 "external/vorbis/lib/vorbisfile.c",
                 "external/vorbis/lib/window.c",
             }
+            if os.hostarch() == "x86_64" then
+                files {
+                    "external/opus/celt/x86/pitch_avx.c",
+                    "external/opus/celt/x86/pitch_sse.c",
+                    "external/opus/celt/x86/vq_sse2.c",
+                    "external/opus/celt/x86/x86_celt_map.c",
+                    "external/opus/celt/x86/x86cpu.c",
+                }
+            end
             includedirs {
                 "external/ogg/include",
                 "external/opus/include",
