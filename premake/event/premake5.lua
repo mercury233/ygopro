@@ -14,7 +14,7 @@ project "event"
         defines { "WIN32" } -- quirk of old libevent
 
     filter "system:linux"
-        files { "arc4random.c", "epoll.c", "epoll_sub.c", "poll.c", "select.c" }
+        files { "evthread_pthread.c", "epoll.c", "epoll_sub.c", "poll.c", "select.c" }
 
     filter "system:macosx"
-        files { "poll.c", "select.c" }
+        files { "evthread_pthread.c", "poll.c", "select.c" }
