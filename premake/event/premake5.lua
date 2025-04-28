@@ -15,7 +15,6 @@ project "event"
 
     filter "system:linux"
         files { "evthread_pthread.c", "epoll.c", "epoll_sub.c", "poll.c", "select.c" }
-        undefines { "_EVENT_HAVE_ARC4RANDOM" }
 
     filter "system:macosx"
         files { "evthread_pthread.c", "poll.c", "select.c" }

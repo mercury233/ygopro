@@ -300,6 +300,7 @@ jobs:
         cd event
         ./configure --disable-openssl --enable-static=yes --enable-shared=no
         sed -f make-event-config.sed < config.h > ./include/event2/event-config.h
+        sed -i 's/#define _EVENT_HAVE_ARC4RANDOM 1/#undef _EVENT_HAVE_ARC4RANDOM/' ./include/event2/event-config.h
         cd ..
 
     - name: Download freetype
