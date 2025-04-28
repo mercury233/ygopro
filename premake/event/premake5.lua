@@ -15,6 +15,7 @@ project "event"
 
     filter "system:linux"
         files { "evthread_pthread.c", "epoll.c", "epoll_sub.c", "poll.c", "select.c" }
+        links { "bsd" }
 
     filter "system:macosx"
         files { "evthread_pthread.c", "poll.c", "select.c" }
