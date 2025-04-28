@@ -272,6 +272,9 @@ workspace "YGOPro"
 
     filter "not action:vs*"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }
+        if not MAC_ARM then
+            buildoptions "-march=native"
+        end
 
     filter {}
 
