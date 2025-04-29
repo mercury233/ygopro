@@ -220,11 +220,9 @@ if GetParam("winxp-support") and os.istarget("windows") then
 end
 if GetParam("mac-arm") and os.istarget("macosx") then
     MAC_ARM = true
-    MAC_INTEL = false
 end
 if GetParam("mac-intel") and os.istarget("macosx") then
     MAC_INTEL = true
-    MAC_ARM = false
 end
 
 workspace "YGOPro"
@@ -250,7 +248,7 @@ workspace "YGOPro"
         if MAC_ARM then
             buildoptions { "-arch arm64" }
         elseif MAC_INTEL then
-            buildoptions { "-arch x86_64" }
+            buildoptions { "-arch x86_64", "-mavx" }
         end
         links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
 

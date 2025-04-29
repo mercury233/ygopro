@@ -689,11 +689,6 @@ jobs:
           --freetype-include-dir="/usr/local/include/freetype2" \
           --opus-include-dir="/usr/local/include/opus"
 
-    - name: Use premake to generate make files
-      if: matrix.dynamiclib != true
-      run: |
-        ./premake5 gmake ${{ (runner.arch == 'ARM64' && matrix.cross-build-intel == true) && '--mac-intel' || '' }}
-
     - name: Use premake to generate make files (Intel)
       if: runner.arch == 'X64' && matrix.dynamiclib != true
       run: |
