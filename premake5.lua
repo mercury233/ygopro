@@ -6,7 +6,9 @@ LUA_LIB_NAME = "lua"
 BUILD_EVENT = true
 BUILD_FREETYPE = true
 BUILD_SQLITE = true
+
 BUILD_IRRLICHT = true
+USE_DXSDK = true
 
 USE_AUDIO = true
 AUDIO_LIB = "miniaudio"
@@ -44,6 +46,7 @@ newoption { trigger = "build-irrlicht", category = "YGOPro - irrlicht", descript
 newoption { trigger = "no-build-irrlicht", category = "YGOPro - irrlicht", description = "" }
 newoption { trigger = "irrlicht-include-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
 newoption { trigger = "irrlicht-lib-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
+newoption { trigger = "no-dxsdk", category = "YGOPro - irrlicht", description = "" }
 
 newoption { trigger = "no-audio", category = "YGOPro", description = "" }
 newoption { trigger = "audio-lib", category = "YGOPro", description = "", value = "miniaudio, irrklang", default = AUDIO_LIB }
@@ -130,6 +133,16 @@ end
 if not BUILD_IRRLICHT then
     IRRLICHT_INCLUDE_DIR = GetParam("irrlicht-include-dir") or os.findheader("irrlicht")
     IRRLICHT_LIB_DIR = GetParam("irrlicht-lib-dir") or os.findlib("irrlicht")
+end
+
+if GetParam("no-dxsdk") then
+    USE_DXSDK = false
+end
+if USE_DXSDK and os.istarget("windows") then
+    if not os.getenv("DXSDK_DIR") then
+        print("DXSDK_DIR environment variable not set, it seems you don't have the DirectX SDK installed. DirectX mode will be disabled.")
+        USE_DXSDK = false
+    end
 end
 
 if GetParam("no-audio") then
