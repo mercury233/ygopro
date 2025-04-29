@@ -524,7 +524,8 @@ jobs:
     - name: Install dependencies
       if: matrix.dynamiclib == true
       run: |
-        brew install premake freetype libevent libx11 sqlite opus opusfile libvorbis
+        brew install premake opus opusfile libvorbis
+#        brew install sqlite libx11 freetype libevent
 
     - name: Download premake
       if: matrix.dynamiclib != true
