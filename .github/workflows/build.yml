@@ -450,6 +450,10 @@ jobs:
       if: matrix.dynamiclib == true
       run: |
         ./premake5 gmake \
+          --no-build-event \
+          --no-build-freetype \
+          --no-build-sqlite \
+          --no-build-opus-vorbis \
           --freetype-include-dir="/usr/include/freetype2" \
           --opus-include-dir="/usr/include/opus"
 
@@ -667,6 +671,10 @@ jobs:
       if: runner.arch == 'X64' && matrix.dynamiclib == true
       run: |
         premake5 gmake \
+          --no-build-event \
+          --no-build-freetype \
+          --no-build-sqlite \
+          --no-build-opus-vorbis \
           --freetype-include-dir="/usr/local/include/freetype2" \
           --opus-include-dir="/usr/local/include/opus"
 
