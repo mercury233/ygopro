@@ -234,17 +234,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-#          - ubuntu-20.04
-          - ubuntu-22.04
-          - ubuntu-24.04
+        name:
+          - ubuntu-22
+          - ubuntu-24
         include:
-#          - os: ubuntu-20.04
-#            premake_version: 5.0.0-beta2
-          - os: ubuntu-22.04
+          - name: ubuntu-22
+            os: ubuntu-22.04
             premake_version: 5.0.0-beta4
-          - os: ubuntu-24.04
-            premake_version: 5.0.0-beta5
+          - name: ubuntu-24
+            os: ubuntu-24.04
+            premake_version: 5.0.0-beta6
 
     runs-on: ${{ matrix.os }}
 
@@ -414,7 +413,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: YGOPro-${{ matrix.os }}
+        name: YGOPro-${{ matrix.name }}
         path: |
           bin/release/YGOPro
 
@@ -422,14 +421,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - macos-13
-          - macos-15
+        name:
+          - macos-13-intel
+          - macos-13-arm64
+          - macos-15-arm64
         include:
-          - os: macos-13
-            premake_version: 5.0.0-beta5
-          - os: macos-15
-            premake_version: 5.0.0-beta5
+          - name: macos-13-intel
+            os: macos-13
+            premake_version: 5.0.0-beta6
+          - name: macos-13-arm64
+            os: macos-13-xlarge
+            premake_version: 5.0.0-beta6
+          - name: macos-15-arm64
+            os: macos-15
+            premake_version: 5.0.0-beta6
 
     runs-on: ${{ matrix.os }}
 
@@ -598,6 +603,6 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: YGOPro-${{ matrix.os }}
+        name: YGOPro-${{ matrix.name }}
         path: |
           bin/*
