@@ -11,8 +11,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2019, windows-2022]
-        audiolib: [miniaudio, irrklang]
+        name:
+          - windows
+          - windows-xp
+          - windows-irrklang
+#          - windows-x64
+          - windows-2025
+        include:
+          - name: windows
+            os: windows-2022
+            audiolib: miniaudio
+          - name: windows-xp
+            os: windows-2019
+            audiolib: miniaudio
+          - name: windows-irrklang
+            os: windows-2022
+            audiolib: irrklang
+          - name: windows-2025
+            os: windows-2025
+            audiolib: miniaudio
 
     runs-on: ${{ matrix.os }}
 
@@ -226,7 +243,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: YGOPro-${{ matrix.os }}-${{ matrix.audiolib }}
+        name: YGOPro-${{ matrix.name }}
         path: |
           bin/release/YGOPro.exe
 
@@ -423,15 +440,15 @@ jobs:
       matrix:
         name:
           - macos-13-intel
-          - macos-13-arm64
+#          - macos-13-arm64
           - macos-15-arm64
         include:
           - name: macos-13-intel
             os: macos-13
             premake_version: 5.0.0-beta6
-          - name: macos-13-arm64
-            os: macos-13-xlarge
-            premake_version: 5.0.0-beta6
+#          - name: macos-13-arm64
+#            os: macos-13-xlarge
+#            premake_version: 5.0.0-beta6
           - name: macos-15-arm64
             os: macos-15
             premake_version: 5.0.0-beta6
