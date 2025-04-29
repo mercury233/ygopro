@@ -247,8 +247,12 @@ workspace "YGOPro"
         libdirs { "/usr/local/lib" }
         if MAC_ARM then
             buildoptions { "-arch arm64" }
-        elseif MAC_INTEL then
+        end
+        if MAC_INTEL then
             buildoptions { "-arch x86_64", "-mavx", "-mfma" }
+        end
+        if MAC_ARM and MAC_INTEL then
+            architecture "universal"
         end
         links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
 
