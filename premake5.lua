@@ -248,7 +248,7 @@ workspace "YGOPro"
         if MAC_ARM then
             buildoptions { "-arch arm64" }
         elseif MAC_INTEL then
-            buildoptions { "-arch x86_64", "-mavx" }
+            buildoptions { "-arch x86_64", "-mavx", "-mfma" }
         end
         links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
 
