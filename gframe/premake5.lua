@@ -88,6 +88,8 @@ project "YGOPro"
         defines { "GL_SILENCE_DEPRECATION" }
         if MAC_ARM then
             linkoptions { "-arch arm64" }
+        elseif MAC_INTEL then
+            linkoptions { "-arch x86_64" }
         end
         if USE_AUDIO and AUDIO_LIB == "irrklang" then
             links { "irrklang" }

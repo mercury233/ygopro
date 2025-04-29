@@ -76,7 +76,8 @@ newoption { trigger = "irrklang-pro-debug-lib-dir", category = "YGOPro - irrklan
 newoption { trigger = 'build-ikpmp3', category = "YGOPro - irrklang - ikpmp3", description = "" }
 
 newoption { trigger = "winxp-support", category = "YGOPro", description = "" }
-newoption { trigger = "mac-arm", category = "YGOPro", description = "Compile for Apple Silicon" }
+newoption { trigger = "mac-arm", category = "YGOPro", description = "Compile for Apple Silicon Mac" }
+newoption { trigger = "mac-intel", category = "YGOPro", description = "Compile for Intel Mac" }
 
 function GetParam(param)
     return _OPTIONS[param] or os.getenv(string.upper(string.gsub(param,"-","_")))
@@ -219,6 +220,11 @@ if GetParam("winxp-support") and os.istarget("windows") then
 end
 if GetParam("mac-arm") and os.istarget("macosx") then
     MAC_ARM = true
+    MAC_INTEL = false
+end
+if GetParam("mac-intel") and os.istarget("macosx") then
+    MAC_INTEL = true
+    MAC_ARM = false
 end
 
 workspace "YGOPro"
@@ -243,6 +249,8 @@ workspace "YGOPro"
         libdirs { "/usr/local/lib" }
         if MAC_ARM then
             buildoptions { "-arch arm64" }
+        elseif MAC_INTEL then
+            buildoptions { "-arch x86_64" }
         end
         links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
 
@@ -309,7 +317,7 @@ workspace "YGOPro"
 
     filter "not action:vs*"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }
-        if not MAC_ARM then
+        if not MAC_ARM and not MAC_INTEL then
             buildoptions "-march=native"
         end
 
