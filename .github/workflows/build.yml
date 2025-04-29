@@ -94,7 +94,7 @@ jobs:
       id: freetype
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
+        url: https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
 
     - name: Extract freetype
       run: |
@@ -325,7 +325,7 @@ jobs:
       id: freetype
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
+        url: https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
 
     - name: Extract freetype
       run: |
@@ -449,15 +449,11 @@ jobs:
       matrix:
         name:
           - macos-13-intel
-#          - macos-13-arm64
           - macos-15-arm64
         include:
           - name: macos-13-intel
             os: macos-13
             premake_version: 5.0.0-beta6
-#          - name: macos-13-arm64
-#            os: macos-13-xlarge
-#            premake_version: 5.0.0-beta6
           - name: macos-15-arm64
             os: macos-15
             premake_version: 5.0.0-beta6
@@ -521,7 +517,7 @@ jobs:
       id: freetype
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
+        url: https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
 
     - name: Extract freetype
       run: |
