@@ -224,7 +224,6 @@ end
 workspace "YGOPro"
     location "build"
     language "C++"
-    objdir "obj"
 
     configurations { "Release", "Debug" }
 
@@ -238,6 +237,7 @@ workspace "YGOPro"
         else
             defines { "WINVER=0x0601" } -- WIN7
         end
+        platforms { "Win32", "x64" }
 
     filter "system:macosx"
         libdirs { "/usr/local/lib" }
@@ -251,12 +251,36 @@ workspace "YGOPro"
 
     filter "configurations:Release"
         optimize "Speed"
+        objdir "obj/release"
         targetdir "bin/release"
 
     filter "configurations:Debug"
         symbols "On"
         defines "_DEBUG"
+        objdir "obj/debug"
         targetdir "bin/debug"
+
+    filter { "system:windows", "platforms:Win32" }
+        architecture "x86"
+
+    filter { "system:windows", "platforms:x64" }
+        architecture "x86_64"
+
+    filter { "system:windows", "platforms:Win32", "configurations:Release" }
+        objdir "obj/release/x86"
+        targetdir "bin/release/x86"
+
+    filter { "system:windows", "platforms:Win32", "configurations:Debug" }
+        objdir "obj/debug/x86"
+        targetdir "bin/debug/x86"
+
+    filter { "system:windows", "platforms:x64", "configurations:Release" }
+        objdir "obj/release/x64"
+        targetdir "bin/release/x64"
+
+    filter { "system:windows", "platforms:x64", "configurations:Debug" }
+        objdir "obj/debug/x64"
+        targetdir "bin/debug/x64"
 
     filter { "configurations:Release", "action:vs*" }
         if linktimeoptimization then

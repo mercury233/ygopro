@@ -16,7 +16,7 @@ jobs:
           - windows-xp
           - windows-irrklang
           - windows-no-dxsdk
-#          - windows-x64
+          - windows-x64
           - windows-2025
         include:
           - name: windows
@@ -37,6 +37,11 @@ jobs:
             vs: vs2022
             audiolib: miniaudio
             nodxsdk: true
+          - name: windows-x64
+            os: windows-2022
+            vs: vs2022
+            audiolib: miniaudio
+            x64: true
           - name: windows-2025
             os: windows-2025
             vs: vs2022
@@ -235,7 +240,7 @@ jobs:
 
     - name: Build solution
       run: |
-        MSBuild.exe build\YGOPro.sln /m /p:Configuration=Release
+        MSBuild.exe build\YGOPro.sln /m /p:Configuration=Release /p:Platform=${{ matrix.x64 && 'x64' || 'Win32' }}
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
