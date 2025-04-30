@@ -230,10 +230,9 @@ if os.istarget("macosx") then
         TARGET_MAC_ARM = true
     elseif not MAC_INTEL then
         -- automatic target arm64, need extra detect
-        print("111111111")
         local uname = os.outputof("uname -m")
-        print("uname -m: " .. uname)
-        if uname:find("arm") then
+        local proctranslated = os.outputof("sysctl sysctl.proc_translated")
+        if uname:find("arm") or proctranslated then
             print("Detected Apple Silicon Mac")
             TARGET_MAC_ARM = true
         end
