@@ -704,6 +704,7 @@ jobs:
     - name: Use premake to generate make files
       if: matrix.dynamiclib != true
       run: |
+        uname -m
         ./premake5 gmake ${{ matrix.cross-build-intel == true && '--mac-intel' || '' }} ${{ matrix.cross-build-arm == true && '--mac-arm' || '' }}
 
     - name: Make
