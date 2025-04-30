@@ -231,7 +231,7 @@ if os.istarget("macosx") then
     elseif not MAC_INTEL then
         -- automatic target arm64, need extra detect
         local uname = os.outputof("uname -m")
-        if uname:find("arm") then
+        if uname:find("ARM") then
             TARGET_MAC_ARM = true
         end
     end
