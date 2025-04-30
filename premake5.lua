@@ -218,11 +218,23 @@ end
 if GetParam("winxp-support") and os.istarget("windows") then
     WINXP_SUPPORT = true
 end
-if GetParam("mac-arm") and os.istarget("macosx") then
-    MAC_ARM = true
-end
-if GetParam("mac-intel") and os.istarget("macosx") then
-    MAC_INTEL = true
+if os.istarget("macosx") then
+    if GetParam("mac-arm") then
+        MAC_ARM = true
+    end
+    if GetParam("mac-intel") then
+        MAC_INTEL = true
+    end
+    
+    if MAC_ARM then
+        TARGET_MAC_ARM = true
+    elseif not MAC_INTEL then
+        -- automatic target arm64, need extra detect
+        local uname = os.outputof("uname -m")
+        if uname:find("arm") then
+            TARGET_MAC_ARM = true
+        end
+    end
 end
 
 workspace "YGOPro"

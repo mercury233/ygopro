@@ -487,25 +487,37 @@ jobs:
       matrix:
         name:
           - macos-13-intel
+          - macos-13-arm-crossbuild
           - macos-13-universal
           - macos-15-arm
+          - macos-15-intel-crossbuild
           - macos-15-universal
           - macos-dynamic-lib
         include:
           - name: macos-13-intel
             os: macos-13
             premake_version: 5.0.0-beta6
+          - name: macos-13-arm-crossbuild
+            os: macos-13
+            premake_version: 5.0.0-beta6
+            cross-build-arm: true
           - name: macos-13-universal
             os: macos-13
             premake_version: 5.0.0-beta6
-            cross-build-universal: true
+            cross-build-intel: true
+            cross-build-arm: true
           - name: macos-15-arm
             os: macos-15
             premake_version: 5.0.0-beta6
+          - name: macos-15-intel-crossbuild
+            os: macos-15
+            premake_version: 5.0.0-beta6
+            cross-build-intel: true
           - name: macos-15-universal
             os: macos-15
             premake_version: 5.0.0-beta6
-            cross-build-universal: true
+            cross-build-intel: true
+            cross-build-arm: true
           - name: macos-dynamic-lib
             os: macos-13
             premake_version: 5.0.0-beta6
@@ -689,16 +701,11 @@ jobs:
           --freetype-include-dir="/usr/local/include/freetype2" \
           --opus-include-dir="/usr/local/include/opus"
 
-    - name: Use premake to generate make files (Intel)
-      if: runner.arch == 'X64' && matrix.dynamiclib != true
+    - name: Use premake to generate make files
+      if: && matrix.dynamiclib != true
       run: |
-        ./premake5 gmake ${{ matrix.cross-build-universal == true && '--mac-intel --mac-arm' || '' }}
+        ./premake5 gmake ${{ matrix.cross-build-intel == true && '--mac-intel' || '' }} ${{ matrix.cross-build-arm == true && '--mac-arm' || '' }}
 
-    - name: Use premake to generate make files (ARM)
-      if: runner.arch == 'ARM64' && matrix.dynamiclib != true
-      run: |
-        ./premake5 gmake --mac-arm ${{ matrix.cross-build-universal == true && '--mac-intel' || '' }}
- 
     - name: Make
       run: |
         cd build

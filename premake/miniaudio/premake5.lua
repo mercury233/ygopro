@@ -103,15 +103,6 @@ project "miniaudio"
                 "external/vorbis/lib/vorbisfile.c",
                 "external/vorbis/lib/window.c",
             }
-            if not MAC_ARM then
-                files {
-                    "external/opus/celt/x86/pitch_avx.c",
-                    "external/opus/celt/x86/pitch_sse.c",
-                    "external/opus/celt/x86/vq_sse2.c",
-                    "external/opus/celt/x86/x86_celt_map.c",
-                    "external/opus/celt/x86/x86cpu.c",
-                }
-            end
             includedirs {
                 "external/ogg/include",
                 "external/opus/include",
@@ -123,7 +114,14 @@ project "miniaudio"
             defines {
                 "OPUS_BUILD", "USE_ALLOCA",
             }
-            if not MAC_ARM then
+            if not TARGET_MAC_ARM then
+                files {
+                    "external/opus/celt/x86/pitch_avx.c",
+                    "external/opus/celt/x86/pitch_sse.c",
+                    "external/opus/celt/x86/vq_sse2.c",
+                    "external/opus/celt/x86/x86_celt_map.c",
+                    "external/opus/celt/x86/x86cpu.c",
+                }
                 defines {
                     "OPUS_HAVE_RTCD", "CPU_INFO_BY_ASM",
                     "OPUS_X86_PRESUME_SSE", "OPUS_X86_PRESUME_SSE2",
