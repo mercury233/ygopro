@@ -531,16 +531,6 @@ jobs:
 #        git pull origin master
 #        cd ..
 
-    - name: Test locales
-      run: |
-        locale -a
-    
-    - name: Test arch
-      run: |
-        uname -a
-        echo "arch: ${{ runner.arch }}"
-        uname -m
-
     - name: Install dependencies
       if: matrix.dynamiclib == true
       run: |
