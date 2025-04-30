@@ -702,7 +702,7 @@ jobs:
           --opus-include-dir="/usr/local/include/opus"
 
     - name: Use premake to generate make files
-      if: && matrix.dynamiclib != true
+      if: matrix.dynamiclib != true
       run: |
         ./premake5 gmake ${{ matrix.cross-build-intel == true && '--mac-intel' || '' }} ${{ matrix.cross-build-arm == true && '--mac-arm' || '' }}
 
