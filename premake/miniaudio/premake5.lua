@@ -33,12 +33,6 @@ project "miniaudio"
                 "external/opus/celt/rate.c",
                 "external/opus/celt/vq.c",
 
-                "external/opus/celt/x86/pitch_avx.c",
-                "external/opus/celt/x86/pitch_sse.c",
-                "external/opus/celt/x86/vq_sse2.c",
-                "external/opus/celt/x86/x86_celt_map.c",
-                "external/opus/celt/x86/x86cpu.c",
-
                 "external/opus/silk/bwexpander.c",
                 "external/opus/silk/bwexpander_32.c",
                 "external/opus/silk/CNG.c",
@@ -119,9 +113,21 @@ project "miniaudio"
             }
             defines {
                 "OPUS_BUILD", "USE_ALLOCA",
-                "OPUS_X86_PRESUME_SSE", "OPUS_X86_PRESUME_SSE2",
-                "OPUS_HAVE_RTCD", "OPUS_X86_MAY_HAVE_SSE", "OPUS_X86_MAY_HAVE_SSE4_1", "OPUS_X86_MAY_HAVE_AVX2",
             }
+            if not TARGET_MAC_ARM then
+                files {
+                    "external/opus/celt/x86/pitch_avx.c",
+                    "external/opus/celt/x86/pitch_sse.c",
+                    "external/opus/celt/x86/vq_sse2.c",
+                    "external/opus/celt/x86/x86_celt_map.c",
+                    "external/opus/celt/x86/x86cpu.c",
+                }
+                defines {
+                    "OPUS_HAVE_RTCD", "CPU_INFO_BY_ASM",
+                    "OPUS_X86_PRESUME_SSE", "OPUS_X86_PRESUME_SSE2",
+                    "OPUS_X86_MAY_HAVE_SSE", "OPUS_X86_MAY_HAVE_SSE4_1", "OPUS_X86_MAY_HAVE_AVX2",
+                }
+            end
         else
             includedirs { OPUS_INCLUDE_DIR, VORBIS_INCLUDE_DIR, OGG_INCLUDE_DIR }
         end

@@ -154,7 +154,23 @@ project "irrlicht"
 
     filter { "system:windows" }
         defines { "_IRR_WCHAR_FILESYSTEM" }
-        includedirs { "$(DXSDK_DIR)Include" }
+        if USE_DXSDK then
+            includedirs { "$(DXSDK_DIR)Include" }
+        else
+            defines { "NO_IRR_COMPILE_WITH_DIRECT3D_9_" }
+        end
 
     filter { "system:linux" }
         links { "X11", "Xxf86vm" }
+
+    filter { "system:macosx" }
+        cppdialect "gnu++14"
+        defines { "GL_SILENCE_DEPRECATION", "PNG_ARM_NEON_OPT=0", "PNG_ARM_NEON_IMPLEMENTATION=0" }
+        undefines { "NO_IRR_COMPILE_WITH_JOYSTICK_EVENTS_" }
+        files {
+            "source/Irrlicht/MacOSX/*.mm",
+            "source/Irrlicht/MacOSX/*.h",
+        }
+
+    filter { "system:macosx", "files:source/Irrlicht/Irrlicht.cpp or source/Irrlicht/COpenGLDriver.cpp" }
+        compileas "Objective-C++" 
