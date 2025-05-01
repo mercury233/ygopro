@@ -215,6 +215,7 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", irr::core::rect<irr::s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
+64位程序。\n\
 新音频引擎。\n\
 导入导出卡组代码功能。\n\
 粘贴文本时自动过滤结尾的空格。\n\
