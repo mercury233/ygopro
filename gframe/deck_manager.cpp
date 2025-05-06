@@ -315,7 +315,7 @@ bool DeckManager::LoadCurrentDeck(int category_index, const wchar_t* category_na
 		mainGame->deckBuilder.RefreshPackListScroll();
 	return res;
 }
-void DeckManager::SaveDeck(Deck& deck, std::stringstream& deckStream) {
+void DeckManager::SaveDeck(const Deck& deck, std::stringstream& deckStream) {
 	deckStream << "#created by ..." << std::endl;
 	deckStream << "#main" << std::endl;
 	for(size_t i = 0; i < deck.main.size(); ++i)
@@ -327,7 +327,7 @@ void DeckManager::SaveDeck(Deck& deck, std::stringstream& deckStream) {
 	for(size_t i = 0; i < deck.side.size(); ++i)
 		deckStream << deck.side[i]->first << std::endl;
 }
-bool DeckManager::SaveDeck(Deck& deck, const wchar_t* file) {
+bool DeckManager::SaveDeck(const Deck& deck, const wchar_t* file) {
 	if(!FileSystem::IsDirExists(L"./deck") && !FileSystem::MakeDir(L"./deck"))
 		return false;
 	FILE* fp = OpenDeckFile(file, "w");
