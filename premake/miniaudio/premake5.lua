@@ -112,7 +112,10 @@ project "miniaudio"
                 "external/vorbis/include",
             }
             defines {
-                "OPUS_BUILD", "USE_ALLOCA",
+                "OPUS_BUILD",
+                "USE_ALLOCA",
+                "HAVE_LRINTF",
+                "OP_HAVE_LRINTF",
             }
             if not TARGET_MAC_ARM then
                 files {
