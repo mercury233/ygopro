@@ -495,29 +495,23 @@ jobs:
         include:
           - name: macos-13-intel
             os: macos-13
-            premake-version: 5.0.0-beta6
           - name: macos-13-arm-cross-compile-static-link
             os: macos-13
-            premake-version: 5.0.0-beta6
             cross-build-arm: true
             static-link: true
           - name: macos-13-universal-static-link
             os: macos-13
-            premake-version: 5.0.0-beta6
             cross-build-intel: true
             cross-build-arm: true
             static-link: true
           - name: macos-15-arm
             os: macos-15
-            premake-version: 5.0.0-beta6
           - name: macos-15-intel-cross-compile-static-link
             os: macos-15
-            premake-version: 5.0.0-beta6
             cross-build-intel: true
             static-link: true
           - name: macos-15-universal-static-link
             os: macos-15
-            premake-version: 5.0.0-beta6
             cross-build-intel: true
             cross-build-arm: true
             static-link: true

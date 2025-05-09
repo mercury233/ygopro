@@ -93,7 +93,7 @@ elseif GetParam("no-build-lua") then
     BUILD_LUA = false
 end
 if not BUILD_LUA then
-    -- at most times you need to change LUA_LIB_NAME if you change BUILD_LUA to false
+    -- at most times you need to change those if you change BUILD_LUA to false
     -- make sure your lua lib is built with C++ and version >= 5.3
     LUA_LIB_NAME = GetParam("lua-lib-name") or LUA_LIB_NAME
     LUA_INCLUDE_DIR = GetParam("lua-include-dir") or os.findheader(LUA_LIB_NAME)
@@ -222,6 +222,7 @@ end
 if GetParam("winxp-support") and os.istarget("windows") then
     WINXP_SUPPORT = true
 end
+
 if os.istarget("macosx") then
     if GetParam("mac-arm") then
         MAC_ARM = true
