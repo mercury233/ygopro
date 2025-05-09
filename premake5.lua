@@ -258,6 +258,12 @@ workspace "YGOPro"
         end
         platforms { "Win32", "x64" }
 
+    filter { "system:windows", "platforms:Win32" }
+        architecture "x86"
+
+    filter { "system:windows", "platforms:x64" }
+        architecture "x86_64"
+
     filter "system:macosx"
         libdirs { "/usr/local/lib" }
         if MAC_ARM then
@@ -282,12 +288,6 @@ workspace "YGOPro"
         symbols "On"
         defines "_DEBUG"
         targetdir "bin/debug"
-
-    filter { "system:windows", "platforms:Win32" }
-        architecture "x86"
-
-    filter { "system:windows", "platforms:x64" }
-        architecture "x86_64"
 
     filter { "system:windows", "platforms:Win32", "configurations:Release" }
         targetdir "bin/release/x86"

@@ -17,7 +17,7 @@ jobs:
           - windows-irrklang
           - windows-no-dxsdk
           - windows-x64
-          - windows-2025
+#          - windows-2025
         include:
           - name: windows
             os: windows-2022
@@ -42,10 +42,10 @@ jobs:
             vs: vs2022
             audiolib: miniaudio
             x64: true
-          - name: windows-2025
-            os: windows-2025
-            vs: vs2022
-            audiolib: miniaudio
+#          - name: windows-2025
+#            os: windows-2025
+#            vs: vs2022
+#            audiolib: miniaudio
 
     runs-on: ${{ matrix.os }}
 
@@ -71,7 +71,7 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta5/premake-5.0.0-beta5-windows.zip
+        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta6/premake-5.0.0-beta6-windows.zip
         filename: premake5.zip
 
     - name: Extract premake
