@@ -676,12 +676,27 @@ jobs:
         cp -r premake/* .
         cp -r resource/* .
 
-    - name: Use premake to generate make files (homebrew packages)
-      if: matrix.static-link != true
+    - name: Use premake to generate make files (homebrew packages, Intel)
+      if: matrix.static-link != true && runner.arch == 'X64'
       run: |
         premake5 gmake ${{ matrix.cross-build-intel == true && '--mac-intel' || '' }} ${{ matrix.cross-build-arm == true && '--mac-arm' || '' }} \
           --freetype-include-dir="/usr/local/include/freetype2" \
           --opus-include-dir="/usr/local/include/opus"
+
+    - name: Use premake to generate make files (homebrew packages, Apple Silicon)
+      if: matrix.static-link != true && runner.arch == 'ARM64'
+      run: |
+        premake5 gmake ${{ matrix.cross-build-intel == true && '--mac-intel' || '' }} ${{ matrix.cross-build-arm == true && '--mac-arm' || '' }} \
+          --event-include-dir="/opt/homebrew/include" \
+          --event-lib-dir="/opt/homebrew/lib" \
+          --freetype-include-dir="/opt/homebrew/include/freetype2" \
+          --freetype-lib-dir="/opt/homebrew/lib" \
+          --sqlite-include-dir="/opt/homebrew/opt/sqlite/include" \
+          --sqlite-lib-dir="/opt/homebrew/opt/sqlite/lib" \
+          --opus-include-dir="/opt/homebrew/include/opus" \
+          --opus-lib-dir="/opt/homebrew/lib" \
+          --vorbis-include-dir="/opt/homebrew/include" \
+          --vorbis-lib-dir="/opt/homebrew/lib"
 
     - name: Use premake to generate make files (static link)
       if: matrix.static-link == true
