@@ -1573,7 +1573,6 @@ void Game::SaveConfig() {
 	std::fprintf(fp, "music_volume = %d\n", vol);
 	std::fprintf(fp, "music_mode = %d\n", (chkMusicMode->isChecked() ? 1 : 0));
 #endif
-
 	std::fclose(fp);
 }
 void Game::ShowCardInfo(int code, bool resize) {
