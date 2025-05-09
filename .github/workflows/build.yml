@@ -500,6 +500,7 @@ jobs:
             os: macos-13
             premake-version: 5.0.0-beta6
             cross-build-arm: true
+            static-link: true
           - name: macos-13-static-link-universal
             os: macos-13
             premake-version: 5.0.0-beta6
@@ -513,11 +514,13 @@ jobs:
             os: macos-15
             premake-version: 5.0.0-beta6
             cross-build-intel: true
+            static-link: true
           - name: macos-15-universal
             os: macos-15
             premake-version: 5.0.0-beta6
             cross-build-intel: true
             cross-build-arm: true
+            static-link: true
 
     runs-on: ${{ matrix.os }}
 
