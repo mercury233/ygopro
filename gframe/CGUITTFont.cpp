@@ -487,13 +487,13 @@ void CGUITTFont::setFontHinting(const bool enable, const bool enable_auto_hintin
 	reset_images();
 }
 
-void CGUITTFont::draw(const core::stringw& text, const core::rect<s32>& position, video::SColor color, bool hcenter, bool vcenter, const core::rect<s32>* clip) {
+void CGUITTFont::draw(const core::stringw& text, const core::rect<s32>& position, video::SColor color, bool hcenter, bool vcenter, const core::rect<s32>* clip, bool usecolor) {
 	if (!Driver)
 		return;
-	drawUstring(text, position, color, hcenter, vcenter, clip);
+	drawUstring(text, position, color, hcenter, vcenter, clip, usecolor);
 }
 
-void CGUITTFont::drawUstring(const core::ustring& utext, const core::rect<s32>&position, video::SColor color, bool hcenter, bool vcenter, const core::rect<s32>*clip) {
+void CGUITTFont::drawUstring(const core::ustring& utext, const core::rect<s32>&position, video::SColor color, bool hcenter, bool vcenter, const core::rect<s32>*clip, bool usecolor) {
 	if (!Driver)
 		return;
 
@@ -501,6 +501,7 @@ void CGUITTFont::drawUstring(const core::ustring& utext, const core::rect<s32>&p
 	for (u32 i = 0; i < Glyph_Pages.size(); ++i) {
 		Glyph_Pages[i]->render_positions.clear();
 		Glyph_Pages[i]->render_source_rects.clear();
+		Glyph_Pages[i]->render_colors.clear();
 	}
 
 	// Set up some variables.
@@ -518,6 +519,12 @@ void CGUITTFont::drawUstring(const core::ustring& utext, const core::rect<s32>&p
 			offset.Y = ((position.getHeight() - textDimension.Height) >> 1) + offset.Y;
 	}
 
+	if (!use_transparency) color.color |= 0xff000000;
+
+	// Current color being used
+	video::SColor currentColor = color;
+	bool colorChanged = false;
+
 	// Set up our render map.
 	core::map<u32, CGUITTGlyphPage*> Render_Map;
 
@@ -525,8 +532,49 @@ void CGUITTFont::drawUstring(const core::ustring& utext, const core::rect<s32>&p
 	u32 n;
 	uchar32_t previousChar = 0;
 	core::ustring::const_iterator iter(utext);
+	
 	while (!iter.atEnd()) {
 		uchar32_t currentChar = *iter;
+
+		// Check for color control sequences like {RRGGBB}
+		if (usecolor && currentChar == L'{' && !(iter + 7).atEnd()) {
+			bool isColorCode = true;
+			u32 hexColor = 0;
+			
+			// Try to parse a color code in the format {RRGGBB}
+			for (int i = 1; i <= 6; ++i) {
+				uchar32_t hexChar = *(iter + i);
+				if ((hexChar >= L'0' && hexChar <= L'9') || 
+					(hexChar >= L'A' && hexChar <= L'F') || 
+					(hexChar >= L'a' && hexChar <= L'f')) {
+					
+					// Convert hex character to value
+					u32 hexValue;
+					if (hexChar <= L'9') hexValue = hexChar - L'0';
+					else if (hexChar <= L'F') hexValue = hexChar - L'A' + 10;
+					else hexValue = hexChar - L'a' + 10;
+					
+					hexColor = (hexColor << 4) | hexValue;
+				} else {
+					isColorCode = false;
+					break;
+				}
+			}
+			
+			if (isColorCode && (*(iter + 7) == L'}')) {
+				// Valid color code found, change the current color
+				currentColor = video::SColor(
+					color.getAlpha(),              // Keep original alpha
+					(hexColor >> 16) & 0xFF,       // R
+					(hexColor >> 8) & 0xFF,        // G
+					hexColor & 0xFF                // B
+				);
+				colorChanged = true;
+				
+				iter += 8; // Skip the entire color code
+				continue;
+			}
+		}
 
 		bool lineBreak = false;
 		if (currentChar == L'\r') { // Mac or Windows breaks
@@ -563,6 +611,7 @@ void CGUITTFont::drawUstring(const core::ustring& utext, const core::rect<s32>&p
 			CGUITTGlyphPage* const page = Glyph_Pages[glyph.glyph_page];
 			page->render_positions.push_back(irr::core::vector2di(offset.X + offx, offset.Y + offy));
 			page->render_source_rects.push_back(glyph.source_rect);
+			page->render_colors.push_back(currentColor);
 			Render_Map.set(glyph.glyph_page, page);
 		}
 		offset.X += getWidthFromCharacter(currentChar);
@@ -581,8 +630,39 @@ void CGUITTFont::drawUstring(const core::ustring& utext, const core::rect<s32>&p
 
 		CGUITTGlyphPage* page = n->getValue();
 
-		if (!use_transparency) color.color |= 0xff000000;
-		Driver->draw2DImageBatch(page->texture, page->render_positions, page->render_source_rects, clip, color, true);
+		// Only use individual draws if we have different colors
+		if (colorChanged) {
+			// Group characters by color to reduce draw calls
+			video::SColor lastColor = page->render_colors[0];
+			core::array<core::vector2di> batchPositions;
+			core::array<core::rect<s32>> batchRects;
+			
+			for (u32 i = 0; i < page->render_positions.size(); ++i) {
+				if (page->render_colors[i] == lastColor) {
+					// Same color, add to current batch
+					batchPositions.push_back(page->render_positions[i]);
+					batchRects.push_back(page->render_source_rects[i]);
+				} else {
+					// Color changed, draw current batch and start a new one
+					if (!batchPositions.empty()) {
+						Driver->draw2DImageBatch(page->texture, batchPositions, batchRects, clip, lastColor, true);
+						batchPositions.clear();
+						batchRects.clear();
+					}
+					lastColor = page->render_colors[i];
+					batchPositions.push_back(page->render_positions[i]);
+					batchRects.push_back(page->render_source_rects[i]);
+				}
+			}
+			
+			// Draw any remaining glyphs in the last batch
+			if (!batchPositions.empty()) {
+				Driver->draw2DImageBatch(page->texture, batchPositions, batchRects, clip, lastColor, true);
+			}
+		} else {
+			// All glyphs have the same color - draw in a single batch for maximum performance
+			Driver->draw2DImageBatch(page->texture, page->render_positions, page->render_source_rects, clip, color, true);
+		}
 	}
 }
 

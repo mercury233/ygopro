@@ -181,6 +181,7 @@ public:
 
 	core::array<core::vector2di> render_positions;
 	core::array<core::recti> render_source_rects;
+	core::array<video::SColor> render_colors;
 
 	core::dimension2du texture_size;
 	u8 pixel_mode;
@@ -265,10 +266,10 @@ public:
 	//! Draws some text and clips it to the specified rectangle if wanted.
 	void draw(const core::stringw& text, const core::rect<s32>& position,
 	                  video::SColor color, bool hcenter = false, bool vcenter = false,
-	                  const core::rect<s32>* clip = 0) override;
+	                  const core::rect<s32>* clip = 0, bool usecolor = false) override;
 	void drawUstring(const core::ustring& text, const core::rect<s32>& position,
 					video::SColor color, bool hcenter = false, bool vcenter = false,
-					const core::rect<s32>* clip = 0);
+					const core::rect<s32>* clip = 0, bool usecolor = false);
 
 	//! Returns the dimension of a character produced by this font.
 	core::dimension2d<u32> getCharDimension(const wchar_t ch) const;

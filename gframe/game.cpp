@@ -366,6 +366,7 @@ bool Game::Initialize() {
 	stSetName = env->addStaticText(L"", irr::core::rect<irr::s32>(15, 83, 296, 106), false, true, tabInfo, -1, false);
 	stSetName->setOverrideColor(irr::video::SColor(255, 0, 0, 255));
 	stText = env->addStaticText(L"", irr::core::rect<irr::s32>(15, 106, 287, 324), false, true, tabInfo, -1, false);
+	stText->setWordWrap(false);
 	scrCardText = env->addScrollBar(false, irr::core::rect<irr::s32>(267, 106, 287, 324), tabInfo, SCROLL_CARDTEXT);
 	scrCardText->setLargeStep(1);
 	scrCardText->setSmallStep(1);
@@ -1122,6 +1123,14 @@ std::wstring Game::SetStaticText(irr::gui::IGUIStaticText* pControl, irr::u32 cW
 			prev = 0;
 			if(_height == pos)
 				pbuffer = 0;
+			continue;
+		}
+		else if (text[i] == L'{' && i + 7 < std::wcslen(text) && text[i + 7] == L'}') {
+			for (int j = 0; j < 7; ++j) {
+				strBuffer[pbuffer++] = text[i];
+				++i;
+			}
+			strBuffer[pbuffer++] = text[i];
 			continue;
 		} else if(_width > 0 && _width + w > cWidth) {
 			strBuffer[pbuffer++] = L'\n';
