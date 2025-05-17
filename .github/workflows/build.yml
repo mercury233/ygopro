@@ -674,6 +674,7 @@ jobs:
         cp -r resource/* .
 
     - name: Test ls
+      if: matrix.static-link != true
       run: |
         ls -lRL "$(brew --prefix libevent)"
         ls -lRL "$(brew --prefix freetype)"
@@ -692,7 +693,7 @@ jobs:
           --freetype-lib-dir="$(brew --prefix freetype)/lib" \
           --sqlite-include-dir="$(brew --prefix sqlite)/include" \
           --sqlite-lib-dir="$(brew --prefix sqlite)/lib" \
-          --opus-include-dir="$(brew --prefix opus)/opus/include" \
+          --opus-include-dir="$(brew --prefix opus)/include/opus" \
           --opus-lib-dir="$(brew --prefix opus)/lib" \
           --opusfile-include-dir="$(brew --prefix opusfile)/include/opus" \
           --opusfile-lib-dir="$(brew --prefix opusfile)/lib" \
