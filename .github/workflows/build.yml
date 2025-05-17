@@ -683,8 +683,10 @@ jobs:
           --freetype-lib-dir="$(brew --prefix freetype)/lib" \
           --sqlite-include-dir="$(brew --prefix sqlite)/include" \
           --sqlite-lib-dir="$(brew --prefix sqlite)/lib" \
-          --opus-include-dir="/usr/local/include/opus" \
+          --opus-include-dir="$(brew --prefix opus)/opus/include" \
           --opus-lib-dir="$(brew --prefix opus)/lib" \
+          --opusfile-include-dir="$(brew --prefix opusfile)/include/opus" \
+          --opusfile-lib-dir="$(brew --prefix opusfile)/lib" \
           --vorbis-include-dir="$(brew --prefix libvorbis)/include" \
           --vorbis-lib-dir="$(brew --prefix libvorbis)/lib"
 
