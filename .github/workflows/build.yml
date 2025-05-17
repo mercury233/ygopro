@@ -673,6 +673,15 @@ jobs:
         cp -r premake/* .
         cp -r resource/* .
 
+    - name: Test ls
+      run: |
+        ls -lRL "$(brew --prefix libevent)"
+        ls -lRL "$(brew --prefix freetype)"
+        ls -lRL "$(brew --prefix sqlite)"
+        ls -lRL "$(brew --prefix opus)"
+        ls -lRL "$(brew --prefix opusfile)"
+        ls -lRL "$(brew --prefix libvorbis)"
+
     - name: Use premake to generate make files (Homebrew packages)
       if: matrix.static-link != true
       run: |
