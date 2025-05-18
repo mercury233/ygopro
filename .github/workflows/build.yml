@@ -682,11 +682,15 @@ jobs:
         ls -lRL "$(brew --prefix opusfile)"
         ls -lRL "$(brew --prefix libvorbis)"
 
-    - name: Use premake to generate make files (Homebrew packages)
-      if: matrix.static-link != true
+    - name: Use premake to generate make files (Homebrew packages, Intel)
+      if: matrix.static-link != true && runner.arch != 'ARM64'
       run: |
-        DYLD_LIBRARY_PATH=$(brew --prefix)/lib premake5 gmake \
-          ${{ matrix.cross-build-intel == true && '--mac-intel' || '' }} ${{ matrix.cross-build-arm == true && '--mac-arm' || '' }}
+        premake5 gmake
+
+    - name: Use premake to generate make files (Homebrew packages, Apple Silicon)
+      if: matrix.static-link != true && runner.arch == 'ARM64'
+      run: |
+        DYLD_LIBRARY_PATH=$(brew --prefix)/lib premake5 gmake
 
     - name: Use premake to generate make files (static link)
       if: matrix.static-link == true
