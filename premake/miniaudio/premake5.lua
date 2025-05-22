@@ -137,4 +137,4 @@ project "miniaudio"
     end
 
     filter "system:linux"
-        links { "dl", "pthread", "m" }
+        links { "m" }

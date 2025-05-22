@@ -162,7 +162,7 @@ project "irrlicht"
         end
 
     filter { "system:linux" }
-        links { "X11", "Xxf86vm" }
+        links { "GL", "X11", "Xxf86vm" }
 
     filter { "system:macosx" }
         cppdialect "gnu++14"
