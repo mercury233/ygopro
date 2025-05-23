@@ -13,7 +13,7 @@ jobs:
       matrix:
         name:
           - windows
-          - windows-xp
+#          - windows-xp
           - windows-irrklang
           - windows-no-dxsdk
           - windows-x64
@@ -23,11 +23,11 @@ jobs:
             os: windows-2022
             vs: vs2022
             audiolib: miniaudio
-          - name: windows-xp
-            os: windows-2019
-            vs: vs2019
-            audiolib: miniaudio
-            xp: true
+#          - name: windows-xp
+#            os: windows-2019
+#            vs: vs2019
+#            audiolib: miniaudio
+#            xp: true
           - name: windows-irrklang
             os: windows-2022
             vs: vs2022
