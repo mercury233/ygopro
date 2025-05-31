@@ -161,6 +161,9 @@ project "irrlicht"
             defines { "NO_IRR_COMPILE_WITH_DIRECT3D_9_" }
         end
 
+    filter "system:linux"
+        links { "GL", "X11", "Xxf86vm" }
+
     filter { "system:macosx" }
         cppdialect "gnu++14"
         defines { "GL_SILENCE_DEPRECATION" }
@@ -169,6 +172,7 @@ project "irrlicht"
             "source/Irrlicht/MacOSX/*.mm",
             "source/Irrlicht/MacOSX/*.h",
         }
+        links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
 
     filter { "system:macosx", "files:source/Irrlicht/Irrlicht.cpp or source/Irrlicht/COpenGLDriver.cpp" }
         compileas "Objective-C++" 

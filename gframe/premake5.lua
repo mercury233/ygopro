@@ -9,7 +9,7 @@ project "YGOPro"
 
     files { "*.cpp", "*.h" }
     includedirs { "../ocgcore" }
-    links { "ocgcore", "clzma", "cspmemvfs", LUA_LIB_NAME, "sqlite3", "irrlicht", "freetype", "event" }
+    links { "ocgcore", "clzma", "cspmemvfs", "sqlite3", "irrlicht", "freetype", "event" }
 
     if BUILD_EVENT then
         includedirs { "../event/include" }
@@ -86,8 +86,6 @@ project "YGOPro"
 
     filter "system:macosx"
         openmp "Off"
-        links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
-        defines { "GL_SILENCE_DEPRECATION" }
         if MAC_ARM then
             linkoptions { "-arch arm64" }
         end
@@ -99,7 +97,6 @@ project "YGOPro"
         end
 
     filter "system:linux"
-        links { "GL", "X11", "Xxf86vm" }
         linkoptions { "-fopenmp" }
         if USE_AUDIO and AUDIO_LIB == "irrklang" then
             links { "IrrKlang" }
