@@ -351,6 +351,8 @@ workspace "YGOPro"
 
     filter {}
 
+    include "ocgcore"
+    include "gframe"
     if BUILD_LUA then
         include "lua"
     end
@@ -374,5 +376,3 @@ workspace "YGOPro"
             include "ikpmp3"
         end
     end
-    include "ocgcore"
-    include "gframe"
