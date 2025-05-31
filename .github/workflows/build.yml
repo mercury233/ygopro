@@ -13,9 +13,8 @@ jobs:
       matrix:
         name:
           - windows
-#          - windows-xp
-          - windows-irrklang
-          - windows-no-dxsdk
+#          - windows-irrklang
+#          - windows-no-dxsdk
           - windows-x64
 #          - windows-2025
         include:
@@ -23,20 +22,15 @@ jobs:
             os: windows-2022
             vs: vs2022
             audiolib: miniaudio
-#          - name: windows-xp
-#            os: windows-2019
-#            vs: vs2019
+#          - name: windows-irrklang
+#            os: windows-2022
+#            vs: vs2022
+#            audiolib: irrklang
+#          - name: windows-no-dxsdk
+#            os: windows-2022
+#            vs: vs2022
 #            audiolib: miniaudio
-#            xp: true
-          - name: windows-irrklang
-            os: windows-2022
-            vs: vs2022
-            audiolib: irrklang
-          - name: windows-no-dxsdk
-            os: windows-2022
-            vs: vs2022
-            audiolib: miniaudio
-            nodxsdk: true
+#            nodxsdk: true
           - name: windows-x64
             os: windows-2022
             vs: vs2022
@@ -44,7 +38,7 @@ jobs:
             x64: true
 #          - name: windows-2025
 #            os: windows-2025
-#            vs: vs2022
+#            vs: vs2025 # to be enabled after the release of Visual Studio 2025
 #            audiolib: miniaudio
 
     runs-on: ${{ matrix.os }}
@@ -233,7 +227,7 @@ jobs:
 
     - name: Use premake to generate Visual Studio solution
       run: |
-        .\premake5.exe ${{ matrix.vs }} --audio-lib=${{ matrix.audiolib }} ${{ matrix.xp && '--winxp-support' || '' }}
+        .\premake5.exe ${{ matrix.vs }} --audio-lib=${{ matrix.audiolib }}
 
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
@@ -485,18 +479,18 @@ jobs:
       matrix:
         name:
           - macos-13-intel
-          - macos-13-arm-cross-compile-static-link
+#          - macos-13-arm-cross-compile-static-link
           - macos-13-universal-static-link
           - macos-15-arm
-          - macos-15-intel-cross-compile-static-link
-          - macos-15-universal-static-link
+#          - macos-15-intel-cross-compile-static-link
+#          - macos-15-universal-static-link
         include:
           - name: macos-13-intel
             os: macos-13
-          - name: macos-13-arm-cross-compile-static-link
-            os: macos-13
-            cross-build-arm: true
-            static-link: true
+#          - name: macos-13-arm-cross-compile-static-link
+#            os: macos-13
+#            cross-build-arm: true
+#            static-link: true
           - name: macos-13-universal-static-link
             os: macos-13
             cross-build-intel: true
@@ -504,15 +498,15 @@ jobs:
             static-link: true
           - name: macos-15-arm
             os: macos-15
-          - name: macos-15-intel-cross-compile-static-link
-            os: macos-15
-            cross-build-intel: true
-            static-link: true
-          - name: macos-15-universal-static-link
-            os: macos-15
-            cross-build-intel: true
-            cross-build-arm: true
-            static-link: true
+#          - name: macos-15-intel-cross-compile-static-link
+#            os: macos-15
+#            cross-build-intel: true
+#            static-link: true
+#          - name: macos-15-universal-static-link
+#            os: macos-15
+#            cross-build-intel: true
+#            cross-build-arm: true
+#            static-link: true
 
     runs-on: ${{ matrix.os }}
 
@@ -671,24 +665,8 @@ jobs:
         cp -r premake/* .
         cp -r resource/* .
 
-    - name: Test ls
+    - name: Use premake to generate make files (Homebrew packages)
       if: matrix.static-link != true
-      run: |
-        ls -lRL "$(brew --prefix libevent)"
-        ls -lRL "$(brew --prefix freetype)"
-        ls -lRL "$(brew --prefix sqlite)"
-        ls -lRL "$(brew --prefix libogg)"
-        ls -lRL "$(brew --prefix opus)"
-        ls -lRL "$(brew --prefix opusfile)"
-        ls -lRL "$(brew --prefix libvorbis)"
-
-    - name: Use premake to generate make files (Homebrew packages, Intel)
-      if: matrix.static-link != true && runner.arch != 'ARM64'
-      run: |
-        premake5 gmake
-
-    - name: Use premake to generate make files (Homebrew packages, Apple Silicon)
-      if: matrix.static-link != true && runner.arch == 'ARM64'
       run: |
         DYLD_LIBRARY_PATH=$(brew --prefix)/lib premake5 gmake
 

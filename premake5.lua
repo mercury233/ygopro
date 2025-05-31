@@ -10,7 +10,9 @@ BUILD_LUA = true
 LUA_LIB_NAME = "lua" -- change this if you don't build Lua
 
 BUILD_EVENT = os.istarget("windows")
+
 BUILD_FREETYPE = os.istarget("windows")
+
 BUILD_SQLITE = os.istarget("windows")
 
 BUILD_IRRLICHT = true -- modified Irrlicht is required, can't use the official one
