@@ -172,6 +172,7 @@ project "irrlicht"
             "source/Irrlicht/MacOSX/*.mm",
             "source/Irrlicht/MacOSX/*.h",
         }
+        links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
 
     filter { "system:macosx", "files:source/Irrlicht/Irrlicht.cpp or source/Irrlicht/COpenGLDriver.cpp" }
         compileas "Objective-C++" 
