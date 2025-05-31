@@ -18,7 +18,7 @@ install:
   - move libevent-2.0.22-stable event
   - xcopy /E event\WIN32-Code event\include
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz ; exit 0"
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz ; exit 0"
   - tar xf freetype-2.13.3.tar.gz
   - move freetype-2.13.3 freetype
   
@@ -30,17 +30,33 @@ install:
   - 7z x sqlite-amalgamation-3490100.zip
   - move sqlite-amalgamation-3490100 sqlite3
 
-  - git clone --depth=1 https://github.com/mercury233/irrlicht
+  - git clone --depth=1 --branch test https://github.com/mercury233/irrlicht
   
-  - git clone --depth=1 https://%access_token%@github.com/purerosefallen/irrklang
-  - mv -f irrklang/plugins/ikpmp3 .
+  - git clone --depth=1 --branch 0.11.22 https://github.com/mackron/miniaudio
+  - xcopy /Y miniaudio\extras\miniaudio_split\miniaudio.* .
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/xiph/ogg/releases/download/v1.3.5/libogg-1.3.5.tar.gz ; exit 0"
+  - tar xf libogg-1.3.5.tar.gz
+  - move libogg-1.3.5 miniaudio/external/ogg
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/xiph/opus/releases/download/v1.5.2/opus-1.5.2.tar.gz ; exit 0"
+  - tar xf opus-1.5.2.tar.gz
+  - move opus-1.5.2 miniaudio/external/opus
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/xiph/opusfile/releases/download/v0.12/opusfile-0.12.tar.gz ; exit 0"
+  - tar xf opusfile-0.12.tar.gz
+  - move opusfile-0.12 miniaudio/external/opusfile
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/xiph/vorbis/releases/download/v1.3.7/libvorbis-1.3.7.tar.gz ; exit 0"
+  - tar xf libvorbis-1.3.7.tar.gz
+  - move libvorbis-1.3.7 miniaudio/external/vorbis
 
   # let premake happy
   - xcopy /E premake\* .
   - xcopy /E resource\* .
 
   # premake
-  - premake5 vs2019 --audio-lib=irrklang --irrklang-pro
+  - premake5 vs2019 --audio-lib=miniaudio --winxp-support
   
 configuration: Release
 
@@ -50,8 +66,6 @@ build:
 
 after_build:
   - mv bin\release\x86\YGOPro.exe YGOPro.exe
-  #- mv irrklang\bin\win32-visualStudio\irrKlang.dll .
-  #- mv irrklang\bin\win32-visualStudio\ikpMP3.dll .
   - mkdir pics
   - mkdir replay
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-database/raw/master/locales/zh-CN/cards.cdb ; exit 0"
@@ -101,3 +115,7 @@ cache:
   - freetype-2.13.3.tar.gz
   - lua-5.4.7.tar.gz
   - sqlite-amalgamation-3490100.zip
+  - libogg-1.3.5.tar.gz
+  - opus-1.5.2.tar.gz
+  - opusfile-0.12.tar.gz
+  - libvorbis-1.3.7.tar.gz
