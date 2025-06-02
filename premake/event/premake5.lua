@@ -1,7 +1,7 @@
 project "event"
     kind "StaticLib"
 
-    local EVENT_VERSION = io.readfile("configure"):match("NUMERIC_VERSION%s+0x(%x+)")
+    local EVENT_VERSION = (io.readfile("configure") or ""):match("NUMERIC_VERSION%s+0x(%x+)")
     if not EVENT_VERSION then
         print("Warning: Could not determine libevent version from the configure file, assuming 2.1.12.")
         EVENT_VERSION = "02010c00" -- 2.1.12
@@ -30,7 +30,7 @@ project "event"
         files { "win32select.c", "evthread_win32.c", "buffer_iocp.c", "event_iocp.c", "bufferevent_async.c" }
         if EVENT_VERSION>=0x02010000 then
             prebuildcommands { "xcopy /E /Y $(ProjectDir)..\\event\\WIN32-Code\\nmake $(ProjectDir)..\\event\\include" }
-            defines { "UINT32_MAX=0xffffffffui32" } -- quirk of libevent 2.1
+            defines { "UINT32_MAX=0xffffffffU" } -- quirk of libevent 2.1
         end
         if EVENT_VERSION<0x02010000 then
             defines { "WIN32" } -- quirk of old libevent
