@@ -107,7 +107,7 @@ project "YGOPro"
         end
 
     filter "system:linux"
-        links { "GL", "X11", "Xxf86vm" }
+        links { "GL", "X11", "Xxf86vm", "dl", "pthread" }
         linkoptions { "-fopenmp" }
         if USE_AUDIO and AUDIO_LIB == "irrklang" then
             links { "IrrKlang" }
