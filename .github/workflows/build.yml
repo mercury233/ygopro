@@ -70,7 +70,7 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta6/premake-5.0.0-beta6-windows.zip
+        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta7/premake-5.0.0-beta7-windows.zip
         filename: premake5.zip
 
     - name: Extract premake
@@ -104,12 +104,12 @@ jobs:
       id: lua
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://www.lua.org/ftp/lua-5.4.7.tar.gz
+        url: https://www.lua.org/ftp/lua-5.4.8.tar.gz
 
     - name: Extract lua
       run: |
         tar xf ${{ steps.lua.outputs.filepath }}
-        move lua-5.4.7 lua
+        move lua-5.4.8 lua
 
     - name: Download sqlite
       id: sqlite
@@ -300,7 +300,7 @@ jobs:
             premake-version: 5.0.0-beta4
           - name: ubuntu-24
             os: ubuntu-24.04
-            premake-version: 5.0.0-beta6
+            premake-version: 5.0.0-beta7
           - name: ubuntu-static-link
             os: ubuntu-22.04
             premake-version: 5.0.0-beta4
@@ -387,12 +387,12 @@ jobs:
       id: lua
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://www.lua.org/ftp/lua-5.4.7.tar.gz
+        url: https://www.lua.org/ftp/lua-5.4.8.tar.gz
 
     - name: Extract lua
       run: |
         tar xf ${{ steps.lua.outputs.filepath }}
-        mv lua-5.4.7 lua
+        mv lua-5.4.8 lua
 
     - name: Download sqlite
       if: matrix.static-link == true
@@ -613,12 +613,12 @@ jobs:
       id: lua
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://www.lua.org/ftp/lua-5.4.7.tar.gz
+        url: https://www.lua.org/ftp/lua-5.4.8.tar.gz
 
     - name: Extract lua
       run: |
         tar xf ${{ steps.lua.outputs.filepath }}
-        mv lua-5.4.7 lua
+        mv lua-5.4.8 lua
 
     - name: Download sqlite
       if: matrix.static-link == true
