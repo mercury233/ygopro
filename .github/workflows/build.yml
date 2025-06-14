@@ -692,4 +692,4 @@ jobs:
       with:
         name: YGOPro-${{ matrix.name }}
         path: |
-          bin/release/YGOPro.app
+          bin/release/YGOPro
