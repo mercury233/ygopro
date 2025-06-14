@@ -311,11 +311,7 @@ workspace "YGOPro"
         targetdir "bin/debug/x64"
 
     filter { "configurations:Release", "action:vs*" }
-        if linktimeoptimization then -- available since premake 5.0-beta4
-            linktimeoptimization "On"
-        else
-            flags { "LinkTimeOptimization" }
-        end
+        linktimeoptimization "On"
         staticruntime "On"
         disablewarnings { "4244", "4267", "4838", "4996", "6011", "6031", "6054", "6262" }
 
