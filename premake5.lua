@@ -244,8 +244,8 @@ if os.istarget("macosx") then
     if GetParam("mac-intel") then
         MAC_INTEL = true
     end
-    
     if MAC_ARM or (not MAC_INTEL and os.hostarch() == "ARM64") then
+        -- building on ARM CPU will target ARM automatically
         TARGET_MAC_ARM = true
     end
 end
