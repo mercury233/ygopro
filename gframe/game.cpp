@@ -199,11 +199,6 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", irr::core::rect<irr::s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
-升级依赖库。\n\
-配置文件中控制图片加载线程功能。\n\
-选择先后攻时显示对方副卡组数量功能。\n\
-64位程序。\n\
-导入导出卡组代码功能。\n\
 粘贴文本时自动过滤结尾的空格。\n\
 开发者功能：F2打开当前卡脚本。\n\
 开发者功能：右键清空聊天记录。\n\
@@ -212,7 +207,7 @@ bool Game::Initialize() {
 鼠标滚轮浏览卡组中的卡片。\n\
 \n\
 \n已知问题：\n\
-\n鸽了，爽\n\
+\n存储的录像为新格式，旧版程序不能读取。\n\
 ", irr::core::rect<irr::s32>(300, 30, 550, 390), false, true, wMainMenu);
 
 	//lan mode
