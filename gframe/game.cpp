@@ -199,6 +199,8 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", irr::core::rect<irr::s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
+优化字体组件。\n\
+修复卡片在移动到额外卡组的动画中变白。\n\
 粘贴文本时自动过滤结尾的空格。\n\
 开发者功能：F2打开当前卡脚本。\n\
 开发者功能：右键清空聊天记录。\n\
