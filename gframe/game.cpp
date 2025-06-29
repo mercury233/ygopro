@@ -209,7 +209,7 @@ bool Game::Initialize() {
 鼠标滚轮浏览卡组中的卡片。\n\
 \n\
 \n已知问题：\n\
-\n存储的录像为新格式，旧版程序不能读取。\n\
+\n鸽了，爽。\n\
 ", irr::core::rect<irr::s32>(300, 30, 550, 390), false, true, wMainMenu);
 
 	//lan mode
