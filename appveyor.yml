@@ -56,7 +56,7 @@ install:
   - xcopy /E resource\* .
 
   # premake
-  - premake5 vs2019 --audio-lib=miniaudio --winxp-support
+  - premake5 vs2019
   
 configuration: Release
 
