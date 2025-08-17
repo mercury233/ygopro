@@ -479,8 +479,8 @@ jobs:
 
     - name: Copy premake files
       run: |
-        cp -r premake/* .
-        cp -r resource/* .
+        cp -pr premake/* .
+        cp -pr resource/* .
 
     - name: Use premake to generate make files (apt packages)
       if: matrix.static-link != true
@@ -706,8 +706,8 @@ jobs:
 
     - name: Copy premake files
       run: |
-        cp -r premake/* .
-        cp -r resource/* .
+        cp -pr premake/* .
+        cp -pr resource/* .
 
     - name: Use premake to generate make files (Homebrew packages)
       if: matrix.static-link != true
