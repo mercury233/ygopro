@@ -105,13 +105,13 @@ void ImageManager::ResizeTexture() {
 	tUnknownFit = GetTextureFromFile("textures/unknown.jpg", imgWidthFit, imgHeightFit);
 	tUnknownThumb = GetTextureFromFile("textures/unknown.jpg", imgWidthThumb, imgHeightThumb);
 	driver->removeTexture(tBackGround);
-	tBackGround = GetTextureFromFile("textures/bg.jpg", bgWidth, bgHeight);
+	tBackGround = GetTextureFromFile("textures/bg.webp", bgWidth, bgHeight);
 	driver->removeTexture(tBackGround_menu);
-	tBackGround_menu = GetTextureFromFile("textures/bg_menu.jpg", bgWidth, bgHeight);
+	tBackGround_menu = GetTextureFromFile("textures/bg_menu.webp", bgWidth, bgHeight);
 	if(!tBackGround_menu)
 		tBackGround_menu = tBackGround;
 	driver->removeTexture(tBackGround_deck);
-	tBackGround_deck = GetTextureFromFile("textures/bg_deck.jpg", bgWidth, bgHeight);
+	tBackGround_deck = GetTextureFromFile("textures/bg_deck.webp", bgWidth, bgHeight);
 	if(!tBackGround_deck)
 		tBackGround_deck = tBackGround;
 }
@@ -219,10 +219,10 @@ irr::video::ITexture* ImageManager::GetTexture(int code, bool fit) {
 	auto tit = tMap[fit ? 1 : 0].find(code);
 	if(tit == tMap[fit ? 1 : 0].end()) {
 		char file[256];
-		mysnprintf(file, "expansions/pics/%d.jpg", code);
+		mysnprintf(file, "expansions/pics/%d.webp", code);
 		irr::video::ITexture* img = GetTextureFromFile(file, width, height);
 		if(img == nullptr) {
-			mysnprintf(file, "pics/%d.jpg", code);
+			mysnprintf(file, "pics/%d.webp", code);
 			img = GetTextureFromFile(file, width, height);
 		}
 		tMap[fit ? 1 : 0][code] = img;
@@ -242,10 +242,10 @@ irr::video::ITexture* ImageManager::GetBigPicture(int code, float zoom) {
 	}
 	irr::video::ITexture* texture;
 	char file[256];
-	mysnprintf(file, "expansions/pics/%d.jpg", code);
+	mysnprintf(file, "expansions/pics/%d.webp", code);
 	irr::video::IImage* srcimg = driver->createImageFromFile(file);
 	if(srcimg == nullptr) {
-		mysnprintf(file, "pics/%d.jpg", code);
+		mysnprintf(file, "pics/%d.webp", code);
 		srcimg = driver->createImageFromFile(file);
 	}
 	if(srcimg == nullptr) {
@@ -271,10 +271,10 @@ int ImageManager::LoadThumbThread() {
 		imageManager.tThumbLoadingCodes.pop();
 		imageManager.tThumbLoadingMutex.unlock();
 		char file[256];
-		mysnprintf(file, "expansions/pics/%d.jpg", code);
+		mysnprintf(file, "expansions/pics/%d.webp", code);
 		irr::video::IImage* img = imageManager.driver->createImageFromFile(file);
 		if(img == nullptr) {
-			mysnprintf(file, "pics/%d.jpg", code);
+			mysnprintf(file, "pics/%d.webp", code);
 			img = imageManager.driver->createImageFromFile(file);
 		}
 		if(img != nullptr) {
@@ -317,12 +317,12 @@ irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 	auto tit = tThumb.find(code);
 	if(tit == tThumb.end() && !mainGame->gameConf.use_image_load_background_thread) {
 		char file[256];
-		mysnprintf(file, "expansions/pics/%d.jpg", code);
+		mysnprintf(file, "expansions/pics/%d.webp", code);
 		int width = CARD_THUMB_WIDTH * mainGame->xScale;
 		int height = CARD_THUMB_HEIGHT * mainGame->yScale;
 		irr::video::ITexture* img = GetTextureFromFile(file, width, height);
 		if(img == NULL) {
-			mysnprintf(file, "pics/%d.jpg", code);
+			mysnprintf(file, "pics/%d.webp", code);
 			img = GetTextureFromFile(file, width, height);
 		}
 		tThumb[code] = img;
@@ -334,7 +334,7 @@ irr::video::ITexture* ImageManager::GetTextureThumb(int code) {
 		if(lit != tThumbLoading.end()) {
 			if(lit->second != nullptr) {
 				char file[256];
-				mysnprintf(file, "pics/%d.jpg", code);
+				mysnprintf(file, "pics/%d.webp", code);
 				irr::video::ITexture* texture = driver->addTexture(file, lit->second); // textures must be added in the main thread due to OpenGL
 				lit->second->drop();
 				tThumb[code] = texture;
