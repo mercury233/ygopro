@@ -211,6 +211,13 @@ project "irrlicht"
         files {
             "source/Irrlicht/MacOSX/*.mm",
             "source/Irrlicht/MacOSX/*.h",
+            "source/Irrlicht/libwebp/src/dsp/alpha_processing_neon.c",
+            "source/Irrlicht/libwebp/src/dsp/dec_neon.c",
+            "source/Irrlicht/libwebp/src/dsp/filters_neon.c",
+            "source/Irrlicht/libwebp/src/dsp/lossless_neon.c",
+            "source/Irrlicht/libwebp/src/dsp/rescaler_neon.c",
+            "source/Irrlicht/libwebp/src/dsp/upsampling_neon.c",
+            "source/Irrlicht/libwebp/src/dsp/yuv_neon.c",
         }
 
     filter { "system:macosx", "files:source/Irrlicht/Irrlicht.cpp or source/Irrlicht/COpenGLDriver.cpp" }
