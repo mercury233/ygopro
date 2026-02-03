@@ -1,6 +1,6 @@
 #include "image_manager.h"
-#include "game.h"
 #include "image_scaler.h"
+#include "game.h"
 #include <thread>
 
 namespace ygo {
@@ -118,7 +118,7 @@ void ImageManager::ResizeTexture() {
 		tBackGround_deck = tBackGround;
 }
 void ImageManager::ScaleImage(irr::video::IImage* src, irr::video::IImage* dest) {
-	imageScaleNNAA(src, dest);
+	imageScale(src, dest);
 }
 /** Convert image to texture, resizing if needed.
  * @param name Texture name (Irrlicht texture key).

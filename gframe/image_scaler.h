@@ -1,10 +1,13 @@
-#pragma once
+#ifndef IMAGESCALER_H
+#define IMAGESCALER_H
 
 #include <irrlicht.h>
 
 namespace ygo {
 
-// Reference scaler (existing NNAA implementation).
-void imageScaleNNAA(irr::video::IImage* src, irr::video::IImage* dest);
+// Use stb_image_resize2 when possible, fallback to NNAA.
+void imageScale(irr::video::IImage* src, irr::video::IImage* dest);
 
-} // namespace ygo
+}
+
+#endif // IMAGESCALER_H
