@@ -17,6 +17,7 @@ public:
 	void SetDevice(irr::IrrlichtDevice* dev);
 	void ClearTexture();
 	void ResizeTexture();
+	void ScaleImage(irr::video::IImage* src, irr::video::IImage* dest);
 	irr::video::ITexture* GetTextureFromFile(const char* file, irr::s32 width, irr::s32 height);
 	irr::video::IImage* GetImage(int code);
 	irr::video::ITexture* GetTexture(int code, irr::s32 width, irr::s32 height);
