@@ -23,4 +23,13 @@ project "ImgBench"
     filter "not action:vs*"
         cppdialect "C++14"
 
+    filter "system:macosx"
+        openmp "Off"
+        if MAC_ARM then
+            linkoptions { "-arch arm64" }
+        end
+        if MAC_INTEL then
+            linkoptions { "-arch x86_64" }
+        end
+
     filter {}

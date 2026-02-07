@@ -245,6 +245,9 @@ if os.istarget("macosx") then
     end
 end
 
+-- workaround
+TARGET_MAC_ARM = true
+
 workspace "YGOPro"
     location "build"
     language "C++"
