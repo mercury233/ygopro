@@ -1,7 +1,9 @@
 #include "image_manager.h"
 #include "image_resizer.h"
 #include "game.h"
+#include "myfilesystem.h"
 #include <thread>
+#include <chrono>
 
 namespace ygo {
 
@@ -44,6 +46,60 @@ bool ImageManager::Initial() {
 	tField[1] = driver->getTexture("textures/field3.png");
 	tFieldTransparent[1] = driver->getTexture("textures/field-transparent3.png");
 	ResizeTexture();
+	// Temporary test for image resizing performance
+	{
+		int TEST_FILE_COUNT = 500;
+		int THUMB_WIDTH = 55;
+		int THUMB_HEIGHT = 80;
+		bool USE_TREADING = mainGame->gameConf.use_image_scale_multi_thread;
+		std::vector<irr::video::IImage*> images;
+		std::vector<std::string> jpgFiles;
+		FileSystem::TraversalDir("pics", [&](const char* name, bool isdir) {
+			if (!isdir && strstr(name, ".jpg")) {
+				jpgFiles.push_back(std::string("pics/") + name);
+			}
+		});
+		auto start = std::chrono::high_resolution_clock::now();
+		for (auto& file : jpgFiles) {
+			if (images.size() >= TEST_FILE_COUNT) break;
+			irr::video::IImage* img = driver->createImageFromFile(file.c_str());
+			if (img) images.push_back(img);
+		}
+		auto read_end = std::chrono::high_resolution_clock::now();
+		auto read_time = std::chrono::duration_cast<std::chrono::milliseconds>(read_end - start).count();
+		
+		// Resize with STB
+		auto resize_start = std::chrono::high_resolution_clock::now();
+		for (auto img : images) {
+			irr::video::IImage* dest = driver->createImage(img->getColorFormat(), irr::core::dimension2d<irr::u32>(THUMB_WIDTH, THUMB_HEIGHT));
+			imageResizer.resizeSTB(img, dest);
+			dest->drop();
+		}
+		auto stb_end = std::chrono::high_resolution_clock::now();
+		auto stb_time = std::chrono::duration_cast<std::chrono::milliseconds>(stb_end - resize_start).count();
+		
+		// Resize with NNAA
+		resize_start = std::chrono::high_resolution_clock::now();
+		for (auto img : images) {
+			irr::video::IImage* dest = driver->createImage(img->getColorFormat(), irr::core::dimension2d<irr::u32>(THUMB_WIDTH, THUMB_HEIGHT));
+			imageResizer.resizeNNAA(img, dest, USE_TREADING);
+			dest->drop();
+		}
+		auto nnaa_end = std::chrono::high_resolution_clock::now();
+		auto nnaa_time = std::chrono::duration_cast<std::chrono::milliseconds>(nnaa_end - resize_start).count();
+		
+		// Print results
+		char buffer[512];
+		mysnprintf(buffer, "Read time: %lld ms, STB resize time: %lld ms, NNAA resize time: %lld ms\n", read_time, stb_time, nnaa_time);
+#ifdef _WIN32
+		OutputDebugStringA(buffer);
+#else
+		printf("%s", buffer);
+#endif
+		
+		// Clean up
+		for (auto img : images) img->drop();
+	}
 	return true;
 }
 void ImageManager::SetDevice(irr::IrrlichtDevice* dev) {
