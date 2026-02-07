@@ -25,11 +25,16 @@ project "ImgBench"
 
     filter "system:macosx"
         openmp "Off"
+		links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
         if MAC_ARM then
             linkoptions { "-arch arm64" }
         end
         if MAC_INTEL then
             linkoptions { "-arch x86_64" }
         end
+
+    filter "system:linux"
+        links { "GL", "X11", "Xxf86vm", "dl", "pthread" }
+        linkoptions { "-fopenmp" }
 
     filter {}
