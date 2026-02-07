@@ -47,6 +47,9 @@ bool ImageManager::Initial() {
 	tFieldTransparent[1] = driver->getTexture("textures/field-transparent3.png");
 	ResizeTexture();
 	// Temporary test for image resizing performance
+	// Define YGOPRO_IMAGE_RESIZE_STARTUP_BENCH to enable.
+	// NOTE: 已迁移到命令行工具 ImgBench，默认不在 GUI 启动时执行。
+#if defined(YGOPRO_IMAGE_RESIZE_STARTUP_BENCH)
 	{
 		int TEST_FILE_COUNT = 500;
 		int THUMB_WIDTH = 55;
@@ -100,6 +103,7 @@ bool ImageManager::Initial() {
 		// Clean up
 		for (auto img : images) img->drop();
 	}
+#endif
 	return true;
 }
 void ImageManager::SetDevice(irr::IrrlichtDevice* dev) {

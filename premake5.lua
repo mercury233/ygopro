@@ -328,6 +328,7 @@ workspace "YGOPro"
 
     include "ocgcore"
     include "gframe"
+    include "tools/imgbench"
     if BUILD_LUA then
         include "lua"
     end

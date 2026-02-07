@@ -247,6 +247,8 @@ jobs:
         path: |
           bin/release/x86/YGOPro.exe
           bin/release/x64/YGOPro.exe
+          bin/release/x86/ImgBench.exe
+          bin/release/x64/ImgBench.exe
 
   build-linux:
     strategy:
@@ -256,6 +258,7 @@ jobs:
           - ubuntu-22
           - ubuntu-24
           - ubuntu-static-link
+          - ubuntu-22-arm-static-link
         include:
           - name: ubuntu-22
             os: ubuntu-22.04
@@ -267,6 +270,11 @@ jobs:
             os: ubuntu-22.04
             premake-version: 5.0.0-beta4
             static-link: true
+          - name: ubuntu-22-arm-static-link
+            os: ubuntu-22.04-arm
+            premake-version: 5.0.0-beta4
+            static-link: true
+            premake-from-source: true
 
     runs-on: ${{ matrix.os }}
 
@@ -293,21 +301,53 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libxxf86vm-dev
 
+    - name: Install dependencies (premake build)
+      if: matrix.premake-from-source == true
+      run: |
+        sudo apt-get install -y build-essential unzip
+
     - name: Install dependencies (dynamic link)
       if: matrix.static-link != true
       run: |
         sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev libopusfile-dev libvorbis-dev
 
-    - name: Download premake
+    - name: Download premake (prebuilt)
+      if: matrix.premake-from-source != true
       id: premake
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
         url: https://github.com/premake/premake-core/releases/download/v${{ matrix.premake-version }}/premake-${{ matrix.premake-version }}-linux.tar.gz
         filename: premake5.tar.gz
 
-    - name: Extract premake
+    - name: Extract premake (prebuilt)
+      if: matrix.premake-from-source != true
       run: |
         tar xf ${{ steps.premake.outputs.filepath }}
+        chmod +x ./premake5
+
+    - name: Download premake (source)
+      if: matrix.premake-from-source == true
+      id: premake_src
+      uses: mercury233/action-cache-download-file@v1.0.0
+      with:
+        url: https://github.com/premake/premake-core/releases/download/v${{ matrix.premake-version }}/premake-${{ matrix.premake-version }}-src.zip
+        filename: premake-src.zip
+
+    - name: Build premake from source
+      if: matrix.premake-from-source == true
+      run: |
+        unzip -q ${{ steps.premake_src.outputs.filepath }}
+        cd premake-${{ matrix.premake-version }}-src
+        chmod +x ./Bootstrap.sh
+        ./Bootstrap.sh
+        PREMAKE_PATH=$(find . -maxdepth 4 -type f -name premake5 -print -quit)
+        if [ -z "$PREMAKE_PATH" ]; then
+          echo "premake5 not found after Bootstrap"
+          find . -maxdepth 4 -type f -print
+          exit 1
+        fi
+        cp "$PREMAKE_PATH" ../premake5
+        cd ..
         chmod +x ./premake5
 
     - name: Download libevent
@@ -470,26 +510,21 @@ jobs:
         name: YGOPro-${{ matrix.name }}
         path: |
           bin/release/YGOPro
+          bin/release/ImgBench
 
   build-macos:
     strategy:
       fail-fast: false
       matrix:
         name:
-          - macos-15-intel
           - macos-15-universal-static-link
-          - macos-15-arm
 #          - macos-15-intel-cross-compile-static-link
         include:
-          - name: macos-15-intel
-            os: macos-15-intel
           - name: macos-15-universal-static-link
             os: macos-15
             cross-build-intel: true
             cross-build-arm: true
             static-link: true
-          - name: macos-15-arm
-            os: macos-15
 #          - name: macos-15-intel-cross-compile-static-link
 #            os: macos-15
 #            cross-build-intel: true
@@ -686,3 +721,4 @@ jobs:
         name: YGOPro-${{ matrix.name }}
         path: |
           bin/release/YGOPro
+          bin/release/ImgBench
