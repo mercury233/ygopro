@@ -11,6 +11,14 @@ private:
 	void imageScaleNNAA(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading);
 public:
 	void resize(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading);
+
+	// Temp functions to call specific resizing algorithms directly
+	void resizeSTB(irr::video::IImage* src, irr::video::IImage* dest) {
+		imageScaleSTB(src, dest);
+	}
+	void resizeNNAA(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading) {
+		imageScaleNNAA(src, dest, use_threading);
+	}
 };
 
 extern ImageResizer imageResizer;
