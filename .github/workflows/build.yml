@@ -299,7 +299,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libxxf86vm-dev
+        sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libxxf86vm-dev unzip
 
     - name: Install dependencies (premake build)
       if: matrix.premake-from-source == true
@@ -504,6 +504,15 @@ jobs:
         make -j 4 config=release
         cd ..
 
+    - name: Download pics and run ImgBench
+      if: matrix.name == 'ubuntu-22-arm-static-link'
+      run: |
+        rm -rf pics imgbench_out pics.zip
+        curl -L -o pics.zip https://filebin.net/eagkrewnkw2cwyqe/pics.zip
+        unzip -q pics.zip
+        chmod +x bin/release/ImgBench
+        ./bin/release/ImgBench --input pics --output imgbench_out
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -511,6 +520,14 @@ jobs:
         path: |
           bin/release/YGOPro
           bin/release/ImgBench
+
+    - name: Upload ImgBench outputs
+      if: matrix.name == 'ubuntu-22-arm-static-link'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ImgBenchOut-${{ matrix.name }}
+        path: |
+          imgbench_out
 
   build-macos:
     strategy:
@@ -715,6 +732,15 @@ jobs:
         make -j 3 config=release
         cd ..
 
+    - name: Download pics and run ImgBench
+      if: matrix.name == 'macos-15-universal-static-link'
+      run: |
+        rm -rf pics imgbench_out pics.zip
+        curl -L -o pics.zip https://filebin.net/eagkrewnkw2cwyqe/pics.zip
+        unzip -q pics.zip
+        chmod +x bin/release/ImgBench
+        ./bin/release/ImgBench --input pics --output imgbench_out
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -722,3 +748,11 @@ jobs:
         path: |
           bin/release/YGOPro
           bin/release/ImgBench
+
+    - name: Upload ImgBench outputs
+      if: matrix.name == 'macos-15-universal-static-link'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ImgBenchOut-${{ matrix.name }}
+        path: |
+          imgbench_out
