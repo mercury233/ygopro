@@ -74,7 +74,7 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta7/premake-5.0.0-beta7-windows.zip
+        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-windows.zip
         filename: premake5.zip
 
     - name: Extract premake
@@ -97,12 +97,12 @@ jobs:
       id: freetype
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
+        url: https://downloads.sourceforge.net/freetype/freetype-2.14.1.tar.gz
 
     - name: Extract freetype
       run: |
         tar xf ${{ steps.freetype.outputs.filepath }}
-        move freetype-2.13.3 freetype
+        move freetype-2.14.1 freetype
 
     - name: Download lua
       id: lua
@@ -119,7 +119,7 @@ jobs:
       id: sqlite
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://www.sqlite.org/2025/sqlite-amalgamation-3500100.zip
+        url: https://www.sqlite.org/2026/sqlite-amalgamation-3510200.zip
 
     - name: Extract sqlite
       run: |
@@ -129,7 +129,7 @@ jobs:
     - name: Download miniaudio
       if: matrix.audiolib == 'miniaudio'
       run: |
-        git clone --depth=1 -b 0.11.23 https://github.com/mackron/miniaudio
+        git clone --depth=1 -b 0.11.24 https://github.com/mackron/miniaudio
         cd miniaudio
         xcopy /Y extras\miniaudio_split\miniaudio.* .
         cd ..
@@ -139,13 +139,13 @@ jobs:
       id: ogg
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://github.com/xiph/ogg/releases/download/v1.3.5/libogg-1.3.5.tar.gz
+        url: https://github.com/xiph/ogg/releases/download/v1.3.6/libogg-1.3.6.tar.gz
 
     - name: Extract ogg
       if: matrix.audiolib == 'miniaudio'
       run: |
         tar xf ${{ steps.ogg.outputs.filepath }}
-        move libogg-1.3.5 miniaudio/external/ogg
+        move libogg-1.3.6 miniaudio/external/ogg
 
     - name: Download opus
       if: matrix.audiolib == 'miniaudio'
@@ -304,7 +304,7 @@ jobs:
             premake-version: 5.0.0-beta4
           - name: ubuntu-24
             os: ubuntu-24.04
-            premake-version: 5.0.0-beta7
+            premake-version: 5.0.0-beta8
           - name: ubuntu-static-link
             os: ubuntu-22.04
             premake-version: 5.0.0-beta4
@@ -379,13 +379,13 @@ jobs:
       id: freetype
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
+        url: https://downloads.sourceforge.net/freetype/freetype-2.14.1.tar.gz
 
     - name: Extract freetype
       if: matrix.static-link == true
       run: |
         tar xf ${{ steps.freetype.outputs.filepath }}
-        mv freetype-2.13.3 freetype
+        mv freetype-2.14.1 freetype
 
     - name: Download lua
       id: lua
@@ -403,7 +403,7 @@ jobs:
       id: sqlite
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://www.sqlite.org/2025/sqlite-amalgamation-3500100.zip
+        url: https://www.sqlite.org/2026/sqlite-amalgamation-3510200.zip
 
     - name: Extract sqlite
       if: matrix.static-link == true
@@ -413,7 +413,7 @@ jobs:
 
     - name: Download miniaudio
       run: |
-        git clone --depth=1 -b 0.11.23 https://github.com/mackron/miniaudio
+        git clone --depth=1 -b 0.11.24 https://github.com/mackron/miniaudio
         cd miniaudio
         cp extras/miniaudio_split/miniaudio.* .
         cd ..
@@ -423,13 +423,13 @@ jobs:
       id: ogg
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://github.com/xiph/ogg/releases/download/v1.3.5/libogg-1.3.5.tar.gz
+        url: https://github.com/xiph/ogg/releases/download/v1.3.6/libogg-1.3.6.tar.gz
 
     - name: Extract ogg
       if: matrix.static-link == true
       run: |
         tar xf ${{ steps.ogg.outputs.filepath }}
-        mv libogg-1.3.5 miniaudio/external/ogg
+        mv libogg-1.3.6 miniaudio/external/ogg
 
     - name: Configure ogg
       if: matrix.static-link == true
@@ -567,7 +567,7 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta7/premake-5.0.0-beta7-macosx.tar.gz
+        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-macosx.tar.gz
         filename: premake5.tar.gz
 
     - name: Extract premake
@@ -602,13 +602,13 @@ jobs:
       id: freetype
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz
+        url: https://downloads.sourceforge.net/freetype/freetype-2.14.1.tar.gz
 
     - name: Extract freetype
       if: matrix.static-link == true
       run: |
         tar xf ${{ steps.freetype.outputs.filepath }}
-        mv freetype-2.13.3 freetype
+        mv freetype-2.14.1 freetype
 
     - name: Download lua
       id: lua
@@ -626,7 +626,7 @@ jobs:
       id: sqlite
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://www.sqlite.org/2025/sqlite-amalgamation-3500100.zip
+        url: https://www.sqlite.org/2026/sqlite-amalgamation-3510200.zip
 
     - name: Extract sqlite
       if: matrix.static-link == true
@@ -636,7 +636,7 @@ jobs:
 
     - name: Download miniaudio
       run: |
-        git clone --depth=1 -b 0.11.23 https://github.com/mackron/miniaudio
+        git clone --depth=1 -b 0.11.24 https://github.com/mackron/miniaudio
         cd miniaudio
         cp extras/miniaudio_split/miniaudio.* .
         cd ..
@@ -646,13 +646,13 @@ jobs:
       id: ogg
       uses: mercury233/action-cache-download-file@v1.0.0
       with:
-        url: https://github.com/xiph/ogg/releases/download/v1.3.5/libogg-1.3.5.tar.gz
+        url: https://github.com/xiph/ogg/releases/download/v1.3.6/libogg-1.3.6.tar.gz
 
     - name: Extract ogg
       if: matrix.static-link == true
       run: |
         tar xf ${{ steps.ogg.outputs.filepath }}
-        mv libogg-1.3.5 miniaudio/external/ogg
+        mv libogg-1.3.6 miniaudio/external/ogg
 
     - name: Download opus
       if: matrix.static-link == true
