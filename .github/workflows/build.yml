@@ -518,13 +518,13 @@ jobs:
       fail-fast: false
       matrix:
         name:
-          - macos-15-intel
+#          - macos-15-intel # need to use premake-5.0.0-beta8-macosx-x64.tar.gz or beta7
           - macos-15-universal-static-link
           - macos-15-arm
 #          - macos-15-intel-cross-compile-static-link
         include:
-          - name: macos-15-intel
-            os: macos-15-intel
+#          - name: macos-15-intel
+#            os: macos-15-intel
           - name: macos-15-universal-static-link
             os: macos-15
             cross-build-intel: true
