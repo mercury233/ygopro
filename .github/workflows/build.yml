@@ -124,7 +124,7 @@ jobs:
     - name: Extract sqlite
       run: |
         7z x ${{ steps.sqlite.outputs.filepath }}
-        move sqlite-amalgamation-3500100 sqlite3
+        move sqlite-amalgamation-3510200 sqlite3
 
     - name: Download miniaudio
       if: matrix.audiolib == 'miniaudio'
@@ -409,7 +409,7 @@ jobs:
       if: matrix.static-link == true
       run: |
         7z x ${{ steps.sqlite.outputs.filepath }}
-        mv sqlite-amalgamation-3500100 sqlite3
+        mv sqlite-amalgamation-3510200 sqlite3
 
     - name: Download miniaudio
       run: |
@@ -632,7 +632,7 @@ jobs:
       if: matrix.static-link == true
       run: |
         7z x ${{ steps.sqlite.outputs.filepath }}
-        mv sqlite-amalgamation-3500100 sqlite3
+        mv sqlite-amalgamation-3510200 sqlite3
 
     - name: Download miniaudio
       run: |
