@@ -130,8 +130,8 @@ jobs:
       if: matrix.audiolib == 'miniaudio'
       run: |
         git clone https://github.com/mackron/miniaudio
-        git checkout 13d161bc8d856ad61ae46b798bbeffc0f49808e8
         cd miniaudio
+        git checkout 13d161bc8d856ad61ae46b798bbeffc0f49808e8
         xcopy /Y extras\miniaudio_split\miniaudio.* .
         cd ..
 
@@ -415,8 +415,8 @@ jobs:
     - name: Download miniaudio
       run: |
         git clone https://github.com/mackron/miniaudio
-        git checkout 13d161bc8d856ad61ae46b798bbeffc0f49808e8
         cd miniaudio
+        git checkout 13d161bc8d856ad61ae46b798bbeffc0f49808e8
         cp extras/miniaudio_split/miniaudio.* .
         cd ..
 
@@ -639,8 +639,8 @@ jobs:
     - name: Download miniaudio
       run: |
         git clone https://github.com/mackron/miniaudio
-        git checkout 13d161bc8d856ad61ae46b798bbeffc0f49808e8
         cd miniaudio
+        git checkout 13d161bc8d856ad61ae46b798bbeffc0f49808e8
         cp extras/miniaudio_split/miniaudio.* .
         cd ..
 
