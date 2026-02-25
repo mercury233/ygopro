@@ -262,9 +262,11 @@ workspace "YGOPro"
 
     filter { "system:windows", "action:vs*", "platforms:Win32" }
         architecture "x86"
+        vectorextensions "SSE2"
 
     filter { "system:windows", "action:vs*", "platforms:x64" }
         architecture "x86_64"
+        vectorextensions "AVX2"
 
     filter { "system:windows", "action:gmake" }
         defines { "UNICODE", "_UNICODE" }
@@ -320,7 +322,6 @@ workspace "YGOPro"
     filter "action:vs*"
         cdialect "C11"
         conformancemode "On" 
-        vectorextensions "SSE2"
         buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
 
