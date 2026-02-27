@@ -322,7 +322,7 @@ bool CGUITTFont::load(const io::path& filename, const u32 size, const bool antia
 	tt_face = face->face;
 
 	// Store font metrics.
-	FT_Set_Pixel_Sizes(tt_face, size, 0);
+	FT_Set_Pixel_Sizes(tt_face, 0, size);
 	font_metrics = tt_face->size->metrics;
 
 	// Allocate our glyphs.
