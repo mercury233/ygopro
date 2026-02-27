@@ -244,7 +244,7 @@ std::vector<uint32_t> DataManager::GetSetCodes(std::wstring setname) const {
 	for(auto csit = _setnameStrings.begin(); csit != _setnameStrings.end(); ++csit) {
 		const std::wstring& setnameString = csit->second;
 		size_t start = 0;
-		while(start <= setnameString.size()) { // handle "setname|another setname"
+		while(start < setnameString.size()) { // handle "setname|another setname"
 			auto pos = setnameString.find(L'|', start);
 			std::wstring token;
 			if(pos == std::wstring::npos)
