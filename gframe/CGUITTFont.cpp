@@ -834,6 +834,7 @@ video::IImage* CGUITTFont::createTextureFromChar(const uchar32_t& ch) {
 	core::dimension2du glyph_size(glyph.source_rect.getSize());
 	video::IImage* image = Driver->createImage(format, glyph_size);
 	pageholder->copyTo(image, irr::core::vector2di(0, 0), glyph.source_rect);
+	pageholder->drop();
 
 	tex->unlock();
 	return image;
