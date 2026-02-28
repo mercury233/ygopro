@@ -29,6 +29,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#if defined(SPMEMVFS_DEBUG)
+#include <stdarg.h>
+#endif
 
 #include "spmemvfs.h"
 
