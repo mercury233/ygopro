@@ -124,7 +124,7 @@ int spmemfileRead( sqlite3_file * file, void * buffer, int len, sqlite3_int64 of
 	spmemfile_t * memfile = (spmemfile_t*)file;
 
 	spmemvfsDebug( "call %s( %p, ..., %d, %lld ), len %lld",
-		__func__, memfile, len, offset, (long long)memfile->mem->used );
+		__func__, memfile, len, (long long)offset, (long long)memfile->mem->used );
 
 	if( offset >= memfile->mem->used ) {
 		/* No data available at all: zero-fill the entire buffer per SQLite VFS spec */
@@ -150,8 +150,8 @@ int spmemfileWrite( sqlite3_file * file, const void * buffer, int len, sqlite3_i
 	spmemfile_t * memfile = (spmemfile_t*)file;
 	spmembuffer_t * mem = memfile->mem;
 
-	spmemvfsDebug( "call %s( %p, ..., %d, %lld ), len %d",
-		__func__, memfile, len, offset, mem->used );
+	spmemvfsDebug( "call %s( %p, ..., %d, %lld ), len %lld",
+		__func__, memfile, len, (long long)offset, (long long)mem->used );
 
 	if( ( offset + len ) > mem->total ) {
 		sqlite3_int64 newTotal = 2 * ( offset + len + mem->total );
