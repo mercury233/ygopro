@@ -126,7 +126,17 @@ int spmemfileRead( sqlite3_file * file, void * buffer, int len, sqlite3_int64 of
 	spmemvfsDebug( "call %s( %p, ..., %d, %lld ), len %lld",
 		__func__, memfile, len, offset, (long long)memfile->mem->used );
 
+	if( offset >= memfile->mem->used ) {
+		/* No data available at all: zero-fill the entire buffer per SQLite VFS spec */
+		memset( buffer, 0, len );
+		return SQLITE_IOERR_SHORT_READ;
+	}
+
 	if( ( offset + len ) > memfile->mem->used ) {
+		/* Partial read: copy available bytes, zero-fill the remainder */
+		sqlite3_int64 available = memfile->mem->used - offset;
+		memcpy( buffer, memfile->mem->data + offset, (size_t)available );
+		memset( (char*)buffer + available, 0, (size_t)(len - available) );
 		return SQLITE_IOERR_SHORT_READ;
 	}
 
