@@ -123,8 +123,8 @@ int spmemfileRead( sqlite3_file * file, void * buffer, int len, sqlite3_int64 of
 {
 	spmemfile_t * memfile = (spmemfile_t*)file;
 
-	spmemvfsDebug( "call %s( %p, ..., %d, %lld ), len %d",
-		__func__, memfile, len, offset, memfile->mem->used );
+	spmemvfsDebug( "call %s( %p, ..., %d, %lld ), len %lld",
+		__func__, memfile, len, offset, (long long)memfile->mem->used );
 
 	if( ( offset + len ) > memfile->mem->used ) {
 		return SQLITE_IOERR_SHORT_READ;
@@ -144,8 +144,8 @@ int spmemfileWrite( sqlite3_file * file, const void * buffer, int len, sqlite3_i
 		__func__, memfile, len, offset, mem->used );
 
 	if( ( offset + len ) > mem->total ) {
-		int newTotal = 2 * ( offset + len + mem->total );
-		char * newBuffer = (char*)realloc( mem->data, newTotal );
+		sqlite3_int64 newTotal = 2 * ( offset + len + mem->total );
+		char * newBuffer = (char*)realloc( mem->data, (size_t)newTotal );
 		if( NULL == newBuffer ) {
 			return SQLITE_NOMEM;
 		}
