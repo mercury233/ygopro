@@ -438,6 +438,7 @@ typedef struct spmemvfs_env_t {
 } spmemvfs_env_t;
 
 static spmemvfs_env_t * g_spmemvfs_env = NULL;
+static int g_spmemvfs_env_refcount = 0;
 
 static spmembuffer_t * load_cb( void * arg, const char * path )
 {
@@ -464,7 +465,9 @@ int spmemvfs_env_init()
 {
 	int ret = 0;
 
-	if( NULL == g_spmemvfs_env ) {
+	++g_spmemvfs_env_refcount;
+
+	if( 1 == g_spmemvfs_env_refcount ) {
 		spmemvfs_cb_t cb;
 
 		g_spmemvfs_env = (spmemvfs_env_t*)calloc( sizeof( spmemvfs_env_t ), 1 );
@@ -481,7 +484,9 @@ int spmemvfs_env_init()
 
 void spmemvfs_env_fini()
 {
-	if( NULL != g_spmemvfs_env ) {
+	if( g_spmemvfs_env_refcount > 0 ) --g_spmemvfs_env_refcount;
+
+	if( 0 == g_spmemvfs_env_refcount && NULL != g_spmemvfs_env ) {
 		spmembuffer_link_t * iter = NULL;
 
 		sqlite3_vfs_unregister( (sqlite3_vfs*)&g_spmemvfs );
