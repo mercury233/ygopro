@@ -314,7 +314,13 @@ int spmemvfsOpen( sqlite3_vfs * vfs, const char * path, sqlite3_file * file, int
 		memfile->mem = (spmembuffer_t*)calloc( sizeof( spmembuffer_t ), 1 );
 	}
 
-	return memfile->mem ? SQLITE_OK : SQLITE_ERROR;
+	if( memfile->mem == NULL ) {
+		free( memfile->path );
+		memfile->path = NULL;
+		return SQLITE_ERROR;
+	}
+
+	return SQLITE_OK;
 }
 
 int spmemvfsDelete( sqlite3_vfs * vfs, const char * path, int syncDir )
@@ -471,12 +477,29 @@ int spmemvfs_env_init()
 		spmemvfs_cb_t cb;
 
 		g_spmemvfs_env = (spmemvfs_env_t*)calloc( sizeof( spmemvfs_env_t ), 1 );
+		if( NULL == g_spmemvfs_env ) {
+			--g_spmemvfs_env_refcount;
+			return SQLITE_NOMEM;
+		}
+
 		g_spmemvfs_env->mutex = sqlite3_mutex_alloc( SQLITE_MUTEX_FAST );
+		if( NULL == g_spmemvfs_env->mutex ) {
+			free( g_spmemvfs_env );
+			g_spmemvfs_env = NULL;
+			--g_spmemvfs_env_refcount;
+			return SQLITE_NOMEM;
+		}
 
 		cb.arg = g_spmemvfs_env;
 		cb.load = load_cb;
 
 		ret = spmemvfs_init( &cb );
+		if( SQLITE_OK != ret ) {
+			sqlite3_mutex_free( g_spmemvfs_env->mutex );
+			free( g_spmemvfs_env );
+			g_spmemvfs_env = NULL;
+			--g_spmemvfs_env_refcount;
+		}
 	}
 
 	return ret;
@@ -517,7 +540,13 @@ int spmemvfs_open_db( spmemvfs_db_t * db, const char * path, spmembuffer_t * mem
 	memset( db, 0, sizeof( spmemvfs_db_t ) );
 
 	iter = (spmembuffer_link_t*)calloc( sizeof( spmembuffer_link_t ), 1 );
+	if( NULL == iter ) return SQLITE_NOMEM;
+
 	iter->path = strdup( path );
+	if( NULL == iter->path ) {
+		free( iter );
+		return SQLITE_NOMEM;
+	}
 	iter->mem = mem;
 
 	sqlite3_mutex_enter( g_spmemvfs_env->mutex );
