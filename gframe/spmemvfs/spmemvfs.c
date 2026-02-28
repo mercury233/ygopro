@@ -105,13 +105,13 @@ int spmemfileClose( sqlite3_file * file )
 
 	spmemvfsDebug( "call %s( %p )", __func__, memfile );
 
-	if( SQLITE_OPEN_MAIN_DB & memfile->flags ) {
-		// noop
-	} else {
-		if( NULL != memfile->mem ) {
-			if( memfile->mem->data ) free( memfile->mem->data );
-			free( memfile->mem );
-		}
+	/* Memory was allocated in spmemvfsOpen(): either via memvfs->cb.load() for main DB
+	 * or via calloc() for temporary/journal files. This spmemfile_t object is the sole
+	 * owner of this memory and must free it here before the file is destroyed. */
+	if( NULL != memfile->mem ) {
+		if( memfile->mem->data ) free( memfile->mem->data );
+		free( memfile->mem );
+		memfile->mem = NULL;
 	}
 
 	free( memfile->path );
@@ -535,15 +535,13 @@ int spmemvfs_close_db( spmemvfs_db_t * db )
 
 	if( NULL == db ) return 0;
 
+	/* spmemfileClose owns and frees mem. Clear db->mem first to
+	 * prevent any accidental double-free from callers. */
+	db->mem = NULL;
+
 	if( NULL != db->handle ) {
 		ret = sqlite3_close( db->handle );
 		db->handle = NULL;
-	}
-
-	if( NULL != db->mem ) {
-		if( NULL != db->mem->data ) free( db->mem->data );
-		free( db->mem );
-		db->mem = NULL;
 	}
 
 	return ret;
