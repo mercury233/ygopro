@@ -305,10 +305,11 @@ int spmemvfsOpen( sqlite3_vfs * vfs, const char * path, sqlite3_file * file, int
 	memfile->base.pMethods = &g_spmemfile_io_memthods;
 	memfile->flags = flags;
 
-	memfile->path = strdup( path );
+	/* SQLite may pass a NULL path for temporary/journal files */
+	memfile->path = ( path != NULL ) ? strdup( path ) : NULL;
 
 	if( SQLITE_OPEN_MAIN_DB & memfile->flags ) {
-		memfile->mem = memvfs->cb.load( memvfs->cb.arg, path );
+		memfile->mem = ( path != NULL ) ? memvfs->cb.load( memvfs->cb.arg, path ) : NULL;
 	} else {
 		memfile->mem = (spmembuffer_t*)calloc( sizeof( spmembuffer_t ), 1 );
 	}
