@@ -377,6 +377,7 @@ int spmemvfsSleep( sqlite3_vfs * vfs, int microseconds )
 
 int spmemvfsCurrentTime( sqlite3_vfs * vfs, double * result )
 {
+	*result = 0.0;
 	return SQLITE_OK;
 }
 
