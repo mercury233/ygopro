@@ -240,6 +240,18 @@ jobs:
       run: |
         MSBuild.exe build\YGOPro.sln /m /p:Configuration=Release /p:Platform=${{ matrix.x64 && 'x64' || 'Win32' }}
 
+    - name: Package source files
+      if: matrix.name == 'windows-x64'
+      run: |
+        7z a source.zip . -xr!.git -xr!bin -xr!obj -xr!.vs -xr!DXSDK
+
+    - name: Upload source files
+      if: matrix.name == 'windows-x64'
+      uses: actions/upload-artifact@v4
+      with:
+        name: YGOPro-${{ matrix.name }}-source
+        path: source.zip
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
