@@ -316,7 +316,7 @@ workspace "YGOPro"
     filter "action:vs*"
         cdialect "C11"
         conformancemode "On" 
-        buildoptions { "/utf-8" }
+        buildoptions { "/utf-8", "/Brepro" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
 
     filter "not action:vs*"
