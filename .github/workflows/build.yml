@@ -236,6 +236,11 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
 
+    - name: Set SOURCE_DATE_EPOCH for reproducible build
+      if: matrix.name == 'windows-x64'
+      run: |
+        "SOURCE_DATE_EPOCH=1704067200" | Out-File -FilePath $env:GITHUB_ENV -Append
+
     - name: Build solution
       run: |
         MSBuild.exe build\YGOPro.sln /m /p:Configuration=Release /p:Platform=${{ matrix.x64 && 'x64' || 'Win32' }}
