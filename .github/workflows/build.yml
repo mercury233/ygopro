@@ -242,6 +242,7 @@ jobs:
 
     - name: Package source files
       if: matrix.name == 'windows-x64'
+      shell: cmd
       run: |
         7z a source.zip . -xr!.git -xr!bin -xr!obj -xr!.vs -xr!DXSDK
 
