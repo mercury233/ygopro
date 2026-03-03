@@ -86,6 +86,9 @@ project "YGOPro"
                 filter {}
             end
         end
+    filter "action:vs*"
+        linkoptions { "/Brepro", "/PDBALTPATH:%_PDB%" }
+
     filter "not action:vs*"
         cppdialect "C++14"
 
