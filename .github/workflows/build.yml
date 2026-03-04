@@ -202,7 +202,7 @@ jobs:
 
     - name: Download irrlicht
       run: |
-        git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn
+        git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn irrlicht
 
     - name: Check DirectX SDK
       if: matrix.nodxsdk != true
@@ -481,7 +481,7 @@ jobs:
 
     - name: Download irrlicht
       run: |
-        git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn
+        git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn irrlicht
 
     - name: Copy premake files
       run: |
@@ -698,7 +698,7 @@ jobs:
 
     - name: Download irrlicht
       run: |
-        git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn
+        git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn irrlicht
 
     - name: Copy premake files
       run: |
