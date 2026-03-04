@@ -165,9 +165,8 @@ project "irrlicht"
         defines { "GL_SILENCE_DEPRECATION" }
         undefines { "NO_IRR_COMPILE_WITH_JOYSTICK_EVENTS_" }
         files {
-            "source/Irrlicht/MacOSX/*.mm",
-            "source/Irrlicht/MacOSX/*.h",
+            "source/Irrlicht/*.mm",
         }
 
-    filter { "system:macosx", "files:source/Irrlicht/Irrlicht.cpp or source/Irrlicht/COpenGLDriver.cpp" }
+    filter { "system:macosx", "files:source/Irrlicht/Irrlicht.cpp or source/Irrlicht/COSOperator.cpp" }
         compileas "Objective-C++" 
