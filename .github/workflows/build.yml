@@ -356,11 +356,21 @@ jobs:
         sed -i 's/#define _WIN32_WINNT 0x0501/#define _WIN32_WINNT 0x0600/g' evutil.c
         cd ..
 
+    - name: Clone and build premake patched version for MinGW
+      if: matrix.mingw == true
+      shell: cmd
+      run: |
+        git clone --depth=1 -b patch-cpp-responseFile https://github.com/mercury233/premake-core premake-patched
+        cd premake-patched
+        call Bootstrap.bat
+        copy bin\release\premake5.exe ..\premake5-patched.exe
+        cd ..
+
     - name: Use premake to generate make files
       if: matrix.mingw == true
       shell: msys2 {0}
       run: |
-        ./premake5.exe gmake --audio-lib=${{ matrix.audiolib }}
+        ./premake5-patched.exe gmake --audio-lib=${{ matrix.audiolib }}
 
     - name: Make
       if: matrix.mingw == true
@@ -371,21 +381,13 @@ jobs:
         mingw32-make -j 4 config=release
         cd ..
 
-    - name: Workaround fix for MinGW build
-      if: matrix.mingw == true
-      shell: msys2 {0}
-      run: |
-        cd build
-        sed -i '/OBJECTS += $(OBJDIR)\/.*\.o/d' irrlicht.make
-        sed -i '/^# Rules/i\OBJECTS += $(OBJDIR)/*.o' irrlicht.make
-        mingw32-make -j 4 config=release
-        cd ..
-
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: YGOPro-${{ matrix.name }}
         path: |
+          build/
+          obj/
           bin/release/YGOPro.exe
           bin/release/x86/YGOPro.exe
           bin/release/x64/YGOPro.exe
