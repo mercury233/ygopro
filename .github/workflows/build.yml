@@ -63,13 +63,11 @@ jobs:
             f.write(f'irrlicht-branch={irrlicht_branch}\n')
 
     - name: Download irrlicht
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git clone --depth=1 ${{ steps.parse-pr-override.outputs.irrlicht-url }} irrlicht
-        cd irrlicht
-        gh pr checkout 19
-        cd ..
+      uses: actions/checkout@v4
+      with:
+        repository: mercury233/irrlicht
+        path: irrlicht
+        ref: ${{ steps.parse-pr-override.outputs.irrlicht-branch }}
 
     - name: Download lua
       id: lua
