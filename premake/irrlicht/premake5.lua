@@ -63,8 +63,6 @@ project "irrlicht"
         "NO__IRR_COMPILE_WITH_WAD_ARCHIVE_LOADER_",
         "NO_IRR_COMPILE_WITH_ZIP_ENCRYPTION_",
         "PNG_INTEL_SSE",
-        "PNG_ARM_NEON_OPT=0",
-        "PNG_ARM_NEON_IMPLEMENTATION=0",
     }
 
     files {
@@ -149,6 +147,9 @@ project "irrlicht"
         "source/Irrlicht/libpng/pngwrite.c",
         "source/Irrlicht/libpng/pngwtran.c",
         "source/Irrlicht/libpng/pngwutil.c",
+        "source/Irrlicht/libpng/arm/arm_init.c",
+        "source/Irrlicht/libpng/arm/filter_neon_intrinsics.c",
+        "source/Irrlicht/libpng/arm/palette_neon_intrinsics.c",
         "source/Irrlicht/libpng/intel/intel_init.c",
         "source/Irrlicht/libpng/intel/filter_sse2_intrinsics.c",
     }
