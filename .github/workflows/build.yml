@@ -245,8 +245,12 @@ jobs:
       run: |
         git submodule update --init --no-fetch ocgcore
         cd ocgcore
+        ls -al
+        echo "Fetching ocgcore"
         git fetch --depth=1 ${{ needs.prepare.outputs.ocgcore-url }} ${{ needs.prepare.outputs.ocgcore-branch }}
         git checkout FETCH_HEAD
+        echo "Checked out ocgcore"
+        ls -al
         cd ..
 #        cd script
 #        git checkout master
@@ -379,8 +383,12 @@ jobs:
       run: |
         git submodule update --init --no-fetch ocgcore
         cd ocgcore
+        ls -al
+        echo "Fetching ocgcore"
         git fetch --depth=1 ${{ needs.prepare.outputs.ocgcore-url }} ${{ needs.prepare.outputs.ocgcore-branch }}
         git checkout FETCH_HEAD
+        echo "Checked out ocgcore"
+        ls -al
         cd ..
 #        cd script
 #        git checkout master
@@ -508,8 +516,12 @@ jobs:
       run: |
         git submodule update --init --no-fetch ocgcore
         cd ocgcore
+        ls -al
+        echo "Fetching ocgcore"
         git fetch --depth=1 ${{ needs.prepare.outputs.ocgcore-url }} ${{ needs.prepare.outputs.ocgcore-branch }}
         git checkout FETCH_HEAD
+        echo "Checked out ocgcore"
+        ls -al
         cd ..
 #        cd script
 #        git checkout master
