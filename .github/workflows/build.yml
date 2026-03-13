@@ -243,6 +243,8 @@ jobs:
       # to make sure we are testing the correct code. Only the ocgcore submodule is required for the build.
       shell: bash
       run: |
+        ls "./ocgcore" || true
+        echo "Initializing ocgcore submodule"
         git submodule update --init --no-fetch ocgcore
         cd ocgcore
         ls -al
@@ -381,6 +383,8 @@ jobs:
 
     - name: Update submodules
       run: |
+        ls "./ocgcore" || true
+        echo "Initializing ocgcore submodule"
         git submodule update --init --no-fetch ocgcore
         cd ocgcore
         ls -al
@@ -514,6 +518,8 @@ jobs:
 
     - name: Update submodules
       run: |
+        ls "./ocgcore" || true
+        echo "Initializing ocgcore submodule"
         git submodule update --init --no-fetch ocgcore
         cd ocgcore
         ls -al
