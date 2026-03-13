@@ -64,12 +64,10 @@ jobs:
 
     - name: Download irrlicht
       run: |
-        branch="${{ steps.parse-pr-override.outputs.irrlicht-branch }}"
-        if [ -n "$branch" ]; then
-          git clone --depth=1 -b "$branch" ${{ steps.parse-pr-override.outputs.irrlicht-url }} irrlicht
-        else
-          git clone --depth=1 ${{ steps.parse-pr-override.outputs.irrlicht-url }} irrlicht
-        fi
+        git clone --depth=1 ${{ steps.parse-pr-override.outputs.irrlicht-url }} irrlicht
+        cd irrlicht
+        gh pr checkout 19
+        cd ..
 
     - name: Download lua
       id: lua
