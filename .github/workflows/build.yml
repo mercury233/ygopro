@@ -63,6 +63,8 @@ jobs:
             f.write(f'irrlicht-branch={irrlicht_branch}\n')
 
     - name: Download irrlicht
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         git clone --depth=1 ${{ steps.parse-pr-override.outputs.irrlicht-url }} irrlicht
         cd irrlicht
