@@ -30,7 +30,7 @@ install:
   - 7z x sqlite-amalgamation-3500100.zip
   - move sqlite-amalgamation-3500100 sqlite3
 
-  - git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn
+  - git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn irrlicht
   
   - git clone --depth=1 https://github.com/mercury233/miniaudio
   - xcopy /Y miniaudio\extras\miniaudio_split\miniaudio.* .

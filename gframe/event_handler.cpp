@@ -2062,8 +2062,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			CardData cd;
 			int code = mainGame->showingcode;
 			if (!code || !dataManager.GetData(code, &cd)) break;
-			if (cd.alias != 0 && (cd.alias - code < CARD_ARTWORK_VERSIONS_OFFSET || code - cd.alias < CARD_ARTWORK_VERSIONS_OFFSET))
-				code = cd.alias;
+			if (cd.rule_code)
+				code = cd.rule_code;
 #ifdef _WIN32
 			wchar_t filename[512];
 			myswprintf(filename, L"expansions\\script\\c%d.lua", code);
