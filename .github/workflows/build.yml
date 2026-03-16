@@ -394,8 +394,6 @@ jobs:
       with:
         name: YGOPro-${{ matrix.name }}
         path: |
-          build/
-          obj/
           bin/release/YGOPro.exe
           bin/release/x86/YGOPro.exe
           bin/release/x64/YGOPro.exe
