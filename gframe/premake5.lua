@@ -4,7 +4,9 @@ include "spmemvfs/."
 project "YGOPro"
     kind "WindowedApp"
     rtti "Off"
-    openmp "On"
+    if USE_OPENMP then
+        openmp "On"
+    end
 
     files { "*.cpp", "*.h" }
     includedirs { "../ocgcore" }
@@ -93,7 +95,6 @@ project "YGOPro"
         linkoptions { "-static", "-static-libgcc", "-static-libstdc++", "-fopenmp" }
 
     filter "system:macosx"
-        openmp "Off"
         links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework", "Carbon.framework" }
         defines { "GL_SILENCE_DEPRECATION" }
         if MAC_ARM then
@@ -108,7 +109,9 @@ project "YGOPro"
 
     filter "system:linux"
         links { "GL", "X11", "Xxf86vm", "dl", "pthread" }
-        linkoptions { "-fopenmp" }
+        if USE_OPENMP then
+            linkoptions { "-fopenmp" }
+        end
         if USE_AUDIO and AUDIO_LIB == "irrklang" then
             links { "IrrKlang" }
             linkoptions{ IRRKLANG_LINK_RPATH }
