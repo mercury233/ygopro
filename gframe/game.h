@@ -189,7 +189,7 @@ public:
 	void PopupElement(irr::gui::IGUIElement* element, int hideframe = 0); // caller must hold gMutex
 	void SetImageButtonDrawing(irr::gui::IGUIElement* element, bool draw = true);
 	void WaitFrameSignal(int frame);
-	void DrawThumb(code_pointer cp, irr::core::vector2di pos, const LFList* lflist, bool drag = false);
+	void DrawThumb(const CardDataC* cp, irr::core::vector2di pos, const LFList* lflist, bool drag = false);
 	void DrawDeckBd();
 	void LoadConfig(const char* file);
 	void SaveConfig();
