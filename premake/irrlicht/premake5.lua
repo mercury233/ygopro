@@ -228,7 +228,7 @@ project "irrlicht"
 
     filter { "system:macosx" }
         defines { "GL_SILENCE_DEPRECATION" }
-        undefines { "__STRICT_ANSI__", "NO_IRR_COMPILE_WITH_JOYSTICK_EVENTS_" }
+        undefines { "__STRICT_ANSI__" }
         files {
             "source/Irrlicht/*.mm",
         }
