@@ -429,7 +429,7 @@ jobs:
     - name: Install dependencies (dynamic link)
       if: matrix.static-link != true
       run: |
-        sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev libopusfile-dev libvorbis-dev
+        sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev libopusfile-dev libvorbis-dev libjpeg-dev libpng-dev
 
     - name: Download premake
       id: premake
@@ -475,6 +475,7 @@ jobs:
       run: |
         ./premake5 gmake \
           --build-event \
+          --build-jpeg-png \
           --build-freetype \
           --build-sqlite \
           --build-opus-vorbis
@@ -542,7 +543,7 @@ jobs:
       if: matrix.static-link != true
       run: |
         brew install opus opusfile libvorbis
-#        brew install sqlite libx11 freetype libevent
+#        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng
 
     - name: Download premake
       id: premake
@@ -580,6 +581,7 @@ jobs:
       run: |
         ./premake5 gmake ${{ matrix.cross-build-intel == true && '--mac-intel' || '' }} ${{ matrix.cross-build-arm == true && '--mac-arm' || '' }} \
           --build-event \
+          --build-jpeg-png \
           --build-freetype \
           --build-sqlite \
           --build-opus-vorbis
