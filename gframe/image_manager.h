@@ -11,7 +11,6 @@ namespace ygo {
 
 class ImageManager {
 private:
-	void resizeImage(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading);
 	irr::video::IImage* RotateImageCCW90(irr::video::IImage* src);
 	irr::video::ITexture* addTexture(const char* name, irr::video::IImage* srcimg, irr::s32 width, irr::s32 height);
 public:
@@ -20,7 +19,7 @@ public:
 	void ClearTexture();
 	void ResizeTexture();
 	irr::video::ITexture* GetTextureFromFile(const char* file, irr::s32 width, irr::s32 height);
-	irr::video::IImage* GetImage(int code);
+	irr::video::IImage* GetImage(int code, irr::s32 targetWidth = 0, irr::s32 targetHeight = 0);
 	irr::video::ITexture* GetTexture(int code, irr::s32 width, irr::s32 height);
 	irr::video::ITexture* GetTexture(int code, bool fit = false);
 	irr::video::ITexture* GetBigPicture(int code, float zoom);
@@ -40,6 +39,7 @@ public:
 	bool tThumbLoadingThreadRunning;
 	irr::IrrlichtDevice* device;
 	irr::video::IVideoDriver* driver;
+	irr::io::IFileSystem* irrFileSystem;
 	irr::video::ITexture* tCover[2];
 	irr::video::ITexture* tButtonFacedown[2];
 	irr::video::ITexture* tButtonFacedownDefense[2];
