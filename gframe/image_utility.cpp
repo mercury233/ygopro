@@ -1,6 +1,7 @@
 #include "image_utility.h"
 #include <cmath>
 #include <new>
+#include <setjmp.h>
 #ifdef _OPENMP
 #include <omp.h>
 #endif
