@@ -234,8 +234,8 @@ project "irrlicht"
         end
 
     filter { "system:macosx" }
+        cppdialect "gnu++14"
         defines { "GL_SILENCE_DEPRECATION" }
-        undefines { "__STRICT_ANSI__" }
         files {
             "source/Irrlicht/*.mm",
         }
