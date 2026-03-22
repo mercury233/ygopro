@@ -143,7 +143,7 @@ void ImageManager::ResizeTexture() {
 		irr::video::IImage* coverImg = driver->createImageFromFile(coverFiles[i]);
 		if(coverImg) {
 			irr::video::IImage* coverResized = driver->createImage(coverImg->getColorFormat(), irr::core::dimension2d<irr::u32>(btnImgWidth, btnImgHeight));
-			resizeImage(coverImg, coverResized, mainGame->gameConf.use_image_scale_multi_thread);
+			ImageUtility::Resize(coverImg, coverResized, mainGame->gameConf.use_image_scale_multi_thread);
 			coverImg->drop();
 			char name[256];
 			mysnprintf(name, "btn_facedown/%d", i);
@@ -460,7 +460,7 @@ irr::video::ITexture* ImageManager::GetTextureButton(int code, bool defense) {
 		return nullptr;
 	}
 	irr::video::IImage* resized = driver->createImage(img->getColorFormat(), irr::core::dimension2d<irr::u32>(width, height));
-	resizeImage(img, resized, mainGame->gameConf.use_image_scale_multi_thread);
+	ImageUtility::Resize(img, resized, mainGame->gameConf.use_image_scale_multi_thread);
 	img->drop();
 	irr::video::ITexture* texture = nullptr;
 	if(defense) {
