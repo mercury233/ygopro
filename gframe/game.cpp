@@ -1181,6 +1181,8 @@ void Game::LoadExpansions() {
 			if (IsExtension(name, ".cdb")) {
 				if (!dataManager.LoadDB(name)) {
 					std::string errmsg = "Warning: Failed to load DB file in expansion archive (";
+					errmsg.append(dataManager.FileSystem->getFileArchive(i)->getArchiveName().c_str());
+					errmsg.append(" : ");
 					errmsg.append(name);
 					errmsg.append(")! ");
 					errmsg.append(dataManager.errmsg);
@@ -1199,6 +1201,8 @@ void Game::LoadExpansions() {
 				// TODO: zip file may contain non-UTF8 file name. DecodeUTF8 can't parse it and returns 0.
 				if (!len) {
 					std::string errmsg = "Warning: Failed to decode deck file name in expansion archive (";
+					errmsg.append(dataManager.FileSystem->getFileArchive(i)->getArchiveName().c_str());
+					errmsg.append(" : ");
 					errmsg.append(name);
 					errmsg.append(")! Please make sure the file name is UTF-8 encoded in the archive.");
 					mainGame->ErrorLog(errmsg.c_str());
