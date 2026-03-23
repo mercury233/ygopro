@@ -213,7 +213,7 @@ irr::video::IImage* ImageManager::GetImage(int code, irr::s32 targetWidth, irr::
 	}
 	if(reader == nullptr)
 		return nullptr;
-	irr::video::IImage* img = ImageUtility::LoadJpegImageDownsampled(driver, reader, targetWidth, targetHeight);
+	irr::video::IImage* img = ImageUtility::LoadJpegImage(driver, reader, targetWidth, targetHeight);
 	reader->drop();
 	return img;
 }

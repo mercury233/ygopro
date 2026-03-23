@@ -234,7 +234,14 @@ irr::video::IImage* ImageUtility::RotateImageCCW90(irr::video::IVideoDriver* dri
 	return dest;
 }
 
-irr::video::IImage* ImageUtility::LoadJpegImageDownsampled(irr::video::IVideoDriver* driver, irr::io::IReadFile* reader, irr::s32 targetWidth, irr::s32 targetHeight) {
+/**
+ * Decode a JPEG file using libjpeg with optional DCT-domain downscaling (1/2, 1/4, 1/8).
+ * When targetWidth / targetHeight are provided the largest scale denominator that keeps
+ * the decoded dimensions >= target is chosen, saving memory and CPU time.
+ * The reader is not dropped by this function.
+ * @return Image pointer. Must be dropped after use.
+ */
+irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver, irr::io::IReadFile* reader, irr::s32 targetWidth, irr::s32 targetHeight) {
 	if(!reader) return nullptr;
 	long fileSize = reader->getSize();
 	if(fileSize <= 0) return nullptr;
@@ -284,13 +291,11 @@ irr::video::IImage* ImageUtility::LoadJpegImageDownsampled(irr::video::IVideoDri
 	const bool useCMYK = (cinfo.jpeg_color_space == JCS_CMYK ||
 	                      cinfo.jpeg_color_space == JCS_YCCK);
 	cinfo.out_color_space = useCMYK ? JCS_CMYK : JCS_RGB;
-	cinfo.do_fancy_upsampling = TRUE;
-	cinfo.do_block_smoothing = TRUE;
-	cinfo.dct_method = JDCT_ISLOW;
-	if (cinfo.scale_denom > 2) {
-		cinfo.do_block_smoothing = FALSE;
-		cinfo.dct_method = JDCT_IFAST;
-	}
+
+	const bool fastDecoding = cinfo.scale_denom > 2;
+	cinfo.do_fancy_upsampling = fastDecoding ? FALSE : TRUE;
+	cinfo.do_block_smoothing = fastDecoding ? FALSE : TRUE;
+	cinfo.dct_method = fastDecoding ? JDCT_IFAST : JDCT_ISLOW;
 
 	jpeg_start_decompress(&cinfo);
 
