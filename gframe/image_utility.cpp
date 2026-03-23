@@ -208,7 +208,7 @@ void ImageUtility::Resize(irr::video::IImage* src, irr::video::IImage* dest, boo
 
 /**
  * Decode a JPEG file using libjpeg with optional DCT-domain downscaling (1/2, 1/4, 1/8).
- * When targetWidth / targetHeight are provided the largest scale denominator that keeps
+ * When targetWidth / targetHeight are provided, the max scale denominator that keeps
  * the decoded dimensions >= target is chosen, saving memory and CPU time.
  * The reader is not dropped by this function.
  * @return Image pointer. Must be dropped after use.
@@ -230,13 +230,13 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	cinfo.err = jpeg_std_error(&jerr.pub);
 	jerr.pub.error_exit = jpeg_error_exit_cb;
 
-	unsigned char* volatile resultData = nullptr;
+	unsigned char* volatile outputData = nullptr;
 	unsigned char* volatile tempCmykRow = nullptr;
 
 	if(setjmp(jerr.setjmp_buffer)) {
 		jpeg_destroy_decompress(&cinfo);
 		delete[] input;
-		delete[] resultData;
+		delete[] outputData;
 		delete[] tempCmykRow;
 		return nullptr;
 	}
@@ -275,9 +275,9 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	const size_t height = cinfo.output_height;
 	const size_t rowspan = width * 3; // RGB bytes per pixel for output
 
-	// Ownership of resultData will be transferred to the IImage created by createImageFromData()
-	resultData = new (std::nothrow) unsigned char[rowspan * height];
-	if (!resultData) {
+	// Ownership of outputData will be transferred to the IImage created by createImageFromData()
+	outputData = new (std::nothrow) unsigned char[rowspan * height];
+	if (!outputData) {
 		longjmp(jerr.setjmp_buffer, 1); 
 	}
 
@@ -293,7 +293,7 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 			jpeg_read_scanlines(&cinfo, rowArray, 1);
 
 			// assume CMYK is in Adobe inverted convention, convert to RGB by multiplying by K
-			unsigned char* dstRow = &resultData[currentLine * rowspan];
+			unsigned char* dstRow = &outputData[currentLine * rowspan];
 			for (size_t i = 0; i < width; i++) {
 				unsigned char k = tempCmykRow[i * 4 + 3];
 				dstRow[i * 3 + 0] = (tempCmykRow[i * 4 + 0] * k + 127) / 255;
@@ -308,7 +308,7 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	else {
 		unsigned char* rowArray[1];
 		while (cinfo.output_scanline < cinfo.output_height) {
-			rowArray[0] = &resultData[(size_t)cinfo.output_scanline * rowspan];
+			rowArray[0] = &outputData[(size_t)cinfo.output_scanline * rowspan];
 			jpeg_read_scanlines(&cinfo, rowArray, 1);
 		}
 	}
@@ -320,7 +320,7 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	return driver->createImageFromData(
 		irr::video::ECF_R8G8B8,
 		irr::core::dimension2d<irr::u32>(width, height),
-		resultData, true, true);
+		outputData, true, true);
 }
 
 } // namespace ygo
