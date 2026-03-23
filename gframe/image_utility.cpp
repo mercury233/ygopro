@@ -263,13 +263,11 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	const bool useCMYK = (cinfo.jpeg_color_space == JCS_CMYK ||
 	                      cinfo.jpeg_color_space == JCS_YCCK);
 	cinfo.out_color_space = useCMYK ? JCS_CMYK : JCS_RGB;
-	cinfo.do_fancy_upsampling = TRUE;
-	cinfo.do_block_smoothing = TRUE;
-	cinfo.dct_method = JDCT_ISLOW;
-	if (cinfo.scale_denom > 2) {
-		cinfo.do_block_smoothing = FALSE;
-		cinfo.dct_method = JDCT_IFAST;
-	}
+
+	const bool fastDecoding = cinfo.scale_denom > 2;
+	cinfo.do_fancy_upsampling = fastDecoding ? FALSE : TRUE;
+	cinfo.do_block_smoothing = fastDecoding ? FALSE : TRUE;
+	cinfo.dct_method = fastDecoding ? JDCT_IFAST : JDCT_ISLOW;
 
 	jpeg_start_decompress(&cinfo);
 
