@@ -22,9 +22,9 @@ project "YGOPro"
     end
 
     if BUILD_IRRLICHT then
-        includedirs { "../irrlicht/include" }
+        includedirs { "../irrlicht/include", "../irrlicht/source/Irrlicht/jpeglib" }
     else
-        includedirs { IRRLICHT_INCLUDE_DIR }
+        includedirs { IRRLICHT_INCLUDE_DIR, JPEG_INCLUDE_DIR }
         libdirs { IRRLICHT_LIB_DIR }
     end
     if not IRRLICHT_BUILD_JPEG_PNG then
