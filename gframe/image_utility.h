@@ -11,6 +11,7 @@ private:
 	static void imageScaleNNAA(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading);
 public:
 	static void Resize(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading);
+	static irr::video::IImage* RotateImageCCW90(irr::video::IVideoDriver* driver, irr::video::IImage* src);
 	/**
 	 * Decode a JPEG file using libjpeg with optional DCT-domain downscaling (1/2, 1/4, 1/8).
 	 * When targetWidth / targetHeight are provided the largest scale denominator that keeps
