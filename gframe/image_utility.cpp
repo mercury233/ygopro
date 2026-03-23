@@ -247,6 +247,8 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	jpeg_read_header(&cinfo, TRUE);
 
 	// Choose the max scale_denom where decoded size is still >= target
+	cinfo.scale_num = 1;
+	cinfo.scale_denom = 1;
 	if(targetWidth > 0 && targetHeight > 0) {
 		const int denoms[] = {8, 4, 2};
 		for(int d : denoms) {
