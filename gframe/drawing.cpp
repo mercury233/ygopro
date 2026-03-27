@@ -69,8 +69,8 @@ void Game::DrawSelectionLine(irr::gui::IGUIElement* element, int width, irr::vid
 	}
 }
 void Game::DrawBackGround() {
-	static int selFieldAlpha = 255;
-	static int selFieldDAlpha = -10;
+	static float selFieldAlpha = 255.0f;
+	static float selFieldDAlpha = -10.0f;
 //	matrix4 im = irr::core::IdentityMatrix;
 //	im.setTranslation(irr::core::vector3df(0, 0, -0.01f));
 //	driver->setTransform(irr::video::ETS_WORLD, im);
@@ -202,17 +202,17 @@ void Game::DrawBackGround() {
 			vertex = matManager.vFieldRemove[dField.hovered_controler][rule];
 		else if (dField.hovered_location == LOCATION_EXTRA)
 			vertex = matManager.vFieldExtra[dField.hovered_controler];
-		selFieldAlpha += selFieldDAlpha;
-		if (selFieldAlpha <= 5) {
-			selFieldAlpha = 5;
-			selFieldDAlpha = 10;
+		selFieldAlpha += selFieldDAlpha / fpsScale;
+		if (selFieldAlpha <= 5.0f) {
+			selFieldAlpha = 5.0f;
+			selFieldDAlpha = 10.0f;
 		}
-		if (selFieldAlpha >= 205) {
-			selFieldAlpha = 205;
-			selFieldDAlpha = -10;
+		if (selFieldAlpha >= 205.0f) {
+			selFieldAlpha = 205.0f;
+			selFieldDAlpha = -10.0f;
 		}
 		matManager.mSelField.AmbientColor = 0xffffffff;
-		matManager.mSelField.DiffuseColor = selFieldAlpha << 24;
+		matManager.mSelField.DiffuseColor = (irr::u32)selFieldAlpha << 24;
 		driver->setMaterial(matManager.mSelField);
 		driver->drawVertexPrimitiveList(vertex, 4, matManager.iRectangle, 2);
 	}
@@ -427,7 +427,7 @@ void Game::DrawMisc() {
 	static irr::core::vector3df act_rot(0, 0, 0);
 	int rule = (dInfo.duel_rule >= 4) ? 1 : 0;
 	irr::core::matrix4 im, ic, it, ig;
-	act_rot.Z += 0.02f;
+	act_rot.Z += 0.02f / fpsScale;
 	im.setRotationRadians(act_rot);
 	matManager.mTexture.setTexture(0, imageManager.tAct);
 	driver->setMaterial(matManager.mTexture);
@@ -557,11 +557,13 @@ void Game::DrawMisc() {
 		}
 		else driver->draw2DImage(imageManager.tLPBar, Resize(986 - 290 * dInfo.lp[1] / maxLP, 12, 986, 28), irr::core::recti(0, 0, 16, 16), 0, 0, true);
 	}
-	if(lpframe) {
-		dInfo.lp[lpplayer] -= lpd;
+	if(lpFrame) {
+		lpFrame--;
+		float progress = (float)lpFrame / lpFrameCount;
+		dInfo.lp[lpplayer] = lpFinal + (lpInitial - lpFinal) * progress;
 		myswprintf(dInfo.strLP[lpplayer], L"%d", dInfo.lp[lpplayer]);
-		lpccolor -= 0x19000000;
-		lpframe--;
+		irr::u32 alpha = 5 + 250 * progress;
+		lpccolor = ((alpha & 0xff) << 24) | (lpccolor & 0x00ffffff);
 	}
 	if(lpcstring.size()) {
 		if(lpplayer == 0) {
@@ -732,7 +734,7 @@ void Game::DrawGUI() {
 		if(fu.fadingFrame) {
 			fu.guiFading->setVisible(true);
 			if(fu.isFadein) {
-				if(fu.fadingFrame > 5) {
+				if(fu.fadingFrame > fu.fadingHalf) {
 					fu.fadingUL.X -= fu.fadingDiff.X;
 					fu.fadingLR.X += fu.fadingDiff.X;
 					fu.fadingFrame--;
@@ -762,7 +764,7 @@ void Game::DrawGUI() {
 						fu.guiFading->setRelativePosition(irr::core::recti(fu.fadingUL, fu.fadingLR));
 				}
 			} else {
-				if(fu.fadingFrame > 5) {
+				if(fu.fadingFrame > fu.fadingHalf) {
 					fu.fadingUL.Y += fu.fadingDiff.Y;
 					fu.fadingLR.Y -= fu.fadingDiff.Y;
 					fu.fadingFrame--;
@@ -814,10 +816,12 @@ void Game::DrawSpec() {
 			driver->draw2DImage(imageManager.GetTexture(showcardcode, true), ResizeCardHint(574, 150));
 			driver->draw2DImage(imageManager.tMask, ResizeCardMid(574, 150, 574 + (showcarddif > CARD_IMG_WIDTH ? CARD_IMG_WIDTH : showcarddif), 150 + CARD_IMG_HEIGHT, midx, midy),
 								irr::core::recti(CARD_IMG_HEIGHT - showcarddif, 0, CARD_IMG_HEIGHT - (showcarddif > CARD_IMG_WIDTH ? showcarddif - CARD_IMG_WIDTH : 0), CARD_IMG_HEIGHT), 0, 0, true);
-			showcarddif += 15;
-			if(showcarddif >= CARD_IMG_HEIGHT) {
-				showcard = 2;
-				showcarddif = 0;
+			if(logicalTick) {
+				showcarddif += 15;
+				if(showcarddif >= CARD_IMG_HEIGHT) {
+					showcard = 2;
+					showcarddif = 0;
+				}
 			}
 			break;
 		}
@@ -825,16 +829,18 @@ void Game::DrawSpec() {
 			driver->draw2DImage(imageManager.GetTexture(showcardcode, true), ResizeCardHint(574, 150));
 			driver->draw2DImage(imageManager.tMask, ResizeCardMid(574 + showcarddif, 150, 574 + CARD_IMG_WIDTH, 150 + CARD_IMG_HEIGHT, midx, midy),
 								irr::core::recti(0, 0, CARD_IMG_WIDTH - showcarddif, CARD_IMG_HEIGHT), 0, 0, true);
-			showcarddif += 15;
-			if(showcarddif >= CARD_IMG_WIDTH) {
-				showcard = 0;
+			if(logicalTick) {
+				showcarddif += 15;
+				if(showcarddif >= CARD_IMG_WIDTH) {
+					showcard = 0;
+				}
 			}
 			break;
 		}
 		case 3: {
 			driver->draw2DImage(imageManager.GetTexture(showcardcode, true), ResizeCardHint(574, 150));
 			driver->draw2DImage(imageManager.tNegated, ResizeCardMid(536 + showcarddif, 141 + showcarddif, 792 - showcarddif, 397 - showcarddif, midx, midy), irr::core::recti(0, 0, 128, 128), 0, 0, true);
-			if(showcarddif < 64)
+			if(logicalTick && showcarddif < 64)
 				showcarddif += 4;
 			break;
 		}
@@ -845,7 +851,7 @@ void Game::DrawSpec() {
 			matManager.c2d[3] = (showcarddif << 24) | 0xffffff;
 			driver->draw2DImage(imageManager.GetTexture(showcardcode, true), ResizeCardHint(574, 150, 574 + CARD_IMG_WIDTH, 150 + CARD_IMG_HEIGHT),
 								ResizeFit(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, matManager.c2d, true);
-			if(showcarddif < 255)
+			if(logicalTick && showcarddif < 255)
 				showcarddif += 17;
 			break;
 		}
@@ -856,7 +862,7 @@ void Game::DrawSpec() {
 			matManager.c2d[3] = (showcarddif << 25) | 0xffffff;
 			driver->draw2DImage(imageManager.GetTexture(showcardcode, true), ResizeCardMid(662 - showcarddif * 0.69685f, 277 - showcarddif, 662 + showcarddif * 0.69685f, 277 + showcarddif, midx, midy),
 								ResizeFit(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), 0, matManager.c2d, true);
-			if(showcarddif < 127)
+			if(logicalTick && showcarddif < 127)
 				showcarddif += 9;
 			break;
 		}
@@ -864,7 +870,7 @@ void Game::DrawSpec() {
 			driver->draw2DImage(imageManager.GetTexture(showcardcode, true), ResizeCardHint(574, 150));
 			driver->draw2DImage(imageManager.tNumber, ResizeCardMid(536 + showcarddif, 141 + showcarddif, 792 - showcarddif, 397 - showcarddif, midx, midy),
 			                    irr::core::recti((showcardp % 5) * 64, (showcardp / 5) * 64, (showcardp % 5 + 1) * 64, (showcardp / 5 + 1) * 64), 0, 0, true);
-			if(showcarddif < 64)
+			if(logicalTick && showcarddif < 64)
 				showcarddif += 4;
 			break;
 		}
@@ -882,13 +888,15 @@ void Game::DrawSpec() {
 			corner[2] = irr::core::vector2d<irr::s32>(winx, winy);
 			corner[3] = irr::core::vector2d<irr::s32>(winx2, winy);
 			irr::gui::Draw2DImageQuad(driver, imageManager.GetTexture(showcardcode, true), ResizeFit(0, 0, CARD_IMG_WIDTH, CARD_IMG_HEIGHT), corner);
-			showcardp++;
-			showcarddif += 9;
-			if(showcarddif >= 90)
-				showcarddif = 90;
-			if(showcardp == 60) {
-				showcardp = 0;
-				showcarddif = 0;
+			if(logicalTick) {
+				showcardp++;
+				showcarddif += 9;
+				if(showcarddif >= 90)
+					showcarddif = 90;
+				if(showcardp == 60) {
+					showcardp = 0;
+					showcarddif = 0;
+				}
 			}
 			break;
 		}
@@ -896,10 +904,12 @@ void Game::DrawSpec() {
 			if(showcardp < 60) {
 				driver->draw2DImage(imageManager.tHand[(showcardcode >> 16) & 0x3], irr::core::vector2di((615 + 44.5) * xScale - 44.5, (showcarddif + 64) * yScale - 64));
 				driver->draw2DImage(imageManager.tHand[showcardcode & 0x3], irr::core::vector2di((615 + 44.5) * xScale - 44.5, (540 - showcarddif + 64) * yScale - 64));
-				float dy = -0.333333f * showcardp + 10;
-				showcardp++;
-				if(showcardp < 30)
-					showcarddif += (int)dy;
+				if(logicalTick) {
+					float dy = -0.333333f * showcardp + 10;
+					showcardp++;
+					if(showcardp < 30)
+						showcarddif += (int)dy;
+				}
 			} else
 				showcard = 0;
 			break;
@@ -967,7 +977,7 @@ void Game::DrawSpec() {
 				int alpha = ((showcarddif + 10 - showcardp) * 25) << 24;
 				DrawShadowText(lpcFont, lstr, ResizePhaseHint(660 + (showcardp - showcarddif) * 40, 290, 960, 370, pos.Width), Resize(-1, -1, 0, 0), alpha | 0xffffff, alpha);
 			}
-			showcardp++;
+			if(logicalTick) showcardp++;
 			break;
 		}
 		}
@@ -979,9 +989,11 @@ void Game::DrawSpec() {
 		driver->setTransform(irr::video::ETS_WORLD, matk);
 		driver->setMaterial(matManager.mATK);
 		driver->drawVertexPrimitiveList(&matManager.vArrow[attack_sv], 12, matManager.iArrow, 10, irr::video::EVT_STANDARD, irr::scene::EPT_TRIANGLE_STRIP);
-		attack_sv += 4;
-		if (attack_sv > 28)
-			attack_sv = 0;
+		if(logicalTick) {
+			attack_sv += 4;
+			if (attack_sv > 28)
+				attack_sv = 0;
+		}
 	}
 	bool showChat = true;
 	if(hideChat) {
@@ -989,14 +1001,14 @@ void Game::DrawSpec() {
 	    hideChatTimer = 10;
 	} else if(hideChatTimer > 0) {
 	    showChat = false;
-	    hideChatTimer--;
+	    if(logicalTick) hideChatTimer--;
 	}
 	int chatRectY = 0;
 	for(int i = 0; i < 8; ++i) {
 		static unsigned int chatColor[] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xff8080ff, 0xffff4040, 0xffff4040,
 		                                   0xffff4040, 0xff40ff40, 0xff4040ff, 0xff40ffff, 0xffff40ff, 0xffffff40, 0xffffffff, 0xff808080, 0xff404040};
 		if(chatTiming[i]) {
-			chatTiming[i]--;
+			if(logicalTick) chatTiming[i]--;
 			if(!is_building) {
 				if(dInfo.isStarted && i >= 5)
 					continue;
@@ -1040,16 +1052,18 @@ void Game::ShowElement(irr::gui::IGUIElement * win, int autoframe) {
 		if(win == fit->guiFading && win != wOptions && win != wANNumber) // the size of wOptions is always setted by ClientField::ShowSelectOption before showing it
 			fu.fadingSize = fit->fadingSize;
 	irr::core::vector2di center = fu.fadingSize.getCenter();
-	fu.fadingDiff.X = fu.fadingSize.getWidth() / 10;
-	fu.fadingDiff.Y = (fu.fadingSize.getHeight() - 4) / 10;
+	int frame = ScaleFrame(10);
+	fu.fadingDiff.X = fu.fadingSize.getWidth() / frame;
+	fu.fadingDiff.Y = (fu.fadingSize.getHeight() - 4) / frame;
 	fu.fadingUL = center;
 	fu.fadingLR = center;
 	fu.fadingUL.Y -= 2;
 	fu.fadingLR.Y += 2;
 	fu.guiFading = win;
 	fu.isFadein = true;
-	fu.fadingFrame = 10;
-	fu.autoFadeoutFrame = autoframe;
+	fu.fadingFrame = frame;
+	fu.fadingHalf = frame / 2;
+	fu.autoFadeoutFrame = autoframe ? ScaleFrame(autoframe) : 0;
 	fu.signalAction = 0;
 	if(win == wPosSelect) {
 		btnPSAU->setDrawImage(false);
@@ -1077,13 +1091,15 @@ void Game::HideElement(irr::gui::IGUIElement * win, bool set_action) {
 	for(auto fit = fadingList.begin(); fit != fadingList.end(); ++fit)
 		if(win == fit->guiFading)
 			fu.fadingSize = fit->fadingSize;
-	fu.fadingDiff.X = fu.fadingSize.getWidth() / 10;
-	fu.fadingDiff.Y = (fu.fadingSize.getHeight() - 4) / 10;
+	int frame = ScaleFrame(10);
+	fu.fadingDiff.X = fu.fadingSize.getWidth() / frame;
+	fu.fadingDiff.Y = (fu.fadingSize.getHeight() - 4) / frame;
 	fu.fadingUL = fu.fadingSize.UpperLeftCorner;
 	fu.fadingLR = fu.fadingSize.LowerRightCorner;
 	fu.guiFading = win;
 	fu.isFadein = false;
-	fu.fadingFrame = 10;
+	fu.fadingFrame = frame;
+	fu.fadingHalf = frame / 2;
 	fu.autoFadeoutFrame = 0;
 	fu.signalAction = set_action;
 	if(win == wPosSelect) {
@@ -1120,7 +1136,7 @@ void Game::PopupElement(irr::gui::IGUIElement * element, int hideframe) {
 }
 void Game::WaitFrameSignal(int frame) {
 	frameSignal.Reset();
-	signalFrame = (gameConf.quick_animation && frame >= 12) ? 12 : frame;
+	signalFrame = ScaleFrame((gameConf.quick_animation && frame >= 12) ? 12 : frame);
 	frameSignal.Wait();
 }
 void Game::DrawThumb(const CardDataC* cp, irr::core::vector2di pos, const LFList* lflist, bool drag) {
