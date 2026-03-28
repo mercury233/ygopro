@@ -8,12 +8,9 @@
 
 namespace ygo {
 
-void Game::Draw2DImageQuad(irr::video::IVideoDriver* driver,
-	const irr::video::ITexture* texture,
-	const irr::core::rect<irr::s32>& sourceRect,
-	const irr::core::vector2d<irr::s32> corners[4],
-	bool useAlphaChannel, irr::video::SColor color)
-{
+void Game::Draw2DImageQuad(irr::video::IVideoDriver* driver, irr::video::ITexture* texture,
+						   const irr::core::recti& sourceRect, const irr::core::vector2di corners[4],
+						   bool useAlphaChannel, irr::video::SColor color) {
 	if (!texture)
 		return;
 
@@ -22,6 +19,8 @@ void Game::Draw2DImageQuad(irr::video::IVideoDriver* driver,
 	driver->setTransform(irr::video::ETS_PROJECTION, irr::core::matrix4());
 	irr::core::matrix4 oldViewMat = driver->getTransform(irr::video::ETS_VIEW);
 	driver->setTransform(irr::video::ETS_VIEW, irr::core::matrix4());
+	irr::core::matrix4 oldWorldMat = driver->getTransform(irr::video::ETS_WORLD);
+	driver->setTransform(irr::video::ETS_WORLD, irr::core::matrix4());
 
 	irr::core::vector2df uvCorner[4];
 	uvCorner[0] = irr::core::vector2df((irr::f32)sourceRect.UpperLeftCorner.X, (irr::f32)sourceRect.UpperLeftCorner.Y);
@@ -34,7 +33,7 @@ void Game::Draw2DImageQuad(irr::video::IVideoDriver* driver,
 		uvCorner[x] = irr::core::vector2df(uvCorner[x].X * invW, uvCorner[x].Y * invH);
 
 	irr::video::S3DVertex vertices[4];
-	irr::u16 indices[6] = { 0, 1, 2, 3, 2, 1 };
+	static const irr::u16 indices[6] = { 0, 1, 2, 3, 2, 1 };
 	const irr::f32 screenWidth = (irr::f32)driver->getScreenSize().Width;
 	const irr::f32 screenHeight = (irr::f32)driver->getScreenSize().Height;
 	for (int x = 0; x < 4; x++)
@@ -48,7 +47,7 @@ void Game::Draw2DImageQuad(irr::video::IVideoDriver* driver,
 
 	material.Lighting = false;
 	material.ZWriteEnable = irr::video::EZW_OFF;
-	material.TextureLayer[0].Texture = const_cast<irr::video::ITexture*>(texture);
+	material.TextureLayer[0].Texture = texture;
 	material.MaterialType = useAlphaChannel ?
 		irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL : irr::video::EMT_SOLID;
 	driver->setMaterial(material);
@@ -56,14 +55,16 @@ void Game::Draw2DImageQuad(irr::video::IVideoDriver* driver,
 
 	driver->setTransform(irr::video::ETS_PROJECTION, oldProjMat);
 	driver->setTransform(irr::video::ETS_VIEW, oldViewMat);
+	driver->setTransform(irr::video::ETS_WORLD, oldWorldMat);
 }
 
-void Game::DrawSelectionLine(irr::video::S3DVertex* vec, bool strip, int width, float* cv) {
+void Game::DrawSelectionLine(irr::video::S3DVertex* vec, bool stipple, irr::video::SColor color) {
 	if(!gameConf.use_d3d) {
-		float origin[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-		glLineWidth(width);
-		glLineStipple(1, linePatternGL);
-		if(strip)
+		GLfloat origin[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+		GLfloat cv[4] = {color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f};
+		glLineWidth(matManager.mOutLine.Thickness);
+		glLineStipple(1, stippleMask);
+		if(stipple)
 			glEnable(GL_LINE_STIPPLE);
 		glDisable(GL_TEXTURE_2D);
 		glMaterialfv(GL_FRONT, GL_AMBIENT, cv);
@@ -78,17 +79,19 @@ void Game::DrawSelectionLine(irr::video::S3DVertex* vec, bool strip, int width, 
 		glEnable(GL_TEXTURE_2D);
 	} else {
 		driver->setMaterial(matManager.mOutLine);
-		if(strip) {
-			if(linePatternD3D < 15) {
-				driver->draw3DLine(vec[0].Pos, vec[0].Pos + (vec[1].Pos - vec[0].Pos) * (linePatternD3D + 1) / 15.0);
-				driver->draw3DLine(vec[1].Pos, vec[1].Pos + (vec[3].Pos - vec[1].Pos) * (linePatternD3D + 1) / 15.0);
-				driver->draw3DLine(vec[3].Pos, vec[3].Pos + (vec[2].Pos - vec[3].Pos) * (linePatternD3D + 1) / 15.0);
-				driver->draw3DLine(vec[2].Pos, vec[2].Pos + (vec[0].Pos - vec[2].Pos) * (linePatternD3D + 1) / 15.0);
+		if(stipple) {
+			if(linePattern < 15) {
+				float progress = (linePattern + 1) / 15.0f;
+				driver->draw3DLine(vec[0].Pos, vec[0].Pos + (vec[1].Pos - vec[0].Pos) * progress);
+				driver->draw3DLine(vec[1].Pos, vec[1].Pos + (vec[3].Pos - vec[1].Pos) * progress);
+				driver->draw3DLine(vec[3].Pos, vec[3].Pos + (vec[2].Pos - vec[3].Pos) * progress);
+				driver->draw3DLine(vec[2].Pos, vec[2].Pos + (vec[0].Pos - vec[2].Pos) * progress);
 			} else {
-				driver->draw3DLine(vec[0].Pos + (vec[1].Pos - vec[0].Pos) * (linePatternD3D - 14) / 15.0, vec[1].Pos);
-				driver->draw3DLine(vec[1].Pos + (vec[3].Pos - vec[1].Pos) * (linePatternD3D - 14) / 15.0, vec[3].Pos);
-				driver->draw3DLine(vec[3].Pos + (vec[2].Pos - vec[3].Pos) * (linePatternD3D - 14) / 15.0, vec[2].Pos);
-				driver->draw3DLine(vec[2].Pos + (vec[0].Pos - vec[2].Pos) * (linePatternD3D - 14) / 15.0, vec[0].Pos);
+				float progress = (linePattern - 14) / 15.0f;
+				driver->draw3DLine(vec[0].Pos + (vec[1].Pos - vec[0].Pos) * progress, vec[1].Pos);
+				driver->draw3DLine(vec[1].Pos + (vec[3].Pos - vec[1].Pos) * progress, vec[3].Pos);
+				driver->draw3DLine(vec[3].Pos + (vec[2].Pos - vec[3].Pos) * progress, vec[2].Pos);
+				driver->draw3DLine(vec[2].Pos + (vec[0].Pos - vec[2].Pos) * progress, vec[0].Pos);
 			}
 		} else {
 			driver->draw3DLine(vec[0].Pos, vec[1].Pos);
@@ -100,40 +103,33 @@ void Game::DrawSelectionLine(irr::video::S3DVertex* vec, bool strip, int width, 
 }
 void Game::DrawSelectionLine(irr::gui::IGUIElement* element, int width, irr::video::SColor color) {
 	irr::core::recti pos = element->getAbsolutePosition();
-	float x1 = pos.UpperLeftCorner.X;
-	float x2 = pos.LowerRightCorner.X;
-	float y1 = pos.UpperLeftCorner.Y;
-	float y2 = pos.LowerRightCorner.Y;
-	float w = pos.getWidth();
-	float h = pos.getHeight();
-	if(linePatternD3D < 15) {
-		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width, y1 - 1 - width, x1 + (w * (linePatternD3D + 1) / 15.0) + 1 + width, y1 - 1));
-		driver->draw2DRectangle(color, irr::core::recti(x2 - (w * (linePatternD3D + 1) / 15.0) - 1 - width, y2 + 1, x2 + 1 + width, y2 + 1 + width));
-		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width, y1 - 1 - width, x1 - 1, y2 - (h * (linePatternD3D + 1) / 15.0) + 1 + width));
-		driver->draw2DRectangle(color, irr::core::recti(x2 + 1, y1 + (h * (linePatternD3D + 1) / 15.0) - 1 - width, x2 + 1 + width, y2 + 1 + width));
+	irr::s32 x1 = pos.UpperLeftCorner.X;
+	irr::s32 x2 = pos.LowerRightCorner.X;
+	irr::s32 y1 = pos.UpperLeftCorner.Y;
+	irr::s32 y2 = pos.LowerRightCorner.Y;
+	irr::s32 w = pos.getWidth();
+	irr::s32 h = pos.getHeight();
+	if(linePattern < 15) {
+		float progress = (linePattern + 1) / 15.0f;
+		irr::s32 wp = w * progress;
+		irr::s32 hp = h * progress;
+		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width, y1 - 1 - width, x1 + wp + 1 + width, y1 - 1));
+		driver->draw2DRectangle(color, irr::core::recti(x2 - wp - 1 - width, y2 + 1, x2 + 1 + width, y2 + 1 + width));
+		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width, y1 - 1 - width, x1 - 1, y2 - hp + 1 + width));
+		driver->draw2DRectangle(color, irr::core::recti(x2 + 1, y1 + hp - 1 - width, x2 + 1 + width, y2 + 1 + width));
 	} else {
-		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width + (w * (linePatternD3D - 14) / 15.0), y1 - 1 - width, x2 + 1 + width, y1 - 1));
-		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width, y2 + 1, x2 - (w * (linePatternD3D - 14) / 15.0) + 1 + width, y2 + 1 + width));
-		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width, y2 - (h * (linePatternD3D - 14) / 15.0) - 1 - width, x1 - 1, y2 + 1 + width));
-		driver->draw2DRectangle(color, irr::core::recti(x2 + 1, y1 - 1 - width, x2 + 1 + width, y1 + (h * (linePatternD3D - 14) / 15.0) + 1 + width));
+		float progress = (linePattern - 14) / 15.0f;
+		irr::s32 wp = w * progress;
+		irr::s32 hp = h * progress;
+		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width + wp, y1 - 1 - width, x2 + 1 + width, y1 - 1));
+		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width, y2 + 1, x2 - wp + 1 + width, y2 + 1 + width));
+		driver->draw2DRectangle(color, irr::core::recti(x1 - 1 - width, y2 - hp - 1 - width, x1 - 1, y2 + 1 + width));
+		driver->draw2DRectangle(color, irr::core::recti(x2 + 1, y1 - 1 - width, x2 + 1 + width, y1 + hp + 1 + width));
 	}
 }
 void Game::DrawBackGround() {
 	static int selFieldAlpha = 255;
 	static int selFieldDAlpha = -10;
-//	matrix4 im = irr::core::IdentityMatrix;
-//	im.setTranslation(irr::core::vector3df(0, 0, -0.01f));
-//	driver->setTransform(irr::video::ETS_WORLD, im);
-	//dark shade
-//	matManager.mSelField.AmbientColor = 0xff000000;
-//	matManager.mSelField.DiffuseColor = 0xa0000000;
-//	driver->setMaterial(matManager.mSelField);
-//	for(int i = 0; i < 120; i += 4)
-//		driver->drawVertexPrimitiveList(&matManager.vFields[i], 4, matManager.iRectangle, 2);
-//	driver->setTransform(irr::video::ETS_WORLD, irr::core::IdentityMatrix);
-//	driver->setMaterial(matManager.mBackLine);
-//	driver->drawVertexPrimitiveList(matManager.vBackLine, 76, matManager.iBackLine, 58, irr::video::EVT_STANDARD, irr::scene::EPT_LINES);
-	//draw field
 	//draw field spell card
 	driver->setTransform(irr::video::ETS_WORLD, irr::core::IdentityMatrix);
 	bool drawField = false;
@@ -177,26 +173,25 @@ void Game::DrawBackGround() {
 	driver->setMaterial(matManager.mBackLine);
 	//select field
 	if(dInfo.curMsg == MSG_SELECT_PLACE || dInfo.curMsg == MSG_SELECT_DISFIELD || dInfo.curMsg == MSG_HINT) {
-		float cv[4] = {0.0f, 0.0f, 1.0f, 1.0f};
 		unsigned int filter = 0x1;
 		for (int i = 0; i < 7; ++i, filter <<= 1) {
 			if (dField.selectable_field & filter)
-				DrawSelectionLine(matManager.vFieldMzone[0][i], !(dField.selected_field & filter), 2, cv);
+				DrawSelectionLine(matManager.vFieldMzone[0][i], !(dField.selected_field & filter), 0xff0000ff);
 		}
 		filter = 0x100;
 		for (int i = 0; i < 8; ++i, filter <<= 1) {
 			if (dField.selectable_field & filter)
-				DrawSelectionLine(matManager.vFieldSzone[0][i][rule], !(dField.selected_field & filter), 2, cv);
+				DrawSelectionLine(matManager.vFieldSzone[0][i][rule], !(dField.selected_field & filter), 0xff0000ff);
 		}
 		filter = 0x10000;
 		for (int i = 0; i < 7; ++i, filter <<= 1) {
 			if (dField.selectable_field & filter)
-				DrawSelectionLine(matManager.vFieldMzone[1][i], !(dField.selected_field & filter), 2, cv);
+				DrawSelectionLine(matManager.vFieldMzone[1][i], !(dField.selected_field & filter), 0xff0000ff);
 		}
 		filter = 0x1000000;
 		for (int i = 0; i < 8; ++i, filter <<= 1) {
 			if (dField.selectable_field & filter)
-				DrawSelectionLine(matManager.vFieldSzone[1][i][rule], !(dField.selected_field & filter), 2, cv);
+				DrawSelectionLine(matManager.vFieldSzone[1][i][rule], !(dField.selected_field & filter), 0xff0000ff);
 		}
 	}
 	//disabled field
@@ -421,18 +416,16 @@ void Game::DrawCard(ClientCard* pcard) {
 	if(pcard->is_moving)
 		return;
 	if(pcard->is_selectable && (pcard->location & 0xe)) {
-		float cv[4] = {1.0f, 1.0f, 0.0f, 1.0f};
 		if((pcard->location == LOCATION_HAND && pcard->code) || ((pcard->location & 0xc) && (pcard->position & POS_FACEUP)))
-			DrawSelectionLine(matManager.vCardOutline, !pcard->is_selected, 2, cv);
+			DrawSelectionLine(matManager.vCardOutline, !pcard->is_selected, 0xffffff00);
 		else
-			DrawSelectionLine(matManager.vCardOutliner, !pcard->is_selected, 2, cv);
+			DrawSelectionLine(matManager.vCardOutliner, !pcard->is_selected, 0xffffff00);
 	}
 	if(pcard->is_highlighting) {
-		float cv[4] = {0.0f, 1.0f, 1.0f, 1.0f};
 		if((pcard->location == LOCATION_HAND && pcard->code) || ((pcard->location & 0xc) && (pcard->position & POS_FACEUP)))
-			DrawSelectionLine(matManager.vCardOutline, true, 2, cv);
+			DrawSelectionLine(matManager.vCardOutline, true, 0xff00ffff);
 		else
-			DrawSelectionLine(matManager.vCardOutliner, true, 2, cv);
+			DrawSelectionLine(matManager.vCardOutliner, true, 0xff00ffff);
 	}
 	irr::core::matrix4 im;
 	im.setTranslation(pcard->curPos);
@@ -1138,7 +1131,7 @@ void Game::SetImageButtonDrawing(irr::gui::IGUIElement* element, bool draw) {
 		for(int i = 0; i < 5; ++i)
 			btnCardSelect[i]->setDrawImage(draw);
 	}
-	if(element== wCardDisplay) {
+	if(element == wCardDisplay) {
 		for(int i = 0; i < 5; ++i)
 			btnCardDisplay[i]->setDrawImage(draw);
 	}

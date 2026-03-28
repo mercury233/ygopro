@@ -1004,8 +1004,8 @@ void Game::MainLoop() {
 			OnResize();
 			gMutex.unlock();
 		}
-		linePatternD3D = (linePatternD3D + 1) % 30;
-		linePatternGL = (linePatternGL << 1) | (linePatternGL >> 15);
+		linePattern = (linePattern + 1) % 30;
+		stippleMask = (stippleMask << 1) | (stippleMask >> 15);
 		atkframe += 0.1f;
 		atkdy = (float)sin(atkframe);
 		driver->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
