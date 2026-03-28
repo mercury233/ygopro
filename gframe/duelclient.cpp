@@ -3179,7 +3179,8 @@ bool DuelClient::ClientAnalyze(unsigned char* msg, int len) {
 			return true;
 		}
 		soundManager.PlaySoundEffect(SOUND_DAMAGE);
-		mainGame->lpd = (mainGame->dInfo.lp[player] - final) / 10;
+		mainGame->lpInitial = mainGame->dInfo.lp[player];
+		mainGame->lpFinal = final;
 		if (player == 0)
 			myswprintf(event_string, dataManager.GetSysString(1613), val);
 		else
@@ -3189,7 +3190,8 @@ bool DuelClient::ClientAnalyze(unsigned char* msg, int len) {
 		myswprintf(textBuffer, L"-%d", val);
 		mainGame->lpcstring = textBuffer;
 		mainGame->WaitFrameSignal(30);
-		mainGame->lpframe = 10;
+		mainGame->lpFrameCount = mainGame->ScaleFrame(10);
+		mainGame->lpFrame = mainGame->lpFrameCount;
 		mainGame->WaitFrameSignal(11);
 		mainGame->lpcstring = L"";
 		mainGame->dInfo.lp[player] = final;
@@ -3208,7 +3210,8 @@ bool DuelClient::ClientAnalyze(unsigned char* msg, int len) {
 			return true;
 		}
 		soundManager.PlaySoundEffect(SOUND_RECOVER);
-		mainGame->lpd = (mainGame->dInfo.lp[player] - final) / 10;
+		mainGame->lpInitial = mainGame->dInfo.lp[player];
+		mainGame->lpFinal = final;
 		if (player == 0)
 			myswprintf(event_string, dataManager.GetSysString(1615), val);
 		else
@@ -3218,7 +3221,8 @@ bool DuelClient::ClientAnalyze(unsigned char* msg, int len) {
 		myswprintf(textBuffer, L"+%d", val);
 		mainGame->lpcstring = textBuffer;
 		mainGame->WaitFrameSignal(30);
-		mainGame->lpframe = 10;
+		mainGame->lpFrameCount = mainGame->ScaleFrame(10);
+		mainGame->lpFrame = mainGame->lpFrameCount;
 		mainGame->WaitFrameSignal(11);
 		mainGame->lpcstring = L"";
 		mainGame->dInfo.lp[player] = final;
@@ -3269,9 +3273,11 @@ bool DuelClient::ClientAnalyze(unsigned char* msg, int len) {
 			myswprintf(mainGame->dInfo.strLP[player], L"%d", mainGame->dInfo.lp[player]);
 			return true;
 		}
-		mainGame->lpd = (mainGame->dInfo.lp[player] - val) / 10;
+		mainGame->lpInitial = mainGame->dInfo.lp[player];
+		mainGame->lpFinal = val;
 		mainGame->lpplayer = player;
-		mainGame->lpframe = 10;
+		mainGame->lpFrameCount = mainGame->ScaleFrame(10);
+		mainGame->lpFrame = mainGame->lpFrameCount;
 		mainGame->WaitFrameSignal(11);
 		mainGame->dInfo.lp[player] = val;
 		mainGame->gMutex.lock();
@@ -3364,13 +3370,15 @@ bool DuelClient::ClientAnalyze(unsigned char* msg, int len) {
 			return true;
 		}
 		soundManager.PlaySoundEffect(SOUND_DAMAGE);
-		mainGame->lpd = (mainGame->dInfo.lp[player] - final) / 10;
+		mainGame->lpInitial = mainGame->dInfo.lp[player];
+		mainGame->lpFinal = final;
 		mainGame->lpccolor = 0xff0000ff;
 		mainGame->lpplayer = player;
 		myswprintf(textBuffer, L"-%d", cost);
 		mainGame->lpcstring = textBuffer;
 		mainGame->WaitFrameSignal(30);
-		mainGame->lpframe = 10;
+		mainGame->lpFrameCount = mainGame->ScaleFrame(10);
+		mainGame->lpFrame = mainGame->lpFrameCount;
 		mainGame->WaitFrameSignal(11);
 		mainGame->lpcstring = L"";
 		mainGame->dInfo.lp[player] = final;
