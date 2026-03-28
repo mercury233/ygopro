@@ -67,29 +67,27 @@ bool Game::Initialize() {
 		ErrorLog("Failed to create Irrlicht Engine device!");
 		return false;
 	}
-	if(gameConf.vsync) {
-		int detectedFps = gameConf.actual_fps;
+	effectiveFps = gameConf.target_fps;
+	if(gameConf.vsync && effectiveFps <= 0) {
+		int detectedFps = 0;
 #ifdef _WIN32
-		if(detectedFps <= 0) {
-			DEVMODE dm{};
-			dm.dmSize = sizeof(dm);
-			if(EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm) && dm.dmDisplayFrequency > 0)
-				detectedFps = (int)dm.dmDisplayFrequency;
-		}
+		DEVMODE dm{};
+		dm.dmSize = sizeof(dm);
+		if(EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm) && dm.dmDisplayFrequency > 0)
+			detectedFps = (int)dm.dmDisplayFrequency;
 #elif defined(__APPLE__)
-		if(detectedFps <= 0) {
-			CGDisplayModeRef mode = CGDisplayCopyDisplayMode(CGMainDisplayID());
-			if(mode) {
-				double rate = CGDisplayModeGetRefreshRate(mode);
-				if(rate > 0) detectedFps = (int)rate;
-				CGDisplayModeRelease(mode);
-			}
+		CGDisplayModeRef mode = CGDisplayCopyDisplayMode(CGMainDisplayID());
+		if(mode) {
+			double rate = CGDisplayModeGetRefreshRate(mode);
+			if(rate > 0) detectedFps = (int)rate;
+			CGDisplayModeRelease(mode);
 		}
 #endif
-		if(detectedFps > 0)
-			fpsScale = (float)detectedFps / 60.0f;
-		if(fpsScale < 1.0f) fpsScale = 1.0f;
+		if(detectedFps > 0) effectiveFps = detectedFps;
 	}
+	if(effectiveFps < 60) effectiveFps = 60;
+	if(effectiveFps > 1000) effectiveFps = 1000;
+	fpsScale = (float)effectiveFps / 60.0f;
 #ifndef _DEBUG
 	device->getLogger()->setLogLevel(irr::ELOG_LEVEL::ELL_ERROR);
 #endif
@@ -1017,7 +1015,7 @@ void Game::MainLoop() {
 	}
 #endif
 	auto lastFrameTime = std::chrono::steady_clock::now();
-	constexpr auto targetFrameDuration = std::chrono::microseconds(16667);
+	auto targetFrameDuration = std::chrono::microseconds(1000000 / effectiveFps);
 	float lineAccum = 0;
 	while(device->run()) {
 		auto size = driver->getScreenSize();
@@ -1112,7 +1110,8 @@ void Game::MainLoop() {
 					dInfo.time_left[dInfo.time_player]--;
 		}
 		if(gameConf.vsync && isMinimized) {
-			std::this_thread::sleep_for(targetFrameDuration);
+			// downscale to 60fps, reduce CPU usage
+			std::this_thread::sleep_for(std::chrono::microseconds(16667));
 		} else if(!gameConf.vsync) {
 			auto targetTime = lastFrameTime + targetFrameDuration;
 			auto now = std::chrono::steady_clock::now();
@@ -1439,8 +1438,8 @@ void Game::LoadConfig() {
 			gameConf.use_d3d = std::strtol(valbuf, nullptr, 10) > 0;
 		} else if(!std::strcmp(strbuf, "vsync")) {
 			gameConf.vsync = std::strtol(valbuf, nullptr, 10) > 0;
-		} else if(!std::strcmp(strbuf, "actual_fps")) {
-			gameConf.actual_fps = std::strtol(valbuf, nullptr, 10);
+		} else if(!std::strcmp(strbuf, "target_fps")) {
+			gameConf.target_fps = std::strtol(valbuf, nullptr, 10);
 		} else if (!std::strcmp(strbuf, "use_image_scale_multi_thread")) {
 			gameConf.use_image_scale_multi_thread = std::strtol(valbuf, nullptr, 10) > 0;
 		} else if (!std::strcmp(strbuf, "use_image_load_background_thread")) {
@@ -1576,10 +1575,10 @@ void Game::SaveConfig() {
 	char linebuf[CONFIG_LINE_SIZE];
 	std::fprintf(fp, "use_d3d = %d\n", gameConf.use_d3d ? 1 : 0);
 	std::fprintf(fp, "vsync = %d\n", gameConf.vsync ? 1 : 0);
-	std::fprintf(fp, "#actual_fps: The target frames per second for the game. 0: auto-detect (not avail on Linux)\n");
-	std::fprintf(fp, "# If you encounter animation speed issues, please set this to the actual FPS your monitor is running at\n");
-	std::fprintf(fp, "actual_fps = %d\n", gameConf.actual_fps);
-	std::fprintf(fp, "use_image_scale_multi_thread = %d\n", gameConf.use_image_scale_multi_thread ? 1 : 0);
+	std::fprintf(fp, "#target_fps: Controls FPS and calculation of animation speed. Default: 0\n");
+	std::fprintf(fp, "# Vsync on:  0 = auto-detect monitor refresh rate. If auto-detect fails, animation speed may be too fast, please try setting this manually\n");
+	std::fprintf(fp, "# Vsync off: 0 = run at default 60 FPS. Can be manually set to any value from 60 to 1000\n");
+	std::fprintf(fp, "target_fps = %d\n", gameConf.target_fps);
 	std::fprintf(fp, "use_image_load_background_thread = %d\n", gameConf.use_image_load_background_thread ? 1 : 0);
 	std::fprintf(fp, "antialias = %d\n", gameConf.antialias);
 	std::fprintf(fp, "errorlog = %u\n", enable_log);

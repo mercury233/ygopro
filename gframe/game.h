@@ -53,8 +53,8 @@ struct Config {
 #else
 	bool vsync{ false };
 #endif
-	int actual_fps{ 0 };
-	bool use_image_scale_multi_thread{ true };
+	int target_fps{ 0 };
+	bool use_image_scale_multi_thread{ false };
 #ifdef _OPENMP
 	bool use_image_load_background_thread{ false };
 #else
@@ -276,6 +276,7 @@ public:
 	unsigned short linePatternGL{ 0x0f0f };
 	int waitFrame{};
 	int signalFrame{};
+	int effectiveFps{};
 	float fpsScale{ 1.0f };
 	bool logicalTick{};
 	float logicalFrameAccum{};
