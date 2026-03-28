@@ -1010,7 +1010,7 @@ void Game::MainLoop() {
 	HANDLE hWaitTimer = NULL;
 	bool useHighResTimer = false;
 	if(!gameConf.vsync) {
-		hWaitTimer = CreateWaitableTimerExW(NULL, NULL, CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, TIMER_ALL_ACCESS);
+		hWaitTimer = CreateWaitableTimerExW(NULL, NULL, CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, TIMER_MODIFY_STATE | SYNCHRONIZE);
 		useHighResTimer = (hWaitTimer != NULL);
 		if(!useHighResTimer)
 			timeBeginPeriod(1);
