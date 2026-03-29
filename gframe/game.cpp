@@ -16,6 +16,21 @@
 #include <timeapi.h>
 #endif
 
+#if defined(__SSE2__) || (defined(_M_IX86_FP) && _M_IX86_FP >= 2) || \
+	defined(__x86_64__) || defined(_M_X64) || defined(__x86_64) || defined(_M_AMD64)
+	#include <immintrin.h>
+	#define CPU_PAUSE() _mm_pause()
+#elif defined(_M_ARM) || defined(_M_ARM64) || defined(__arm__) || defined(__aarch64__)
+    #if defined(_MSC_VER)
+        #include <intrin.h>
+        #define CPU_PAUSE() __yield()
+    #else
+        #define CPU_PAUSE() __asm__ __volatile__("yield" ::: "memory")
+    #endif
+#else
+	#define CPU_PAUSE() ((void)0)
+#endif
+
 namespace ygo {
 
 Game* mainGame;
@@ -1000,10 +1015,8 @@ void Game::MainLoop() {
 	camera->setViewMatrixAffector(mProjection);
 	smgr->setAmbientLight(irr::video::SColorf(1.0f, 1.0f, 1.0f));
 	float atkframe = 0.1f;
-	irr::ITimer* timer = device->getTimer();
-	timer->setTime(0);
 	int fps = 0;
-	int cur_time = 0;
+	auto lastFpsTime = std::chrono::steady_clock::now();
 #ifdef _WIN32
 	HANDLE hWaitTimer = NULL;
 	bool useHighResTimer = false;
@@ -1038,6 +1051,8 @@ void Game::MainLoop() {
 			linePatternGL = (linePatternGL << 1) | (linePatternGL >> 15);
 		}
 		atkframe += 0.1f / fpsScale;
+		if(atkframe > 6.2832f)
+			atkframe -= 6.2832f;
 		atkdy = (float)sin(atkframe);
 		bool isMinimized = device->isWindowMinimized();
 		if(!isMinimized) {
@@ -1098,17 +1113,6 @@ void Game::MainLoop() {
 		if(closeSignal.TryWait())
 			CloseDuelWindow();
 		fps++;
-		cur_time = timer->getTime();
-		if(cur_time >= 1000) {
-			myswprintf(cap, L"YGOPro FPS: %d", fps);
-			device->setWindowCaption(cap);
-			fps = 0;
-			cur_time -= 1000;
-			timer->setTime(0);
-			if(dInfo.time_player == 0 || dInfo.time_player == 1)
-				if(dInfo.time_left[dInfo.time_player])
-					dInfo.time_left[dInfo.time_player]--;
-		}
 		if(gameConf.vsync && isMinimized) {
 			// downscale to 60fps, reduce CPU usage
 			std::this_thread::sleep_for(std::chrono::microseconds(16667));
@@ -1138,7 +1142,9 @@ void Game::MainLoop() {
 				// Spin-wait for sub-millisecond precision.
 				// If the window is inactive, sleep 1ms per iteration to avoid wasting CPU.
 				while(std::chrono::steady_clock::now() < targetTime) {
-					if(!device->isWindowActive())
+					if(device->isWindowActive())
+						CPU_PAUSE();
+					else
 						std::this_thread::sleep_for(std::chrono::milliseconds(1));
 				}
 			}
@@ -1146,6 +1152,18 @@ void Game::MainLoop() {
 			now = std::chrono::steady_clock::now();
 			if(now - targetTime > targetFrameDuration)
 				lastFrameTime = now;
+		}
+		auto now = std::chrono::steady_clock::now();
+		if(now - lastFpsTime >= std::chrono::milliseconds(1000)) {
+			myswprintf(cap, L"YGOPro FPS: %d", fps);
+			device->setWindowCaption(cap);
+			fps = 0;
+			lastFpsTime += std::chrono::milliseconds(1000);
+			if(now - lastFpsTime > std::chrono::milliseconds(1000))
+				lastFpsTime = now;
+			if(dInfo.time_player == 0 || dInfo.time_player == 1)
+				if(dInfo.time_left[dInfo.time_player])
+					dInfo.time_left[dInfo.time_player]--;
 		}
 	}
 #ifdef _WIN32
