@@ -30,6 +30,11 @@
 #define BITS_IN_JSAMPLE  8
 #endif
 
+/* turbojpeg.c (not cjpeg/djpeg!) requires these features.
+ * Used in the Packed-Pixel Image I/O part. */
+#define BMP_SUPPORTED
+#define PPM_SUPPORTED
+
 #ifdef _WIN32
 
 #undef RIGHT_SHIFT_IS_UNSIGNED

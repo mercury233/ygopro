@@ -40,8 +40,18 @@ project "turbojpeg"
         "src/jaricom.c",
         "src/jcarith.c",
         "src/jdarith.c",
+        -- TurboJPEG API sources
+        "src/rdbmp.c",
+        "src/wrbmp.c",
+        "src/turbojpeg.c",
+        "src/tjutil.c",
+        "src/jdatadst-tj.c",
+        "src/jdatasrc-tj.c",
+        "src/transupp.c",
         -- Wrapper sources (multiple precisions / variants)
         "src/wrapper/j*.c",
+        "src/wrapper/rdppm-*.c",
+        "src/wrapper/wrppm-*.c",
     }
 
     -- NOTE: Several libjpeg-turbo .c files are meant to be #include'd into

@@ -10,6 +10,7 @@ private:
 	static bool imageScaleSTB(irr::video::IImage* src, irr::video::IImage* dest);
 	static void imageScaleNNAA(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading);
 public:
+	static irr::video::IImage* LoadJpegImage(irr::video::IVideoDriver* driver, irr::io::IReadFile* reader, irr::s32 targetWidth, irr::s32 targetHeight);
 	static void Resize(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading);
 };
 

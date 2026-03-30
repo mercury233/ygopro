@@ -7,6 +7,8 @@
 #define STB_IMAGE_RESIZE2_IMPLEMENTATION
 #include "stb_image_resize2.h"
 
+#include <turbojpeg.h>
+
 namespace ygo {
 
 struct StbSamplerCache {
@@ -182,6 +184,129 @@ void ImageUtility::imageScaleNNAA(irr::video::IImage* src, irr::video::IImage* d
 		}
 	}
 } // end of parallel region
+}
+
+/**
+ * Decode a JPEG file using TurboJPEG with optional DCT-domain scaling.
+ * When targetWidth / targetHeight are provided, the max scale denominator that keeps
+ * the decoded dimensions >= target is chosen, saving memory and CPU time.
+ * The reader is not dropped by this function.
+ * @return Image pointer (ECF_A8R8G8B8). Must be dropped after use.
+ */
+irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver, irr::io::IReadFile* reader, irr::s32 targetWidth, irr::s32 targetHeight) {
+	if(!reader) return nullptr;
+	long fileSize = reader->getSize();
+	if(fileSize <= 0) return nullptr;
+
+	unsigned char* input = new (std::nothrow) unsigned char[fileSize];
+	if(!input) return nullptr;
+
+	if(reader->read(input, (irr::u32)fileSize) != (irr::s32)fileSize) {
+		delete[] input;
+		return nullptr;
+	}
+
+	tjhandle tj = tjInitDecompress();
+	if(!tj) {
+		delete[] input;
+		return nullptr;
+	}
+
+	int imgWidth, imgHeight, jpegSubsamp, jpegColorspace;
+	if(tjDecompressHeader3(tj, input, (unsigned long)fileSize, &imgWidth, &imgHeight, &jpegSubsamp, &jpegColorspace) < 0) {
+		tjDestroy(tj);
+		delete[] input;
+		return nullptr;
+	}
+
+	// Find the most downscaled factor whose output is still >= target.
+	// tjGetScalingFactors returns factors in decreasing order (1/1, 7/8, ..., 1/8).
+	int width = imgWidth, height = imgHeight;
+	if(targetWidth > 0 && targetHeight > 0) {
+		int numFactors = 0;
+		const tjscalingfactor* factors = tjGetScalingFactors(&numFactors);
+		if(factors && numFactors > 0) {
+			for(int i = numFactors - 1; i >= 0; i--) {
+				const int sw = TJSCALED(imgWidth, factors[i]);
+				const int sh = TJSCALED(imgHeight, factors[i]);
+				if(sw >= targetWidth && sh >= targetHeight) {
+					width = sw;
+					height = sh;
+					break;
+				}
+			}
+		}
+	}
+
+	// Use fast DCT / upsampling when downscaling by more than 2x.
+	const bool fastDecoding = (width * 2 < imgWidth || height * 2 < imgHeight);
+	const int tjFlags = fastDecoding ? (TJFLAG_FASTUPSAMPLE | TJFLAG_FASTDCT) : 0;
+
+	// TurboJPEG handles YCCK→CMYK automatically, but CMYK→RGB still needs manual conversion.
+	const bool isCMYK = (jpegColorspace == TJCS_CMYK || jpegColorspace == TJCS_YCCK);
+
+	unsigned char* outputData = nullptr;
+
+	if(isCMYK) {
+		unsigned char* cmykData = new (std::nothrow) unsigned char[(size_t)width * height * 4];
+		if(!cmykData) {
+			tjDestroy(tj);
+			delete[] input;
+			return nullptr;
+		}
+
+		if(tjDecompress2(tj, input, (unsigned long)fileSize, cmykData, width, 0, height, TJPF_CMYK, tjFlags) < 0) {
+			delete[] cmykData;
+			tjDestroy(tj);
+			delete[] input;
+			return nullptr;
+		}
+
+		// Convert CMYK (Adobe inverted convention) → BGRA.
+		const size_t pixelCount = (size_t)width * height;
+
+		// Ownership of outputData will be transferred to the IImage created by createImageFromData()
+		outputData = new (std::nothrow) unsigned char[pixelCount * 4];
+		if(!outputData) {
+			delete[] cmykData;
+			tjDestroy(tj);
+			delete[] input;
+			return nullptr;
+		}
+
+		for(size_t i = 0; i < pixelCount; i++) {
+			const unsigned char k = cmykData[i * 4 + 3];
+			outputData[i * 4 + 0] = (unsigned char)((cmykData[i * 4 + 2] * k + 127) / 255); // B (from Y)
+			outputData[i * 4 + 1] = (unsigned char)((cmykData[i * 4 + 1] * k + 127) / 255); // G (from M)
+			outputData[i * 4 + 2] = (unsigned char)((cmykData[i * 4 + 0] * k + 127) / 255); // R (from C)
+			outputData[i * 4 + 3] = 255;
+		}
+		delete[] cmykData;
+	} else {
+		// Decompress directly to BGRA (matches ECF_A8R8G8B8 memory layout on little-endian).
+		// Ownership of outputData will be transferred to the IImage created by createImageFromData()
+		outputData = new (std::nothrow) unsigned char[(size_t)width * height * 4];
+		if(!outputData) {
+			tjDestroy(tj);
+			delete[] input;
+			return nullptr;
+		}
+
+		if(tjDecompress2(tj, input, (unsigned long)fileSize, outputData, width, 0, height, TJPF_BGRA, tjFlags) < 0) {
+			delete[] outputData;
+			tjDestroy(tj);
+			delete[] input;
+			return nullptr;
+		}
+	}
+
+	tjDestroy(tj);
+	delete[] input;
+
+	return driver->createImageFromData(
+		irr::video::ECF_A8R8G8B8,
+		irr::core::dimension2d<irr::u32>((irr::u32)width, (irr::u32)height),
+		outputData, true, true);
 }
 
 void ImageUtility::Resize(irr::video::IImage* src, irr::video::IImage* dest, bool use_threading) {

@@ -179,8 +179,8 @@ elseif GetParam("build-turbojpeg") then
 end
 TURBOJPEG_INCLUDE_DIR = path.getabsolute("./turbojpeg/src")
 if not BUILD_TURBOJPEG then
-    TURBOJPEG_INCLUDE_DIR = GetParam("turbojpeg-include-dir") or os.findheader("jpeglib.h")
-    TURBOJPEG_LIB_DIR = GetParam("turbojpeg-lib-dir") or os.findlib("jpeg")
+    TURBOJPEG_INCLUDE_DIR = GetParam("turbojpeg-include-dir") or os.findheader("turbojpeg.h")
+    TURBOJPEG_LIB_DIR = GetParam("turbojpeg-lib-dir") or os.findlib("turbojpeg")
 end
 
 if GetParam("no-dxsdk") then

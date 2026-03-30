@@ -6,7 +6,7 @@ project "YGOPro"
     openmp "On"
 
     files { "*.cpp", "*.h" }
-    includedirs { "../ocgcore" }
+    includedirs { "../ocgcore", TURBOJPEG_INCLUDE_DIR }
     links { "ocgcore", "clzma", LUA_LIB_NAME, "sqlite3", "irrlicht", "freetype", "event", "turbojpeg" }
 
     if not BUILD_LUA then
@@ -106,8 +106,11 @@ project "YGOPro"
         end
 
     filter "system:linux"
-        links { "GL", "X11", "Xxf86vm", "dl", "pthread", "jpeg" }
+        links { "GL", "X11", "Xxf86vm", "dl", "pthread" }
         linkoptions { "-fopenmp" }
+        if not BUILD_TURBOJPEG then
+            links { "jpeg" }
+        end
         if USE_AUDIO and AUDIO_LIB == "irrklang" then
             links { "IrrKlang" }
             linkoptions{ IRRKLANG_LINK_RPATH }
