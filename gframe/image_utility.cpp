@@ -243,13 +243,13 @@ irr::video::IImage* ImageUtility::RotateImageCCW90(irr::video::IVideoDriver* dri
  */
 irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver, irr::io::IReadFile* reader, irr::s32 targetWidth, irr::s32 targetHeight) {
 	if(!reader) return nullptr;
-	long fileSize = reader->getSize();
-	if(fileSize <= 0) return nullptr;
-	unsigned char* input = new (std::nothrow) unsigned char[fileSize];
-	if(!input) return nullptr;
+	const long inputSize = reader->getSize();
+	if(inputSize <= 0) return nullptr;
+	unsigned char* inputData = new (std::nothrow) unsigned char[inputSize];
+	if(!inputData) return nullptr;
 
-	if(reader->read(input, (irr::u32)fileSize) != (irr::s32)fileSize) {
-		delete[] input;
+	if(reader->read(inputData, inputSize) != inputSize) {
+		delete[] inputData;
 		return nullptr;
 	}
 
@@ -259,18 +259,16 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	jerr.pub.error_exit = jpeg_error_exit_cb;
 
 	unsigned char* volatile outputData = nullptr;
-	unsigned char* volatile tempCmykRow = nullptr;
 
 	if(setjmp(jerr.setjmp_buffer)) {
 		jpeg_destroy_decompress(&cinfo);
-		delete[] input;
+		delete[] inputData;
 		delete[] outputData;
-		delete[] tempCmykRow;
 		return nullptr;
 	}
 
 	jpeg_create_decompress(&cinfo);
-	jpeg_mem_src(&cinfo, input, (unsigned long)fileSize);
+	jpeg_mem_src(&cinfo, inputData, (unsigned long)inputSize);
 
 	jpeg_read_header(&cinfo, TRUE);
 
@@ -304,39 +302,37 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	const size_t width = cinfo.output_width;
 	const size_t height = cinfo.output_height;
 	const size_t rowspan = width * 4; // ARGB bytes per pixel for output
+	const unsigned long long outputSize = (unsigned long long)rowspan * height;
+	if (outputSize > SIZE_MAX) { // SIZE_MAX may be smaller than uint64 max on 32-bit systems
+		longjmp(jerr.setjmp_buffer, 1);
+	}
 
 	// Ownership of outputData will be transferred to the IImage created by createImageFromData()
-	outputData = new (std::nothrow) unsigned char[rowspan * height];
+	outputData = new (std::nothrow) unsigned char[outputSize];
 	if (!outputData) {
 		longjmp(jerr.setjmp_buffer, 1); 
 	}
 
 	if (useCMYK) {
-		tempCmykRow = new (std::nothrow) unsigned char[width * 4];
-		if (!tempCmykRow) longjmp(jerr.setjmp_buffer, 1);
-
 		unsigned char* rowArray[1];
-		rowArray[0] = tempCmykRow;
-
 		while (cinfo.output_scanline < cinfo.output_height) {
-			size_t currentLine = cinfo.output_scanline;
+			rowArray[0] = &outputData[(size_t)cinfo.output_scanline * rowspan];
 			jpeg_read_scanlines(&cinfo, rowArray, 1);
 
 			// assume CMYK is in Adobe inverted convention, convert to RGB by multiplying by K
-			unsigned char* dstRow = &outputData[currentLine * rowspan];
+			unsigned char* row = rowArray[0];
 			for (size_t i = 0; i < width; i++) {
-				unsigned char k = tempCmykRow[i * 4 + 3];
-				dstRow[i * 4 + 0] = (tempCmykRow[i * 4 + 2] * k + 127) / 255;
-				dstRow[i * 4 + 1] = (tempCmykRow[i * 4 + 1] * k + 127) / 255;
-				dstRow[i * 4 + 2] = (tempCmykRow[i * 4 + 0] * k + 127) / 255;
-				dstRow[i * 4 + 3] = 255;
+				const unsigned char c = row[i * 4 + 0];
+				const unsigned char m = row[i * 4 + 1];
+				const unsigned char y = row[i * 4 + 2];
+				const unsigned char k = row[i * 4 + 3];
+				row[i * 4 + 3] = 255;				 	// A
+				row[i * 4 + 2] = (c * k + 127) / 255;	// R
+				row[i * 4 + 1] = (m * k + 127) / 255;	// G
+				row[i * 4 + 0] = (y * k + 127) / 255;	// B
 			}
 		}
-		
-		delete[] tempCmykRow;
-		tempCmykRow = nullptr;
-	} 
-	else {
+	} else {
 		unsigned char* rowArray[1];
 		while (cinfo.output_scanline < cinfo.output_height) {
 			rowArray[0] = &outputData[(size_t)cinfo.output_scanline * rowspan];
@@ -346,7 +342,7 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 
 	jpeg_finish_decompress(&cinfo);
 	jpeg_destroy_decompress(&cinfo);
-	delete[] input;
+	delete[] inputData;
 
 	return driver->createImageFromData(
 		irr::video::ECF_A8R8G8B8,
