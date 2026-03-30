@@ -8,8 +8,8 @@ project "YGOPro"
     end
 
     files { "*.cpp", "*.h" }
-    includedirs { "../ocgcore" }
-    links { "ocgcore", "clzma", LUA_LIB_NAME, "sqlite3", "irrlicht", "freetype", "event" }
+    includedirs { "../ocgcore", JPEG_INCLUDE_DIR }
+    links { "ocgcore", "clzma", LUA_LIB_NAME, "sqlite3", "irrlicht", "jpeg", "freetype", "event" }
 
     if not BUILD_LUA then
         libdirs { LUA_LIB_DIR }
@@ -26,14 +26,16 @@ project "YGOPro"
     if BUILD_IRRLICHT then
         includedirs { "../irrlicht/include" }
     else
-        includedirs { IRRLICHT_INCLUDE_DIR, JPEG_INCLUDE_DIR }
+        includedirs { IRRLICHT_INCLUDE_DIR }
         libdirs { IRRLICHT_LIB_DIR }
     end
-    if BUILD_IRRLICHT and IRRLICHT_BUILD_JPEG_PNG then
-        includedirs { "../irrlicht/source/Irrlicht/jpeglib" }
-    else
-        links { "jpeg", "png" }
-        libdirs { JPEG_LIB_DIR, PNG_LIB_DIR }
+    if not BUILD_PNG_IRRLICHT then
+        links { "png" }
+        libdirs { PNG_LIB_DIR }
+    end
+
+    if not BUILD_JPEG then
+        libdirs { JPEG_LIB_DIR }
     end
 
     if BUILD_FREETYPE then
