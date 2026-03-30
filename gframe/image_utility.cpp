@@ -264,7 +264,7 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	// decode as CMYK (4 ch) and convert manually using the Adobe inverted convention.
 	const bool useCMYK = (cinfo.jpeg_color_space == JCS_CMYK ||
 	                      cinfo.jpeg_color_space == JCS_YCCK);
-	cinfo.out_color_space = useCMYK ? JCS_CMYK : JCS_RGB;
+	cinfo.out_color_space = useCMYK ? JCS_CMYK : JCS_EXT_BGRA;
 
 	const bool fastDecoding = cinfo.scale_denom > 2;
 	cinfo.do_fancy_upsampling = fastDecoding ? FALSE : TRUE;
@@ -275,7 +275,7 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 
 	const size_t width = cinfo.output_width;
 	const size_t height = cinfo.output_height;
-	const size_t rowspan = width * 3; // RGB bytes per pixel for output
+	const size_t rowspan = width * 4; // ARGB bytes per pixel for output
 
 	// Ownership of outputData will be transferred to the IImage created by createImageFromData()
 	outputData = new (std::nothrow) unsigned char[rowspan * height];
@@ -298,9 +298,10 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 			unsigned char* dstRow = &outputData[currentLine * rowspan];
 			for (size_t i = 0; i < width; i++) {
 				unsigned char k = tempCmykRow[i * 4 + 3];
-				dstRow[i * 3 + 0] = (tempCmykRow[i * 4 + 0] * k + 127) / 255;
-				dstRow[i * 3 + 1] = (tempCmykRow[i * 4 + 1] * k + 127) / 255;
-				dstRow[i * 3 + 2] = (tempCmykRow[i * 4 + 2] * k + 127) / 255;
+				dstRow[i * 4 + 0] = (tempCmykRow[i * 4 + 2] * k + 127) / 255;
+				dstRow[i * 4 + 1] = (tempCmykRow[i * 4 + 1] * k + 127) / 255;
+				dstRow[i * 4 + 2] = (tempCmykRow[i * 4 + 0] * k + 127) / 255;
+				dstRow[i * 4 + 3] = 255;
 			}
 		}
 		
@@ -320,7 +321,7 @@ irr::video::IImage* ImageUtility::LoadJpegImage(irr::video::IVideoDriver* driver
 	delete[] input;
 
 	return driver->createImageFromData(
-		irr::video::ECF_R8G8B8,
+		irr::video::ECF_A8R8G8B8,
 		irr::core::dimension2d<irr::u32>(width, height),
 		outputData, true, true);
 }
