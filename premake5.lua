@@ -16,8 +16,10 @@ BUILD_FREETYPE = os.istarget("windows")
 BUILD_SQLITE = os.istarget("windows")
 
 BUILD_IRRLICHT = true -- modified Irrlicht is required, can't use the official one
-IRRLICHT_BUILD_JPEG_PNG = os.istarget("windows") -- build the bundled jpeglib and libpng from Irrlicht
+BUILD_PNG_IRRLICHT = os.istarget("windows") -- build the bundled libpng from Irrlicht
 USE_DXSDK = true
+
+BUILD_TURBOJPEG = os.istarget("windows") -- libjpeg-turbo
 
 USE_AUDIO = true
 AUDIO_LIB = "miniaudio" -- can be "miniaudio" or "irrklang"
@@ -55,13 +57,16 @@ newoption { trigger = "build-irrlicht", category = "YGOPro - irrlicht", descript
 newoption { trigger = "no-build-irrlicht", category = "YGOPro - irrlicht", description = "" }
 newoption { trigger = "irrlicht-include-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
 newoption { trigger = "irrlicht-lib-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
-newoption { trigger = "build-jpeg-png", category = "YGOPro - irrlicht", description = "" }
-newoption { trigger = "no-build-jpeg-png", category = "YGOPro - irrlicht", description = "" }
-newoption { trigger = "jpeg-include-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
-newoption { trigger = "jpeg-lib-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
+newoption { trigger = "build-png-irrlicht", category = "YGOPro - irrlicht", description = "" }
+newoption { trigger = "no-build-png-irrlicht", category = "YGOPro - irrlicht", description = "" }
 newoption { trigger = "png-include-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
 newoption { trigger = "png-lib-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
 newoption { trigger = "no-dxsdk", category = "YGOPro - irrlicht", description = "" }
+
+newoption { trigger = "build-turbojpeg", category = "YGOPro - turbojpeg", description = "" }
+newoption { trigger = "no-build-turbojpeg", category = "YGOPro - turbojpeg", description = "" }
+newoption { trigger = "turbojpeg-include-dir", category = "YGOPro - turbojpeg", description = "", value = "PATH" }
+newoption { trigger = "turbojpeg-lib-dir", category = "YGOPro - turbojpeg", description = "", value = "PATH" }
 
 newoption { trigger = "no-audio", category = "YGOPro", description = "" }
 newoption { trigger = "audio-lib", category = "YGOPro", description = "", value = "miniaudio, irrklang", default = AUDIO_LIB }
@@ -157,16 +162,25 @@ if not BUILD_IRRLICHT then
     IRRLICHT_INCLUDE_DIR = GetParam("irrlicht-include-dir") or os.findheader("irrlicht.h")
     IRRLICHT_LIB_DIR = GetParam("irrlicht-lib-dir") or os.findlib("irrlicht")
 end
-if GetParam("no-build-jpeg-png") then
-    IRRLICHT_BUILD_JPEG_PNG = false
-elseif GetParam("build-jpeg-png") then
-    IRRLICHT_BUILD_JPEG_PNG = true
+if GetParam("no-build-png-irrlicht") then
+    BUILD_PNG_IRRLICHT = false
+elseif GetParam("build-png-irrlicht") then
+    BUILD_PNG_IRRLICHT = true
 end
-if not IRRLICHT_BUILD_JPEG_PNG then
-    JPEG_INCLUDE_DIR = GetParam("jpeg-include-dir") or os.findheader("jpeglib.h")
-    JPEG_LIB_DIR = GetParam("jpeg-lib-dir") or os.findlib("jpeg")
+if not BUILD_PNG_IRRLICHT then
     PNG_INCLUDE_DIR = GetParam("png-include-dir") or os.findheader("png.h")
     PNG_LIB_DIR = GetParam("png-lib-dir") or os.findlib("png")
+end
+
+if GetParam("no-build-turbojpeg") then
+    BUILD_TURBOJPEG = false
+elseif GetParam("build-turbojpeg") then
+    BUILD_TURBOJPEG = true
+end
+TURBOJPEG_INCLUDE_DIR = path.getabsolute("./turbojpeg/src")
+if not BUILD_TURBOJPEG then
+    TURBOJPEG_INCLUDE_DIR = GetParam("turbojpeg-include-dir") or os.findheader("jpeglib.h")
+    TURBOJPEG_LIB_DIR = GetParam("turbojpeg-lib-dir") or os.findlib("jpeg")
 end
 
 if GetParam("no-dxsdk") then
@@ -357,6 +371,9 @@ workspace "YGOPro"
     end
     if BUILD_IRRLICHT then
         include "irrlicht"
+    end
+    if BUILD_TURBOJPEG then
+        include "turbojpeg"
     end
     if BUILD_SQLITE then
         include "sqlite3"

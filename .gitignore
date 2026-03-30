@@ -35,6 +35,7 @@
 /lua
 /miniaudio
 /sqlite3
+/turbojpeg
 /gframe/*.ico
 /gframe/ygopro.rc
 /gframe/ygopro.aps
