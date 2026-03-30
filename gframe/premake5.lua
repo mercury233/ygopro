@@ -32,6 +32,10 @@ project "YGOPro"
         libdirs { PNG_LIB_DIR }
     end
 
+    if not BUILD_JPEG then
+        libdirs { JPEG_LIB_DIR }
+    end
+
     if BUILD_FREETYPE then
         includedirs { "../freetype/custom", "../freetype/include" }
     else
