@@ -239,6 +239,10 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", irr::core::rect<irr::s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
+加快JPEG图片加载速度。\n\
+支持设置帧率和垂直同步。\n\
+优化锁帧处理。\n\
+选择卡片对话框随窗口缩放。\n\
 升级图形引擎Irrlicht到1.9。\n\
 粘贴文本时自动过滤结尾的空格。\n\
 开发者功能：F2打开当前卡脚本。\n\
