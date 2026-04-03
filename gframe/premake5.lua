@@ -115,7 +115,7 @@ project "YGOPro"
         end
 
     filter "system:linux"
-        links { "GL", "X11", "Xxf86vm", "dl", "pthread" }
+        links { "GL", "X11", "dl", "pthread" }
         if USE_OPENMP then
             linkoptions { "-fopenmp" }
         end

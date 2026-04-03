@@ -15,6 +15,9 @@
 #ifdef _WIN32
 #include <timeapi.h>
 #endif
+#ifdef __APPLE__
+#include <CoreGraphics/CoreGraphics.h>
+#endif
 
 #if defined(__SSE2__) || (defined(_M_IX86_FP) && _M_IX86_FP >= 2) || \
 	defined(__x86_64__) || defined(_M_X64) || defined(__x86_64) || defined(_M_AMD64)
