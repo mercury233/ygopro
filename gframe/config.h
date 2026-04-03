@@ -1,10 +1,11 @@
 #ifndef YGOPRO_CONFIG_H
 #define YGOPRO_CONFIG_H
 
-#define _IRR_STATIC_LIB_
-#define IRR_COMPILE_WITH_DX9_DEV_PACK
-
 #include <cerrno>
+#include <cstdio>
+#include <string>
+#include "bufferio.h"
+#include "../ocgcore/ocgapi.h"
 
 #ifdef _WIN32
 
@@ -26,11 +27,6 @@
 #define mystrncasecmp strncasecmp
 
 #endif // _WIN32
-
-#include <cstdio>
-#include <string>
-#include "bufferio.h"
-#include "../ocgcore/ocgapi.h"
 
 template<size_t N, typename... TR>
 inline int myswprintf(wchar_t(&buf)[N], const wchar_t* fmt, TR... args) {
@@ -57,6 +53,7 @@ inline FILE* mywfopen(const wchar_t* filename, const char* mode) {
 
 #define myfopen std::fopen
 
+#define _IRR_STATIC_LIB_
 #include <irrlicht.h>
 
 constexpr uint16_t PRO_VERSION = 0x1362;
@@ -66,4 +63,4 @@ extern bool open_file;
 extern wchar_t open_file_name[256];
 extern bool bot_mode;
 
-#endif
+#endif // YGOPRO_CONFIG_H
