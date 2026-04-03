@@ -20,6 +20,20 @@
 #include <Windows.h>
 #include <shellapi.h>
 
+inline FILE* mywfopen(const wchar_t* filename, const char* mode) {
+	FILE* fp{};
+#ifdef _WIN32
+	wchar_t wmode[20]{};
+	BufferIO::CopyCharArray(mode, wmode);
+	fp = _wfopen(filename, wmode);
+#else
+	char fname[1024]{};
+	BufferIO::EncodeUTF8(filename, fname);
+	fp = std::fopen(fname, mode);
+#endif
+	return fp;
+}
+
 class FileSystem {
 public:
 	static void SafeFileName(wchar_t* wfile) {
