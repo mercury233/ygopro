@@ -43,10 +43,5 @@ inline int mysnprintf(char(&buf)[N], const char* fmt, TR... args) {
 #include <irrlicht.h>
 
 constexpr uint16_t PRO_VERSION = 0x1362;
-extern unsigned int enable_log;
-extern bool exit_on_return;
-extern bool open_file;
-extern wchar_t open_file_name[256];
-extern bool bot_mode;
 
 #endif // YGOPRO_CONFIG_H

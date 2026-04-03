@@ -1,4 +1,4 @@
-#include "config.h"
+﻿#include "config.h"
 #include "single_duel.h"
 #include "netserver.h"
 #include "game.h"
@@ -1576,7 +1576,7 @@ void SingleDuel::RefreshSingle(int player, int location, int sequence, int flag)
 		NetServer::ReSendToPlayer(*pit);
 }
 uint32_t SingleDuel::MessageHandler(intptr_t fduel, uint32_t type) {
-	if(!enable_log)
+	if(!mainGame->enable_log)
 		return 0;
 	char msgbuf[1024];
 	get_log_message(fduel, msgbuf);
