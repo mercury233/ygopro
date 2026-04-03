@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <string>
 #include "bufferio.h"
-#include "../ocgcore/common.h"
+#include "../ocgcore/ocgapi.h"
 
 #ifdef _WIN32
 

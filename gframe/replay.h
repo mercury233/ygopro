@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <vector>
 #include <string>
-#include "../ocgcore/common.h"
+#include "../ocgcore/ocgapi.h"
 #include "deck.h"
 
 namespace ygo {
