@@ -14,12 +14,6 @@
 #include <string>
 #endif
 
-#ifdef _WIN32
-
-#define NOMINMAX 1
-#include <Windows.h>
-#include <shellapi.h>
-
 inline FILE* mywfopen(const wchar_t* filename, const char* mode) {
 	FILE* fp{};
 #ifdef _WIN32
@@ -33,6 +27,12 @@ inline FILE* mywfopen(const wchar_t* filename, const char* mode) {
 #endif
 	return fp;
 }
+
+#ifdef _WIN32
+
+#define NOMINMAX 1
+#include <Windows.h>
+#include <shellapi.h>
 
 class FileSystem {
 public:
