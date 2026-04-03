@@ -8,10 +8,9 @@
 
 #ifdef _WIN32
 
-#define NOMINMAX
-#include <WinSock2.h>
+#define NOMINMAX 1
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <ws2tcpip.h>
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #define mywcsncasecmp _wcsnicmp
@@ -21,29 +20,12 @@
 #define mystrncasecmp strncasecmp
 #endif
 
-#define socklen_t int
-
 #else //_WIN32
-
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <unistd.h>
-
-#define SD_BOTH 2
-#define SOCKET int
-#define closesocket close
-#define INVALID_SOCKET -1
-#define SOCKET_ERROR -1
-#define SOCKADDR_IN sockaddr_in
-#define SOCKADDR sockaddr
-#define SOCKET_ERRNO() (errno)
 
 #define mywcsncasecmp wcsncasecmp
 #define mystrncasecmp strncasecmp
-#endif
+
+#endif // _WIN32
 
 #include <cstdio>
 #include <string>
