@@ -12,6 +12,12 @@
 #include "single_mode.h"
 #include <thread>
 
+#ifdef _WIN32
+#define NOMINMAX 1
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
+
 namespace ygo {
 
 Game* mainGame;

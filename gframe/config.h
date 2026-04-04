@@ -9,10 +9,6 @@
 
 #ifdef _WIN32
 
-#define NOMINMAX 1
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #define mywcsncasecmp _wcsnicmp
 #define mystrncasecmp _strnicmp
@@ -38,6 +34,8 @@ inline int mysnprintf(char(&buf)[N], const char* fmt, TR... args) {
 }
 
 #define _IRR_STATIC_LIB_
+#define NOMINMAX 1 // for windows.h, temporary solution
+#define WIN32_LEAN_AND_MEAN
 #include <irrlicht.h>
 
 constexpr uint16_t PRO_VERSION = 0x1362;
