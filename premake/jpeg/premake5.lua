@@ -7,8 +7,6 @@ project "jpeg"
     local turboSimdX86Dir  = path.getabsolute("simd/i386")
 
     files {
-        -- libjpeg-turbo (libjpeg API)
-        -- Keep this aligned with libjpeg-turbo's JPEG_SOURCES in its CMakeLists.txt.
         "src/jcapimin.c",
         "src/jchuff.c",
         "src/jcicc.c",
@@ -36,17 +34,11 @@ project "jpeg"
         "src/jmemmgr.c",
         "src/jmemnobs.c",
         "src/jpeg_nbits.c",
-        -- Arithmetic coding support
         "src/jaricom.c",
         "src/jcarith.c",
         "src/jdarith.c",
-        -- Wrapper sources (multiple precisions / variants)
         "src/wrapper/j*.c",
     }
-
-    -- NOTE: Several libjpeg-turbo .c files are meant to be #include'd into
-    -- other compilation units (not compiled separately.) Those are not listed
-    -- above on purpose.
 
     filter { "system:windows", "architecture:x86_64" }
         includedirs {
@@ -58,9 +50,6 @@ project "jpeg"
             "simd/x86_64/jsimd.c",
             "simd/x86_64/*.asm",
         }
-        -- These are implementation fragments that are %include'd by the
-        -- corresponding top-level files (jccolor/jcgray/jdcolor/jdmerge).
-        -- They must NOT be assembled as standalone translation units.
         removefiles {
             "simd/x86_64/jccolext-*.asm",
             "simd/x86_64/jcgryext-*.asm",
@@ -78,9 +67,6 @@ project "jpeg"
             "simd/i386/jsimd.c",
             "simd/i386/*.asm",
         }
-        -- These are implementation fragments that are %include'd by the
-        -- corresponding top-level files (jccolor/jcgray/jdcolor/jdmerge).
-        -- They must NOT be assembled as standalone translation units.
         removefiles {
             "simd/i386/jccolext-*.asm",
             "simd/i386/jcgryext-*.asm",
@@ -88,9 +74,8 @@ project "jpeg"
             "simd/i386/jdmrgext-*.asm",
         }
 
-    -- Build libjpeg-turbo NASM sources (SSE2/AVX2 accelerated routines)
     filter { "system:windows", "architecture:x86_64", "files:simd/**.asm" }
-        buildmessage "NASM %{file.relpath}"
+        buildmessage "NASM Compiling %{file.relpath}"
         buildcommands {
             '"' .. nasm .. '" -f win64 -DWIN64 -D__x86_64__ '
             .. '-I"' .. turboSimdNasmDir .. '" '
@@ -100,7 +85,7 @@ project "jpeg"
         buildoutputs { "%{cfg.objdir}/%{file.basename}.obj" }
 
     filter { "system:windows", "architecture:x86", "files:simd/**.asm" }
-        buildmessage "NASM %{file.relpath}"
+        buildmessage "NASM Compiling %{file.relpath}"
         buildcommands {
             '"' .. nasm .. '" -f win32 -DWIN32 '
             .. '-I"' .. turboSimdNasmDir .. '" '

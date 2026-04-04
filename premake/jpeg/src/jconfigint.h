@@ -1,7 +1,6 @@
 /*
   Minimal internal configuration header for building libjpeg-turbo from source
-  inside the Irrlicht tree (without running libjpeg-turbo's CMake to generate
-  it).
+  (without running libjpeg-turbo's CMake to generate it).
 
   This file is based on libjpeg-turbo's src/jconfigint.h.in.
 */
