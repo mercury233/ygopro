@@ -33,7 +33,7 @@ project "YGOPro"
     end
 
     if BUILD_JPEG then
-        includedirs { "../jpeg/src" }
+        includedirs { JPEG_INCLUDE_DIR }
     else
         includedirs { JPEG_INCLUDE_DIR }
         libdirs { JPEG_LIB_DIR }

@@ -178,6 +178,7 @@ if GetParam("build-jpeg") then
 elseif GetParam("no-build-jpeg") then
     BUILD_JPEG = false
 end
+JPEG_INCLUDE_DIR = path.getabsolute("./jpeg/src") -- both gframe and Irrlicht need it
 if not BUILD_JPEG then
     JPEG_INCLUDE_DIR = GetParam("jpeg-include-dir") or os.findheader("jpeglib.h")
     JPEG_LIB_DIR = GetParam("jpeg-lib-dir") or os.findlib(JPEG_LIB_NAME)
