@@ -3,6 +3,7 @@
 #include "single_duel.h"
 #include "tag_duel.h"
 #include "deck_manager.h"
+#include "mysocket.h"
 #include <thread>
 
 namespace ygo {
