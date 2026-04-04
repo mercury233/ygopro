@@ -207,9 +207,10 @@ void ImageUtility::Resize(irr::video::IImage* src, irr::video::IImage* dest, boo
 }
 
 /**
- * Decode a JPEG file using libjpeg with optional DCT-domain downscaling (1/2, 1/4, 1/8).
- * When targetWidth / targetHeight are provided, the max scale denominator that keeps
- * the decoded dimensions >= target is chosen, saving memory and CPU time.
+ * Decode a JPEG file using libjpeg-turbo with optional DCT-domain downscaling (1/2, 1/4, 1/8).
+ * When targetWidth / targetHeight are provided, the max scale denominator that keeps the
+ * decoded dimensions >= target is chosen, saving memory and CPU time. Also it will output in
+ * ECF_A8R8G8B8 format directly, which is the most common format for textures in Irrlicht.
  * The reader is not dropped by this function.
  * @return Image pointer. Must be dropped after use.
  */
