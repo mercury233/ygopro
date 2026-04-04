@@ -37,8 +37,6 @@ inline int mysnprintf(char(&buf)[N], const char* fmt, TR... args) {
 	return std::snprintf(buf, N, fmt, args...);
 }
 
-#define myfopen std::fopen
-
 #define _IRR_STATIC_LIB_
 #include <irrlicht.h>
 
