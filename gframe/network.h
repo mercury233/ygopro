@@ -13,34 +13,6 @@
 
 #define check_trivially_copyable(T) static_assert(std::is_trivially_copyable<T>::value == true && std::is_standard_layout<T>::value == true, "not trivially copyable")
 
-#ifdef _WIN32
-
-#define NOMINMAX 1
-#include <WinSock2.h>
-#include <windows.h>
-#include <ws2tcpip.h>
-#define socklen_t int
-
-#else // _WIN32
-
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <unistd.h>
-
-#define SD_BOTH 2
-#define SOCKET int
-#define closesocket close
-#define INVALID_SOCKET -1
-#define SOCKET_ERROR -1
-#define SOCKADDR_IN sockaddr_in
-#define SOCKADDR sockaddr
-#define SOCKET_ERRNO() (errno)
-
-#endif // _WIN32
-
 namespace ygo {
 
 constexpr int SIZE_NETWORK_BUFFER = 0x20000;
