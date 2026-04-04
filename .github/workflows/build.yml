@@ -400,11 +400,6 @@ jobs:
       run: |
         sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev libopusfile-dev libvorbis-dev libjpeg-dev libpng-dev
 
-    - name: Install NASM
-      if: matrix.static-link == true
-      run: |
-        sudo apt-get install -y nasm
-
     - name: Download premake
       id: premake
       uses: mercury233/action-cache-download-file@0e2b8bab566270adae95bd3cd298744402b667eb
@@ -519,11 +514,6 @@ jobs:
       run: |
         brew install opus opusfile libvorbis
 #        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng
-
-    - name: Install NASM
-      if: matrix.static-link == true
-      run: |
-        brew install nasm
 
     - name: Download premake
       id: premake
