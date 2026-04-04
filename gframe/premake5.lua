@@ -6,8 +6,8 @@ project "YGOPro"
     openmp "On"
 
     files { "*.cpp", "*.h" }
-    includedirs { "../ocgcore", JPEG_INCLUDE_DIR }
-    links { "ocgcore", "clzma", LUA_LIB_NAME, "sqlite3", "irrlicht", "jpeg", "freetype", "event" }
+    includedirs { "../ocgcore" }
+    links { "ocgcore", "clzma", LUA_LIB_NAME, "sqlite3", "irrlicht", JPEG_LIB_NAME, "freetype", "event" }
 
     if not BUILD_LUA then
         libdirs { LUA_LIB_DIR }
@@ -32,7 +32,10 @@ project "YGOPro"
         libdirs { PNG_LIB_DIR }
     end
 
-    if not BUILD_JPEG then
+    if BUILD_JPEG then
+        includedirs { "../jpeg/src" }
+    else
+        includedirs { JPEG_INCLUDE_DIR }
         libdirs { JPEG_LIB_DIR }
     end
 
