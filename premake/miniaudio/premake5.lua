@@ -117,7 +117,6 @@ project "miniaudio"
                 "HAVE_LRINTF",
                 "OP_HAVE_LRINTF",
             }
-            if not TARGET_MAC_ARM then
                 files {
                     "external/opus/celt/x86/pitch_avx.c",
                     "external/opus/celt/x86/pitch_sse.c",
@@ -133,7 +132,6 @@ project "miniaudio"
                 filter "system:linux"
                     buildoptions { "-mavx", "-mfma" }
                 filter {}
-            end
         else
             includedirs { OPUS_INCLUDE_DIR, OPUSFILE_INCLUDE_DIR, VORBIS_INCLUDE_DIR, OGG_INCLUDE_DIR }
         end
