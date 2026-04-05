@@ -2,8 +2,8 @@
 
 -- Global settings
 
--- Default: Build Lua, Irrlicht from source on all systems.
---          Don't build event, freetype, sqlite, opus, vorbis on Linux or MacOS, use apt or homebrew,
+-- Default: Build Lua, Irrlicht, miniaudio from source on all systems.
+--          Don't build event, freetype, sqlite, jpeg, png, opus, vorbis on Linux or MacOS, use package manager,
 --          but build them on Windows, due to the lack of package manager on Windows.
 
 BUILD_LUA = true
@@ -19,7 +19,8 @@ BUILD_IRRLICHT = true -- modified Irrlicht is required, can't use the official o
 BUILD_PNG_IRRLICHT = os.istarget("windows") -- build the bundled libpng from Irrlicht
 USE_DXSDK = true
 
-BUILD_JPEG = os.istarget("windows") -- libjpeg-turbo is required, can't use the bundled jpeglib from Irrlicht
+BUILD_JPEG = os.istarget("windows") -- libjpeg-turbo is required, can't use the bundled IJG jpeglib from Irrlicht
+JPEG_LIB_NAME = "jpeg" -- use the libjpeg API of libjpeg-turbo, the lib name should always be "jpeg", just in case
 
 USE_AUDIO = true
 AUDIO_LIB = "miniaudio" -- can be "miniaudio" or "irrklang"
@@ -164,25 +165,25 @@ if not BUILD_IRRLICHT then
     IRRLICHT_INCLUDE_DIR = GetParam("irrlicht-include-dir") or os.findheader("irrlicht.h")
     IRRLICHT_LIB_DIR = GetParam("irrlicht-lib-dir") or os.findlib("irrlicht")
 end
-if GetParam("no-build-png-irrlicht") then
-    BUILD_PNG_IRRLICHT = false
-elseif GetParam("build-png-irrlicht") then
+if GetParam("build-png-irrlicht") then
     BUILD_PNG_IRRLICHT = true
+elseif GetParam("no-build-png-irrlicht") then
+    BUILD_PNG_IRRLICHT = false
 end
 if not BUILD_PNG_IRRLICHT then
     PNG_INCLUDE_DIR = GetParam("png-include-dir") or os.findheader("png.h")
     PNG_LIB_DIR = GetParam("png-lib-dir") or os.findlib("png")
 end
 
-if GetParam("no-build-jpeg") then
-    BUILD_JPEG = false
-elseif GetParam("build-jpeg") then
+if GetParam("build-jpeg") then
     BUILD_JPEG = true
+elseif GetParam("no-build-jpeg") then
+    BUILD_JPEG = false
 end
-JPEG_INCLUDE_DIR = path.getabsolute("./jpeg/src")
+JPEG_INCLUDE_DIR = path.getabsolute("./jpeg/src") -- both gframe and Irrlicht need it
 if not BUILD_JPEG then
     JPEG_INCLUDE_DIR = GetParam("jpeg-include-dir") or os.findheader("jpeglib.h")
-    JPEG_LIB_DIR = GetParam("jpeg-lib-dir") or os.findlib("jpeg")
+    JPEG_LIB_DIR = GetParam("jpeg-lib-dir") or os.findlib(JPEG_LIB_NAME)
 end
 
 if GetParam("no-dxsdk") then
