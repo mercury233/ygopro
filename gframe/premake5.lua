@@ -8,7 +8,7 @@ project "YGOPro"
     end
 
     files { "*.cpp", "*.h" }
-    includedirs { "../ocgcore" }
+    includedirs { "../ocgcore", JPEG_INCLUDE_DIR }
     links { "ocgcore", "clzma", LUA_LIB_NAME, "sqlite3", "irrlicht", JPEG_LIB_NAME, "freetype", "event" }
 
     if not BUILD_LUA then
@@ -34,10 +34,7 @@ project "YGOPro"
         libdirs { PNG_LIB_DIR }
     end
 
-    if BUILD_JPEG then
-        includedirs { JPEG_INCLUDE_DIR }
-    else
-        includedirs { JPEG_INCLUDE_DIR }
+    if not BUILD_JPEG then
         libdirs { JPEG_LIB_DIR }
     end
 
