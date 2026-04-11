@@ -242,6 +242,8 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", irr::core::rect<irr::s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
+支持左右互换「是/否」按钮位置。\n\
+支持多倍放大弹出菜单。\n\
 加快JPEG图片加载速度。\n\
 支持设置帧率和垂直同步。\n\
 优化锁帧处理。\n\
