@@ -46,7 +46,7 @@ bool IsExtension(const char* filename, const char(&extension)[N]) {
 
 struct Config {
 	bool use_d3d{ false };
-#if defined(_WIN32) || defined(__APPLE__)
+#if defined(_WIN32)
 	bool vsync{ true };
 #else
 	bool vsync{ false };
