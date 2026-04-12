@@ -388,6 +388,8 @@ workspace "YGOPro"
 
     filter "action:gmake"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }
+
+    filter { "action:gmake", "architecture:x86_64" }
         vectorextensions "AVX2"
         buildoptions { "-mfma" }
 
