@@ -40,7 +40,7 @@ project "jpeg"
         "src/wrapper/j*.c",
     }
 
-    filter { "system:windows", "architecture:x86_64" }
+    filter { "architecture:x86_64" }
         includedirs {
             "simd",
             "simd/nasm",
@@ -57,7 +57,7 @@ project "jpeg"
             "simd/x86_64/jdmrgext-*.asm",
         }
 
-    filter { "system:windows", "architecture:x86" }
+    filter { "architecture:x86" }
         includedirs {
             "simd",
             "simd/nasm",
@@ -74,7 +74,7 @@ project "jpeg"
             "simd/i386/jdmrgext-*.asm",
         }
 
-    filter { "system:windows", "architecture:x86_64", "files:simd/**.asm" }
+    filter { "action:vs*", "architecture:x86_64", "files:simd/**.asm" }
         buildmessage "NASM Compiling %{file.relpath}"
         buildcommands {
             '"' .. nasm .. '" -f win64 -DWIN64 -D__x86_64__ '
@@ -84,7 +84,7 @@ project "jpeg"
         }
         buildoutputs { "%{cfg.objdir}/%{file.basename}.obj" }
 
-    filter { "system:windows", "architecture:x86", "files:simd/**.asm" }
+    filter { "action:vs*", "architecture:x86", "files:simd/**.asm" }
         buildmessage "NASM Compiling %{file.relpath}"
         buildcommands {
             '"' .. nasm .. '" -f win32 -DWIN32 '
@@ -93,3 +93,13 @@ project "jpeg"
             .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.obj"'
         }
         buildoutputs { "%{cfg.objdir}/%{file.basename}.obj" }
+
+    filter { "action:gmake", "files:simd/**.asm" }
+        buildmessage "NASM Compiling %{file.relpath}"
+        buildcommands {
+            '"' .. nasm .. '" -f elf64 -D__x86_64__ '
+            .. '-I"' .. turboSimdNasmDir .. '" '
+            .. '-I"' .. turboSimdX64Dir .. '" '
+            .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.o"'
+        }
+        buildoutputs { "%{cfg.objdir}/%{file.basename}.o" }
