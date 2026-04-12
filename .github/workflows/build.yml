@@ -521,24 +521,22 @@ jobs:
       fail-fast: false
       matrix:
         name:
-#          - macos-15-intel # need to use premake-5.0.0-beta8-macosx-x64.tar.gz or beta7
-          - macos-15-universal-static-link
-          - macos-15-arm
-#          - macos-15-intel-cross-compile-static-link
+          - macos-15-intel
+          - macos-26-arm
+          - macos-14-intel-cross-compile-static-link
+          - macos-14-arm-static-link
         include:
-#          - name: macos-15-intel
-#            os: macos-15-intel
-          - name: macos-15-universal-static-link
-            os: macos-15
+          - name: macos-15-intel
+            os: macos-15-intel
+          - name: macos-26-arm
+            os: macos-26
+          - name: macos-14-intel-cross-compile-static-link
+            os: macos-14
             cross-build-intel: true
-            cross-build-arm: true
             static-link: true
-          - name: macos-15-arm
-            os: macos-15
-#          - name: macos-15-intel-cross-compile-static-link
-#            os: macos-15
-#            cross-build-intel: true
-#            static-link: true
+          - name: macos-14-arm-static-link
+            os: macos-14
+            static-link: true
 
     runs-on: ${{ matrix.os }}
 
@@ -574,10 +572,25 @@ jobs:
         url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-macosx.tar.gz
         filename: premake5.tar.gz
 
-    - name: Extract premake
+    - name: Extract & test premake
+      id: extract-premake
+      continue-on-error: true
       run: |
         tar xf ${{ steps.premake.outputs.filepath }}
         chmod +x ./premake5
+        ./premake5 --version
+
+    - name: Build premake from source (fallback)
+      if: steps.extract-premake.outcome == 'failure'
+      run: |
+        cd /tmp
+        curl -L -o premake-core.tar.gz https://github.com/premake/premake-core/archive/refs/tags/v5.0.0-beta8.tar.gz
+        tar xf premake-core.tar.gz
+        cd premake-core-5.0.0-beta8
+        chmod +x ./Bootstrap.sh
+        ./Bootstrap.sh
+        cp bin/release/premake5 "$GITHUB_WORKSPACE/premake5"
+        cd "$GITHUB_WORKSPACE"
 
     - name: Configure libevent
       if: matrix.static-link == true

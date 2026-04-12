@@ -96,8 +96,8 @@ newoption { trigger = "irrklang-pro-release-lib-dir", category = "YGOPro - irrkl
 newoption { trigger = "irrklang-pro-debug-lib-dir", category = "YGOPro - irrklang - pro", description = "", value = "PATH" }
 newoption { trigger = 'build-ikpmp3', category = "YGOPro - irrklang - ikpmp3", description = "" }
 
-newoption { trigger = "mac-arm", category = "YGOPro", description = "Compile for Apple Silicon Mac" }
-newoption { trigger = "mac-intel", category = "YGOPro", description = "Compile for Intel Mac" }
+newoption { trigger = "mac-arm", category = "YGOPro", description = "Cross Compile for Apple Silicon Mac" }
+newoption { trigger = "mac-intel", category = "YGOPro", description = "Cross Compile for Intel Mac" }
 
 newoption { trigger = "use-openmp", category = "YGOPro", description = "Enable OpenMP support (edge case)" }
 
@@ -274,10 +274,6 @@ if os.istarget("macosx") then
     if GetParam("mac-intel") then
         MAC_INTEL = true
     end
-    if MAC_ARM or (not MAC_INTEL and os.hostarch() == "ARM64") then
-        -- building on ARM CPU will target ARM automatically
-        TARGET_MAC_ARM = true
-    end
 end
 
 if GetParam("use-openmp") then
@@ -300,34 +296,55 @@ workspace "YGOPro"
         defines { "WINVER=0x0601" } -- WIN7
 
     filter { "system:windows", "action:vs*" }
-        platforms { "Win32", "x64" }
+        platforms { "Win32", "x64", "ARM64" }
 
     filter { "system:windows", "action:vs*", "platforms:Win32" }
         architecture "x86"
-        vectorextensions "SSE2"
 
     filter { "system:windows", "action:vs*", "platforms:x64" }
         architecture "x86_64"
         vectorextensions "AVX2"
 
+    filter { "system:windows", "action:vs*", "platforms:ARM64" }
+        architecture "AARCH64"
+
     filter { "system:windows", "action:gmake" }
+        architecture "x86_64"
         defines { "UNICODE", "_UNICODE" }
         buildoptions { "-municode" }
 
     filter "system:macosx"
-        libdirs { "/usr/local/lib" }
+        if MAC_ARM and MAC_INTEL then
+            print("Warning: Universal binary is no longer supported, please choose either --mac-arm or --mac-intel, and combine the binaries with lipo manually.")
+            MAC_ARM = false
+            MAC_INTEL = false
+        end
+        if not MAC_ARM and not MAC_INTEL then
+            -- Auto detect architecture
+            if os.hostarch() == "x86_64" then
+                MAC_INTEL = true
+            else
+                MAC_ARM = true
+            end
+        end
         if MAC_ARM then
-            buildoptions { "-arch arm64" }
+            architecture "AARCH64"
         end
         if MAC_INTEL then
-            buildoptions { "-arch x86_64", "-mavx", "-mfma" }
-        end
-        if MAC_ARM and MAC_INTEL then
-            architecture "universal"
+            architecture "x86_64"
         end
 
     filter "system:linux"
         buildoptions { "-U_FORTIFY_SOURCE" }
+        if os.hostarch() == "x86_64" then
+            architecture "x86_64"
+        else
+            architecture "AARCH64"
+        end
+
+    filter { "system:macosx or linux", "architecture:x86_64" }
+        vectorextensions "AVX2"
+        buildoptions { "-mfma" }
 
     filter "configurations:Release"
         optimize "Speed"
@@ -350,6 +367,12 @@ workspace "YGOPro"
     filter { "system:windows", "action:vs*", "platforms:x64", "configurations:Debug" }
         targetdir "bin/debug/x64"
 
+    filter { "system:windows", "action:vs*", "platforms:ARM64", "configurations:Release" }
+        targetdir "bin/release/arm64"
+
+    filter { "system:windows", "action:vs*", "platforms:ARM64", "configurations:Debug" }
+        targetdir "bin/debug/arm64"
+
     filter { "configurations:Release", "action:vs*" }
         linktimeoptimization "On"
         staticruntime "On"
@@ -367,11 +390,8 @@ workspace "YGOPro"
         buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
 
-    filter "not action:vs*"
+    filter "action:gmake"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }
-        if not MAC_ARM and not MAC_INTEL then
-            buildoptions "-march=native"
-        end
 
     filter {}
 
