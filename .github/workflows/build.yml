@@ -354,7 +354,7 @@ jobs:
       with:
         msystem: UCRT64
         update: true
-        install: mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make
+        install: mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make nasm
 
     - name: Backport libevent fix for MinGW build
       if: matrix.mingw == true
@@ -384,12 +384,19 @@ jobs:
 
     - name: Make
       if: matrix.mingw == true
+      id: mingw-make
       shell: msys2 {0}
       run: |
-        export PATH=$PATH:/c/Program\ Files/NASM
         cd build
         mingw32-make -j 4 config=release
         cd ..
+
+    - name: Upload build dir (temporary)
+      if: steps.mingw-make.outcome == 'failure'
+      uses: actions/upload-artifact@v6
+      with:
+        name: build-${{ matrix.name }}
+        path: build
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v6
