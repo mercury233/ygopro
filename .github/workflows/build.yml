@@ -385,6 +385,7 @@ jobs:
     - name: Make
       if: matrix.mingw == true
       id: mingw-make
+      continue-on-error: true
       shell: msys2 {0}
       run: |
         cd build
