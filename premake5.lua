@@ -342,10 +342,6 @@ workspace "YGOPro"
             architecture "AARCH64"
         end
 
-    filter { "system:macosx or linux", "architecture:x86_64" }
-        vectorextensions "AVX2"
-        buildoptions { "-mfma" }
-
     filter "configurations:Release"
         optimize "Speed"
         targetdir "bin/release"
@@ -392,6 +388,8 @@ workspace "YGOPro"
 
     filter "action:gmake"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }
+        vectorextensions "AVX2"
+        buildoptions { "-mfma" }
 
     filter {}
 
