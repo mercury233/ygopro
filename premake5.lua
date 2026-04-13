@@ -386,7 +386,7 @@ workspace "YGOPro"
         defines { "_CRT_SECURE_NO_WARNINGS" }
 
     filter "action:gmake"
-        buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }
+        buildoptions { "-fno-strict-aliasing" }
 
     filter { "action:gmake", "architecture:x86_64" }
         vectorextensions "AVX2"
