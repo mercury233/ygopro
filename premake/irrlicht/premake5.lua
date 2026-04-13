@@ -106,8 +106,6 @@ project "irrlicht"
         }
         defines {
             "PNG_INTEL_SSE",
-            "PNG_ARM_NEON_OPT=0",
-            "PNG_ARM_NEON_IMPLEMENTATION=0",
         }
     else
         includedirs { PNG_INCLUDE_DIR }

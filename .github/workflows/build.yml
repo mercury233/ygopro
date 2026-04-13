@@ -208,16 +208,18 @@ jobs:
       fail-fast: false
       matrix:
         name:
-          - windows
+          - windows-x86
 #          - windows-irrklang
 #          - windows-no-dxsdk
           - windows-x64
+          - windows-arm64
 #          - windows-2025
           - windows-mingw
         include:
-          - name: windows
+          - name: windows-x86
             os: windows-2022
             vs: vs2022
+            platform: Win32
             audiolib: miniaudio
 #          - name: windows-irrklang
 #            os: windows-2022
@@ -231,8 +233,13 @@ jobs:
           - name: windows-x64
             os: windows-2022
             vs: vs2022
+            platform: x64
             audiolib: miniaudio
-            x64: true
+          - name: windows-arm64
+            os: windows-2022
+            vs: vs2022
+            platform: ARM64
+            audiolib: miniaudio
 #          - name: windows-2025
 #            os: windows-2025
 #            vs: vs2025 # to be enabled after the release of Visual Studio 2025
@@ -346,7 +353,7 @@ jobs:
       if: matrix.mingw != true
       shell: pwsh
       run: |
-        MSBuild.exe build\YGOPro.sln /m /p:Configuration=Release /p:Platform=${{ matrix.x64 && 'x64' || 'Win32' }}
+        MSBuild.exe build\YGOPro.sln /m /p:Configuration=Release /p:Platform=${{ matrix.platform }}
 
     - name: Install MinGW
       if: matrix.mingw == true
