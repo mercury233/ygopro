@@ -74,42 +74,52 @@ project "jpeg"
             "simd/i386/jdmrgext-*.asm",
         }
 
-    local nasmFlags = ""
-    local nasmOutputExt = ""
-    local turboSimdArchDir = ""
-
-    filter { "action:vs*", "architecture:x86_64" }
-        nasmFlags = '-f win64 -DWIN64 -D__x86_64__'
-        nasmOutputExt = "obj"
-        turboSimdArchDir = turboSimdX64Dir
-
-    filter { "action:vs*", "architecture:x86" }
-        nasmFlags = '-f win32 -DWIN32'
-        nasmOutputExt = "obj"
-        turboSimdArchDir = turboSimdX86Dir
-
-    filter { "action:gmake", "system:windows", "architecture:x86_64" }
-        nasmFlags = '-f win64 -DWIN64 -D__x86_64__ -DPIC'
-        nasmOutputExt = "o"
-        turboSimdArchDir = turboSimdX64Dir
-
-    filter { "action:gmake", "system:linux", "architecture:x86_64" }
-        nasmFlags = '-f elf64 -DELF -D__x86_64__ -DPIC'
-        nasmOutputExt = "o"
-        turboSimdArchDir = turboSimdX64Dir
-
-    filter { "action:gmake", "system:macosx", "architecture:x86_64" }
-        nasmFlags = '-f macho64 -DMACHO -D__x86_64__ -DPIC'
-        nasmOutputExt = "o"
-        turboSimdArchDir = turboSimdX64Dir
-
-    filter { "files:simd/**.asm" }
+    filter { "action:vs*", "architecture:x86_64", "files:simd/**.asm" }
         buildmessage "NASM Compiling %{file.relpath}"
         buildcommands {
-            '"' .. nasm .. '"'
-            .. ' ' .. nasmFlags .. ' '
+            '"' .. nasm .. '" -f win64 -DWIN64 -D__x86_64__ '
             .. '-I"' .. turboSimdNasmDir .. '" '
-            .. '-I"' .. turboSimdArchDir .. '" '
-            .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.' .. nasmOutputExt .. '"'
+            .. '-I"' .. turboSimdX64Dir .. '" '
+            .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.obj"'
         }
-        buildoutputs { "%{cfg.objdir}/%{file.basename}." .. nasmOutputExt }
+        buildoutputs { "%{cfg.objdir}/%{file.basename}.obj" }
+
+    filter { "action:vs*", "architecture:x86", "files:simd/**.asm" }
+        buildmessage "NASM Compiling %{file.relpath}"
+        buildcommands {
+            '"' .. nasm .. '" -f win32 -DWIN32 '
+            .. '-I"' .. turboSimdNasmDir .. '" '
+            .. '-I"' .. turboSimdX86Dir .. '" '
+            .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.obj"'
+        }
+        buildoutputs { "%{cfg.objdir}/%{file.basename}.obj" }
+
+    filter { "action:gmake", "system:windows", "architecture:x86_64", "files:simd/**.asm" }
+        buildmessage "NASM Compiling %{file.relpath}"
+        buildcommands {
+            '"' .. nasm .. '" -f win64 -DWIN64 -D__x86_64__ -DPIC '
+            .. '-I"' .. turboSimdNasmDir .. '" '
+            .. '-I"' .. turboSimdX64Dir .. '" '
+            .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.o"'
+        }
+        buildoutputs { "%{cfg.objdir}/%{file.basename}.o" }
+
+    filter { "action:gmake", "system:linux", "architecture:x86_64", "files:simd/**.asm" }
+        buildmessage "NASM Compiling %{file.relpath}"
+        buildcommands {
+            '"' .. nasm .. '" -f elf64 -DELF -D__x86_64__ -DPIC '
+            .. '-I"' .. turboSimdNasmDir .. '" '
+            .. '-I"' .. turboSimdX64Dir .. '" '
+            .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.o"'
+        }
+        buildoutputs { "%{cfg.objdir}/%{file.basename}.o" }
+
+    filter { "action:gmake", "system:macosx", "architecture:x86_64", "files:simd/**.asm" }
+        buildmessage "NASM Compiling %{file.relpath}"
+        buildcommands {
+            '"' .. nasm .. '" -f macho64 -DMACHO -D__x86_64__ -DPIC '
+            .. '-I"' .. turboSimdNasmDir .. '" '
+            .. '-I"' .. turboSimdX64Dir .. '" '
+            .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.o"'
+        }
+        buildoutputs { "%{cfg.objdir}/%{file.basename}.o" }
