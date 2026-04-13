@@ -32,7 +32,7 @@ install:
   - 7z x sqlite-amalgamation-3500100.zip
   - move sqlite-amalgamation-3500100 sqlite3
 
-  - git clone --depth=1 --branch test https://github.com/mercury233/irrlicht-svn irrlicht
+  - git clone --depth=1 --branch test https://github.com/mercury233/irrlicht irrlicht
 
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.1.4.1/libjpeg-turbo-3.1.4.1.tar.gz ; exit 0"
   - tar xf libjpeg-turbo-3.1.4.1.tar.gz
