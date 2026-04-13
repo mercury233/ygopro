@@ -129,6 +129,7 @@ project "irrlicht"
         files {
             "source/Irrlicht/*.mm",
         }
+        buildoptions { "-Wno-deprecated-declarations" }
 
     filter { "system:macosx", "files:source/Irrlicht/Irrlicht.cpp or source/Irrlicht/COSOperator.cpp" }
         compileas "Objective-C++" 
