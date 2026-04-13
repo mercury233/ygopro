@@ -103,7 +103,7 @@ project "irrlicht"
             "source/Irrlicht/libpng/pngwutil.c",
         }
 
-        filter { "architecture:x86*" }
+        filter { "architecture:x86 or x86_64" }
             files {
                 "source/Irrlicht/libpng/intel/intel_init.c",
                 "source/Irrlicht/libpng/intel/filter_sse2_intrinsics.c",

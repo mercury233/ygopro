@@ -130,7 +130,23 @@ project "miniaudio"
                     "OPUS_X86_PRESUME_SSE", "OPUS_X86_PRESUME_SSE2",
                     "OPUS_X86_MAY_HAVE_SSE", "OPUS_X86_MAY_HAVE_SSE4_1", "OPUS_X86_MAY_HAVE_AVX2",
                 }
-            filter {}
+            filter "architecture:AARCH64"
+                files {
+                    "external/opus/celt/arm/arm_celt_map.c",
+                    "external/opus/celt/arm/armcpu.c",
+                    "external/opus/celt/arm/celt_neon_intr.c",
+                    "external/opus/celt/arm/pitch_neon_intr.c",
+                    "external/opus/silk/arm/LPC_inv_pred_gain_neon_intr.c",
+                }
+                defines {
+                    "OPUS_HAVE_RTCD",
+                    "OPUS_ARM_PRESUME_EDSP", "OPUS_ARM_PRESUME_MEDIA",
+                    "OPUS_ARM_PRESUME_DOTPROD", "OPUS_ARM_PRESUME_NEON",
+                    "OPUS_ARM_MAY_HAVE_NEON_INTR", "OPUS_ARM_PRESUME_NEON_INTR", "OPUS_ARM_PRESUME_AARCH64_NEON_INTR",
+                }
+                includedirs {
+                    "external/opus",
+                }
         else
             includedirs { OPUS_INCLUDE_DIR, OPUSFILE_INCLUDE_DIR, VORBIS_INCLUDE_DIR, OGG_INCLUDE_DIR }
         end
