@@ -335,7 +335,6 @@ workspace "YGOPro"
         end
 
     filter "system:linux"
-        buildoptions { "-U_FORTIFY_SOURCE" }
         if os.hostarch() == "x86_64" then
             architecture "x86_64"
         else
