@@ -74,41 +74,34 @@ project "jpeg"
             "simd/i386/jdmrgext-*.asm",
         }
 
-    filter {}
-
     local nasmFlags = ""
     local nasmOutputExt = ""
     local turboSimdArchDir = ""
 
-    if _ACTION:startswith("vs") then
-        if _TARGET_ARCH == "x86_64" then
-            nasmFlags = '-f win64 -DWIN64 -D__x86_64__'
-            nasmOutputExt = "obj"
-            turboSimdArchDir = turboSimdX64Dir
-        elseif _TARGET_ARCH == "x86" then
-            nasmFlags = '-f win32 -DWIN32'
-            nasmOutputExt = "obj"
-            turboSimdArchDir = turboSimdX86Dir
-        end
-    end
+    filter { "action:vs*", "architecture:x86_64" }
+        nasmFlags = '-f win64 -DWIN64 -D__x86_64__'
+        nasmOutputExt = "obj"
+        turboSimdArchDir = turboSimdX64Dir
 
-    if _ACTION == "gmake" then
-        if _TARGET_ARCH == "x86_64" then
-            if _TARGET_OS == "windows" then
-                nasmFlags = '-f win64 -DWIN64 -D__x86_64__ -DPIC'
-                nasmOutputExt = "o"
-                turboSimdArchDir = turboSimdX64Dir
-            elseif _TARGET_OS == "linux" then
-                nasmFlags = '-f elf64 -DELF -D__x86_64__ -DPIC'
-                nasmOutputExt = "o"
-                turboSimdArchDir = turboSimdX64Dir
-            elseif _TARGET_OS == "macosx" then
-                nasmFlags = '-f macho64 -DMACHO -D__x86_64__ -DPIC'
-                nasmOutputExt = "o"
-                turboSimdArchDir = turboSimdX64Dir
-            end
-        end
-    end
+    filter { "action:vs*", "architecture:x86" }
+        nasmFlags = '-f win32 -DWIN32'
+        nasmOutputExt = "obj"
+        turboSimdArchDir = turboSimdX86Dir
+
+    filter { "action:gmake", "system:windows", "architecture:x86_64" }
+        nasmFlags = '-f win64 -DWIN64 -D__x86_64__ -DPIC'
+        nasmOutputExt = "o"
+        turboSimdArchDir = turboSimdX64Dir
+
+    filter { "action:gmake", "system:linux", "architecture:x86_64" }
+        nasmFlags = '-f elf64 -DELF -D__x86_64__ -DPIC'
+        nasmOutputExt = "o"
+        turboSimdArchDir = turboSimdX64Dir
+
+    filter { "action:gmake", "system:macosx", "architecture:x86_64" }
+        nasmFlags = '-f macho64 -DMACHO -D__x86_64__ -DPIC'
+        nasmOutputExt = "o"
+        turboSimdArchDir = turboSimdX64Dir
 
     filter { "files:simd/**.asm" }
         buildmessage "NASM Compiling %{file.relpath}"
