@@ -9,6 +9,8 @@ environment:
 install:
   - git submodule update --init --recursive
 
+  - choco install -y nasm
+
   # environment and system dependency
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-windows.zip ; exit 0"
   - 7z x premake-5.0.0-beta8-windows.zip
@@ -30,8 +32,13 @@ install:
   - 7z x sqlite-amalgamation-3500100.zip
   - move sqlite-amalgamation-3500100 sqlite3
 
-  - git clone --depth=1 --branch mercury https://github.com/mercury233/irrlicht-svn irrlicht
-  
+  - git clone --depth=1 --branch test https://github.com/mercury233/irrlicht-svn irrlicht
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.1.4.1/libjpeg-turbo-3.1.4.1.tar.gz ; exit 0"
+  - tar xf libjpeg-turbo-3.1.4.1.tar.gz
+  - move libjpeg-turbo-3.1.4.1 jpeg
+  - copy jpeg\src\jversion.h.in jpeg\src\jversion.h
+
   - git clone --depth=1 https://github.com/mercury233/miniaudio
   - xcopy /Y miniaudio\extras\miniaudio_split\miniaudio.* .
 
@@ -115,6 +122,7 @@ cache:
   - freetype-2.13.3.tar.gz
   - lua-5.4.8.tar.gz
   - sqlite-amalgamation-3500100.zip
+  - libjpeg-turbo-3.1.4.1.tar.gz
   - libogg-1.3.5.tar.gz
   - opus-1.5.2.tar.gz
   - opusfile-0.12.tar.gz
