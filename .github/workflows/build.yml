@@ -417,6 +417,7 @@ jobs:
           bin/release/YGOPro.exe
           bin/release/x86/YGOPro.exe
           bin/release/x64/YGOPro.exe
+          bin/release/arm64/YGOPro.exe
 
   build-linux:
     needs: [prepare, prepare-static-dependencies]

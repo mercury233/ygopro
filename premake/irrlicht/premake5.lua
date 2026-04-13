@@ -101,12 +101,26 @@ project "irrlicht"
             "source/Irrlicht/libpng/pngwrite.c",
             "source/Irrlicht/libpng/pngwtran.c",
             "source/Irrlicht/libpng/pngwutil.c",
-            "source/Irrlicht/libpng/intel/intel_init.c",
-            "source/Irrlicht/libpng/intel/filter_sse2_intrinsics.c",
         }
-        defines {
-            "PNG_INTEL_SSE",
-        }
+
+        filter { "architecture:x86*" }
+            files {
+                "source/Irrlicht/libpng/intel/intel_init.c",
+                "source/Irrlicht/libpng/intel/filter_sse2_intrinsics.c",
+            }
+            defines {
+                "PNG_INTEL_SSE",
+            }
+
+        filter { "architecture:AARCH64" }
+            files {
+                "source/Irrlicht/libpng/arm/arm_init.c",
+                "source/Irrlicht/libpng/arm/filter_neon_intrinsics.c",
+                "source/Irrlicht/libpng/arm/palette_neon_intrinsics.c",
+            }
+            defines {
+                "PNG_ARM_NEON_OPT=2",
+            }
     else
         includedirs { PNG_INCLUDE_DIR }
         defines {
