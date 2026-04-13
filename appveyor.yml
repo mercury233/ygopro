@@ -10,7 +10,7 @@ install:
   - git submodule update --init --recursive
 
   - choco install -y nasm
-  - setx path "%path%;C:\Program Files\NASM"
+  - ps: $env:Path += ';C:\Program Files\NASM'
 
   # environment and system dependency
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-windows.zip ; exit 0"
