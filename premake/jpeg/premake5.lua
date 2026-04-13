@@ -94,10 +94,20 @@ project "jpeg"
         }
         buildoutputs { "%{cfg.objdir}/%{file.basename}.obj" }
 
-    filter { "action:gmake", "architecture:x86_64", "files:simd/**.asm" }
+    filter { "action:gmake", "system:not macosx", "architecture:x86_64", "files:simd/**.asm" }
         buildmessage "NASM Compiling %{file.relpath}"
         buildcommands {
             '"' .. nasm .. '" -felf64 -DELF -D__x86_64__ -DPIC '
+            .. '-I"' .. turboSimdNasmDir .. '" '
+            .. '-I"' .. turboSimdX64Dir .. '" '
+            .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.o"'
+        }
+        buildoutputs { "%{cfg.objdir}/%{file.basename}.o" }
+
+    filter { "action:gmake", "system:macosx", "architecture:x86_64", "files:simd/**.asm" }
+        buildmessage "NASM Compiling %{file.relpath}"
+        buildcommands {
+            '"' .. nasm .. '" -f macho64 -DMACHO -D__x86_64__ -DPIC '
             .. '-I"' .. turboSimdNasmDir .. '" '
             .. '-I"' .. turboSimdX64Dir .. '" '
             .. '"%{file.relpath}" -o "%{cfg.objdir}/%{file.basename}.o"'

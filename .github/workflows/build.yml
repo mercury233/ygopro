@@ -397,7 +397,10 @@ jobs:
       uses: actions/upload-artifact@v6
       with:
         name: build-${{ matrix.name }}
-        path: build
+        path: |
+          build
+          bin
+          obj
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v6
