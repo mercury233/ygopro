@@ -64,7 +64,8 @@ install:
 
   # premake
   - premake5 vs2019
-  
+
+platform: Win32
 configuration: Release
 
 build: 
