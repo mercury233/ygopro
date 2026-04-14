@@ -19,7 +19,7 @@ install:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz ; exit 0"
   - tar xf libevent-2.1.12-stable.tar.gz
   - move libevent-2.1.12-stable event
-  - copy premake\event\custom\win32-event-config.h event\include\event2\event-config.h
+  - copy premake\event\msvc-event-config.h event\include\event2\event-config.h
   - copy event\WIN32-Code\nmake\evconfig-private.h event\include\evconfig-private.h
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://downloads.sourceforge.net/freetype/freetype-2.14.2.tar.gz ; exit 0"
