@@ -306,6 +306,9 @@ workspace "YGOPro"
         startproject "YGOPro"
         defines { "WINVER=0x0601" } -- WIN7
 
+    filter { "system:windows", "action:vs2026" }
+        toolset "v143"
+
     filter { "system:windows", "action:vs*" }
         platforms { "Win32", "x64", "ARM64" }
 
