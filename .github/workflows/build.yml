@@ -360,7 +360,7 @@ jobs:
       if: matrix.mingw != true
       shell: pwsh
       run: |
-        MSBuild.exe build\YGOPro.sln /m /p:Configuration=Release /p:Platform=${{ matrix.platform }}
+        MSBuild.exe build\YGOPro.${{ matrix.vs == 'vs2026' && 'slnx' || 'sln' }} /m /p:Configuration=Release /p:Platform=${{ matrix.platform }}
 
     - name: Install MinGW
       if: matrix.mingw == true
