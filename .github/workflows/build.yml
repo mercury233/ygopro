@@ -243,6 +243,7 @@ jobs:
           - name: windows-2025
             os: windows-2025-vs2026
             vs: vs2026
+            platform: x64
             audiolib: miniaudio
           - name: windows-mingw
             os: windows-2022
