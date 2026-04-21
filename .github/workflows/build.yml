@@ -585,19 +585,19 @@ jobs:
         name:
           - macos-15-intel
           - macos-26-arm
-          - macos-14-intel-cross-compile-static-link
-          - macos-14-arm-static-link
+          - macos-26-intel-cross-compile-static-link
+          - macos-26-arm-static-link
         include:
           - name: macos-15-intel
             os: macos-15-intel
           - name: macos-26-arm
             os: macos-26
-          - name: macos-14-intel-cross-compile-static-link
-            os: macos-14
+          - name: macos-26-intel-cross-compile-static-link
+            os: macos-26
             cross-build-intel: true
             static-link: true
-          - name: macos-14-arm-static-link
-            os: macos-14
+          - name: macos-26-arm-static-link
+            os: macos-26
             static-link: true
 
     runs-on: ${{ matrix.os }}
