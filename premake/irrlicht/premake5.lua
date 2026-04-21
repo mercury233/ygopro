@@ -1,7 +1,7 @@
 project "irrlicht"
     kind "StaticLib"
 
-    includedirs { "include", JPEG_INCLUDE_DIR }
+    includedirs { "include", JPEG_INCLUDE_DIR, PNG_INCLUDE_DIR }
 
     exceptionhandling "Off"
     rtti "Off"
@@ -9,6 +9,7 @@ project "irrlicht"
     defines {
         "_IRR_STATIC_LIB_",
         "NO_IRR_USE_NON_SYSTEM_JPEG_LIB_",
+        "NO_IRR_USE_NON_SYSTEM_LIB_PNG_",
         "NO_IRR_LINUX_X11_VIDMODE_",
         "NO_IRR_COMPILE_WITH_BZIP2_",
         "NO_IRR_COMPILE_WITH_LZMA_",
@@ -83,50 +84,6 @@ project "irrlicht"
         "source/Irrlicht/zlib/zutil.h",
         "source/Irrlicht/zlib/zutil.c",
     }
-
-    if BUILD_PNG_IRRLICHT then
-        files {
-            "source/Irrlicht/libpng/png.c",
-            "source/Irrlicht/libpng/pngerror.c",
-            "source/Irrlicht/libpng/pngget.c",
-            "source/Irrlicht/libpng/pngmem.c",
-            "source/Irrlicht/libpng/pngpread.c",
-            "source/Irrlicht/libpng/pngread.c",
-            "source/Irrlicht/libpng/pngrio.c",
-            "source/Irrlicht/libpng/pngrtran.c",
-            "source/Irrlicht/libpng/pngrutil.c",
-            "source/Irrlicht/libpng/pngset.c",
-            "source/Irrlicht/libpng/pngtrans.c",
-            "source/Irrlicht/libpng/pngwio.c",
-            "source/Irrlicht/libpng/pngwrite.c",
-            "source/Irrlicht/libpng/pngwtran.c",
-            "source/Irrlicht/libpng/pngwutil.c",
-        }
-
-        filter { "architecture:x86 or x86_64" }
-            files {
-                "source/Irrlicht/libpng/intel/intel_init.c",
-                "source/Irrlicht/libpng/intel/filter_sse2_intrinsics.c",
-            }
-            defines {
-                "PNG_INTEL_SSE",
-            }
-
-        filter { "architecture:AARCH64" }
-            files {
-                "source/Irrlicht/libpng/arm/arm_init.c",
-                "source/Irrlicht/libpng/arm/filter_neon_intrinsics.c",
-                "source/Irrlicht/libpng/arm/palette_neon_intrinsics.c",
-            }
-            defines {
-                "PNG_ARM_NEON_OPT=2",
-            }
-    else
-        includedirs { PNG_INCLUDE_DIR }
-        defines {
-            "NO_IRR_USE_NON_SYSTEM_LIB_PNG_",
-        }
-    end
 
     filter { "system:windows" }
         if USE_DXSDK then

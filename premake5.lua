@@ -16,11 +16,12 @@ BUILD_FREETYPE = os.istarget("windows")
 BUILD_SQLITE = os.istarget("windows")
 
 BUILD_IRRLICHT = true -- modified Irrlicht is required, can't use the official one
-BUILD_PNG_IRRLICHT = os.istarget("windows") -- build the bundled libpng from Irrlicht
 USE_DXSDK = true
 
 BUILD_JPEG = os.istarget("windows") -- libjpeg-turbo is required, can't use the bundled IJG jpeglib from Irrlicht
 JPEG_LIB_NAME = "jpeg" -- use the libjpeg API of libjpeg-turbo, the lib name should always be "jpeg", just in case
+
+BUILD_PNG = os.istarget("windows")
 
 USE_AUDIO = true
 AUDIO_LIB = "miniaudio" -- can be "miniaudio" or "irrklang"
@@ -36,6 +37,7 @@ LUA_INCLUDE_DIR = path.getabsolute("./lua/src")
 EVENT_INCLUDE_DIR = path.getabsolute("./event/include")
 IRRLICHT_INCLUDE_DIR = path.getabsolute("./irrlicht/include")
 JPEG_INCLUDE_DIR = path.getabsolute("./jpeg/src")
+PNG_INCLUDE_DIR = path.getabsolute("./png")
 FREETYPE_CUSTOM_INCLUDE_DIR = path.getabsolute("./freetype/custom")
 FREETYPE_INCLUDE_DIR = path.getabsolute("./freetype/include")
 SQLITE_INCLUDE_DIR = path.getabsolute("./sqlite3")
@@ -70,16 +72,17 @@ newoption { trigger = "build-irrlicht", category = "YGOPro - irrlicht", descript
 newoption { trigger = "no-build-irrlicht", category = "YGOPro - irrlicht", description = "" }
 newoption { trigger = "irrlicht-include-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
 newoption { trigger = "irrlicht-lib-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
-newoption { trigger = "build-png-irrlicht", category = "YGOPro - irrlicht", description = "" }
-newoption { trigger = "no-build-png-irrlicht", category = "YGOPro - irrlicht", description = "" }
-newoption { trigger = "png-include-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
-newoption { trigger = "png-lib-dir", category = "YGOPro - irrlicht", description = "", value = "PATH" }
 newoption { trigger = "no-dxsdk", category = "YGOPro - irrlicht", description = "" }
 
 newoption { trigger = "build-jpeg", category = "YGOPro - jpeg", description = "" }
 newoption { trigger = "no-build-jpeg", category = "YGOPro - jpeg", description = "" }
 newoption { trigger = "jpeg-include-dir", category = "YGOPro - jpeg", description = "", value = "PATH" }
 newoption { trigger = "jpeg-lib-dir", category = "YGOPro - jpeg", description = "", value = "PATH" }
+
+newoption { trigger = "build-png", category = "YGOPro - png", description = "" }
+newoption { trigger = "no-build-png", category = "YGOPro - png", description = "" }
+newoption { trigger = "png-include-dir", category = "YGOPro - png", description = "", value = "PATH" }
+newoption { trigger = "png-lib-dir", category = "YGOPro - png", description = "", value = "PATH" }
 
 newoption { trigger = "no-audio", category = "YGOPro", description = "" }
 newoption { trigger = "audio-lib", category = "YGOPro", description = "", value = "miniaudio, irrklang", default = AUDIO_LIB }
@@ -177,15 +180,6 @@ if not BUILD_IRRLICHT then
     IRRLICHT_INCLUDE_DIR = GetParam("irrlicht-include-dir") or os.findheader("irrlicht.h")
     IRRLICHT_LIB_DIR = GetParam("irrlicht-lib-dir") or os.findlib("irrlicht")
 end
-if GetParam("build-png-irrlicht") then
-    BUILD_PNG_IRRLICHT = true
-elseif GetParam("no-build-png-irrlicht") then
-    BUILD_PNG_IRRLICHT = false
-end
-if not BUILD_PNG_IRRLICHT then
-    PNG_INCLUDE_DIR = GetParam("png-include-dir") or os.findheader("png.h")
-    PNG_LIB_DIR = GetParam("png-lib-dir") or os.findlib("png")
-end
 
 if GetParam("build-jpeg") then
     BUILD_JPEG = true
@@ -195,6 +189,16 @@ end
 if not BUILD_JPEG then
     JPEG_INCLUDE_DIR = GetParam("jpeg-include-dir") or os.findheader("jpeglib.h")
     JPEG_LIB_DIR = GetParam("jpeg-lib-dir") or os.findlib(JPEG_LIB_NAME)
+end
+
+if GetParam("build-png") then
+    BUILD_PNG = true
+elseif GetParam("no-build-png") then
+    BUILD_PNG = false
+end
+if not BUILD_PNG then
+    PNG_INCLUDE_DIR = GetParam("png-include-dir") or os.findheader("png.h")
+    PNG_LIB_DIR = GetParam("png-lib-dir") or os.findlib("png")
 end
 
 if GetParam("no-dxsdk") then
@@ -425,6 +429,9 @@ workspace "YGOPro"
     end
     if BUILD_JPEG then
         include "jpeg"
+    end
+    if BUILD_PNG then
+        include "png"
     end
     if BUILD_SQLITE then
         include "sqlite3"
