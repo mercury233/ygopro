@@ -328,7 +328,7 @@ workspace "YGOPro"
         buildoptions { "-municode" }
 
     filter "system:macosx"
-        systemversion "11"
+        --systemversion "11"
         if MAC_ARM and MAC_INTEL then
             print("Warning: Universal binary is no longer supported, please choose either --mac-arm or --mac-intel, and combine the binaries with lipo manually.")
             MAC_ARM = false
