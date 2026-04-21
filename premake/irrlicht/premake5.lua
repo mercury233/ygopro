@@ -1,7 +1,7 @@
 project "irrlicht"
     kind "StaticLib"
 
-    includedirs { "include", JPEG_INCLUDE_DIR, PNG_INCLUDE_DIR }
+    includedirs { "include", JPEG_INCLUDE_DIR, PNG_INCLUDE_DIR, ZLIB_INCLUDE_DIR }
 
     exceptionhandling "Off"
     rtti "Off"
@@ -65,24 +65,6 @@ project "irrlicht"
     files {
         "include/*.h",
         "source/Irrlicht/*.cpp",
-        "source/Irrlicht/zlib/zlib.h",
-        "source/Irrlicht/zlib/adler32.c",
-        "source/Irrlicht/zlib/compress.c",
-        "source/Irrlicht/zlib/crc32.h",
-        "source/Irrlicht/zlib/crc32.c",
-        "source/Irrlicht/zlib/deflate.h",
-        "source/Irrlicht/zlib/deflate.c",
-        "source/Irrlicht/zlib/inffast.h",
-        "source/Irrlicht/zlib/inffast.c",
-        "source/Irrlicht/zlib/inflate.h",
-        "source/Irrlicht/zlib/inflate.c",
-        "source/Irrlicht/zlib/inftrees.h",
-        "source/Irrlicht/zlib/inftrees.c",
-        "source/Irrlicht/zlib/trees.h",
-        "source/Irrlicht/zlib/trees.c",
-        "source/Irrlicht/zlib/uncompr.c",
-        "source/Irrlicht/zlib/zutil.h",
-        "source/Irrlicht/zlib/zutil.c",
     }
 
     filter { "system:windows" }

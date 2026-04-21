@@ -145,6 +145,18 @@ jobs:
         tar xf ${{ steps.libpng.outputs.filepath }}
         mv libpng-1.6.58 png
         cp png/scripts/pnglibconf.h.prebuilt png/pnglibconf.h
+    
+    - name: Download zlib
+      id: zlib
+      uses: mercury233/action-cache-download-file@v1.2.0
+      with:
+        url: https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz
+        sha256: bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16
+
+    - name: Extract zlib
+      run: |
+        tar xf ${{ steps.zlib.outputs.filepath }}
+        mv zlib-1.3.2 zlib
 
     - name: Download sqlite
       id: sqlite
@@ -221,6 +233,7 @@ jobs:
           !jpeg/java/
           !jpeg/testimgs/
           png/
+          zlib/
           sqlite3/
           miniaudio/
           !miniaudio/external/opus/dnn/
@@ -502,7 +515,7 @@ jobs:
     - name: Install dependencies (dynamic link)
       if: matrix.static-link != true
       run: |
-        sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev libopusfile-dev libvorbis-dev libjpeg-dev libpng-dev
+        sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev libopusfile-dev libvorbis-dev libjpeg-dev libpng-dev zlib1g-dev
 
     - name: Install NASM
       if: matrix.static-link == true
@@ -574,6 +587,7 @@ jobs:
           --build-event \
           --build-jpeg \
           --build-png \
+          --build-zlib \
           --build-freetype \
           --build-sqlite \
           --build-opus-vorbis
@@ -638,7 +652,7 @@ jobs:
     - name: Install dependencies
       if: matrix.static-link != true
       run: |
-        brew install opus opusfile libvorbis
+        brew install opus opusfile libvorbis zlib
 #        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng
 
     - name: Install NASM
@@ -704,6 +718,7 @@ jobs:
           --build-event \
           --build-jpeg \
           --build-png \
+          --build-zlib \
           --build-freetype \
           --build-sqlite \
           --build-opus-vorbis

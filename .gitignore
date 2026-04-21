@@ -38,6 +38,7 @@
 /miniaudio
 /png
 /sqlite3
+/zlib
 /gframe/*.ico
 /gframe/ygopro.rc
 /gframe/ygopro.aps

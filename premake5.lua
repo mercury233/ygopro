@@ -23,6 +23,9 @@ JPEG_LIB_NAME = "jpeg" -- use the libjpeg API of libjpeg-turbo, the lib name sho
 
 BUILD_PNG = os.istarget("windows")
 
+BUILD_ZLIB = os.istarget("windows")
+ZLIB_LIB_NAME = "z" -- the lib name should always be "z", just in case
+
 USE_AUDIO = true
 AUDIO_LIB = "miniaudio" -- can be "miniaudio" or "irrklang"
 -- BUILD_MINIAUDIO is always true
@@ -38,6 +41,7 @@ EVENT_INCLUDE_DIR = path.getabsolute("./event/include")
 IRRLICHT_INCLUDE_DIR = path.getabsolute("./irrlicht/include")
 JPEG_INCLUDE_DIR = path.getabsolute("./jpeg/src")
 PNG_INCLUDE_DIR = path.getabsolute("./png")
+ZLIB_INCLUDE_DIR = path.getabsolute("./zlib")
 FREETYPE_CUSTOM_INCLUDE_DIR = path.getabsolute("./freetype/custom")
 FREETYPE_INCLUDE_DIR = path.getabsolute("./freetype/include")
 SQLITE_INCLUDE_DIR = path.getabsolute("./sqlite3")
@@ -83,6 +87,11 @@ newoption { trigger = "build-png", category = "YGOPro - png", description = "" }
 newoption { trigger = "no-build-png", category = "YGOPro - png", description = "" }
 newoption { trigger = "png-include-dir", category = "YGOPro - png", description = "", value = "PATH" }
 newoption { trigger = "png-lib-dir", category = "YGOPro - png", description = "", value = "PATH" }
+
+newoption { trigger = "build-zlib", category = "YGOPro - zlib", description = "" }
+newoption { trigger = "no-build-zlib", category = "YGOPro - zlib", description = "" }
+newoption { trigger = "zlib-include-dir", category = "YGOPro - zlib", description = "", value = "PATH" }
+newoption { trigger = "zlib-lib-dir", category = "YGOPro - zlib", description = "", value = "PATH" }
 
 newoption { trigger = "no-audio", category = "YGOPro", description = "" }
 newoption { trigger = "audio-lib", category = "YGOPro", description = "", value = "miniaudio, irrklang", default = AUDIO_LIB }
@@ -199,6 +208,16 @@ end
 if not BUILD_PNG then
     PNG_INCLUDE_DIR = GetParam("png-include-dir") or os.findheader("png.h")
     PNG_LIB_DIR = GetParam("png-lib-dir") or os.findlib("png")
+end
+
+if GetParam("build-zlib") then
+    BUILD_ZLIB = true
+elseif GetParam("no-build-zlib") then
+    BUILD_ZLIB = false
+end
+if not BUILD_ZLIB then
+    ZLIB_INCLUDE_DIR = GetParam("zlib-include-dir") or os.findheader("zlib.h")
+    ZLIB_LIB_DIR = GetParam("zlib-lib-dir") or os.findlib(ZLIB_LIB_NAME)
 end
 
 if GetParam("no-dxsdk") then
@@ -432,6 +451,9 @@ workspace "YGOPro"
     end
     if BUILD_PNG then
         include "png"
+    end
+    if BUILD_ZLIB then
+        include "zlib"
     end
     if BUILD_SQLITE then
         include "sqlite3"
