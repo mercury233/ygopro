@@ -1,6 +1,5 @@
 project "zlib"
     kind "StaticLib"
-    targetname (ZLIB_LIB_NAME)
 
     files {
         "zlib.h",
