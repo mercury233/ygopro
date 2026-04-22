@@ -85,6 +85,7 @@ newoption { trigger = "build-jpeg", category = "YGOPro - jpeg", description = ""
 newoption { trigger = "no-build-jpeg", category = "YGOPro - jpeg", description = "" }
 newoption { trigger = "jpeg-include-dir", category = "YGOPro - jpeg", description = "", value = "PATH" }
 newoption { trigger = "jpeg-lib-dir", category = "YGOPro - jpeg", description = "", value = "PATH" }
+newoption { trigger = "jpeg-lib-name", category = "YGOPro - jpeg", description = "", value = "NAME", default = JPEG_LIB_NAME }
 
 newoption { trigger = "build-png", category = "YGOPro - png", description = "" }
 newoption { trigger = "no-build-png", category = "YGOPro - png", description = "" }
@@ -95,6 +96,7 @@ newoption { trigger = "build-zlib", category = "YGOPro - zlib", description = ""
 newoption { trigger = "no-build-zlib", category = "YGOPro - zlib", description = "" }
 newoption { trigger = "zlib-include-dir", category = "YGOPro - zlib", description = "", value = "PATH" }
 newoption { trigger = "zlib-lib-dir", category = "YGOPro - zlib", description = "", value = "PATH" }
+newoption { trigger = "zlib-lib-name", category = "YGOPro - zlib", description = "", value = "NAME", default = ZLIB_LIB_NAME }
 
 newoption { trigger = "no-audio", category = "YGOPro", description = "" }
 newoption { trigger = "audio-lib", category = "YGOPro", description = "", value = "miniaudio, irrklang", default = AUDIO_LIB }
@@ -214,6 +216,7 @@ elseif GetParam("no-build-jpeg") then
     BUILD_JPEG = false
 end
 if not BUILD_JPEG then
+    JPEG_LIB_NAME = GetParam("jpeg-lib-name") or JPEG_LIB_NAME
     JPEG_INCLUDE_DIR = GetParam("jpeg-include-dir") or os.findheader("jpeglib.h")
     JPEG_LIB_DIR = GetParam("jpeg-lib-dir") or os.findlib(JPEG_LIB_NAME)
 end
@@ -234,6 +237,7 @@ elseif GetParam("no-build-zlib") then
     BUILD_ZLIB = false
 end
 if not BUILD_ZLIB then
+    ZLIB_LIB_NAME = GetParam("zlib-lib-name") or ZLIB_LIB_NAME
     ZLIB_INCLUDE_DIR = GetParam("zlib-include-dir") or os.findheader("zlib.h")
     ZLIB_LIB_DIR = GetParam("zlib-lib-dir") or os.findlib(ZLIB_LIB_NAME)
 end
