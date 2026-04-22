@@ -508,14 +508,14 @@ jobs:
       fail-fast: false
       matrix:
         name:
-          - ubuntu-22
+#          - ubuntu-22
           - ubuntu-24
           - ubuntu-static-link
           - ubuntu-arm-static-link
         include:
-          - name: ubuntu-22
-            os: ubuntu-22.04
-            premake-version: 5.0.0-beta8
+#          - name: ubuntu-22
+#            os: ubuntu-22.04
+#            premake-version: 5.0.0-beta8
           - name: ubuntu-24
             os: ubuntu-24.04
             premake-version: 5.0.0-beta8
@@ -696,8 +696,8 @@ jobs:
     - name: Install dependencies
       if: matrix.static-link != true
       run: |
-        brew install opus opusfile libvorbis zlib xz
-#        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng
+        brew install opus opusfile libvorbis zlib
+#        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng xz
 
     - name: Install NASM
       if: matrix.static-link == true
