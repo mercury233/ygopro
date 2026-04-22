@@ -19,9 +19,7 @@
 #define MEM_SRCDST_SUPPORTED  1
 
 /* Use accelerated SIMD routines when available. */
-#if defined(_M_IX86) || defined(_M_X64) || defined(__i386__) || defined(__x86_64__) || \
-    defined(_M_ARM64) || defined(_M_ARM64EC) || defined(__aarch64__) || \
-    defined(_M_ARM) || defined(__arm__)
+#ifndef YGOPRO_NO_SIMD
 #define WITH_SIMD  1
 #endif
 

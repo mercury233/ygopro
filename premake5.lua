@@ -1,5 +1,9 @@
 -- Supported systems: Windows, Linux, MacOS
 
+-- Windows (Visual Studio) build supports x86, x86_64, and ARM64.
+-- Linux (and MinGW) build supports x86_64 and ARM64.
+-- MacOS build supports x86_64 and ARM64, and it supports cross-compilation.
+
 -- Global settings
 
 -- Default: Build Lua, Irrlicht, miniaudio from source on all systems.
@@ -36,6 +40,18 @@ IRRKLANG_PRO = false
 IRRKLANG_PRO_BUILD_IKPMP3 = false
 
 BUILD_LZMA = os.istarget("windows")
+
+-- Available: none, sse2, avx2, neon, best
+-- "best" means avx2 on x86 and neon on ARM
+USE_SIMD = "best"
+
+-- Variable indicating whether we are building for Apple Silicon, will be detected automatically if not specified.
+local MAC_ARM = false
+local MAC_INTEL = false
+
+-- os.hostarch() actually returns the architecture of Premake5, and the official Windows build of Premake5 is 32-bit,
+-- so we can only distinguish between AARCH64 and x86, and must use the ARM build of Premake5 on ARM platforms.
+PREMAKE_ARCH = os.hostarch()
 
 -- Default include dirs, those values are ONLY used in static builds, WILL BE IGNORED if set corresponding BUILD_* to false
 LUA_INCLUDE_DIR = path.getabsolute("./lua/src")
@@ -134,6 +150,8 @@ newoption { trigger = "mac-arm", category = "YGOPro", description = "Cross Compi
 newoption { trigger = "mac-intel", category = "YGOPro", description = "Cross Compile for Intel Mac" }
 
 newoption { trigger = "use-openmp", category = "YGOPro", description = "Enable OpenMP support (edge case)" }
+
+newoption { trigger = "use-simd", category = "YGOPro", description = "", value = "none, sse2, avx2, neon, best", default = "best" }
 
 function GetParam(param)
     return _OPTIONS[param] or os.getenv(string.upper(string.gsub(param,"-","_")))
@@ -323,6 +341,19 @@ if USE_AUDIO then
     end
 end
 
+if GetParam("use-simd") then
+    USE_SIMD = GetParam("use-simd")
+end
+
+if table.indexof({ "x86", "x86_64", "AARCH64" }, PREMAKE_ARCH) == nil then
+    print("Warning: Architecture: " .. PREMAKE_ARCH .. " is not supported, trying to build anyway")
+    USE_SIMD = "none"
+end
+
+if USE_SIMD == "avx2" or USE_SIMD == "neon" then
+    USE_SIMD = "best"
+end
+
 if os.istarget("macosx") then
     if GetParam("mac-arm") then
         MAC_ARM = true
@@ -356,13 +387,26 @@ workspace "YGOPro"
 
     filter { "system:windows", "action:vs*" }
         platforms { "Win32", "x64", "ARM64" }
+        defaultplatform "x64"
 
     filter { "system:windows", "action:vs*", "platforms:Win32" }
         architecture "x86"
+        if USE_SIMD == "none" then
+            vectorextensions "IA32"
+        end
+        if USE_SIMD == "sse2" then
+            vectorextensions "SSE2"
+        end
+        if USE_SIMD == "best" then
+            vectorextensions "AVX2"
+        end
 
     filter { "system:windows", "action:vs*", "platforms:x64" }
         architecture "x86_64"
-        vectorextensions "AVX2"
+        -- x86_64 must have SSE2, so we shouldn't check USE_SIMD for SSE2
+        if USE_SIMD == "best" then
+            vectorextensions "AVX2"
+        end
 
     filter { "system:windows", "action:vs*", "platforms:ARM64" }
         architecture "AARCH64"
@@ -380,11 +424,10 @@ workspace "YGOPro"
             MAC_INTEL = false
         end
         if not MAC_ARM and not MAC_INTEL then
-            -- Auto detect architecture
-            if os.hostarch() == "x86_64" then
-                MAC_INTEL = true
-            else
+            if PREMAKE_ARCH == "AARCH64" then
                 MAC_ARM = true
+            else
+                MAC_INTEL = true
             end
         end
         if MAC_ARM then
@@ -395,10 +438,10 @@ workspace "YGOPro"
         end
 
     filter "system:linux"
-        if os.hostarch() == "x86_64" then
-            architecture "x86_64"
-        else
+        if PREMAKE_ARCH == "AARCH64" then
             architecture "AARCH64"
+        else
+            architecture "x86_64"
         end
 
     filter "configurations:Release"
@@ -449,8 +492,10 @@ workspace "YGOPro"
         buildoptions { "-fno-strict-aliasing" }
 
     filter { "action:gmake", "architecture:x86_64" }
-        vectorextensions "AVX2"
-        buildoptions { "-mfma" }
+        if USE_SIMD == "best" then
+            vectorextensions "AVX2"
+            buildoptions { "-mfma" }
+        end
 
     filter {}
 

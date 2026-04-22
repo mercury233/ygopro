@@ -58,6 +58,10 @@ project "YGOPro"
         libdirs { LZMA_LIB_DIR }
     end
 
+    if USE_SIMD == "none" then
+        defines { "STBIR_NO_SIMD" }
+    end
+
     if USE_AUDIO then
         defines { "YGOPRO_USE_AUDIO" }
         if AUDIO_LIB == "miniaudio" then

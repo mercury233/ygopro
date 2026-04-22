@@ -21,6 +21,7 @@ project "png"
         "pngwutil.c",
     }
 
+if USE_SIMD ~= "none" then
     filter { "architecture:x86 or x86_64" }
         files {
             "intel/intel_init.c",
@@ -39,3 +40,4 @@ project "png"
         defines {
             "PNG_ARM_NEON_OPT=2",
         }
+end

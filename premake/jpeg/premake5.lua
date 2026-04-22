@@ -1,12 +1,9 @@
 project "jpeg"
     kind "StaticLib"
 
-    local nasm = os.getenv("ASM_NASM") or "nasm"
-    local turboSimdNasmDir = path.getabsolute("simd/nasm")
-    local turboSimdX64Dir  = path.getabsolute("simd/x86_64")
-    local turboSimdX86Dir  = path.getabsolute("simd/i386")
-
     files {
+        "src/jconfig.h",
+        "src/jconfigint.h",
         "src/jcapimin.c",
         "src/jchuff.c",
         "src/jcicc.c",
@@ -39,6 +36,14 @@ project "jpeg"
         "src/jdarith.c",
         "src/wrapper/j*.c",
     }
+
+if USE_SIMD == "none" then
+    defines { "YGOPRO_NO_SIMD" }
+else
+    local nasm = os.getenv("ASM_NASM") or "nasm"
+    local turboSimdNasmDir = path.getabsolute("simd/nasm")
+    local turboSimdX64Dir  = path.getabsolute("simd/x86_64")
+    local turboSimdX86Dir  = path.getabsolute("simd/i386")
 
     filter { "architecture:x86_64" }
         includedirs {
@@ -147,3 +152,4 @@ project "jpeg"
             "simd/arm/aarch64/jchuff-neon.c",
             "simd/arm/aarch64/jsimd.c",
         }
+end

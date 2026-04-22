@@ -257,19 +257,21 @@ jobs:
       fail-fast: false
       matrix:
         name:
-          - windows-x86
+          - windows-x86-sse2
 #          - windows-irrklang
 #          - windows-no-dxsdk
-          - windows-x64
+          - windows-x64-avx2
+          - windows-x64-no-simd
           - windows-arm64
           - windows-2025
           - windows-mingw
         include:
-          - name: windows-x86
+          - name: windows-x86-sse2
             os: windows-2022
             vs: vs2022
             platform: Win32
             audiolib: miniaudio
+            simd: sse2
 #          - name: windows-irrklang
 #            os: windows-2022
 #            vs: vs2022
@@ -279,11 +281,18 @@ jobs:
 #            vs: vs2022
 #            audiolib: miniaudio
 #            nodxsdk: true
-          - name: windows-x64
+          - name: windows-x64-avx2
             os: windows-2022
             vs: vs2022
             platform: x64
             audiolib: miniaudio
+            simd: avx2
+          - name: windows-x64-no-simd
+            os: windows-2022
+            vs: vs2022
+            platform: x64
+            audiolib: miniaudio
+            simd: none
           - name: windows-arm64
             os: windows-2022
             vs: vs2022
@@ -417,7 +426,7 @@ jobs:
       if: matrix.mingw != true
       shell: pwsh
       run: |
-        .\premake5.exe ${{ matrix.vs }} --audio-lib=${{ matrix.audiolib }}
+        .\premake5.exe ${{ matrix.vs }} --audio-lib=${{ matrix.audiolib }} ${{ matrix.simd && "--use-simd=" + matrix.simd || '' }}
 
     - name: Add msbuild to PATH
       if: matrix.mingw != true
