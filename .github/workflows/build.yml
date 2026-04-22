@@ -175,7 +175,7 @@ jobs:
       uses: mercury233/action-cache-download-file@v1.2.0
       with:
         url: https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz
-        sha256: 8d0048ee51177b11ef1613959c2a268c951f4e7f6fb3706e681e00e34bb6d5e3
+        sha256: 3d3a1b973af218114f4f889bbaa2f4c037deaae0c8e815eec381c3d546b974a0
 
     - name: Extract lzma
       run: |
