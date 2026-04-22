@@ -170,6 +170,18 @@ jobs:
         7z x ${{ steps.sqlite.outputs.filepath }}
         mv sqlite-amalgamation-3510300 sqlite3
 
+    - name: Download lzma (xz)
+      id: lzma
+      uses: mercury233/action-cache-download-file@v1.2.0
+      with:
+        url: https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz
+        sha256: 8d0048ee51177b11ef1613959c2a268c951f4e7f6fb3706e681e00e34bb6d5e3
+
+    - name: Extract lzma
+      run: |
+        tar xf ${{ steps.lzma.outputs.filepath }}
+        mv xz-5.8.3 lzma
+
     - name: Create miniaudio external directory
       run: |
         mkdir -p miniaudio/external
@@ -235,6 +247,7 @@ jobs:
           png/
           zlib/
           sqlite3/
+          lzma/
           miniaudio/
           !miniaudio/external/opus/dnn/
 
@@ -530,7 +543,7 @@ jobs:
     - name: Install dependencies (dynamic link)
       if: matrix.static-link != true
       run: |
-        sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev libopusfile-dev libvorbis-dev libjpeg-dev libpng-dev zlib1g-dev
+        sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev libopusfile-dev libvorbis-dev libjpeg-dev libpng-dev zlib1g-dev liblzma-dev
 
     - name: Install NASM
       if: matrix.static-link == true
@@ -605,6 +618,7 @@ jobs:
           --build-zlib \
           --build-freetype \
           --build-sqlite \
+          --build-lzma \
           --build-opus-vorbis
 
     - name: Make
@@ -667,7 +681,7 @@ jobs:
     - name: Install dependencies
       if: matrix.static-link != true
       run: |
-        brew install opus opusfile libvorbis zlib
+        brew install opus opusfile libvorbis zlib xz
 #        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng
 
     - name: Install NASM
@@ -736,6 +750,7 @@ jobs:
           --build-zlib \
           --build-freetype \
           --build-sqlite \
+          --build-lzma \
           --build-opus-vorbis
 
     - name: Make
