@@ -313,7 +313,7 @@ jobs:
     - name: Install NASM
       shell: pwsh
       run: |
-        choco install nasm -y
+        choco install na404sm -y
         echo "C:\Program Files\NASM" >> $env:GITHUB_PATH
 
     - name: Download premake
