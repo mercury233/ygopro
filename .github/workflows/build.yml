@@ -426,7 +426,7 @@ jobs:
       if: matrix.mingw != true
       shell: pwsh
       run: |
-        .\premake5.exe ${{ matrix.vs }} --audio-lib=${{ matrix.audiolib }} ${{ matrix.simd && "--use-simd=" + matrix.simd || '' }}
+        .\premake5.exe ${{ matrix.vs }} --audio-lib=${{ matrix.audiolib }} ${{ matrix.simd && '--use-simd=' + matrix.simd || '' }}
 
     - name: Add msbuild to PATH
       if: matrix.mingw != true
