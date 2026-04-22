@@ -345,8 +345,8 @@ if GetParam("use-simd") then
     USE_SIMD = GetParam("use-simd")
 end
 
-if table.indexof({ "x86", "x86_64", "AARCH64" }, PREMAKE_ARCH) == nil then
-    print("Warning: Architecture: " .. PREMAKE_ARCH .. " is not supported, trying to build anyway")
+if not MAC_ARM and not MAC_INTEL and table.indexof({ "x86", "x86_64", "ARM64" }, PREMAKE_ARCH) == nil then
+    print("Warning: Detected architecture " .. PREMAKE_ARCH .. " seems not supported, trying to build anyway, SIMD will be disabled.")
     USE_SIMD = "none"
 end
 
@@ -424,7 +424,7 @@ workspace "YGOPro"
             MAC_INTEL = false
         end
         if not MAC_ARM and not MAC_INTEL then
-            if PREMAKE_ARCH == "AARCH64" then
+            if PREMAKE_ARCH == "ARM64" then
                 MAC_ARM = true
             else
                 MAC_INTEL = true
@@ -438,7 +438,7 @@ workspace "YGOPro"
         end
 
     filter "system:linux"
-        if PREMAKE_ARCH == "AARCH64" then
+        if PREMAKE_ARCH == "ARM64" then
             architecture "AARCH64"
         else
             architecture "x86_64"
