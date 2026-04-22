@@ -316,14 +316,14 @@ jobs:
         $maxRetries = 3
         $success = $false
         for ($i = 1; $i -le $maxRetries; $i++) {
-          $output = choco install na404sm -y 2>&1
+          $output = choco install nasm -y 2>&1
           $output | Write-Host
           if (Test-Path "C:\Program Files\NASM\nasm.exe") {
             $success = $true
             break
           }
           Write-Warning "NASM installation attempt $i failed, retrying in 10s..."
-          Start-Sleep -Seconds 1
+          Start-Sleep -Seconds 10
         }
         if (-not $success) {
           Write-Error "NASM installation failed after $maxRetries attempts"
