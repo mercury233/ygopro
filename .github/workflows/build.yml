@@ -511,6 +511,7 @@ jobs:
           - ubuntu-22
           - ubuntu-24
           - ubuntu-static-link
+          - ubuntu-arm-static-link
         include:
           - name: ubuntu-22
             os: ubuntu-22.04
@@ -520,6 +521,10 @@ jobs:
             premake-version: 5.0.0-beta8
           - name: ubuntu-static-link
             os: ubuntu-22.04
+            premake-version: 5.0.0-beta8
+            static-link: true
+          - name: ubuntu-arm-static-link
+            os: ubuntu-24.04-arm
             premake-version: 5.0.0-beta8
             static-link: true
 
