@@ -1,7 +1,7 @@
 project "png"
     kind "StaticLib"
 
-    includedirs { "../irrlicht/source/Irrlicht/zlib" }
+    includedirs { ZLIB_INCLUDE_DIR }
 
     files {
         "png.c",
