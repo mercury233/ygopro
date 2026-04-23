@@ -99,7 +99,9 @@ bool FileSystem::RemoveFile(const wchar_t* wfile) {
 }
 
 bool FileSystem::RemoveFile(const char* file) {
-	return DeleteFileA(file);
+	wchar_t wfile[1024];
+	BufferIO::DecodeUTF8(file, wfile);
+	return RemoveFile(wfile);
 }
 
 void FileSystem::TraversalDir(const wchar_t* wpath, const std::function<void(const wchar_t*, bool)>& cb) {
