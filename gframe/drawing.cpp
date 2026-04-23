@@ -1,15 +1,21 @@
 #include "game.h"
-#ifdef __APPLE__
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif
 #include "client_card.h"
 #include "materials.h"
 #include "image_manager.h"
 #include "deck_manager.h"
 #include "sound_manager.h"
 #include "duelclient.h"
+
+#ifdef _WIN32
+#define NOMINMAX 1
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#else
+#include <GL/gl.h>
+#endif
 
 namespace ygo {
 

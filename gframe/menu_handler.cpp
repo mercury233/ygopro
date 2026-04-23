@@ -1,6 +1,6 @@
-#include "config.h"
+﻿#include "config.h"
 #include "menu_handler.h"
-#include "myfilesystem.h"
+#include "file_system.h"
 #include "netserver.h"
 #include "duelclient.h"
 #include "deck_manager.h"
@@ -9,6 +9,7 @@
 #include "image_manager.h"
 #include "sound_manager.h"
 #include "game.h"
+#include "mysocket.h"
 
 namespace ygo {
 

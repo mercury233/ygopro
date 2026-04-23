@@ -1,4 +1,4 @@
-#include <random>
+﻿#include <random>
 #include <thread>
 #include "replay_mode.h"
 #include "duelclient.h"

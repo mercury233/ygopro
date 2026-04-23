@@ -1,4 +1,4 @@
-#include "config.h"
+﻿#include "config.h"
 #include "single_duel.h"
 #include "netserver.h"
 #include "game.h"

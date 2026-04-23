@@ -1,6 +1,6 @@
 #include "config.h"
 #include "game.h"
-#include "myfilesystem.h"
+#include "file_system.h"
 #include "image_manager.h"
 #include "data_manager.h"
 #include "deck_manager.h"
@@ -29,6 +29,12 @@
     #endif
 #else
 	#define CPU_PAUSE() ((void)0)
+#endif
+
+#ifdef _WIN32
+#define NOMINMAX 1
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 #endif
 
 namespace ygo {

@@ -1,4 +1,4 @@
-#include <algorithm>
+﻿#include <algorithm>
 #include <thread>
 #include "config.h"
 #include "duelclient.h"
@@ -10,6 +10,7 @@
 #include "game.h"
 #include "deck_manager.h"
 #include "replay.h"
+#include "mysocket.h"
 
 namespace ygo {
 

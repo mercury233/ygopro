@@ -1,9 +1,13 @@
-#include "config.h"
+﻿#include "config.h"
+#include "network.h"
 #include "game.h"
 #include "data_manager.h"
 #include <event2/thread.h>
 #include <clocale>
 #include <memory>
+#ifdef _WIN32
+#include <shellapi.h>
+#endif
 #ifdef __APPLE__
 #import <CoreFoundation/CoreFoundation.h>
 #endif
