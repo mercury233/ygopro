@@ -469,7 +469,7 @@ jobs:
       with:
         repository: mercury233/premake-core
         path: premake-patched
-        ref: 397000b812b365b5a83da76eb057a983dfa49486 # feat: add cpp.responseFile
+        ref: 1c7437b5e29b7bc94600b6ba160d8422c2cb6842 # feat: add cpp.responseFile
 
     - name: Build premake premake patched version for MinGW
       if: matrix.mingw == true
@@ -604,7 +604,7 @@ jobs:
       with:
         repository: mercury233/premake-core
         path: premake-source
-        ref: 397000b812b365b5a83da76eb057a983dfa49486 # feat: add cpp.responseFile
+        ref: 1c7437b5e29b7bc94600b6ba160d8422c2cb6842 # feat: add cpp.responseFile
 
     - name: Build premake (fallback)
       if: steps.extract-premake.outputs.premake != 'ok'
@@ -767,7 +767,7 @@ jobs:
       with:
         repository: mercury233/premake-core
         path: premake-source
-        ref: 397000b812b365b5a83da76eb057a983dfa49486 # feat: add cpp.responseFile
+        ref: 1c7437b5e29b7bc94600b6ba160d8422c2cb6842 # feat: add cpp.responseFile
 
     - name: Build premake (fallback)
       if: steps.extract-premake.outputs.premake != 'ok'
