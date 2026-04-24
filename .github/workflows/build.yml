@@ -467,7 +467,7 @@ jobs:
       if: matrix.mingw == true
       shell: cmd
       run: |
-        git clone --depth=1 -b patch-cpp-responseFile https://github.com/mercury233/premake-core premake-patched
+        git clone --depth=1 -b patch-cpp-responseFile-v2 https://github.com/mercury233/premake-core premake-patched
         cd premake-patched
         call Bootstrap.bat
         copy bin\release\premake5.exe ..\premake5-patched.exe
