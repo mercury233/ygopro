@@ -480,7 +480,7 @@ jobs:
         text = makefile.read_text()
         pattern = r'^LINKCMD\s*=\s*\$\(AR\)\s+-rcs\s+"\$@"\s+\$\(OBJECTS\)'
         replacement = (
-            'LINKCMD = $(file >objects.rsp,$(foreach o,$(OBJECTS),$(o)\\n)) \\\n'
+            'LINKCMD = $(file >objects.rsp,$(OBJECTS)) \\\n'
             '\t$(AR) -rcs "$@" @objects.rsp'
         )
         new_text, n = re.subn(pattern, replacement, text, flags=re.MULTILINE)
