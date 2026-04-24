@@ -392,6 +392,7 @@ workspace "YGOPro"
             vectorextensions "IA32"
         end
         if USE_SIMD == "sse2" then
+            print "::notice:: just a test"
             vectorextensions "SSE2"
         end
         if USE_SIMD == "best" then

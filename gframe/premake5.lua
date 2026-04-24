@@ -9,13 +9,13 @@ project "YGOPro"
     files { "*.cpp", "*.h" }
     
     --test
-    if EVENT_INCLUDE_DIR == nil then print "EVENT_INCLUDE_DIR is not set" end
-    if IRRLICHT_INCLUDE_DIR == nil then print "IRRLICHT_INCLUDE_DIR is not set" end
-    if JPEG_INCLUDE_DIR == nil then print "JPEG_INCLUDE_DIR is not set" end
-    if LZMA_INCLUDE_DIR == nil then print "LZMA_INCLUDE_DIR is not set" end
-    if ZLIB_INCLUDE_DIR == nil then print "ZLIB_INCLUDE_DIR is not set" end
-    if SQLITE_INCLUDE_DIR == nil then print "SQLITE_INCLUDE_DIR is not set" end
-    if FREETYPE_INCLUDE_DIR == nil then print "FREETYPE_INCLUDE_DIR is not set" end
+    if EVENT_INCLUDE_DIR == nil then print "::warning:: EVENT_INCLUDE_DIR is not set" end
+    if IRRLICHT_INCLUDE_DIR == nil then print "::warning:: IRRLICHT_INCLUDE_DIR is not set" end
+    if JPEG_INCLUDE_DIR == nil then print "::warning:: JPEG_INCLUDE_DIR is not set" end
+    if LZMA_INCLUDE_DIR == nil then print "::warning:: LZMA_INCLUDE_DIR is not set" end
+    if ZLIB_INCLUDE_DIR == nil then print "::warning:: ZLIB_INCLUDE_DIR is not set" end
+    if SQLITE_INCLUDE_DIR == nil then print "::warning:: SQLITE_INCLUDE_DIR is not set" end
+    if FREETYPE_INCLUDE_DIR == nil then print "::warning:: FREETYPE_INCLUDE_DIR is not set" end
 
     includedirs { "../ocgcore", EVENT_INCLUDE_DIR, IRRLICHT_INCLUDE_DIR, JPEG_INCLUDE_DIR, LZMA_INCLUDE_DIR, ZLIB_INCLUDE_DIR, SQLITE_INCLUDE_DIR }
     links { "ocgcore", "lzma", "sqlite3", "irrlicht", "png", "freetype", "event" }

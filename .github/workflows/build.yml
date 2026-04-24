@@ -488,23 +488,11 @@ jobs:
 
     - name: Make
       if: matrix.mingw == true
-      id: mingw-make
-      continue-on-error: true
       shell: msys2 {0}
       run: |
         cd build
         mingw32-make -j 4 config=release
         cd ..
-
-    - name: Upload build dir for debugging (on failure)
-      if: steps.mingw-make.outcome == 'failure'
-      uses: actions/upload-artifact@v6
-      with:
-        name: build-${{ matrix.name }}
-        path: |
-          build
-          bin
-          obj
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v6
