@@ -74,12 +74,18 @@ jobs:
         tar xf ${{ steps.lua.outputs.filepath }}
         mv lua-5.4.8 lua
 
-    - name: Download miniaudio
+    - name: Fetch miniaudio
+      uses: actions/checkout@v6
+      with:
+        repository: mackron/miniaudio
+        path: miniaudio-source
+        ref: 9634bedb5b5a2ca38c1ee7108a9358a4e233f14d # tag: 0.11.25
+
+    - name: Use miniaudio split & decoders only
       run: |
-        git clone --depth=1 -b 0.11.25 https://github.com/mackron/miniaudio
-        cd miniaudio
-        cp extras/miniaudio_split/miniaudio.* .
-        cd ..
+        mkdir -p miniaudio/extras
+        cp miniaudio-source/extras/miniaudio_split/miniaudio.* miniaudio/
+        cp -r miniaudio-source/extras/decoders miniaudio/extras/
 
     - name: Upload sources
       uses: actions/upload-artifact@v6
@@ -88,7 +94,11 @@ jobs:
         path: |
           lua/
           miniaudio/
-          irrlicht/
+          irrlicht/include/
+          irrlicht/source/
+          !irrlicht/source/Irrlicht/jpeglib/
+          !irrlicht/source/Irrlicht/libpng/
+          !irrlicht/source/Irrlicht/zlib/
           ocgcore/
 
   prepare-static-dependencies:
@@ -241,9 +251,10 @@ jobs:
         path: |
           event/
           freetype/
+          !freetype/docs/
           jpeg/
           !jpeg/java/
-          !jpeg/testimgs/
+          !jpeg/testimages/
           png/
           zlib/
           sqlite3/
@@ -478,7 +489,7 @@ jobs:
         mingw32-make -j 4 config=release
         cd ..
 
-    - name: Upload build dir (temporary)
+    - name: Upload build dir for debugging (on failure)
       if: steps.mingw-make.outcome == 'failure'
       uses: actions/upload-artifact@v6
       with:
@@ -509,19 +520,15 @@ jobs:
           - ubuntu-static-link
           - ubuntu-arm-static-link
         include:
-#          - name: ubuntu-22
-#            os: ubuntu-22.04
-#            premake-version: 5.0.0-beta8
+          - name: ubuntu-22
+            os: ubuntu-22.04
           - name: ubuntu-24
             os: ubuntu-24.04
-            premake-version: 5.0.0-beta8
           - name: ubuntu-static-link
             os: ubuntu-22.04
-            premake-version: 5.0.0-beta8
             static-link: true
           - name: ubuntu-arm-static-link
             os: ubuntu-24.04-arm
-            premake-version: 5.0.0-beta8
             static-link: true
 
     runs-on: ${{ matrix.os }}
@@ -564,8 +571,9 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@v1.2.0
       with:
-        url: https://github.com/premake/premake-core/releases/download/v${{ matrix.premake-version }}/premake-${{ matrix.premake-version }}-linux.tar.gz
+        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-linux.tar.gz
         filename: premake5.tar.gz
+        sha256: 63edd3e7461eebdd45b500a3c7e8ad4e7a67d68f230010f9a97cbb71b4ec59c8
 
     - name: Extract & test premake
       id: extract-premake
@@ -575,7 +583,6 @@ jobs:
         mkdir premake-test
         cp ./premake5 ./premake-test
         cd ./premake-test
-        set +e
         if ./premake5 --version; then
           echo "premake=ok" >> $GITHUB_OUTPUT
         else
@@ -725,7 +732,6 @@ jobs:
         mkdir premake-test
         cp ./premake5 ./premake-test
         cd ./premake-test
-        set +e
         if ./premake5 --version; then
           echo "premake=ok" >> $GITHUB_OUTPUT
         else

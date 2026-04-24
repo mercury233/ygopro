@@ -1,13 +1,13 @@
 -- Supported systems: Windows, Linux, MacOS
 
 -- Windows (Visual Studio) build supports x86, x86_64, and ARM64.
--- Linux (and MinGW) build supports x86_64 and ARM64.
+-- Linux build supports x86_64 and ARM64.
 -- MacOS build supports x86_64 and ARM64, and it supports cross-compilation.
 
 -- Global settings
 
 -- Default: Build Lua, Irrlicht, miniaudio from source on all systems.
---          Don't build event, freetype, sqlite, jpeg, png, opus, vorbis on Linux or MacOS, use package manager,
+--          Don't build event, freetype, sqlite, jpeg, png, zlib, opus, vorbis on Linux or MacOS, use package manager,
 --          but build them on Windows, due to the lack of package manager on Windows.
 
 BUILD_LUA = true
