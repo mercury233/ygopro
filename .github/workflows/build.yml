@@ -469,6 +469,23 @@ jobs:
       run: |
         ./premake5.exe gmake --audio-lib=${{ matrix.audiolib }}
 
+    - name: Fix irrlicht.make for MinGW
+      if: matrix.mingw == true
+      shell: python
+      run: |
+        import sys
+        import re
+        from pathlib import Path
+        makefile = Path('build/irrlicht.make')
+        text = makefile.read_text()
+        pattern = r'^LINKCMD\s*=\s*\$\(AR\)\s+-rcs\s+"\$@"\s+\$\(OBJECTS\)'
+        replacement = (
+            'LINKCMD = $(file >objects.rsp,$(foreach o,$(OBJECTS),$(o)\\n)) \\\n'
+            '\t$(AR) -rcs "$@" @objects.rsp'
+        )
+        new_text, n = re.subn(pattern, replacement, text, flags=re.MULTILINE)
+        makefile.write_text(new_text)
+
     - name: Make
       if: matrix.mingw == true
       id: mingw-make
