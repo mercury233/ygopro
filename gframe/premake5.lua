@@ -7,7 +7,7 @@ project "YGOPro"
 
     defines { "_IRR_STATIC_LIB_" }
     files { "*.cpp", "*.h" }
-    
+
     --test
     if EVENT_INCLUDE_DIR == nil then print "::warning:: EVENT_INCLUDE_DIR is not set" end
     if IRRLICHT_INCLUDE_DIR == nil then print "::warning:: IRRLICHT_INCLUDE_DIR is not set" end
