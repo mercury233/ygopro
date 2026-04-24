@@ -463,23 +463,6 @@ jobs:
         sed -i 's/#define _WIN32_WINNT 0x0501/#define _WIN32_WINNT 0x0600/g' evutil.c
         cd ..
 
-    - name: Fetch premake source for MinGW build
-      if: matrix.mingw == true
-      uses: actions/checkout@v6
-      with:
-        repository: mercury233/premake-core
-        path: premake-patched
-        ref: 1c7437b5e29b7bc94600b6ba160d8422c2cb6842 # feat: add cpp.responseFile
-
-    - name: Build premake premake patched version for MinGW
-      if: matrix.mingw == true
-      shell: cmd
-      run: |
-        cd premake-patched
-        call Bootstrap.bat
-        copy /Y bin\release\premake5.exe ..\premake5.exe
-        cd ..
-
     - name: Use premake to generate make files
       if: matrix.mingw == true
       shell: msys2 {0}
@@ -592,7 +575,7 @@ jobs:
         cp ./premake5 ./premake-test
         cd ./premake-test
         if ./premake5 --version; then
-          echo "premake=testing" >> $GITHUB_OUTPUT
+          echo "premake=ok" >> $GITHUB_OUTPUT
         else
           echo "premake=fail" >> $GITHUB_OUTPUT
         fi
@@ -602,9 +585,9 @@ jobs:
       if: steps.extract-premake.outputs.premake != 'ok'
       uses: actions/checkout@v6
       with:
-        repository: mercury233/premake-core
+        repository: premake/premake-core
         path: premake-source
-        ref: 1c7437b5e29b7bc94600b6ba160d8422c2cb6842 # feat: add cpp.responseFile
+        ref: 2ca338a25ed5f6e62d36c9cd70e5f313953c630d # tag: v5.0.0-beta8
 
     - name: Build premake (fallback)
       if: steps.extract-premake.outputs.premake != 'ok'
@@ -755,7 +738,7 @@ jobs:
         cp ./premake5 ./premake-test
         cd ./premake-test
         if ./premake5 --version; then
-          echo "premake=testing" >> $GITHUB_OUTPUT
+          echo "premake=ok" >> $GITHUB_OUTPUT
         else
           echo "premake=fail" >> $GITHUB_OUTPUT
         fi
@@ -765,9 +748,9 @@ jobs:
       if: steps.extract-premake.outputs.premake != 'ok'
       uses: actions/checkout@v6
       with:
-        repository: mercury233/premake-core
+        repository: premake/premake-core
         path: premake-source
-        ref: 1c7437b5e29b7bc94600b6ba160d8422c2cb6842 # feat: add cpp.responseFile
+        ref: 9ca696c86d5df6a1f6e674a931eef18e2b1c3b31 # fix: x86_64 architecture detection for macOS in Bootstrap.sh (#2640)
 
     - name: Build premake (fallback)
       if: steps.extract-premake.outputs.premake != 'ok'
