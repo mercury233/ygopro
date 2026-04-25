@@ -441,7 +441,7 @@ jobs:
       if: matrix.mingw == true
       shell: msys2 {0}
       run: |
-        ./premake5.exe gmake --audio-lib=${{ matrix.audiolib }}
+        ./premake5.exe gmake
 
     - name: Fix irrlicht.make for MinGW
       if: matrix.mingw == true
