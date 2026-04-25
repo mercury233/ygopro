@@ -407,7 +407,6 @@ jobs:
         cp event/WIN32-Code/nmake/evconfig-private.h event/include/evconfig-private.h
 
     - name: Copy premake files
-      if: matrix.cmake != true
       shell: bash
       run: |
         cp -pr premake/* .
