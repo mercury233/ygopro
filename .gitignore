@@ -21,8 +21,6 @@
 /ygopro
 /ygopro.exe
 /ygopro.app
-/ikpMP3.dll
-/irrKlang.dll
 
 /.vscode/
 /bin/
@@ -32,8 +30,6 @@
 /freetype
 /irrlicht
 /jpeg
-/irrklang
-/ikpmp3
 /lua
 /miniaudio
 /png
