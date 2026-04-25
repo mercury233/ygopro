@@ -274,6 +274,7 @@ jobs:
           - windows-x64-no-simd
           - windows-arm64
           - windows-2025
+          - windows-cmake
           - windows-mingw
         include:
           - name: windows-x86-sse2
@@ -304,6 +305,10 @@ jobs:
             os: windows-2025-vs2026
             vs: vs2026
             platform: x64
+          - name: windows-cmake
+            os: windows-2022
+            cmake: true
+            platform: x64
           - name: windows-mingw
             os: windows-2022
             mingw: true
@@ -333,6 +338,7 @@ jobs:
         path: .
 
     - name: Download NASM
+      if: matrix.cmake != true
       id: nasm
       uses: mercury233/action-cache-download-file@v1.2.0
       with:
@@ -341,6 +347,7 @@ jobs:
         sha256: e0ba5157007abc7b1a65118a96657a961ddf55f7e3f632ee035366dfce039ca4
 
     - name: Install NASM
+      if: matrix.cmake != true
       shell: pwsh
       run: |
         New-Item -ItemType Directory -Path nasm | Out-Null
@@ -350,6 +357,7 @@ jobs:
         $nasmPath | Out-File -FilePath $env:GITHUB_PATH -Append
 
     - name: Download premake
+      if: matrix.cmake != true
       id: premake
       uses: mercury233/action-cache-download-file@v1.2.0
       with:
@@ -358,6 +366,7 @@ jobs:
         sha256: e64ce2ed8778e0098f63674cca61fe33941b5f0c8d9a4afd651152bdea3758ab
 
     - name: Extract premake
+      if: matrix.cmake != true
       shell: bash
       run: |
         7z x ${{ steps.premake.outputs.filepath }}
@@ -398,26 +407,35 @@ jobs:
         cp event/WIN32-Code/nmake/evconfig-private.h event/include/evconfig-private.h
 
     - name: Copy premake files
+      if: matrix.cmake != true
       shell: bash
       run: |
         cp -pr premake/* .
         cp -pr resource/* .
 
     - name: Use premake to generate Visual Studio solution
-      if: matrix.mingw != true
+      if: matrix.mingw != true && matrix.cmake != true
       shell: pwsh
       run: |
         .\premake5.exe ${{ matrix.vs }} ${{ matrix.simd && format('--use-simd={0}', matrix.simd) || '' }}
 
     - name: Add msbuild to PATH
-      if: matrix.mingw != true
+      if: matrix.mingw != true && matrix.cmake != true
       uses: microsoft/setup-msbuild@v3
 
     - name: Build solution
-      if: matrix.mingw != true
+      if: matrix.mingw != true && matrix.cmake != true
       shell: pwsh
       run: |
         MSBuild.exe build\YGOPro.${{ matrix.vs == 'vs2026' && 'slnx' || 'sln' }} /m /p:Configuration=Release /p:Platform=${{ matrix.platform }}
+
+    - name: Configure CMake
+      if: matrix.cmake == true
+      run: cmake -B cmake-build -G "Visual Studio 17 2022" -A x64
+
+    - name: Build (CMake)
+      if: matrix.cmake == true
+      run: cmake --build cmake-build --config Release
 
     - name: Install MinGW
       if: matrix.mingw == true
@@ -477,6 +495,7 @@ jobs:
           bin/release/x86/YGOPro.exe
           bin/release/x64/YGOPro.exe
           bin/release/arm64/YGOPro.exe
+          cmake-build/bin/Release/YGOPro.exe
 
   build-linux:
     needs: [prepare, prepare-static-dependencies]

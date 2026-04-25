@@ -4,8 +4,6 @@ if (NOT WIN32 AND NOT APPLE)
     include (FindX11)   
 endif ()
 
-add_subdirectory (lzma)
-
 set (AUTO_FILES_RESULT)
 if (MSVC)
     AutoFiles("." "res" "\\.(rc)$")
@@ -25,11 +23,18 @@ else ()
     add_executable (ygopro ${AUTO_FILES_RESULT})
 endif ()
 
-target_link_libraries (ygopro ocgcore clzma)
+target_link_libraries (ygopro ocgcore lzma)
 
 if (MSVC)
-    target_link_libraries (ygopro irrlicht freetype sqlite3 event)
-    include_directories ( "../irrlicht/include" "../freetype/include" "../event/include" "../sqlite3" )
+    target_link_libraries (ygopro irrlicht freetype sqlite3 event jpeg png_static zlibstatic)
+    include_directories (
+        "../irrlicht/include"
+        "../freetype/include"
+        "../event/include"
+        "../sqlite3"
+        "../jpeg/src"
+        "../lzma/src/liblzma/api"
+    )
 else ()
     target_link_libraries (ygopro
         ${IRRLICHT_LIBRARIES}
@@ -37,6 +42,9 @@ else ()
         ${SQLITE_LIBRARIES}
         ${LIBEVENT_LIBRARIES}
         ${OPENGL_gl_LIBRARY}
+        ${JPEG_LIBRARIES}
+        ${PNG_LIBRARIES}
+        LibLZMA::LibLZMA
     )
     include_directories (
         ${IRRLICHT_INCLUDE_DIR}
@@ -44,6 +52,9 @@ else ()
         ${SQLITE_INCLUDE_DIRS}
         ${LIBEVENT_INCLUDE_DIR}
         ${OPENGL_INCLUDE_DIR}
+        ${JPEG_INCLUDE_DIRS}
+        ${PNG_INCLUDE_DIRS}
+        ${LIBLZMA_INCLUDE_DIRS}
     )
     target_link_libraries (ygopro ${CMAKE_THREAD_LIBS_INIT} ${DL_LIBRARIES})
 endif ()
@@ -54,14 +65,11 @@ if (APPLE)
     target_link_libraries(ygopro ${COCOA_LIBRARY} ${IOKIT_LIBRARY})
 endif ()
 
-if (USE_IRRKLANG)
-    add_definitions ( "-DYGOPRO_USE_IRRKLANG" )
-    if (MSVC)
-        target_link_libraries (ygopro ${IRRKLANG_DIR}/lib/Win32-visualStudio/irrKlang.lib)
-	elseif (CMAKE_SYSTEM MATCHES Linux)
-	    target_link_libraries (ygopro ${IRRKLANG_DIR}/bin/linux-gcc-64/libIrrKlang.so)
-	endif ()
-	include_directories ( "${IRRKLANG_DIR}/include" )
+if (USE_AUDIO)
+    add_definitions ("-DYGOPRO_USE_AUDIO")
+    add_definitions ("-DYGOPRO_USE_MINIAUDIO")
+    target_link_libraries (ygopro miniaudio)
+    include_directories ("../miniaudio")
 endif ()
 
 if (WIN32)
