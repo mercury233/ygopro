@@ -443,7 +443,7 @@ jobs:
       run: |
         ./premake5.exe gmake
 
-    - name: Fix irrlicht.make for MinGW
+    - name: Fix irrlicht.make for MinGW build
       if: matrix.mingw == true
       shell: python
       run: |
