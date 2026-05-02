@@ -425,7 +425,7 @@ jobs:
       with:
         msystem: UCRT64
         update: true
-        install: mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make nasm
+        install: mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make
 
     - name: Backport libevent fix for MinGW build
       if: matrix.mingw == true
