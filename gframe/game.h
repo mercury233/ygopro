@@ -60,7 +60,7 @@ struct Config {
 	unsigned char textfontsize{ 14 };
 	wchar_t lasthost[100]{};
 	wchar_t lastport[10]{};
-	wchar_t nickname[20]{ L"Player"};
+	wchar_t nickname[20]{ L"Player" };
 	wchar_t gamename[20]{ L"Game" };
 	wchar_t roompass[20]{};
 	//path
@@ -69,7 +69,7 @@ struct Config {
 	char textfont[256]{};
 	char numfont[256]{};
 	wchar_t startupcmd[256]{};
-	wchar_t bot_deck_path[256]{};
+	wchar_t bot_deck_path[256]{ L"./botdeck" };
 	//settings
 	int chkMAutoPos{ 0 };
 	int chkSTAutoPos{ 0 };
