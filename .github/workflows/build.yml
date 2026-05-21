@@ -173,7 +173,7 @@ jobs:
       uses: mercury233/action-cache-download-file@v1.2.0
       with:
         url: https://www.sqlite.org/2026/sqlite-amalgamation-3530100.zip
-        sha256: 3c07136e4f6b5dd0c395be86455014039597bc65b6851f7111e88f71b6e06114
+        sha256: 36ad6e7f38540a3b21a2ac36340833f0a9e426bc1c752751c3ba669466827eae
 
     - name: Extract sqlite
       run: |
