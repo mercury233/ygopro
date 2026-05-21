@@ -347,7 +347,7 @@ jobs:
       run: |
         New-Item -ItemType Directory -Path nasm | Out-Null
         Expand-Archive -Path ${{ steps.nasm.outputs.filepath }} -DestinationPath nasm
-        Move-Item .\nasm\nasm-3.01\nasm.exe .\nasm
+        Move-Item .\nasm\nasm-3.02rc7\nasm.exe .\nasm
         $nasmPath = (Resolve-Path .\nasm).Path
         $nasmPath | Out-File -FilePath $env:GITHUB_PATH -Append
 
