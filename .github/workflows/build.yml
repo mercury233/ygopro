@@ -122,13 +122,13 @@ jobs:
       id: freetype
       uses: mercury233/action-cache-download-file@v1.2.0
       with:
-        url: https://downloads.sourceforge.net/freetype/freetype-2.14.2.tar.gz
-        sha256: 752c2671f85c54a84b7f0dd2b5cd26b6b741117033886ffbc5ac89a68464b848
+        url: https://downloads.sourceforge.net/freetype/freetype-2.14.3.tar.gz
+        sha256: e61b31ab26358b946e767ed7eb7f4bb2e507da1cfefeb7a8861ace7fd5c899a1
 
     - name: Extract freetype
       run: |
         tar xf ${{ steps.freetype.outputs.filepath }}
-        mv freetype-2.14.2 freetype
+        mv freetype-2.14.3 freetype
 
     - name: Download libjpeg-turbo
       id: libjpeg-turbo
@@ -172,13 +172,13 @@ jobs:
       id: sqlite
       uses: mercury233/action-cache-download-file@v1.2.0
       with:
-        url: https://www.sqlite.org/2026/sqlite-amalgamation-3510300.zip
-        sha256: acb1e6f5d832484bf6d32b681e858c38add8b2acdfd42ac5df24b8afb46552b4
+        url: https://www.sqlite.org/2026/sqlite-amalgamation-3530100.zip
+        sha256: 3c07136e4f6b5dd0c395be86455014039597bc65b6851f7111e88f71b6e06114
 
     - name: Extract sqlite
       run: |
         7z x ${{ steps.sqlite.outputs.filepath }}
-        mv sqlite-amalgamation-3510300 sqlite3
+        mv sqlite-amalgamation-3530100 sqlite3
 
     - name: Download lzma (xz)
       id: lzma
@@ -337,9 +337,9 @@ jobs:
       id: nasm
       uses: mercury233/action-cache-download-file@v1.2.0
       with:
-        url: https://www.nasm.us/pub/nasm/releasebuilds/3.01/win64/nasm-3.01-win64.zip
+        url: https://www.nasm.us/pub/nasm/releasebuilds/3.02rc7/win64/nasm-3.02rc7-win64.zip
         filename: nasm.zip
-        sha256: e0ba5157007abc7b1a65118a96657a961ddf55f7e3f632ee035366dfce039ca4
+        sha256: 20a4e2a146c6be5feb280a6f098a48ef5ba2328dd85ef896f8df43fc84ffc1c7
 
     - name: Install NASM
       if: matrix.mingw != true
