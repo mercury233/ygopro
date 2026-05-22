@@ -246,6 +246,7 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", irr::core::rect<irr::s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
+改善卡片列表滚动条点击体验。\n\
 升级依赖库。\n\
 支持设置帧率和垂直同步。\n\
 粘贴文本时自动过滤结尾的空格。\n\
