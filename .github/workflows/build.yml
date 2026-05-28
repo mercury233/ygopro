@@ -720,7 +720,15 @@ jobs:
         echo "sqlite lib: $(brew --prefix sqlite)/lib"
         echo "zlib include: $(brew --prefix zlib)/include"
         echo "zlib lib: $(brew --prefix zlib)/lib"
+        echo "event include: $(brew --prefix libevent)/include"
+        echo "event lib: $(brew --prefix libevent)/lib"
+        echo "webp include: $(brew --prefix webp)/include"
+        echo "webp lib: $(brew --prefix webp)/lib"
         DYLD_LIBRARY_PATH=$(brew --prefix)/lib ./premake5 gmake \
+          --event-include-dir=$(brew --prefix libevent)/include \
+          --event-lib-dir=$(brew --prefix libevent)/lib \
+          --webp-include-dir=$(brew --prefix webp)/include \
+          --webp-lib-dir=$(brew --prefix webp)/lib \
           --sqlite-include-dir=$(brew --prefix sqlite)/include \
           --sqlite-lib-dir=$(brew --prefix sqlite)/lib \
           --zlib-include-dir=$(brew --prefix zlib)/include \
