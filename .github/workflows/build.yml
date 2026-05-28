@@ -721,6 +721,8 @@ jobs:
         echo "zlib include: $(brew --prefix zlib)/include"
         echo "zlib lib: $(brew --prefix zlib)/lib"
         echo "event include: $(brew --prefix libevent)/include"
+        ls $(brew --prefix libevent)/include
+        ls $(brew --prefix libevent)/include/event2
         echo "event lib: $(brew --prefix libevent)/lib"
         echo "webp include: $(brew --prefix webp)/include"
         echo "webp lib: $(brew --prefix webp)/lib"
