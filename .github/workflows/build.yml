@@ -647,11 +647,35 @@ jobs:
         name: dependencies-sources-static-link
         path: .
 
+    - name: wtf
+      continue-on-error: true
+      if: matrix.static-link != true
+      run: |
+        echo "event include: $(brew --prefix libevent)/include"
+        echo "=== brew libevent dir ==="
+        ls $(brew --prefix libevent)
+        echo "=== brew libevent include dir ==="
+        ls $(brew --prefix libevent)/include
+        echo "=== brew libevent include/event2 dir ==="
+        ls $(brew --prefix libevent)/include/event2
+
     - name: Install dependencies
       if: matrix.static-link != true
       run: |
-        brew install libevent opus opusfile libvorbis zlib
+        brew install libevent webp opus opusfile libvorbis zlib
 #        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng webp xz
+
+    - name: wtf2
+      continue-on-error: true
+      if: matrix.static-link != true
+      run: |
+        echo "event include: $(brew --prefix libevent)/include"
+        echo "=== brew libevent dir ==="
+        ls $(brew --prefix libevent)
+        echo "=== brew libevent include dir ==="
+        ls $(brew --prefix libevent)/include
+        echo "=== brew libevent include/event2 dir ==="
+        ls $(brew --prefix libevent)/include/event2
 
     - name: Install NASM
       if: matrix.static-link == true
@@ -721,8 +745,11 @@ jobs:
         echo "zlib include: $(brew --prefix zlib)/include"
         echo "zlib lib: $(brew --prefix zlib)/lib"
         echo "event include: $(brew --prefix libevent)/include"
+        echo "=== brew libevent dir ==="
         ls $(brew --prefix libevent)
+        echo "=== brew libevent include dir ==="
         ls $(brew --prefix libevent)/include
+        echo "=== brew libevent include/event2 dir ==="
         ls $(brew --prefix libevent)/include/event2
         echo "event lib: $(brew --prefix libevent)/lib"
         echo "webp include: $(brew --prefix webp)/include"
