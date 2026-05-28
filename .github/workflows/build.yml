@@ -715,6 +715,11 @@ jobs:
     - name: Use premake to generate make files (Homebrew packages)
       if: matrix.static-link != true
       run: |
+        echo "DYLD_LIBRARY_PATH=$(brew --prefix)/lib"
+        echo "sqlite include: $(brew --prefix sqlite)/include"
+        echo "sqlite lib: $(brew --prefix sqlite)/lib"
+        echo "zlib include: $(brew --prefix zlib)/include"
+        echo "zlib lib: $(brew --prefix zlib)/lib"
         DYLD_LIBRARY_PATH=$(brew --prefix)/lib ./premake5 gmake \
           --sqlite-include-dir=$(brew --prefix sqlite)/include \
           --sqlite-lib-dir=$(brew --prefix sqlite)/lib \

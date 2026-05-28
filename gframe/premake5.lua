@@ -5,6 +5,19 @@ project "YGOPro"
         openmp "On"
     end
 
+
+    --test
+    if EVENT_INCLUDE_DIR == nil then print "::warning:: EVENT_INCLUDE_DIR is not set" end
+    if IRRLICHT_INCLUDE_DIR == nil then print "::warning:: IRRLICHT_INCLUDE_DIR is not set" end
+    if JPEG_INCLUDE_DIR == nil then print "::warning:: JPEG_INCLUDE_DIR is not set" end
+    if PNG_INCLUDE_DIR == nil then print "::warning:: PNG_INCLUDE_DIR is not set" end -- not used by gframe
+    if WEBP_INCLUDE_DIR == nil then print "::warning:: WEBP_INCLUDE_DIR is not set" end
+    if LZMA_INCLUDE_DIR == nil then print "::warning:: LZMA_INCLUDE_DIR is not set" end
+    if ZLIB_INCLUDE_DIR == nil then print "::warning:: ZLIB_INCLUDE_DIR is not set" end
+    if SQLITE_INCLUDE_DIR == nil then print "::warning:: SQLITE_INCLUDE_DIR is not set" end
+    if FREETYPE_INCLUDE_DIR == nil then print "::warning:: FREETYPE_INCLUDE_DIR is not set" end
+
+
     defines { "_IRR_STATIC_LIB_" }
     files { "*.cpp", "*.h" }
     includedirs { "../ocgcore", EVENT_INCLUDE_DIR, IRRLICHT_INCLUDE_DIR, JPEG_INCLUDE_DIR, WEBP_INCLUDE_DIR, ZLIB_INCLUDE_DIR, LZMA_INCLUDE_DIR, SQLITE_INCLUDE_DIR }
