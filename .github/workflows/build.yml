@@ -650,7 +650,7 @@ jobs:
     - name: Install dependencies
       if: matrix.static-link != true
       run: |
-        brew install opus opusfile libvorbis zlib
+        brew install libevent opus opusfile libvorbis zlib
 #        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng webp xz
 
     - name: Install NASM
@@ -721,6 +721,7 @@ jobs:
         echo "zlib include: $(brew --prefix zlib)/include"
         echo "zlib lib: $(brew --prefix zlib)/lib"
         echo "event include: $(brew --prefix libevent)/include"
+        ls $(brew --prefix libevent)
         ls $(brew --prefix libevent)/include
         ls $(brew --prefix libevent)/include/event2
         echo "event lib: $(brew --prefix libevent)/lib"
