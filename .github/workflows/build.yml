@@ -647,35 +647,11 @@ jobs:
         name: dependencies-sources-static-link
         path: .
 
-    - name: wtf
-      continue-on-error: true
-      if: matrix.static-link != true
-      run: |
-        echo "event include: $(brew --prefix libevent)/include"
-        echo "=== brew libevent dir ==="
-        ls $(brew --prefix libevent)
-        echo "=== brew libevent include dir ==="
-        ls $(brew --prefix libevent)/include
-        echo "=== brew libevent include/event2 dir ==="
-        ls $(brew --prefix libevent)/include/event2
-
     - name: Install dependencies
       if: matrix.static-link != true
       run: |
-        brew install libevent webp opus opusfile libvorbis zlib
+        brew install opus opusfile libvorbis zlib
 #        brew install sqlite libx11 freetype libevent libjpeg-turbo libpng webp xz
-
-    - name: wtf2
-      continue-on-error: true
-      if: matrix.static-link != true
-      run: |
-        echo "event include: $(brew --prefix libevent)/include"
-        echo "=== brew libevent dir ==="
-        ls $(brew --prefix libevent)
-        echo "=== brew libevent include dir ==="
-        ls $(brew --prefix libevent)/include
-        echo "=== brew libevent include/event2 dir ==="
-        ls $(brew --prefix libevent)/include/event2
 
     - name: Install NASM
       if: matrix.static-link == true
@@ -739,26 +715,7 @@ jobs:
     - name: Use premake to generate make files (Homebrew packages)
       if: matrix.static-link != true
       run: |
-        echo "DYLD_LIBRARY_PATH=$(brew --prefix)/lib"
-        echo "sqlite include: $(brew --prefix sqlite)/include"
-        echo "sqlite lib: $(brew --prefix sqlite)/lib"
-        echo "zlib include: $(brew --prefix zlib)/include"
-        echo "zlib lib: $(brew --prefix zlib)/lib"
-        echo "event include: $(brew --prefix libevent)/include"
-        echo "=== brew libevent dir ==="
-        ls $(brew --prefix libevent)
-        echo "=== brew libevent include dir ==="
-        ls $(brew --prefix libevent)/include
-        echo "=== brew libevent include/event2 dir ==="
-        ls $(brew --prefix libevent)/include/event2
-        echo "event lib: $(brew --prefix libevent)/lib"
-        echo "webp include: $(brew --prefix webp)/include"
-        echo "webp lib: $(brew --prefix webp)/lib"
         DYLD_LIBRARY_PATH=$(brew --prefix)/lib ./premake5 gmake \
-          --event-include-dir=$(brew --prefix libevent)/include \
-          --event-lib-dir=$(brew --prefix libevent)/lib \
-          --webp-include-dir=$(brew --prefix webp)/include \
-          --webp-lib-dir=$(brew --prefix webp)/lib \
           --sqlite-include-dir=$(brew --prefix sqlite)/include \
           --sqlite-lib-dir=$(brew --prefix sqlite)/lib \
           --zlib-include-dir=$(brew --prefix zlib)/include \
