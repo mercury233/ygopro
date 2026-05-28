@@ -10,47 +10,47 @@ project "YGOPro"
     if EVENT_INCLUDE_DIR == nil then
         print "::warning:: EVENT_INCLUDE_DIR is not set"
     else
-        print EVENT_INCLUDE_DIR
+        print (EVENT_INCLUDE_DIR)
     end
     if IRRLICHT_INCLUDE_DIR == nil then
         print "::warning:: IRRLICHT_INCLUDE_DIR is not set"
     else
-        print IRRLICHT_INCLUDE_DIR
+        print (IRRLICHT_INCLUDE_DIR)
     end
     if JPEG_INCLUDE_DIR == nil then
         print "::warning:: JPEG_INCLUDE_DIR is not set"
     else
-        print JPEG_INCLUDE_DIR
+        print (JPEG_INCLUDE_DIR)
     end
     if PNG_INCLUDE_DIR == nil then
         print "::warning:: PNG_INCLUDE_DIR is not set"
     else
-        print PNG_INCLUDE_DIR
+        print (PNG_INCLUDE_DIR)
     end
     if WEBP_INCLUDE_DIR == nil then
         print "::warning:: WEBP_INCLUDE_DIR is not set"
     else
-        print WEBP_INCLUDE_DIR
+        print (WEBP_INCLUDE_DIR)
     end
     if LZMA_INCLUDE_DIR == nil then
         print "::warning:: LZMA_INCLUDE_DIR is not set"
     else
-        print LZMA_INCLUDE_DIR
+        print (LZMA_INCLUDE_DIR)
     end
     if ZLIB_INCLUDE_DIR == nil then
         print "::warning:: ZLIB_INCLUDE_DIR is not set"
     else
-        print ZLIB_INCLUDE_DIR
+        print (ZLIB_INCLUDE_DIR)
     end
     if SQLITE_INCLUDE_DIR == nil then
         print "::warning:: SQLITE_INCLUDE_DIR is not set"
     else
-        print SQLITE_INCLUDE_DIR
+        print (SQLITE_INCLUDE_DIR)
     end
     if FREETYPE_INCLUDE_DIR == nil then
         print "::warning:: FREETYPE_INCLUDE_DIR is not set"
     else
-        print FREETYPE_INCLUDE_DIR
+        print (FREETYPE_INCLUDE_DIR)
     end
 
     defines { "_IRR_STATIC_LIB_" }
