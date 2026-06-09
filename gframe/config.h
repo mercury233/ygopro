@@ -37,8 +37,6 @@ inline T myclamp(T v, T lo, T hi) {
 	return (v < lo) ? lo : (hi < v) ? hi : v;
 }
 
-#define NOMINMAX 1 // for windows.h, temporary solution
-#define WIN32_LEAN_AND_MEAN
 #include <irrlicht.h>
 
 constexpr uint16_t PRO_VERSION = 0x1362;
