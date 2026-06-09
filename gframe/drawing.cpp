@@ -8,8 +8,6 @@
 #include "duelclient.h"
 
 #ifdef _WIN32
-#define NOMINMAX 1
-#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 #ifdef __APPLE__

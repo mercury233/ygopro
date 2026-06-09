@@ -1,4 +1,4 @@
-﻿#include "config.h"
+#include "config.h"
 #include "menu_handler.h"
 #include "file_system.h"
 #include "netserver.h"

@@ -17,8 +17,6 @@ FILE* mywfopen(const wchar_t* filename, const char* mode) {
 
 #ifdef _WIN32
 
-#define NOMINMAX 1
-#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <shellapi.h>
 
