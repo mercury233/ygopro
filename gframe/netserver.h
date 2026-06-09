@@ -32,7 +32,7 @@ public:
 		BufferIO::Write<uint8_t>(p, proto);
 		last_sent = 3;
 		if (dp)
-			bufferevent_write(dp->bev, net_server_write, 3);
+			WriteBufferEvent(dp->bev, net_server_write, 3);
 	}
 	template<typename ST>
 	static void SendPacketToPlayer(DuelPlayer* dp, unsigned char proto, const ST& st) {
@@ -43,7 +43,7 @@ public:
 		std::memcpy(p, &st, sizeof(ST));
 		last_sent = sizeof(ST) + 3;
 		if (dp)
-			bufferevent_write(dp->bev, net_server_write, sizeof(ST) + 3);
+			WriteBufferEvent(dp->bev, net_server_write, sizeof(ST) + 3);
 	}
 	static void SendBufferToPlayer(DuelPlayer* dp, unsigned char proto, void* buffer, size_t len) {
 		auto p = net_server_write;
@@ -54,11 +54,11 @@ public:
 		std::memcpy(p, buffer, len);
 		last_sent = len + 3;
 		if (dp)
-			bufferevent_write(dp->bev, net_server_write, len + 3);
+			WriteBufferEvent(dp->bev, net_server_write, len + 3);
 	}
 	static void ReSendToPlayer(DuelPlayer* dp) {
 		if(dp)
-			bufferevent_write(dp->bev, net_server_write, last_sent);
+			WriteBufferEvent(dp->bev, net_server_write, last_sent);
 	}
 };
 

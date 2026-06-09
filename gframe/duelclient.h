@@ -32,7 +32,7 @@ public:
 		auto p = duel_client_write;
 		BufferIO::Write<uint16_t>(p, 1);
 		BufferIO::Write<uint8_t>(p, proto);
-		bufferevent_write(client_bev, duel_client_write, 3);
+		WriteBufferEvent(client_bev, duel_client_write, 3);
 	}
 	template<typename ST>
 	static void SendPacketToServer(unsigned char proto, const ST& st) {
@@ -41,7 +41,7 @@ public:
 		BufferIO::Write<uint16_t>(p, (uint16_t)(1 + sizeof(ST)));
 		BufferIO::Write<uint8_t>(p, proto);
 		std::memcpy(p, &st, sizeof(ST));
-		bufferevent_write(client_bev, duel_client_write, sizeof(ST) + 3);
+		WriteBufferEvent(client_bev, duel_client_write, sizeof(ST) + 3);
 	}
 	static void SendBufferToServer(unsigned char proto, void* buffer, size_t len) {
 		auto p = duel_client_write;
@@ -50,7 +50,7 @@ public:
 		BufferIO::Write<uint16_t>(p, (uint16_t)(1 + len));
 		BufferIO::Write<uint8_t>(p, proto);
 		std::memcpy(p, buffer, len);
-		bufferevent_write(client_bev, duel_client_write, len + 3);
+		WriteBufferEvent(client_bev, duel_client_write, len + 3);
 	}
 
 	static std::vector<HostPacket> hosts;

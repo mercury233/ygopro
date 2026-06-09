@@ -6,6 +6,10 @@
 #include "mysocket.h"
 #include <thread>
 #include <unordered_map>
+#include <event2/event.h>
+#include <event2/listener.h>
+#include <event2/bufferevent.h>
+#include <event2/buffer.h>
 
 namespace ygo {
 
@@ -21,6 +25,10 @@ namespace{
 
 unsigned char NetServer::net_server_write[SIZE_NETWORK_BUFFER]{};
 size_t NetServer::last_sent{};
+
+int WriteBufferEvent(struct bufferevent *bufev, const void *data, size_t size){
+	return bufferevent_write(bufev, data, size);
+}
 
 bool NetServer::StartServer(unsigned short port) {
 	if(net_evbase)

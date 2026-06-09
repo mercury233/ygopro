@@ -1,4 +1,4 @@
-#include "config.h"
+﻿#include "config.h"
 #include "network.h"
 #include "game.h"
 #include "data_manager.h"
@@ -6,7 +6,9 @@
 #include <clocale>
 #include <memory>
 #ifdef _WIN32
+#include <windows.h>
 #include <shellapi.h>
+#include <WinSock2.h>
 #endif
 #ifdef __APPLE__
 #import <CoreFoundation/CoreFoundation.h>

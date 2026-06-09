@@ -1,4 +1,4 @@
-#include "config.h"
+﻿#include "config.h"
 #include "menu_handler.h"
 #include "file_system.h"
 #include "netserver.h"
@@ -11,6 +11,7 @@
 #include "sound_manager.h"
 #include "game.h"
 #include "mysocket.h"
+#include <event2/event.h>
 
 namespace ygo {
 

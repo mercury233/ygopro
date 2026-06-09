@@ -3,13 +3,19 @@
 
 #include <cstdint>
 #include <cstring>
-#include <event2/event.h>
-#include <event2/listener.h>
-#include <event2/bufferevent.h>
-#include <event2/buffer.h>
-#include <event2/thread.h>
 #include <type_traits>
 #include "deck_manager.h"
+
+struct bufferevent;
+struct event;
+struct event_base;
+struct evconnlistener;
+struct sockaddr;
+#ifdef _WIN32
+#define evutil_socket_t intptr_t
+#else
+#define evutil_socket_t int
+#endif
 
 #define check_trivially_copyable(T) static_assert(std::is_trivially_copyable<T>::value == true && std::is_standard_layout<T>::value == true, "not trivially copyable")
 
@@ -202,6 +208,8 @@ inline unsigned int GetPosition(unsigned char* qbuf, size_t offset) {
 	std::memcpy(&info, qbuf + offset, sizeof info);
 	return info >> 24;
 }
+
+int WriteBufferEvent(struct bufferevent *bufev, const void *data, size_t size);
 
 class DuelMode {
 public:

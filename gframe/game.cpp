@@ -13,6 +13,7 @@
 #include <thread>
 #include <chrono>
 #ifdef _WIN32
+#include <windows.h>
 #include <timeapi.h>
 #endif
 #ifdef __APPLE__
@@ -32,10 +33,6 @@
     #endif
 #else
 	#define CPU_PAUSE() ((void)0)
-#endif
-
-#ifdef _WIN32
-#include <windows.h>
 #endif
 
 namespace ygo {
