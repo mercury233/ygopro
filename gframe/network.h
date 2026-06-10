@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <cstring>
 #include <type_traits>
-#include "deck_manager.h"
 
 struct bufferevent;
 struct event;
