@@ -4189,4 +4189,25 @@ void DuelClient::BroadcastReply(evutil_socket_t fd, short events, void * arg) {
 		}
 	}
 }
+
+unsigned int DuelClient::ResolveHostName(const char* hostname, const char* port) {
+	unsigned int remote_addr = htonl(inet_addr(hostname));
+	if(remote_addr == INADDR_NONE) {
+		evutil_addrinfo hints{};
+		hints.ai_family = AF_INET;
+		hints.ai_socktype = SOCK_STREAM;
+		hints.ai_protocol = IPPROTO_TCP;
+		hints.ai_flags = EVUTIL_AI_ADDRCONFIG;
+		evutil_addrinfo* answer = nullptr;
+		if(evutil_getaddrinfo(hostname, port, &hints, &answer) != 0) {
+			return 0;
+		}
+		char ip[20];
+		auto* sin = reinterpret_cast<sockaddr_in*>(answer->ai_addr);
+		evutil_inet_ntop(AF_INET, &sin->sin_addr, ip, sizeof(ip));
+		remote_addr = htonl(inet_addr(ip));
+		evutil_freeaddrinfo(answer);
+	}
+	return remote_addr;
+}
 }
