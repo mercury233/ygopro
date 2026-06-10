@@ -14,6 +14,15 @@
 #include <chrono>
 #ifdef _WIN32
 #include <timeapi.h>
+#else
+#include <spawn.h>
+#ifdef __APPLE__
+#include <crt_externs.h>
+#define GetEnviron() (*_NSGetEnviron())
+#else
+extern char **environ;
+#define GetEnviron() environ
+#endif
 #endif
 #ifdef __APPLE__
 #include <CoreGraphics/CoreGraphics.h>
@@ -2495,23 +2504,49 @@ void Game::SetCursor(irr::gui::ECURSOR_ICON icon) {
 		cursor->setActiveIcon(icon);
 	}
 }
-bool Game::StartProcess(const wchar_t* cmd, const wchar_t* param1, const wchar_t* param2) {
-	if(cmd[0] == 0)
-		return false;
+bool Game::SpawnAsync(const std::wstring& exePath, const std::vector<std::wstring>& args) {
 #ifdef _WIN32
+	std::wstring cmdLine = L"\"" + exePath + L"\"";
+	for (const auto& arg : args) {
+		cmdLine += L" \"" + arg + L"\"";
+	}
+
 	STARTUPINFOW si;
 	PROCESS_INFORMATION pi;
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
-	wchar_t command[MAX_PATH];
-	myswprintf(command, L"%ls \"%ls\" \"%ls\"", cmd, param1, param2);
-	return CreateProcessW(NULL, command, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
-#else
+
+	// CreateProcessW can modify the command line buffer, so we need to create a mutable copy of it
+	// TODO: Move to C++17 and use cmdLine.data() directly without copying to a vector
+	std::vector<wchar_t> cmdBuffer(cmdLine.begin(), cmdLine.end());
+	cmdBuffer.push_back(L'\0');
+
+	if (!CreateProcessW(exePath.c_str(), cmdBuffer.data(), nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi)) {
+		return false;
+	}
+
+	CloseHandle(pi.hThread);
+	CloseHandle(pi.hProcess);
 	return true;
-//	if(fork() == 0) {
-//		exit(0);
-//	}
+#else
+	std::string exePathUTF8 = BufferIO::EncodeUTF8String(exePath);
+
+	std::vector<std::string> utf8Args;
+	utf8Args.emplace_back(exePathUTF8);
+	for (const auto& arg : args) {
+		utf8Args.push_back(BufferIO::EncodeUTF8String(arg));
+	}
+
+	std::vector<char*> execArgs;
+	execArgs.reserve(utf8Args.size() + 1);
+	for (auto& arg : utf8Args) {
+		execArgs.push_back(const_cast<char*>(arg.c_str()));
+	}
+	execArgs.push_back(nullptr);
+
+	pid_t pid{}; // ignore pid return value, use SIG_IGN to prevent zombie process
+	return posix_spawn(&pid, exePathUTF8.c_str(), nullptr, nullptr, execArgs.data(), GetEnviron()) == 0;
 #endif
 }
 
