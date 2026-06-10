@@ -9,6 +9,8 @@
 #include <windows.h>
 #include <shellapi.h>
 #include <WinSock2.h>
+#else
+#include <signal.h>
 #endif
 #ifdef __APPLE__
 #import <CoreFoundation/CoreFoundation.h>
@@ -57,6 +59,7 @@ int main(int argc, char* argv[]) {
 	evthread_use_windows_threads();
 #else
 	evthread_use_pthreads();
+	signal(SIGCHLD, SIG_IGN);
 #endif //_WIN32
 	ygo::Game _game;
 	ygo::mainGame = &_game;
