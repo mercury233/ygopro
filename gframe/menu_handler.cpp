@@ -10,6 +10,7 @@
 #include "image_manager.h"
 #include "sound_manager.h"
 #include "game.h"
+#include "mysocket.h"
 #include <event2/event.h>
 
 namespace ygo {
