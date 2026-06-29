@@ -2078,6 +2078,7 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 		}
 		case irr::KEY_F2: {
 			if (event.KeyInput.PressedDown) break;
+			if (!mainGame->is_building && !event.KeyInput.Control) break;
 			CardData cd;
 			int code = mainGame->showingcode;
 			if (!code || !dataManager.GetData(code, &cd)) break;
