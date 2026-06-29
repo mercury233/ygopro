@@ -1410,6 +1410,15 @@ void DeckBuilder::FilterCards() {
 	const wchar_t* pstr = mainGame->ebCardName->getText();
 	int trycode = BufferIO::GetVal(pstr);
 	std::wstring str{ pstr };
+	if (str[0] == 'c') {
+		size_t extension_start = str.find_last_of('.');
+		if (extension_start != std::wstring::npos) {
+			std::wstring cno = str.substr(0, extension_start);
+			trycode = BufferIO::GetVal(cno.c_str() + 1);
+		} else {
+			trycode = BufferIO::GetVal(str.c_str() + 1);
+		}
+	}
 	std::vector<element_t> query_elements;
 	if(mainGame->gameConf.search_multiple_keywords) {
 		const wchar_t separator = mainGame->gameConf.search_multiple_keywords == 1 ? L' ' : L'+';
