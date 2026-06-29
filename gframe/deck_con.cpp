@@ -1151,6 +1151,18 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			}
 			if(havePopupWindow())
 				break;
+			if (mainGame->env->getRootGUIElement()->getElementFromPoint(mouse_pos) == mainGame->ebCardName) {
+				const char* txt = mainGame->env->getOSOperator()->getTextFromClipboard();
+				if (txt) {
+					wchar_t text[0x10000];
+					BufferIO::DecodeUTF8(txt, text);
+					irr::core::stringw t(text);
+					t.trim();
+					mainGame->ebCardName->setText(t.c_str());
+					InstantSearch();
+				}
+				break;
+			}
 			if(!is_draging) {
 				if(hovered_pos == 0 || hovered_seq == -1)
 					break;
