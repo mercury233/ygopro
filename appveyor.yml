@@ -1,0 +1,148 @@
+version: '{build}'
+skip_tags: true
+image: Visual Studio 2019
+
+environment:
+  access_token:
+    secure: QRJ97uSkoKE5kasZbXJMkRXX9VZYA4jUIl1YgkqMT+KE2hvSGds459bxYHQvvwFP
+
+install:
+  - git submodule update --init --recursive
+
+  - choco install -y nasm
+  - ps: $env:Path += ';C:\Program Files\NASM'
+
+  # environment and system dependency
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-windows.zip ; exit 0"
+  - 7z x premake-5.0.0-beta8-windows.zip
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz ; exit 0"
+  - tar xf libevent-2.1.12-stable.tar.gz
+  - move libevent-2.1.12-stable event
+  - copy premake\event\msvc-event-config.h event\include\event2\event-config.h
+  - copy event\WIN32-Code\nmake\evconfig-private.h event\include\evconfig-private.h
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://downloads.sourceforge.net/freetype/freetype-2.14.2.tar.gz ; exit 0"
+  - tar xf freetype-2.14.2.tar.gz
+  - move freetype-2.14.2 freetype
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.4.8.tar.gz ; exit 0"
+  - tar xf lua-5.4.8.tar.gz
+  - move lua-5.4.8 lua
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2026/sqlite-amalgamation-3510300.zip ; exit 0"
+  - 7z x sqlite-amalgamation-3510300.zip
+  - move sqlite-amalgamation-3510300 sqlite3
+
+  - git clone --depth=1 --branch test https://github.com/mercury233/irrlicht irrlicht
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.1.4.1/libjpeg-turbo-3.1.4.1.tar.gz ; exit 0"
+  - tar xf libjpeg-turbo-3.1.4.1.tar.gz
+  - move libjpeg-turbo-3.1.4.1 jpeg
+  - copy jpeg\src\jversion.h.in jpeg\src\jversion.h
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://downloads.sourceforge.net/libpng/libpng-1.6.58.tar.gz ; exit 0"
+  - tar xf libpng-1.6.58.tar.gz
+  - move libpng-1.6.58 png
+  - copy png\scripts\pnglibconf.h.prebuilt png\pnglibconf.h
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz ; exit 0"
+  - tar xf zlib-1.3.2.tar.gz
+  - move zlib-1.3.2 zlib
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz ; exit 0"
+  - tar xf xz-5.8.3.tar.gz
+  - move xz-5.8.3 lzma
+
+  - git clone --depth=1 https://github.com/mackron/miniaudio
+  - xcopy /Y miniaudio\extras\miniaudio_split\miniaudio.* .
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/xiph/ogg/releases/download/v1.3.6/libogg-1.3.6.tar.gz ; exit 0"
+  - tar xf libogg-1.3.6.tar.gz
+  - move libogg-1.3.6 miniaudio/external/ogg
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/xiph/opus/releases/download/v1.5.2/opus-1.5.2.tar.gz ; exit 0"
+  - tar xf opus-1.5.2.tar.gz
+  - move opus-1.5.2 miniaudio/external/opus
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/xiph/opusfile/releases/download/v0.12/opusfile-0.12.tar.gz ; exit 0"
+  - tar xf opusfile-0.12.tar.gz
+  - move opusfile-0.12 miniaudio/external/opusfile
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/xiph/vorbis/releases/download/v1.3.7/libvorbis-1.3.7.tar.gz ; exit 0"
+  - tar xf libvorbis-1.3.7.tar.gz
+  - move libvorbis-1.3.7 miniaudio/external/vorbis
+
+  # let premake happy
+  - xcopy /E premake\* .
+  - xcopy /E resource\* .
+
+  # premake
+  - premake5 vs2019
+
+platform: Win32
+configuration: Release
+
+build: 
+    project: build/YGOPro.sln
+    parallel: true
+
+after_build:
+  - mv bin\release\x86\YGOPro.exe YGOPro.exe
+  - mkdir pics
+  - mkdir replay
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-database/raw/master/locales/zh-CN/cards.cdb ; exit 0"
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-starter-pack/archive/master.zip ; exit 0"
+  - 7z x ygopro-starter-pack-master.zip
+  - xcopy /E ygopro-starter-pack-master\* .
+  - 7z a YGOPro-ver.233.7z YGOPro.exe LICENSE README.md lflist.conf strings.conf cards.cdb script textures deck single pics replay -xr!.git*
+
+  - git config --global credential.helper store
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - bash -c "git tag -d latest ; exit 0"
+  - git tag latest HEAD
+  - git push -f origin latest
+  - ps: |
+      try {
+          $url = 'https://api.github.com/repos/mercury233/ygopro/releases/'
+          $latest = Invoke-RestMethod ($url+'latest')
+          if ($latest.id) {
+              Invoke-RestMethod ($url+$latest.id) -Method Delete -Headers @{
+                  "Authorization" = "Bearer $($env:access_token)"
+              }
+          }
+      } catch {
+          Write-Output "Failed to delete latest release: $_"
+      }
+
+test: off
+
+artifacts:
+  - path: YGOPro.exe
+    name: YGOPro
+  - path: YGOPro-ver.233.7z
+    name: YGOPro-ver.233
+
+deploy:
+    release: latest
+    description: 'Automatic build by Appveyor.'
+    provider: GitHub
+    auth_token: $(access_token)
+    force_update: true
+    on:
+        branch: test
+
+cache:
+  - premake-5.0.0-beta8-windows.zip
+  - libevent-2.1.12-stable.tar.gz
+  - freetype-2.14.2.tar.gz
+  - lua-5.4.8.tar.gz
+  - sqlite-amalgamation-3510300.zip
+  - libjpeg-turbo-3.1.4.1.tar.gz
+  - libpng-1.6.58.tar.gz
+  - zlib-1.3.2.tar.gz
+  - xz-5.8.3.tar.gz
+  - libogg-1.3.6.tar.gz
+  - opus-1.5.2.tar.gz
+  - opusfile-0.12.tar.gz
+  - libvorbis-1.3.7.tar.gz
