@@ -1151,6 +1151,18 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			}
 			if(havePopupWindow())
 				break;
+			if (mainGame->env->getRootGUIElement()->getElementFromPoint(mouse_pos) == mainGame->ebCardName) {
+				const char* txt = mainGame->env->getOSOperator()->getTextFromClipboard();
+				if (txt) {
+					wchar_t text[0x10000];
+					BufferIO::DecodeUTF8(txt, text);
+					irr::core::stringw t(text);
+					t.trim();
+					mainGame->ebCardName->setText(t.c_str());
+					InstantSearch();
+				}
+				break;
+			}
 			if(!is_draging) {
 				if(hovered_pos == 0 || hovered_seq == -1)
 					break;
@@ -1410,6 +1422,15 @@ void DeckBuilder::FilterCards() {
 	const wchar_t* pstr = mainGame->ebCardName->getText();
 	int trycode = BufferIO::GetVal(pstr);
 	std::wstring str{ pstr };
+	if (str[0] == 'c') {
+		size_t extension_start = str.find_last_of('.');
+		if (extension_start != std::wstring::npos) {
+			std::wstring cno = str.substr(0, extension_start);
+			trycode = BufferIO::GetVal(cno.c_str() + 1);
+		} else {
+			trycode = BufferIO::GetVal(str.c_str() + 1);
+		}
+	}
 	std::vector<element_t> query_elements;
 	if(mainGame->gameConf.search_multiple_keywords) {
 		const wchar_t separator = mainGame->gameConf.search_multiple_keywords == 1 ? L' ' : L'+';

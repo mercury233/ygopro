@@ -2076,6 +2076,25 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			return true;
 			break;
 		}
+		case irr::KEY_F2: {
+			if (event.KeyInput.PressedDown) break;
+			if (!mainGame->is_building && !event.KeyInput.Control) break;
+			CardData cd;
+			int code = mainGame->showingcode;
+			if (!code || !dataManager.GetData(code, &cd)) break;
+			if (cd.rule_code)
+				code = cd.rule_code;
+#ifdef _WIN32
+			wchar_t filename[512];
+			myswprintf(filename, L"expansions\\script\\c%d.lua", code);
+			if ((INT_PTR)ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL) <= 32) {
+				myswprintf(filename, L"script\\c%d.lua", code);
+				ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL);
+			}
+			return true;
+#endif
+			break;
+		}
 		case irr::KEY_F9: {
 			if(mainGame->gameConf.control_mode == 1
 				&& !event.KeyInput.PressedDown && !mainGame->HasFocus(irr::gui::EGUIET_EDIT_BOX)) {
