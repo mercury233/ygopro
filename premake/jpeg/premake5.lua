@@ -52,7 +52,7 @@ else
             "simd/x86_64",
         }
         files {
-            "simd/x86_64/jsimd.c",
+            "simd/jsimd.c",
             "simd/x86_64/*.asm",
         }
         removefiles {
@@ -69,7 +69,7 @@ else
             "simd/i386",
         }
         files {
-            "simd/i386/jsimd.c",
+            "simd/jsimd.c",
             "simd/i386/*.asm",
         }
         removefiles {
@@ -126,6 +126,7 @@ else
             "simd/arm",
         }
         files {
+            "simd/jsimd.c",
             "simd/arm/jccolor-neon.c",
             "simd/arm/jcgray-neon.c",
             "simd/arm/jcphuff-neon.c",
@@ -140,6 +141,6 @@ else
             "simd/arm/jidctred-neon.c",
             "simd/arm/jquanti-neon.c",
             "simd/arm/aarch64/jchuff-neon.c",
-            "simd/arm/aarch64/jsimd.c",
+            "simd/arm/aarch64/jsimdcpu.c",
         }
 end
