@@ -122,10 +122,7 @@ else
         buildoutputs { "%{cfg.objdir}/%{file.basename}.o" }
 
     filter { "architecture:AARCH64" }
-        defines {
-            "NEON_INTRINSICS",
-            "SIMD_ARCHITECTURE=ARM64",
-        }
+        defines { "SIMD_ARCHITECTURE=ARM64" }
         includedirs {
             "simd",
             "simd/arm",
