@@ -46,6 +46,7 @@ else
     local turboSimdX86Dir  = path.getabsolute("simd/i386")
 
     filter { "architecture:x86_64" }
+        defines { "SIMD_ARCHITECTURE=X86_64" }
         includedirs {
             "simd",
             "simd/nasm",
@@ -63,6 +64,7 @@ else
         }
 
     filter { "architecture:x86" }
+        defines { "SIMD_ARCHITECTURE=I386" }
         includedirs {
             "simd",
             "simd/nasm",
@@ -120,7 +122,10 @@ else
         buildoutputs { "%{cfg.objdir}/%{file.basename}.o" }
 
     filter { "architecture:AARCH64" }
-        defines { "NEON_INTRINSICS" }
+        defines {
+            "NEON_INTRINSICS",
+            "SIMD_ARCHITECTURE=ARM64",
+        }
         includedirs {
             "simd",
             "simd/arm",
