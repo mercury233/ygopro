@@ -10,15 +10,6 @@
 #include "sound_manager.h"
 #include "duelclient.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-#ifdef __APPLE__
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif
-
 namespace ygo {
 
 void Game::Draw2DImageQuad(irr::video::IVideoDriver* driver, irr::video::ITexture* texture,
