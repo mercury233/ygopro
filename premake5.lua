@@ -397,7 +397,7 @@ workspace "YGOPro"
     filter "system:windows"
         systemversion "latest"
         startproject "YGOPro"
-        -- Target Windows 7. Require Windows 10 SDK 1803+ to build, but the generated binary will run on Windows 7+.
+        -- Target Windows 7 or later. (Building requires Windows 10 SDK 1803 or newer.)
         defines { "WINVER=0x0601", "_WIN32_WINNT=0x0601" }
 
     if WIN7_SUPPORT then
