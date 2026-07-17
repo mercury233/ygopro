@@ -306,13 +306,15 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				if(sel == -1)
 					break;
 				mainGame->bot_mode = true;
-				if(!NetServer::StartServer(mainGame->gameConf.serverport)) {
-					soundManager.PlaySoundEffect(SOUND_INFO);
-					mainGame->env->addMessageBox(L"", dataManager.GetSysString(1402));
-					break;
+				constexpr unsigned int localhost = 0x7f000001;
+				unsigned short bot_server_port = 0;
+				unsigned int bot_server_listen = localhost;
+				bool bot_server_public = mainGame->gameConf.bot_room_public;
+				if(bot_server_public) {
+					bot_server_port = mainGame->gameConf.serverport;
+					bot_server_listen = 0; // INADDR_ANY
 				}
-				if(!DuelClient::StartClient(0x7f000001, mainGame->gameConf.serverport)) {
-					NetServer::StopServer();
+				if(!NetServer::StartServer(bot_server_port, bot_server_listen, &bot_server_port, bot_server_public)) {
 					soundManager.PlaySoundEffect(SOUND_INFO);
 					mainGame->env->addMessageBox(L"", dataManager.GetSysString(1402));
 					break;
@@ -330,15 +332,20 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				int flag = 0;
 				flag += (mainGame->chkBotHand->isChecked() ? 0x1 : 0);
 				processArgs.push_back(std::to_wstring(flag));
-				processArgs.push_back(std::to_wstring(mainGame->gameConf.serverport));
+				processArgs.push_back(std::to_wstring(bot_server_port));
 #ifdef _WIN32
 				std::wstring executableName = L"Bot.exe";
 #else
 				std::wstring executableName = L"./bot";
 #endif
-				if (!Game::SpawnAsync(executableName, processArgs)) {
-					DuelClient::StopClient();
+				mainGame->pending_bot_executable = executableName;
+				mainGame->pending_bot_args = processArgs;
+				if(!DuelClient::StartClient(localhost, bot_server_port)) {
+					mainGame->pending_bot_executable.clear();
+					mainGame->pending_bot_args.clear();
 					NetServer::StopServer();
+					soundManager.PlaySoundEffect(SOUND_INFO);
+					mainGame->env->addMessageBox(L"", dataManager.GetSysString(1402));
 					break;
 				}
 				mainGame->btnStartBot->setEnabled(false);
