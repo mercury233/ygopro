@@ -2,10 +2,12 @@
 #define CLIENT_CARD_H
 
 #include "config.h"
-#include <irrlicht.h>
 #include <vector>
 #include <set>
 #include <map>
+#include <irrTypes.h>
+#include <matrix4.h>
+#include <vector3d.h>
 
 namespace ygo {
 

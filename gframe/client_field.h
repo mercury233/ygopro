@@ -2,11 +2,12 @@
 #define CLIENT_FIELD_H
 
 #include "config.h"
-#include <irrlicht.h>
 #include <random>
 #include <vector>
 #include <set>
 #include <map>
+#include <IEventReceiver.h>
+#include <vector3d.h>
 
 namespace ygo {
 
