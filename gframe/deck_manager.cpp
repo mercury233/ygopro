@@ -1,5 +1,7 @@
 #include <algorithm>
 #include "deck_manager.h"
+#include "IFileSystem.h"
+#include "IReadFile.h"
 #include "data_manager.h"
 #include "game.h"
 #include "file_system.h"

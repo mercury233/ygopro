@@ -31,15 +31,31 @@
 #ifndef __C_GUI_TTFONT_H_INCLUDED__
 #define __C_GUI_TTFONT_H_INCLUDED__
 
-#include <irrlicht.h>
 #include <ft2build.h>
+#include "irrMap.h"
+#include "SMesh.h"
+
+#include "ITexture.h"
+#include "IVideoDriver.h"
+#include "IGUIFont.h"
 #include "irrUString.h"
 #include FT_FREETYPE_H
 
 namespace irr {
+	class IrrlichtDevice;
+	namespace scene {
+		class ISceneManager;
+		class ISceneNode;
+	}
+	namespace gui {
+		class IGUIEnvironment;
+		struct SGUITTFace;
+		class CGUITTFont;
+	}
+}
+
+namespace irr {
 namespace gui {
-struct SGUITTFace;
-class CGUITTFont;
 
 //! Class to assist in deleting glyphs.
 class CGUITTAssistDelete {

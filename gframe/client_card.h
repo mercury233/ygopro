@@ -5,6 +5,9 @@
 #include <vector>
 #include <set>
 #include <map>
+#include "irrTypes.h"
+#include "vector3d.h"
+#include "matrix4.h"
 
 namespace ygo {
 

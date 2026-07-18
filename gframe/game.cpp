@@ -1,5 +1,7 @@
 #include "config.h"
 #include "game.h"
+#include "IFileSystem.h"
+#include "SIrrCreationParameters.h"
 #include "file_system.h"
 #include "image_manager.h"
 #include "data_manager.h"
@@ -28,6 +30,11 @@ extern char **environ;
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #endif
+
+namespace irr {
+// Irrlicht declares this entry point only in its umbrella header.
+extern "C" IRRLICHT_API IrrlichtDevice* IRRCALLCONV createDeviceEx(const SIrrlichtCreationParameters& parameters);
+}
 
 #if defined(__SSE2__) || (defined(_M_IX86_FP) && _M_IX86_FP >= 2) || \
 	defined(__x86_64__) || defined(_M_X64) || defined(__x86_64) || defined(_M_AMD64)

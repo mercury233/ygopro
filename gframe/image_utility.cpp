@@ -1,4 +1,7 @@
 #include "image_utility.h"
+#include "IImage.h"
+#include "IReadFile.h"
+#include "IVideoDriver.h"
 #include <cmath>
 #include <new>
 #include <setjmp.h>
