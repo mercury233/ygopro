@@ -6,13 +6,24 @@
 #include "client_field.h"
 #include "deck_con.h"
 #include "menu_handler.h"
-#include <irrlicht.h>
+#include <EGUIElementTypes.h>
+#include <ICursorControl.h>
+#include <SColor.h>
+#include <irrTypes.h>
+#include <rect.h>
+#include <vector2d.h>
+#include <vector3d.h>
+#include <cstddef>
+#include <cstring>
 #include <ctime>
-#include <unordered_map>
-#include <vector>
+#include <cwchar>
+#include <functional>
 #include <list>
 #include <mutex>
-#include <functional>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
 #ifdef _WIN32
 struct HWND__;
@@ -20,8 +31,35 @@ using HWND = HWND__*;
 #endif
 
 namespace irr {
+	class IrrlichtDevice;
+	namespace core {
+		template<typename T>
+		class CMatrix4;
+		typedef CMatrix4<f32> matrix4;
+	}
 	namespace gui {
 		class CGUITTFont;
+		class IGUIButton;
+		class IGUICheckBox;
+		class IGUIComboBox;
+		class IGUIEditBox;
+		class IGUIElement;
+		class IGUIEnvironment;
+		class IGUIImage;
+		class IGUIListBox;
+		class IGUIScrollBar;
+		class IGUIStaticText;
+		class IGUITabControl;
+		class IGUIWindow;
+	}
+	namespace scene {
+		class ICameraSceneNode;
+		class ISceneManager;
+	}
+	namespace video {
+		struct S3DVertex;
+		class ITexture;
+		class IVideoDriver;
 	}
 }
 
@@ -243,16 +281,8 @@ public:
 		}
 	}
 
-	bool HasFocus(irr::gui::EGUI_ELEMENT_TYPE type) const {
-		irr::gui::IGUIElement* focus = env->getFocus();
-		return focus && focus->hasType(type);
-	}
-
-	void TrimText(irr::gui::IGUIElement* editbox) const {
-		irr::core::stringw text(editbox->getText());
-		text.trim();
-		editbox->setText(text.c_str());
-	}
+	bool HasFocus(irr::gui::EGUI_ELEMENT_TYPE type) const;
+	void TrimText(irr::gui::IGUIElement* editbox) const;
 
 	void SwapYesNoButtons(bool no_first);
 

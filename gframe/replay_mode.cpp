@@ -4,6 +4,7 @@
 #include "duelclient.h"
 #include "game.h"
 #include "data_manager.h"
+#include <irrlicht.h>
 
 namespace ygo {
 

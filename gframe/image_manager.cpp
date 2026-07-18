@@ -1,6 +1,7 @@
 #include "image_manager.h"
 #include "image_utility.h"
 #include "game.h"
+#include <irrlicht.h>
 #include <thread>
 
 namespace ygo {

@@ -10,6 +10,7 @@
 #include "image_manager.h"
 #include "sound_manager.h"
 #include "game.h"
+#include <irrlicht.h>
 
 namespace ygo {
 

@@ -2,6 +2,7 @@
 #include "network.h"
 #include "game.h"
 #include "data_manager.h"
+#include <irrlicht.h>
 #include <event2/thread.h>
 #include <clocale>
 #include <memory>

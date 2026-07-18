@@ -11,6 +11,7 @@
 #include "replay_mode.h"
 #include "single_mode.h"
 #include "materials.h"
+#include <irrlicht.h>
 
 namespace ygo {
 

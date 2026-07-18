@@ -7,6 +7,7 @@
 #include "image_manager.h"
 #include "game.h"
 #include "materials.h"
+#include <irrlicht.h>
 
 namespace ygo {
 

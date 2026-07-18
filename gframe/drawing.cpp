@@ -10,6 +10,7 @@
 #include "deck_manager.h"
 #include "sound_manager.h"
 #include "duelclient.h"
+#include <irrlicht.h>
 
 namespace ygo {
 
