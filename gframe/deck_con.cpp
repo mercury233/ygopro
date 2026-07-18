@@ -9,7 +9,6 @@
 #include "sound_manager.h"
 #include "game.h"
 #include "duelclient.h"
-#include <irrlicht.h>
 
 namespace ygo {
 

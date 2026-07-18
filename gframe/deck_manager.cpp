@@ -4,7 +4,6 @@
 #include "game.h"
 #include "file_system.h"
 #include "network.h"
-#include <irrlicht.h>
 
 namespace ygo {
 

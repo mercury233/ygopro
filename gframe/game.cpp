@@ -11,7 +11,6 @@
 #include "duelclient.h"
 #include "netserver.h"
 #include "single_mode.h"
-#include <irrlicht.h>
 #include <thread>
 #include <chrono>
 #ifdef _WIN32
@@ -2432,15 +2431,6 @@ void Game::SetCursor(irr::gui::ECURSOR_ICON icon) {
 	if(cursor->getActiveIcon() != icon) {
 		cursor->setActiveIcon(icon);
 	}
-}
-bool Game::HasFocus(irr::gui::EGUI_ELEMENT_TYPE type) const {
-	irr::gui::IGUIElement* focus = env->getFocus();
-	return focus && focus->hasType(type);
-}
-void Game::TrimText(irr::gui::IGUIElement* editbox) const {
-	irr::core::stringw text(editbox->getText());
-	text.trim();
-	editbox->setText(text.c_str());
 }
 bool Game::SpawnAsync(const std::wstring& exePath, const std::vector<std::wstring>& args) {
 #ifdef _WIN32

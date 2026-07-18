@@ -13,7 +13,6 @@
 #include "deck_manager.h"
 #include "replay.h"
 #include "mysocket.h"
-#include <irrlicht.h>
 #include <event2/event.h>
 #include <event2/bufferevent.h>
 #include <event2/buffer.h>
