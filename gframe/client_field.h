@@ -6,8 +6,6 @@
 #include <vector>
 #include <set>
 #include <map>
-#include "IEventReceiver.h"
-#include "vector3d.h"
 
 namespace ygo {
 

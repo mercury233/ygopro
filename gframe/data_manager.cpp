@@ -1,6 +1,4 @@
 #include "data_manager.h"
-#include "IFileSystem.h"
-#include "IReadFile.h"
 #include "game.h"
 #include "client_card.h"
 #include "file_system.h"

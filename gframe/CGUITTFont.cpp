@@ -28,16 +28,8 @@
    john@suckerfreegames.com
 */
 
+#include <irrlicht.h>
 #include "CGUITTFont.h"
-#include "IFileSystem.h"
-#include "IGUIEnvironment.h"
-#include "IMeshManipulator.h"
-#include "IMeshSceneNode.h"
-#include "IReadFile.h"
-#include "IrrlichtDevice.h"
-#include "ISceneManager.h"
-#include "ISceneNode.h"
-#include "SMeshBuffer.h"
 
 namespace irr {
 namespace gui {

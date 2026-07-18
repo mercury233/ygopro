@@ -5,8 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <random>
-#include "IEventReceiver.h"
-#include "vector2d.h"
+#include <irrlicht.h>
 
 namespace ygo {
 

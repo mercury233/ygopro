@@ -1,18 +1,11 @@
 #ifndef SOUNDMANAGER_H
 #define SOUNDMANAGER_H
 
+#include "game.h"
 #include <random>
-#include <string>
-#include <vector>
 #ifdef YGOPRO_USE_MINIAUDIO
 #include <miniaudio.h>
 #endif
-
-namespace irr {
-	namespace gui {
-		class IGUIElement;
-	}
-}
 
 namespace ygo {
 

@@ -1,8 +1,7 @@
 #ifndef MATERIALS_H
 #define MATERIALS_H
 
-#include "S3DVertex.h"
-#include "SMaterial.h"
+#include <irrlicht.h>
 
 namespace ygo {
 

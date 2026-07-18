@@ -1,6 +1,5 @@
 #include "sound_manager.h"
 #include "file_system.h"
-#include "game.h"
 #if defined(YGOPRO_USE_MINIAUDIO) && defined(YGOPRO_MINIAUDIO_SUPPORT_OPUS_VORBIS)
 #include <miniaudio_libopus.h>
 #include <miniaudio_libvorbis.h>
