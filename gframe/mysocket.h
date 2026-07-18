@@ -1,29 +1,45 @@
-#ifndef SOCKET_H
-#define SOCKET_H
+#ifndef YGOPRO_SOCKET_H
+#define YGOPRO_SOCKET_H
 
 #ifdef _WIN32
 
 #include <WinSock2.h>
 #include <ws2tcpip.h>
 
-#else // _WIN32
+#else
 
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include <sys/ioctl.h>
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <unistd.h>
 
-#define SD_BOTH 2
-#define SOCKET int
-#define closesocket close
-#define INVALID_SOCKET -1
-#define SOCKET_ERROR -1
-#define SOCKADDR_IN sockaddr_in
-#define SOCKADDR sockaddr
-#define SOCKET_ERRNO() (errno)
+#endif // _WIN32
+
+namespace ygo {
+
+#ifdef _WIN32
+
+using Socket = SOCKET;
+constexpr Socket INVALID_SOCKET_HANDLE = INVALID_SOCKET;
+constexpr int SOCKET_RESULT_ERROR = SOCKET_ERROR;
+
+inline int CloseSocket(Socket socket) {
+	return closesocket(socket);
+}
+
+#else
+
+using Socket = int;
+constexpr Socket INVALID_SOCKET_HANDLE = -1;
+constexpr int SOCKET_RESULT_ERROR = -1;
+
+inline int CloseSocket(Socket socket) {
+	return close(socket);
+}
 
 #endif // _WIN32
 
-#endif // SOCKET_H
+}
+
+#endif // YGOPRO_SOCKET_H

@@ -24,7 +24,7 @@ namespace{
 	bool broadcast_enabled{};
 	unsigned char net_server_read[SIZE_NETWORK_BUFFER]{};
 
-	void DuelTimer(evutil_socket_t, short, void* arg) {
+	void DuelTimer(EventSocket, short, void* arg) {
 		static_cast<DuelMode*>(arg)->TimerTick();
 	}
 }
@@ -58,7 +58,7 @@ bool NetServer::StartServer(unsigned short port, unsigned int ip, unsigned short
 	sockaddr_in bound_addr;
 	std::memset(&bound_addr, 0, sizeof bound_addr);
 	socklen_t bound_addr_len = sizeof bound_addr;
-	if(getsockname(evconnlistener_get_fd(listener), (sockaddr*)&bound_addr, &bound_addr_len) == SOCKET_ERROR) {
+	if(getsockname(evconnlistener_get_fd(listener), (sockaddr*)&bound_addr, &bound_addr_len) == SOCKET_RESULT_ERROR) {
 		evconnlistener_free(listener);
 		listener = nullptr;
 		event_base_free(net_evbase);
@@ -76,7 +76,7 @@ bool NetServer::StartServer(unsigned short port, unsigned int ip, unsigned short
 bool NetServer::StartBroadcast() {
 	if(!net_evbase || !broadcast_enabled)
 		return false;
-	SOCKET udp = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	Socket udp = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	int opt = TRUE;
 	setsockopt(udp, SOL_SOCKET, SO_BROADCAST, (const char*)&opt, sizeof opt);
 	setsockopt(udp, SOL_SOCKET, SO_REUSEADDR, (const char*)&opt, sizeof opt);
@@ -85,8 +85,8 @@ bool NetServer::StartBroadcast() {
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(7920);
 	addr.sin_addr.s_addr = 0;
-	if(bind(udp, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR) {
-		closesocket(udp);
+	if(bind(udp, (sockaddr*)&addr, sizeof(addr)) == SOCKET_RESULT_ERROR) {
+		CloseSocket(udp);
 		return false;
 	}
 	broadcast_ev = event_new(net_evbase, udp, EV_READ | EV_PERSIST, BroadcastEvent, nullptr);
@@ -104,7 +104,7 @@ void NetServer::StopBroadcast() {
 	if(!net_evbase || !broadcast_ev)
 		return;
 	event_del(broadcast_ev);
-	evutil_socket_t fd;
+	EventSocket fd;
 	event_get_assignment(broadcast_ev, 0, &fd, 0, 0, 0);
 	evutil_closesocket(fd);
 	event_free(broadcast_ev);
@@ -124,7 +124,7 @@ void NetServer::StopDuelTimer() {
 	if(duel_etimer)
 		event_del(duel_etimer);
 }
-void NetServer::BroadcastEvent(evutil_socket_t fd, short events, void* arg) {
+void NetServer::BroadcastEvent(EventSocket fd, short events, void* arg) {
 	sockaddr_in bc_addr;
 	socklen_t sz = sizeof(sockaddr_in);
 	char buf[256];
@@ -135,7 +135,7 @@ void NetServer::BroadcastEvent(evutil_socket_t fd, short events, void* arg) {
 	std::memcpy(&packet, buf, sizeof packet);
 	const HostRequest* pHR = &packet;
 	if(pHR->identifier == NETWORK_CLIENT_ID) {
-		SOCKADDR_IN sockTo;
+		sockaddr_in sockTo;
 		sockTo.sin_addr.s_addr = bc_addr.sin_addr.s_addr;
 		sockTo.sin_family = AF_INET;
 		sockTo.sin_port = htons(7921);
@@ -148,7 +148,7 @@ void NetServer::BroadcastEvent(evutil_socket_t fd, short events, void* arg) {
 		sendto(fd, (const char*)&hp, sizeof(HostPacket), 0, (sockaddr*)&sockTo, sizeof(sockTo));
 	}
 }
-void NetServer::ServerAccept(evconnlistener* listener, evutil_socket_t fd, sockaddr* address, int socklen, void* ctx) {
+void NetServer::ServerAccept(evconnlistener* listener, EventSocket fd, sockaddr* address, int socklen, void* ctx) {
 	bufferevent* bev = bufferevent_socket_new(net_evbase, fd, BEV_OPT_CLOSE_ON_FREE);
 	DuelPlayer dp;
 	dp.name[0] = 0;
@@ -205,7 +205,7 @@ void NetServer::ServerThread() {
 	evconnlistener_free(listener);
 	listener = nullptr;
 	if(broadcast_ev) {
-		evutil_socket_t fd;
+		EventSocket fd;
 		event_get_assignment(broadcast_ev, 0, &fd, 0, 0, 0);
 		evutil_closesocket(fd);
 		event_free(broadcast_ev);

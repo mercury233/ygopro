@@ -26,7 +26,7 @@ private:
 public:
 	static unsigned char selftype;
 	static bool StartClient(unsigned int ip, unsigned short port, bool create_game = true);
-	static void ConnectTimeout(evutil_socket_t fd, short events, void* arg);
+	static void ConnectTimeout(EventSocket fd, short events, void* arg);
 	static void StopClient(unsigned reason = CLIENT_CLOSE_REASON_STOP);
 	static void ClientRead(bufferevent* bev, void* ctx);
 	static void ClientEvent(bufferevent* bev, short events, void* ctx);
@@ -66,7 +66,7 @@ public:
 	static std::vector<HostPacket> hosts;
 	static void BeginRefreshHost();
 	static int RefreshThread(event_base* broadev);
-	static void BroadcastReply(evutil_socket_t fd, short events, void* arg);
+	static void BroadcastReply(EventSocket fd, short events, void* arg);
 
 	static unsigned int ResolveHostName(const char* hostname, const char* port);
 };
