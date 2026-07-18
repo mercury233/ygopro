@@ -208,8 +208,6 @@ inline unsigned int GetPosition(unsigned char* qbuf, size_t offset) {
 	return info >> 24;
 }
 
-int WriteBufferEvent(struct bufferevent *bufev, const void *data, size_t size);
-
 class DuelMode {
 public:
 	DuelMode() = default;

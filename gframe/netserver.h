@@ -11,6 +11,7 @@ private:
 	static unsigned char net_server_write[SIZE_NETWORK_BUFFER];
 	static size_t last_sent;
 	static bufferevent* disconnecting_bev;
+	static int WriteBufferEvent(bufferevent* bufev, const void* data, size_t size);
 
 	static bool CanWriteToPlayer(DuelPlayer* dp) {
 		return dp && dp->bev && dp->bev != disconnecting_bev;

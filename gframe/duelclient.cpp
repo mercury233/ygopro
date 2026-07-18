@@ -65,6 +65,10 @@ unsigned char DuelClient::duel_client_write[SIZE_NETWORK_BUFFER]{};
 unsigned char DuelClient::selftype = 0;
 std::vector<HostPacket> DuelClient::hosts;
 
+int DuelClient::WriteBufferEvent(bufferevent* bufev, const void* data, size_t size) {
+	return bufferevent_write(bufev, data, size);
+}
+
 bool DuelClient::StartClient(unsigned int ip, unsigned short port, bool create_game) {
 	if(connect_state != CONNECT_STATE_NONE)
 		return false;

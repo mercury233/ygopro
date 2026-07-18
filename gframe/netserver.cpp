@@ -33,7 +33,7 @@ unsigned char NetServer::net_server_write[SIZE_NETWORK_BUFFER]{};
 size_t NetServer::last_sent{};
 bufferevent* NetServer::disconnecting_bev = nullptr;
 
-int WriteBufferEvent(struct bufferevent *bufev, const void *data, size_t size){
+int NetServer::WriteBufferEvent(bufferevent* bufev, const void* data, size_t size) {
 	return bufferevent_write(bufev, data, size);
 }
 

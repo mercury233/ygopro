@@ -21,6 +21,7 @@ class DuelClient {
 private:
 	static bufferevent* client_bev;
 	static unsigned char duel_client_write[SIZE_NETWORK_BUFFER];
+	static int WriteBufferEvent(bufferevent* bufev, const void* data, size_t size);
 
 public:
 	static unsigned char selftype;
