@@ -2,7 +2,6 @@
 #include <stack>
 #include "client_field.h"
 #include "client_card.h"
-#include "CGUITTFont.h"
 #include "duelclient.h"
 #include "data_manager.h"
 #include "image_manager.h"
@@ -637,7 +636,7 @@ void ClientField::ShowSelectOption(int select_hint) {
 	bool quickmode = true;
 	mainGame->gMutex.lock();
 	for(auto option : select_options) {
-		if(mainGame->guiFont->getDimension(dataManager.GetDesc(option)).Width > 310) {
+		if(mainGame->GetGUIFontDimension(dataManager.GetDesc(option)).Width > 310) {
 			quickmode = false;
 			break;
 		}
