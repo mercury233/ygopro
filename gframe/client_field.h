@@ -2,6 +2,7 @@
 #define CLIENT_FIELD_H
 
 #include "config.h"
+#include <irrlicht.h>
 #include <random>
 #include <vector>
 #include <set>

@@ -1,5 +1,6 @@
 #include "config.h"
 #include "game.h"
+#include "CGUITTFont.h"
 #include "file_system.h"
 #include "image_manager.h"
 #include "data_manager.h"

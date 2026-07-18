@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "event_handler.h"
+#include "CGUITTFont.h"
 #include "client_field.h"
 #include "network.h"
 #include "game.h"

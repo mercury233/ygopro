@@ -2,6 +2,7 @@
 #define CLIENT_CARD_H
 
 #include "config.h"
+#include <irrlicht.h>
 #include <vector>
 #include <set>
 #include <map>

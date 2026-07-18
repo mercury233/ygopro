@@ -2,6 +2,7 @@
 #define IMAGEMANAGER_H
 
 #include "config.h"
+#include <irrlicht.h>
 #include <unordered_map>
 #include <queue>
 #include <mutex>

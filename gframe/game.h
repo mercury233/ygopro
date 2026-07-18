@@ -2,11 +2,11 @@
 #define GAME_H
 
 #include "config.h"
-#include "CGUITTFont.h"
 #include "mysignal.h"
 #include "client_field.h"
 #include "deck_con.h"
 #include "menu_handler.h"
+#include <irrlicht.h>
 #include <ctime>
 #include <unordered_map>
 #include <vector>
@@ -18,6 +18,12 @@
 struct HWND__;
 using HWND = HWND__*;
 #endif
+
+namespace irr {
+	namespace gui {
+		class CGUITTFont;
+	}
+}
 
 namespace ygo {
 
