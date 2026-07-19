@@ -1336,12 +1336,12 @@ void Game::DrawThumb(const CardDataC* cp, irr::core::vector2di pos, const LFList
 	}
 	driver->draw2DImage(img, dragloc, irr::core::rect<irr::s32>(0, 0, size.Width, size.Height), 0, 0, true);
 	auto current_limitloc = limitloc;
-	auto credit_max_display = CARD_THUMB_WIDTH / 20;
+	auto remaining_icon_slots = CARD_THUMB_WIDTH / 20;
 	auto advance_icon_slot = [&]() {
 		auto width = current_limitloc.getWidth();
 		current_limitloc.UpperLeftCorner.X += width;
 		current_limitloc.LowerRightCorner.X += width;
-		--credit_max_display;
+		--remaining_icon_slots;
 	};
 	auto lfit = lflist->content.find(lcode);
 	int count = lfit != lflist->content.end() ? lfit->second : 3;
@@ -1364,16 +1364,11 @@ void Game::DrawThumb(const CardDataC* cp, irr::core::vector2di pos, const LFList
 			continue;
 		auto value = it->second;
 		if (value >= 1 && value <= 100) {
-			auto cvalue = value - 1; // 1-100 => 0-99
-			// pick the first and second digit
-			auto digit1 = cvalue / 10;
-			auto digit2 = cvalue % 10;
-			auto credit_texture_offset_x = digit2 * 64;
-			auto credit_texture_offset_y = digit1 * 64;
-			driver->draw2DImage(imageManager.tLimCredit, current_limitloc, irr::core::recti(credit_texture_offset_x, credit_texture_offset_y, credit_texture_offset_x + 64, credit_texture_offset_y + 64), 0, 0, true);
+			driver->draw2DImage(imageManager.tPointMark, current_limitloc, irr::core::recti(0, 0, imageManager.tPointMark->getOriginalSize().Width, imageManager.tPointMark->getOriginalSize().Height), 0, 0, true);
+			DrawShadowText(numFont, std::to_wstring(value), current_limitloc, Resize(1, 1, 1, 1), 0xffffffff, 0xff000000, true, false, 0);
 			advance_icon_slot();
 		}
-		if (credit_max_display <= 0)
+		if (remaining_icon_slots <= 0)
 			break;
 	}
 	bool showAvail = false;
