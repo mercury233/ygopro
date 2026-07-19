@@ -14,7 +14,6 @@ void DeckManager::LoadLFListSingle(const char* path) {
 	FILE* fp = myfopen(path, "r");
 	char linebuf[1024]{};
 	wchar_t strBuffer[256]{};
-	uint32_t pointHash{};
 	auto credit_hash = [](const char* s) -> uint32_t {
 		uint32_t h = 2166136261u;
 		for (auto p = s; *p; ++p) {
@@ -67,7 +66,7 @@ void DeckManager::LoadLFListSingle(const char* path) {
 				if (limitValue < 0)
 					limitValue = 0;
 				cur->pointList.push_back({ keybuf, limitValue });
-				pointHash = credit_hash(keybuf);
+				auto pointHash = credit_hash(keybuf);
 				cur->hash = credit_update_hash(cur->hash, pointHash, static_cast<uint32_t>(limitValue), 0x43524544u);
 				continue;
 			}
@@ -78,15 +77,18 @@ void DeckManager::LoadLFListSingle(const char* path) {
 			if (errno || result > UINT32_MAX || end == pos)
 				continue;
 			uint32_t code = static_cast<uint32_t>(result);
+			char keybuf[256];
 			int creditValue = 0;
-			if (std::sscanf(end, " $%*[^ \t\n] %d", &creditValue) == 1) {
-				if (cur->pointList.empty())
-					continue;
+			if (std::sscanf(end, " $%255[^ \t\n] %d", keybuf, &creditValue) == 2) {
 				if (creditValue <= 0)
 					continue;
-				auto& point = cur->pointList.back();
-				point.table[code] = creditValue;
-				cur->hash = credit_update_hash(cur->hash, code, pointHash, static_cast<uint32_t>(creditValue));
+				auto point = std::find_if(cur->pointList.begin(), cur->pointList.end(), [&keybuf](const GamePoint& item) {
+					return item.name == keybuf;
+				});
+				if (point == cur->pointList.end())
+					continue;
+				point->table[code] = creditValue;
+				cur->hash = credit_update_hash(cur->hash, code, credit_hash(keybuf), static_cast<uint32_t>(creditValue));
 				continue;
 			}
 			pos = end;
