@@ -2006,15 +2006,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			if (!code || !dataManager.GetData(code, &cd)) break;
 			if (cd.rule_code)
 				code = cd.rule_code;
-#ifdef _WIN32
-			wchar_t filename[512];
-			myswprintf(filename, L"expansions\\script\\c%d.lua", code);
-			if ((INT_PTR)ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL) <= 32) {
-				myswprintf(filename, L"script\\c%d.lua", code);
-				ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL);
-			}
-			return true;
-#endif
+			if (Game::ShellEditScript(code))
+				return true;
 			break;
 		}
 		case irr::KEY_F9: {

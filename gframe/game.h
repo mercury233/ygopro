@@ -276,6 +276,7 @@ public:
 	irr::core::recti ResizeFit(irr::s32 x, irr::s32 y, irr::s32 x2, irr::s32 y2);
 
 	static void FixMacOSBundleWorkingDirectory();
+	static bool ShellEditScript(int code);
 	void SetWindowsIcon();
 	void SetWindowsScale(float scale);
 	void FlashWindow();

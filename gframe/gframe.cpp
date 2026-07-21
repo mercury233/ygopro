@@ -17,6 +17,24 @@
 #endif
 
 
+namespace ygo {
+
+bool Game::ShellEditScript(int code) {
+#ifdef _WIN32
+	wchar_t filename[512];
+	myswprintf(filename, L"expansions\\script\\c%d.lua", code);
+	if ((INT_PTR)ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL) <= 32) {
+		myswprintf(filename, L"script\\c%d.lua", code);
+		ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL);
+	}
+	return true;
+#else
+	return false;
+#endif
+}
+
+}
+
 void ClickButton(irr::gui::IGUIElement* btn) {
 	irr::SEvent event;
 	event.EventType = irr::EET_GUI_EVENT;
