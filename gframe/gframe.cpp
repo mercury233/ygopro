@@ -1,5 +1,4 @@
 #include "config.h"
-#include "network.h"
 #include "game.h"
 #include "data_manager.h"
 #include <event2/thread.h>
@@ -11,9 +10,6 @@
 #include <shellapi.h>
 #else
 #include <signal.h>
-#endif
-#ifdef __APPLE__
-#import <CoreFoundation/CoreFoundation.h>
 #endif
 
 #if defined(_WIN32) && (!defined(WDK_NTDDI_VERSION) || (WDK_NTDDI_VERSION < 0x0A000005)) // Redstone 4, Version 1803, Build 17134.
