@@ -323,6 +323,8 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", irr::core::rect<irr::s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
+优化决斗计时的处理。\n\
+优化选择卡片时的标签颜色的处理。\n\
 升级依赖库。\n\
 优化卡片和场地周围的动态虚线的绘制。\n\
 更新建立主机时玩家准备的处理。\n\
