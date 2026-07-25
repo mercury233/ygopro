@@ -1,7 +1,6 @@
 #ifndef YGOPRO_CONFIG_H
 #define YGOPRO_CONFIG_H
 
-#include <cerrno>
 #include <cstdio>
 #include "bufferio.h"
 #include "../ocgcore/ocgapi.h"
