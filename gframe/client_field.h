@@ -1,14 +1,13 @@
 #ifndef CLIENT_FIELD_H
 #define CLIENT_FIELD_H
 
-#include "config.h"
 #include <random>
 #include <vector>
 #include <set>
 #include <map>
+#include <memory>
 #include <IEventReceiver.h>
 #include <vector3d.h>
-#include <memory>
 
 namespace ygo {
 

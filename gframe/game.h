@@ -7,7 +7,6 @@
 #include "deck_con.h"
 #include "menu_handler.h"
 #include <irrlicht.h>
-#include <ctime>
 #include <unordered_map>
 #include <vector>
 #include <list>
