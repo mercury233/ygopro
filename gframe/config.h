@@ -3,7 +3,7 @@
 
 #include <cstdio>
 #include "bufferio.h"
-#include "../ocgcore/ocgapi.h"
+#include "../ocgcore/common.h"
 
 #ifdef _WIN32
 #define mywcsncasecmp _wcsnicmp

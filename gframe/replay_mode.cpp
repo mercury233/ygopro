@@ -1,9 +1,10 @@
-#include <random>
+﻿#include <random>
 #include <thread>
 #include "replay_mode.h"
 #include "duelclient.h"
 #include "game.h"
 #include "data_manager.h"
+#include "../ocgcore/ocgapi.h"
 
 namespace ygo {
 
