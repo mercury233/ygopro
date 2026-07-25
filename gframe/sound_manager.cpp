@@ -1,6 +1,6 @@
 #include "sound_manager.h"
-#include "file_system.h"
 #include "game.h"
+#include "file_system.h"
 #ifdef YGOPRO_USE_MINIAUDIO
 #include <miniaudio.h>
 #ifdef YGOPRO_MINIAUDIO_SUPPORT_OPUS_VORBIS
@@ -94,6 +94,8 @@ bool SoundManager::Init() {
 }
 void SoundManager::RefreshBGMList() {
 #ifdef YGOPRO_USE_AUDIO
+	for(size_t i = 0; i < sizeof(BGMList) / sizeof(BGMList[0]); ++i)
+		BGMList[i].clear();
 	RefershBGMDir(L"", BGM_DUEL);
 	RefershBGMDir(L"duel", BGM_DUEL);
 	RefershBGMDir(L"menu", BGM_MENU);
