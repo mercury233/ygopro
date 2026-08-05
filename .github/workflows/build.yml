@@ -15,8 +15,50 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    outputs:
+      premake_windows_url: ${{ steps.premake-release.outputs.windows_url }}
+      premake_windows_sha256: ${{ steps.premake-release.outputs.windows_sha256 }}
+      premake_linux_url: ${{ steps.premake-release.outputs.linux_url }}
+      premake_linux_sha256: ${{ steps.premake-release.outputs.linux_sha256 }}
+      premake_linux_arm64_url: ${{ steps.premake-release.outputs.linux_arm64_url }}
+      premake_linux_arm64_sha256: ${{ steps.premake-release.outputs.linux_arm64_sha256 }}
+      premake_macos_url: ${{ steps.premake-release.outputs.macos_url }}
+      premake_macos_sha256: ${{ steps.premake-release.outputs.macos_sha256 }}
 
     steps:
+    - name: Resolve latest mercury233 premake dev release
+      id: premake-release
+      shell: python
+      run: |
+        import json, os, urllib.request
+
+        request = urllib.request.Request(
+            'https://api.github.com/repos/mercury233/premake-core/releases?per_page=1',
+            headers={
+                'Accept': 'application/vnd.github+json',
+                'User-Agent': 'ygopro-ci',
+                'X-GitHub-Api-Version': '2022-11-28',
+            },
+        )
+        with urllib.request.urlopen(request) as response:
+            releases = json.load(response)
+        release = releases[0]
+        asset_names = {
+            'windows': 'premake-dev-windows-win32.zip',
+            'linux': 'premake-dev-linux-x64.tar.gz',
+            'linux_arm64': 'premake-dev-linux-arm64.tar.gz',
+            'macos': 'premake-dev-macosx-universal.tar.gz',
+        }
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+            for platform, asset_name in asset_names.items():
+                asset = next(asset for asset in release['assets'] if asset['name'] == asset_name)
+                digest = asset.get('digest', '')
+                if not digest.startswith('sha256:'):
+                    raise RuntimeError(f'Missing SHA-256 digest for {asset_name}')
+                output.write(f'{platform}_url={asset["browser_download_url"]}\n')
+                output.write(f'{platform}_sha256={digest.removeprefix("sha256:")}\n')
+        print(f'Using premake release {release["tag_name"]}')
+
     - name: Parse pull request description for dependency overrides
       id: parse-pr-override
       env:
@@ -355,9 +397,9 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@3fffc760bf7b992889fcadf1055bc475b1cd7db6
       with:
-        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-windows.zip
+        url: ${{ needs.prepare.outputs.premake_windows_url }}
         filename: premake5.zip
-        sha256: e64ce2ed8778e0098f63674cca61fe33941b5f0c8d9a4afd651152bdea3758ab
+        sha256: ${{ needs.prepare.outputs.premake_windows_sha256 }}
 
     - name: Extract premake
       shell: bash
@@ -536,9 +578,9 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@3fffc760bf7b992889fcadf1055bc475b1cd7db6
       with:
-        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-linux.tar.gz
+        url: ${{ runner.arch == 'ARM64' && needs.prepare.outputs.premake_linux_arm64_url || needs.prepare.outputs.premake_linux_url }}
         filename: premake5.tar.gz
-        sha256: 63edd3e7461eebdd45b500a3c7e8ad4e7a67d68f230010f9a97cbb71b4ec59c8
+        sha256: ${{ runner.arch == 'ARM64' && needs.prepare.outputs.premake_linux_arm64_sha256 || needs.prepare.outputs.premake_linux_sha256 }}
 
     - name: Extract & test premake
       id: extract-premake
@@ -554,6 +596,10 @@ jobs:
           echo "premake=fail" >> $GITHUB_OUTPUT
         fi
         cd ..
+
+    - name: Fail if premake cannot run (test)
+      if: steps.extract-premake.outputs.premake == 'fail'
+      run: exit 1
 
     - name: Fetch premake source (fallback)
       if: steps.extract-premake.outputs.premake != 'ok'
@@ -690,9 +736,9 @@ jobs:
       id: premake
       uses: mercury233/action-cache-download-file@3fffc760bf7b992889fcadf1055bc475b1cd7db6
       with:
-        url: https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-macosx.tar.gz
+        url: ${{ needs.prepare.outputs.premake_macos_url }}
         filename: premake5.tar.gz
-        sha256: fa73a46f093fa6f17494a3d063421aa6cae3ea825a61c62dd59fc2f07a256d03
+        sha256: ${{ needs.prepare.outputs.premake_macos_sha256 }}
 
     - name: Extract & test premake
       id: extract-premake
@@ -708,6 +754,10 @@ jobs:
           echo "premake=fail" >> $GITHUB_OUTPUT
         fi
         cd ..
+
+    - name: Fail if premake cannot run (test)
+      if: steps.extract-premake.outputs.premake == 'fail'
+      run: exit 1
 
     - name: Fetch premake source (fallback)
       if: steps.extract-premake.outputs.premake != 'ok'

@@ -13,8 +13,8 @@ install:
   - ps: $env:Path += ';C:\Program Files\NASM'
 
   # environment and system dependency
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-beta8/premake-5.0.0-beta8-windows.zip ; exit 0"
-  - 7z x premake-5.0.0-beta8-windows.zip
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mercury233/premake-core/releases/download/dev-20260805-014814/premake-dev-windows-win32.zip ; exit 0"
+  - 7z x premake-dev-windows-win32.zip
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.1.13-stable/libevent-2.1.13-stable.tar.gz ; exit 0"
   - tar xf libevent-2.1.13-stable.tar.gz
@@ -133,7 +133,7 @@ deploy:
         branch: test
 
 cache:
-  - premake-5.0.0-beta8-windows.zip
+  - premake-dev-windows-win32.zip
   - libevent-2.1.13-stable.tar.gz
   - freetype-2.14.3.tar.gz
   - lua-5.4.8.tar.gz
