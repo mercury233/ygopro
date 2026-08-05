@@ -499,7 +499,7 @@ jobs:
       shell: msys2 {0}
       run: |
         cd build
-        mingw32-make -j 4 config=release
+        mingw32-make -j 4
         cd ..
 
     - name: Upload build artifacts
@@ -668,7 +668,7 @@ jobs:
     - name: Make
       run: |
         cd build
-        make -j 4 config=release
+        make -j 4
         cd ..
 
     - name: Upload build artifacts
@@ -808,7 +808,7 @@ jobs:
     - name: Make
       run: |
         cd build
-        make -j 3 config=release
+        make -j 3
         cd ..
 
     - name: Upload build artifacts
