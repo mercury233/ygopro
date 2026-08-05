@@ -2,7 +2,8 @@
 
 --- Supported systems: Windows, Linux, macOS
 
--- Windows (Visual Studio) build supports x86, x86_64, and ARM64, with cross-compilation support.
+-- Windows (Visual Studio, with MSVC or clang-cl) build supports x86, x86_64, and ARM64, with cross-compilation support.
+-- Pass --cc=clang when generating a Visual Studio solution to use the ClangCL platform toolset.
 -- Linux build supports x86_64 and ARM64.
 -- macOS build supports x86_64 and ARM64, with cross-compilation support.
 
@@ -496,12 +497,14 @@ workspace "YGOPro"
     filter { "configurations:Release", "action:vs*" }
         linktimeoptimization "On"
         staticruntime "On"
+
+    filter { "configurations:Release", "action:vs*", "toolset:not clang" }
         disablewarnings { "4244", "4267", "4838", "4996", "6011", "6031", "6054", "6262" }
 
     filter { "configurations:Release", "not action:vs*" }
         defines "NDEBUG"
 
-    filter { "configurations:Debug", "action:vs*" }
+    filter { "configurations:Debug", "action:vs*", "toolset:not clang" }
         disablewarnings { "6011", "6031", "6054", "6262" }
 
     filter "action:vs*"
@@ -509,6 +512,9 @@ workspace "YGOPro"
         conformancemode "On"
         buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
+
+    filter "toolset:clang"
+        disablewarnings { "pragma-pack" }
 
     filter "action:gmake"
         buildoptions { "-fno-strict-aliasing" }
