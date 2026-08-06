@@ -499,13 +499,12 @@ workspace "YGOPro"
         staticruntime "On"
 
     filter { "configurations:Release", "action:vs*", "toolset:not clang" }
-        disablewarnings { "4244", "4267", "4838", "4996", "6011", "6031", "6054", "6262" }
+        disablewarnings {
+            "4996", -- Currently only some dependencies use deprecated functions.
+        }
 
     filter { "configurations:Release", "not action:vs*" }
         defines "NDEBUG"
-
-    filter { "configurations:Debug", "action:vs*", "toolset:not clang" }
-        disablewarnings { "6011", "6031", "6054", "6262" }
 
     filter "action:vs*"
         cdialect "C11"
@@ -515,6 +514,12 @@ workspace "YGOPro"
 
     filter "toolset:clang"
         disablewarnings { "pragma-pack" }
+
+    filter { "action:vs*", "toolset:not clang" }
+        disablewarnings {
+            "4244", -- Intentional narrowing conversions are pervasive in the program and dependencies.
+            "4267", -- The 32-bit APIs frequently consume container sizes represented by size_t on 64-bit builds.
+        }
 
     filter "action:gmake"
         buildoptions { "-fno-strict-aliasing" }
