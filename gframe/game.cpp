@@ -323,10 +323,7 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", irr::core::rect<irr::s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
-优化编译速度。\n\
-升级依赖库。\n\
 支持设置帧率和垂直同步。\n\
-粘贴文本时自动过滤结尾的空格。\n\
 开发者功能：F2打开当前卡脚本。\n\
 开发者功能：c开头的ID查卡。\n\
 开发者功能：右键粘贴查卡。\n\
