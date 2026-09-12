@@ -562,8 +562,7 @@ int TagDuel::Analyze(unsigned char* msgbuffer, unsigned int len) {
 			case HINT_RACE:
 			case HINT_ATTRIB:
 			case HINT_CODE:
-			case HINT_NUMBER:
-			case HINT_ZONE: {
+			case HINT_NUMBER: {
 				for(int i = 0; i < 4; ++i)
 					if(players[i] != cur_player[player])
 						NetServer::SendBufferToPlayer(players[i], STOC_GAME_MSG, offset, pbuf - offset);
@@ -571,7 +570,8 @@ int TagDuel::Analyze(unsigned char* msgbuffer, unsigned int len) {
 					NetServer::ReSendToPlayer(*oit);
 				break;
 			}
-			case HINT_CARD: {
+			case HINT_CARD:
+			case HINT_ZONE: {
 				for(int i = 0; i < 4; ++i)
 					NetServer::SendBufferToPlayer(players[i], STOC_GAME_MSG, offset, pbuf - offset);
 				for(auto oit = observers.begin(); oit != observers.end(); ++oit)
