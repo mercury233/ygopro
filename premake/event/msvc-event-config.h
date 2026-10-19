@@ -282,7 +282,7 @@
 /* #undef EVENT__HAVE_STRSEP */
 
 /* Define to 1 if you have the `strtok_r' function. */
-#if defined(__MINGW32__) && !defined(__STRICT_ANSI__)
+#ifdef __MINGW32__
 #define EVENT__HAVE_STRTOK_R 1
 #endif
 
