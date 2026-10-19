@@ -1,6 +1,6 @@
 project "event"
     kind "StaticLib"
-    cppdialect "C++14"
+    cdialect "C11"
 
     includedirs { "include", "compat" }
 
