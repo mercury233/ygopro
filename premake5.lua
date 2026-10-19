@@ -79,7 +79,7 @@ VORBISFILE_LIB_NAME = "vorbisfile"
 -- Fields:
 --   name (will resolve to global variable prefix)
 --   prebuilt_header (for finding directory)
---   prebuilt_header_subdir (for some dependencies which require a subdirectory to pass to compiler)
+--   prebuilt_header_subdir (for dependencies which require a subdirectory in the compiler's include path)
 --   prebuilt_libname (for prebuilt dependencies only; default: same as name)
 --   source_dir (when building dependency from source, its code should be in this directory relative to the project root; default: ./name)
 --   source_header_subdir (dependency's header subdirectory relative to source_dir; default: .)

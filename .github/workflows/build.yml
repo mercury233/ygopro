@@ -613,7 +613,7 @@ jobs:
       with:
         repository: premake/premake-core
         path: premake-source
-        ref: 2ca338a25ed5f6e62d36c9cd70e5f313953c630d # tag: v5.0.0-beta8
+        ref: 4f6dab3129f86832c9ed745c69438fcaa5fee460 # tag: v5.0.0
 
     - name: Build premake (fallback)
       if: steps.extract-premake.outputs.premake != 'ok'
@@ -771,7 +771,7 @@ jobs:
       with:
         repository: premake/premake-core
         path: premake-source
-        ref: 9ca696c86d5df6a1f6e674a931eef18e2b1c3b31 # fix: x86_64 architecture detection for macOS in Bootstrap.sh (#2640)
+        ref: 4f6dab3129f86832c9ed745c69438fcaa5fee460 # tag: v5.0.0
 
     - name: Build premake (fallback)
       if: steps.extract-premake.outputs.premake != 'ok'
