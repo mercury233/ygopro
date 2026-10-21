@@ -13,7 +13,7 @@ install:
   - ps: $env:Path += ';C:\Program Files\NASM'
 
   # environment and system dependency
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mercury233/premake-core/releases/download/dev-20260805-014814/premake-dev-windows-win32.zip ; exit 0"
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mercury233/premake-core/releases/download/dev-20261020-012532/premake-dev-windows-win32.zip ; exit 0"
   - 7z x premake-dev-windows-win32.zip
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.1.13-stable/libevent-2.1.13-stable.tar.gz ; exit 0"
