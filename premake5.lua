@@ -415,7 +415,6 @@ workspace "YGOPro"
     filter "system:windows"
         systemversion "latest"
         startproject "YGOPro"
-        -- Use Unicode character set for Windows builds (Default for MSVC, but MinGW requires it explicitly).
         characterset "Unicode"
         -- Target Windows 7 or later. (Building requires Windows 10 SDK 1803 or newer.)
         defines { "WINVER=0x0601", "_WIN32_WINNT=0x0601" }
