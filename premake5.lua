@@ -528,8 +528,8 @@ workspace "YGOPro"
         buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
 
-    filter "toolset:clang"
-        disablewarnings { "pragma-pack" }
+    filter { "action:vs*", "toolset:clang" }
+        buildoptions { "/showFilenames" }
 
     filter { "action:vs*", "toolset:not clang" }
         disablewarnings {
