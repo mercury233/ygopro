@@ -13,8 +13,10 @@ install:
   - ps: $env:Path += ';C:\Program Files\NASM'
 
   # environment and system dependency
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mercury233/premake-core/releases/download/dev-20261020-012532/premake-dev-windows-win32.zip ; exit 0"
-  - 7z x premake-dev-windows-win32.zip
+  - set PREMAKE_VERSION=dev-20261020-012532
+  - set PREMAKE_ARCHIVE=premake-%PREMAKE_VERSION%-windows-win32.zip
+  - if not exist "%PREMAKE_ARCHIVE%" curl --retry 5 --connect-timeout 30 --location --output "%PREMAKE_ARCHIVE%" https://github.com/mercury233/premake-core/releases/download/%PREMAKE_VERSION%/premake-dev-windows-win32.zip
+  - 7z x "%PREMAKE_ARCHIVE%"
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.1.13-stable/libevent-2.1.13-stable.tar.gz ; exit 0"
   - tar xf libevent-2.1.13-stable.tar.gz
@@ -134,7 +136,7 @@ deploy:
         branch: test
 
 cache:
-  - premake-dev-windows-win32.zip
+  - premake-dev-20261020-012532-windows-win32.zip
   - libevent-2.1.13-stable.tar.gz
   - freetype-2.14.3.tar.gz
   - lua-5.4.8.tar.gz
